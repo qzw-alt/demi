@@ -142,6 +142,9 @@
 - memory-tiering
 - learning
 - web-search
+- social-media-management
+- memory-lancedb-pro（2026-02-26新增）
+- lenny-skills（2026-02-26新增，86个产品管理技能）
 
 ---
 

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Tourism China - Find Top Hospitals</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo h1 {
+            color: #e94560;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        .logo p {
+            color: #666;
+            font-size: 14px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #e94560;
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: #e94560;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+        }
+        .submit-btn:hover {
+            background: #d63850;
+            transform: translateY(-2px);
+        }
+        .contact-direct {
+            margin-top: 30px;
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        .contact-direct p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        .contact-links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        .contact-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .whatsapp {
+            background: #25D366;
+            color: white;
+        }
+        .telegram {
+            background: #0088cc;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <h1>🏥 Medical Tourism China</h1>
+            <p>Find Top Hospitals in China for International Patients</p>
+        </div>
+        
+        <form id="consultForm">
+            <div class="form-group">
+                <label>📋 What is your medical condition?</label>
+                <textarea placeholder="e.g., Cardiology, Neurology, Orthopedics..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>🌍 Which country are you from?</label>
+                <input type="text" placeholder="e.g., USA, UK, Russia...">
+            </div>
+            
+            <div class="form-group">
+                <label>🏙️ Preferred city in China</label>
+                <select>
+                    <option value="">Select a city</option>
+                    <option value="beijing">Beijing</option>
+                    <option value="shanghai">Shanghai</option>
+                    <option value="guangzhou">Guangzhou</option>
+                    <option value="shenzhen">Shenzhen</option>
+                    <option value="other">Other (please specify)</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>📱 Your WhatsApp / Telegram / Email</label>
+                <input type="text" placeholder="Your contact information">
+            </div>
+            
+            <button type="submit" class="submit-btn">🚀 Submit Inquiry</button>
+        </form>
+        
+        <div class="contact-direct">
+            <p>Or contact us directly:</p>
+            <div class="contact-links">
+                <a href="https://wa.me/86138xxxxxxx" class="whatsapp" target="_blank">
+                    💬 WhatsApp
+                </a>
+                <a href="https://t.me/yourchannel" class="telegram" target="_blank">
+                    ✈️ Telegram
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('consultForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you! We will contact you soon. 🙏');
+        });
+    </script>
+</body>
+</html>

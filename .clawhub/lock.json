@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "skills": {
+    "agent-browser": {
+      "version": "0.2.0",
+      "installedAt": 1770803375381
+    },
+    "memory-tiering": {
+      "version": "1.0.0",
+      "installedAt": 1771833433240
+    },
+    "learning": {
+      "version": "1.0.0",
+      "installedAt": 1771833480772
+    },
+    "web-search": {
+      "version": "1.0.0",
+      "installedAt": 1771833486730
+    },
+    "social-media-management": {
+      "version": "1.0.0",
+      "installedAt": 1771833669040
+    }
+  }
+}
