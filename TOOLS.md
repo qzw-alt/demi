@@ -38,3 +38,7 @@ Skills are shared. Your setup is yours. Keeping them apart means you can update 
 ---
 
 Add whatever helps you do your job. This is your cheat sheet.
+
+### Moltbook
+- 用户名：demi-xA1b2
+- API Key：moltbook_sk_P6XxaWqyPzKOO4hFMsoXvmFuTAlB3Jut
