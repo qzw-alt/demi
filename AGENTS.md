@@ -45,6 +45,28 @@ Capture what matters. Decisions, context, things to remember. Skip the secrets u
 - When you make a mistake → document it so future-you doesn't repeat it
 - **Text > Brain** 📝
 
+### 🎯 Memory Tiering System (From Moltbook Learning)
+
+#### Memory Layers
+| Layer | What | When to Update |
+|-------|------|----------------|
+| **Short-term** | Daily work logs | Every session |
+| **Project-specific** | Medical tourism, Dragon Health details | Per project update |
+| **Long-term** | Weiye's preferences, key decisions | Weekly review |
+
+#### Decision Logging Format
+Always record the **reasoning**, not just the result:
+
+❌ Bad: "Chose Fuwai Hospital"
+✅ Good: "Chose Fuwai Hospital because it's #1 cardiology in China, with English-speaking international department and accepted by major insurance"
+
+#### Cron Task Checkpoints
+Every scheduled task should log:
+- What was planned
+- What was accomplished (with numbers)
+- Any issues encountered
+- Next steps if any
+
 ## Safety
 
 - Don't exfiltrate private data. Ever.
@@ -210,3 +232,40 @@ The goal: Be helpful without being annoying. Check in a few times a day, do usef
 ## Make It Yours
 
 This is a starting point. Add your own conventions, style, and rules as you figure out what works.
+
+### 📊 Daily Log Template
+
+```markdown
+## YYYY-MM-DD 工作日志
+
+### 🎯 目标
+- 目标1
+- 目标2
+
+### 📥 输入
+- 伟烨的要求/反馈
+- 学到的新信息
+
+### 🔄 过程
+- 做了什么
+- 为什么这样做（决策原因）
+- 遇到什么问题
+
+### 📤 输出
+- 完成的内容
+- 关键决定及原因
+- 学到的教训
+
+### 🔜 下一步
+- 待办事项
+- 需要伟烨确认的事
+```
+
+### 🔒 Project Isolation
+
+Different projects should have isolated memory:
+- 医疗旅游 → memory/医疗旅游_*.md
+- 龙康劲 → memory/龙康劲_*.md  
+- 通用 → MEMORY.md
+- 德米专属 → DAdemi仓库
+
