@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Tourism China - World-Class Healthcare at Affordable Costs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 25px;
+            opacity: 0.9;
+        }
+        
+        .hero .price-tag {
+            background: rgba(255,255,255,0.2);
+            display: inline-block;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: #ff6b6b;
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(255,107,107,0.4);
+        }
+        
+        /* Features */
+        .features {
+            padding: 60px 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        
+        .features h2 {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 40px;
+            color: #1e3c72;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .feature-card {
+            padding: 25px;
+            border-radius: 12px;
+            background: #f8f9fa;
+            text-align: center;
+        }
+        
+        .feature-card h3 {
+            color: #1e3c72;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .feature-card p {
+            font-size: 0.95rem;
+            color: #666;
+        }
+        
+        /* Hospital List */
+        .hospitals {
+            background: #f0f4f8;
+            padding: 60px 20px;
+        }
+        
+        .hospitals h2 {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 40px;
+            color: #1e3c72;
+        }
+        
+        .hospital-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        
+        .hospital-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .hospital-card h3 {
+            color: #1e3c72;
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+        
+        .hospital-card .specialty {
+            color: #ff6b6b;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .hospital-card .city {
+            color: #888;
+            font-size: 0.85rem;
+        }
+        
+        /* Pricing */
+        .pricing {
+            background: #fff;
+            padding: 60px 20px;
+        }
+        
+        .pricing h2 {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 40px;
+            color: #1e3c72;
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .pricing-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .pricing-card.featured {
+            border: 3px solid #ff6b6b;
+            transform: scale(1.03);
+            box-shadow: 0 10px 30px rgba(255,107,107,0.2);
+        }
+        
+        .pricing-card h3 {
+            color: #1e3c72;
+            margin-bottom: 10px;
+        }
+        
+        .price {
+            font-size: 2rem;
+            color: #1e3c72;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        
+        .pricing-card ul {
+            list-style: none;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+        
+        .pricing-card li {
+            padding: 5px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .pricing-card li:before {
+            content: "✓ ";
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        
+        /* Form */
+        .form-section {
+            padding: 60px 20px;
+            max-width: 550px;
+            margin: 0 auto;
+        }
+        
+        .form-section h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #1e3c72;
+        }
+        
+        form {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 18px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #1e3c72;
+        }
+        
+        button[type="submit"] {
+            width: 100%;
+            background: #1e3c72;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        button[type="submit"]:hover {
+            background: #2a5298;
+        }
+        
+        /* Footer */
+        footer {
+            background: #1e3c72;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        footer h3 {
+            margin-bottom: 15px;
+        }
+        
+        footer p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 1.8rem; }
+            .hero .subtitle { font-size: 1rem; }
+            .pricing-card.featured { transform: none; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero -->
+    <section class="hero">
+        <h1>🏥 Medical Tourism China</h1>
+        <p class="subtitle">Access world-class healthcare in China at 50-80% lower costs. We guide you through every step.</p>
+        <div class="price-tag">Starting from <strong>$30</strong> USD</div>
+        <br>
+        <a href="#contact" class="cta-button">Get Your Free Guide</a>
+    </section>
+    
+    <!-- Why Choose Us -->
+    <section class="features">
+        <h2>Why Choose Medical Tourism in China?</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>🏆 World-Class Quality</h3>
+                <p>Top hospitals ranked among the best in Asia with internationally certified specialists</p>
+            </div>
+            <div class="feature-card">
+                <h3>💰 50-80% Savings</h3>
+                <p>High-quality medical treatment at a fraction of US/European costs</p>
+            </div>
+            <div class="feature-card">
+                <h3>⚡ No Waiting Lists</h3>
+                <p>Get appointments within days, not months</p>
+            </div>
+            <div class="feature-card">
+                <h3>🌐 English Service</h3>
+                <p>International departments with English-speaking doctors</p>
+            </div>
+            <div class="feature-card">
+                <h3>🛡️ Insurance Accepted</h3>
+                <p>Direct billing with most international insurance companies</p>
+            </div>
+            <div class="feature-card">
+                <h3>✈️ Easy Access</h4>
+                <p>Major cities with international airports and convenient transport</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Top Hospitals -->
+    <section class="hospitals">
+        <h2>Top Hospitals We Work With</h2>
+        <div class="hospital-grid">
+            <div class="hospital-card">
+                <h3>Beijing Fuwai Hospital</h3>
+                <div class="specialty">#1 Cardiology in China</div>
+                <div class="city">🏙️ Beijing</div>
+            </div>
+            <div class="hospital-card">
+                <h3>Beijing Tongren Hospital</h3>
+                <div class="specialty">#1 Ophthalmology in China</div>
+                <div class="city">🏙️ Beijing</div>
+            </div>
+            <div class="hospital-card">
+                <h3>Shanghai Zhongshan Hospital</h3>
+                <div class="specialty">#1 Cardiology in Shanghai</div>
+                <div class="city">🏙️ Shanghai</div>
+            </div>
+            <div class="hospital-card">
+                <h3>Shanghai Ruijin Hospital</h3>
+                <div class="specialty">Top Hematology & Endocrinology</div>
+                <div class="city">🏙️ Shanghai</div>
+            </div>
+            <div class="hospital-card">
+                <h3>Guangzhou Sun Yat-sen VI Hospital</h3>
+                <div class="specialty">#1 GI Surgery in the World</div>
+                <div class="city">🏙️ Guangzhou</div>
+            </div>
+            <div class="hospital-card">
+                <h3>Guangzhou Medical Uni. 1st Hospital</h3>
+                <div class="specialty">#1 Respiratory (Dr. Zhong Nanshan)</div>
+                <div class="city">🏙️ Guangzhou</div>
+            </div>
+            <div class="hospital-card">
+                <h3>Shenzhen People's Hospital</h3>
+                <div class="specialty">Top General Hospital</div>
+                <div class="city">🏙️ Shenzhen</div>
+            </div>
+            <div class="hospital-card">
+                <h3>Beijing Xiehe Hospital</h3>
+                <div class="specialty">#1 Rheumatology in China</div>
+                <div class="city">🏙️ Beijing</div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Pricing -->
+    <section class="pricing">
+        <h2>Our Service Packages</h2>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>📋 Basic</h3>
+                <div class="price">$30</div>
+                <ul>
+                    <li>Complete treatment guide (PDF)</li>
+                    <li>Hospital information</li>
+                    <li>Visa instructions (S2)</li>
+                    <li>Cost estimates</li>
+                    <li>Airport transport info</li>
+                </ul>
+            </div>
+            <div class="pricing-card featured">
+                <h3>⭐ Standard</h3>
+                <div class="price">$140</div>
+                <ul>
+                    <li>Everything in Basic</li>
+                    <li>Q&A support</li>
+                    <li>Hospital booking help</li>
+                    <li>Visa invitation letter</li>
+                    <li>1-time hospital change FREE</li>
+                </ul>
+            </div>
+            <div class="pricing-card">
+                <h3>👑 Premium</h3>
+                <div class="price">$420+</div>
+                <ul>
+                    <li>Everything in Standard</li>
+                    <li>Airport pickup ($60-80)</li>
+                    <li>Full accompaniment</li>
+                    <li>Hospital admission assist</li>
+                    <li>24/7 support</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Form -->
+    <section class="form-section" id="contact">
+        <h2>📝 Get Your Personalized Guide</h2>
+        <form>
+            <div class="form-group">
+                <label>Your Name *</label>
+                <input type="text" name="name" required placeholder="Enter your name">
+            </div>
+            <div class="form-group">
+                <label>Country *</label>
+                <input type="text" name="country" required placeholder="e.g., USA, UK, Australia">
+            </div>
+            <div class="form-group">
+                <label>Medical Condition *</label>
+                <input type="text" name="condition" required placeholder="e.g., Heart problem, Eye surgery">
+            </div>
+            <div class="form-group">
+                <label>Preferred City *</label>
+                <select name="city" required>
+                    <option value="">Select a city</option>
+                    <option value="beijing">Beijing</option>
+                    <option value="shanghai">Shanghai</option>
+                    <option value="guangzhou">Guangzhou</option>
+                    <option value="shenzhen">Shenzhen</option>
+                    <option value="not_sure">Not sure yet</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Message (Optional)</label>
+                <textarea name="message" rows="3" placeholder="Any questions or special requirements?"></textarea>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <h3>🏥 Medical Tourism China</h3>
+        <p>Your health is our priority</p>
+        <p style="margin-top: 15px; font-size: 0.85rem;">WhatsApp/WeChat: Available after submission</p>
+    </footer>
+</body>
+</html>
