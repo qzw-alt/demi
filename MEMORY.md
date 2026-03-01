@@ -39,7 +39,7 @@
 
 ## 🔑 API Keys
 
-- **Kimi API**: sk-kimi-Cs9OtGUatopK0qds8T2oThQpG3eapXvEjt5LDqENMjWqNXmT1dyqkajioQUzub8p（已配置成功）
+- **Kimi API (2.5)**: sk-kimi-iGuVj23Mgkz5ZSKkW9vdkVTg6PQY5FIlpTiPn8ryhrGA8jO4UyVWredtEfbDNGGW（新配置中）
 - **Tavily API**: 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
 
 ---
@@ -218,3 +218,4 @@ _最后更新: 2026-02-26_
 - 医疗旅游 → memory/医疗旅游_xxx.md
 - 龙康劲 → memory/龙康劲_xxx.md
 - 通用 → MEMORY.md
+sk-kimi-iGuVj23Mgkz5ZSKkW9vdkVTg6PQY5FIlpTiPn8ryhrGA8jO4UyVWredtEfbDNGGW

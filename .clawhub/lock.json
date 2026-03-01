@@ -20,6 +20,34 @@
     "social-media-management": {
       "version": "1.0.0",
       "installedAt": 1771833669040
+    },
+    "tavily-search": {
+      "version": "1.0.0",
+      "installedAt": 1772370800564
+    },
+    "summarize": {
+      "version": "1.0.0",
+      "installedAt": 1772370801480
+    },
+    "find-skills": {
+      "version": "0.1.0",
+      "installedAt": 1772370802258
+    },
+    "github": {
+      "version": "1.0.0",
+      "installedAt": 1772370802913
+    },
+    "obsidian": {
+      "version": "1.0.0",
+      "installedAt": 1772370803628
+    },
+    "notion": {
+      "version": "1.0.0",
+      "installedAt": 1772370804559
+    },
+    "weather": {
+      "version": "1.0.0",
+      "installedAt": 1772370805269
     }
   }
 }
