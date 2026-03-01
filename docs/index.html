@@ -544,6 +544,11 @@
             e.preventDefault();
             // Show thank you modal
             document.getElementById('thankYouModal').classList.add('active');
+            // Track conversion event
+            gtag('event', 'generate_lead', {
+                'event_category': 'form',
+                'event_label': 'guide_request'
+            });
             // Reset form
             this.reset();
         });
