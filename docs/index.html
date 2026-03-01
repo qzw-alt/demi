@@ -116,6 +116,7 @@
         .hospital-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto; }
         .hospital-card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); transition: all 0.3s; }
         .hospital-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.12); }
+        .hospital-card.extra { display: none; }
         .hospital-card h3 { color: var(--primary); font-size: 1.1rem; margin-bottom: 10px; }
         .hospital-card .specialty { color: var(--accent); font-size: 0.9rem; font-weight: 600; margin-bottom: 10px; }
         .hospital-card .city { color: #888; font-size: 0.9rem; }
@@ -281,19 +282,22 @@
             <div class="hospital-card"><h3>Sichuan Provincial People</h3><div class="specialty">Top General Hospital</div><div class="city">🏙️ Chengdu</div><div class="certification">🏆 80+ Years History</div></div>
             <div class="hospital-card"><h3>Zhejiang University Hospital</h3><div class="specialty">Top Orthopedics</div><div class="city">🏙️ Hangzhou</div><div class="certification">🏆 AI-Assisted Surgery</div></div>
             <div class="hospital-card"><h3>Sir Run Run Shaw (Hangzhou)</h3><div class="specialty">Top Cardiology</div><div class="city">🏙️ Hangzhou</div><div class="certification">🏆 JCI Accredited</div></div>
-            <div class="hospital-card"><h3>Tongji Hospital (Wuhan)</h3><div class="specialty">Top Rehabilitation</div><div class="city">🏙️ Wuhan</div><div class="certification">🏆 Largest Rehab Center</div></div>
-            <div class="hospital-card"><h3>Wuhan Union Hospital</h3><div class="specialty">Top Dermatology</div><div class="city">🏙️ Wuhan</div><div class="certification">🏆 百年名院</div></div>
-            <div class="hospital-card"><h3>Nanjing Gulou Hospital</h3><div class="specialty">Top Oncology</div><div class="city">🏙️ Nanjing</div><div class="certification">🏆 Cancer Treatment Center</div></div>
-            <div class="hospital-card"><h3>Nanjing Zhongda Hospital</h3><div class="specialty">Top Cardiology</div><div class="city">🏙️ Nanjing</div><div class="certification">🏆 Medical University Affiliated</div></div>
-            <div class="hospital-card"><h3>Xijing Hospital (Xi'an)</h3><div class="specialty">Top Digestion</div><div class="city">🏙️ Xi'an</div><div class="certification">🏆 Military Medical Excellence</div></div>
-            <div class="hospital-card"><h3>Xi'an Jiaotong Hospital</h3><div class="specialty">Top Endocrinology</div><div class="city">🏙️ Xi'an</div><div class="certification">🏆 百年名院</div></div>
-            <div class="hospital-card"><h3>Tianjin Union Medical Center</h3><div class="specialty">Top Cardiology</div><div class="city">🏙️ Tianjin</div><div class="certification">🏆 Beijing-Tianjin Integration</div></div>
-            <div class="hospital-card"><h3>Tianjin Cancer Hospital</h3><div class="specialty">Top Oncology</div><div class="city">🏙️ Tianjin</div><div class="certification">🏆 National Cancer Center</div></div>
-            <div class="hospital-card"><h3>Chongqing Xinhua Hospital</h3><div class="specialty">Top Urology</div><div class="city">🏙️ Chongqing</div><div class="certification">🏆 Medical University Affiliated</div></div>
-            <div class="hospital-card"><h3>Chongqing Southwest Hospital</h3><div class="specialty">Top Burn Treatment</div><div class="city">🏙️ Chongqing</div><div class="certification">🏆 Military Medical</div></div>
-            <div class="hospital-card"><h3>Xiamen Cardiovascular Hospital</h3><div class="specialty">Top Cardiology</div><div class="city">🏙️ Xiamen</div><div class="certification">🏆 Southeast Asia Connection</div></div>
-            <div class="hospital-card"><h3>苏州大学第一附属医院</h3><div class="specialty">Top Hematology</div><div class="city">🏙️ Suzhou</div><div class="certification">🏆 Medical Excellence</div></div>
-            <div class="hospital-card"><h3>苏州人民医院</h3><div class="specialty">Top Neurology</div><div class="city">🏙️ Suzhou</div><div class="certification">🏆 Smart Hospital</div></div>
+            <div class="hospital-card extra"><h3>Tongji Hospital (Wuhan)</h3><div class="specialty">Top Rehabilitation</div><div class="city">🏙️ Wuhan</div><div class="certification">🏆 Largest Rehab Center</div></div>
+            <div class="hospital-card extra"><h3>Wuhan Union Hospital</h3><div class="specialty">Top Dermatology</div><div class="city">🏙️ Wuhan</div><div class="certification">🏆 百年名院</div></div>
+            <div class="hospital-card extra"><h3>Nanjing Gulou Hospital</h3><div class="specialty">Top Oncology</div><div class="city">🏙️ Nanjing</div><div class="certification">🏆 Cancer Treatment Center</div></div>
+            <div class="hospital-card extra"><h3>Nanjing Zhongda Hospital</h3><div class="specialty">Top Cardiology</div><div class="city">🏙️ Nanjing</div><div class="certification">🏆 Medical University Affiliated</div></div>
+            <div class="hospital-card extra"><h3>Xijing Hospital (Xi'an)</h3><div class="specialty">Top Digestion</div><div class="city">🏙️ Xi'an</div><div class="certification">🏆 Military Medical Excellence</div></div>
+            <div class="hospital-card extra"><h3>Xi'an Jiaotong Hospital</h3><div class="specialty">Top Endocrinology</div><div class="city">🏙️ Xi'an</div><div class="certification">🏆 百年名院</div></div>
+            <div class="hospital-card extra"><h3>Tianjin Union Medical Center</h3><div class="specialty">Top Cardiology</div><div class="city">🏙️ Tianjin</div><div class="certification">🏆 Beijing-Tianjin Integration</div></div>
+            <div class="hospital-card extra"><h3>Tianjin Cancer Hospital</h3><div class="specialty">Top Oncology</div><div class="city">🏙️ Tianjin</div><div class="certification">🏆 National Cancer Center</div></div>
+            <div class="hospital-card extra"><h3>Chongqing Xinhua Hospital</h3><div class="specialty">Top Urology</div><div class="city">🏙️ Chongqing</div><div class="certification">🏆 Medical University Affiliated</div></div>
+            <div class="hospital-card extra"><h3>Chongqing Southwest Hospital</h3><div class="specialty">Top Burn Treatment</div><div class="city">🏙️ Chongqing</div><div class="certification">🏆 Military Medical</div></div>
+            <div class="hospital-card extra"><h3>Xiamen Cardiovascular Hospital</h3><div class="specialty">Top Cardiology</div><div class="city">🏙️ Xiamen</div><div class="certification">🏆 Southeast Asia Connection</div></div>
+            <div class="hospital-card extra"><h3>苏州大学第一附属医院</h3><div class="specialty">Top Hematology</div><div class="city">🏙️ Suzhou</div><div class="certification">🏆 Medical Excellence</div></div>
+            <div class="hospital-card extra"><h3>苏州人民医院</h3><div class="specialty">Top Neurology</div><div class="city">🏙️ Suzhou</div><div class="certification">🏆 Smart Hospital</div></div>
+        </div>
+        <div style="text-align: center; margin-top: 30px;">
+            <button id="showMoreBtn" onclick="showMoreHospitals()" style="background: var(--primary); color: white; padding: 15px 40px; border: none; border-radius: 30px; font-size: 1rem; cursor: pointer;">Show More (+19 Hospitals)</button>
         </div>
     </section>
     
@@ -497,6 +501,21 @@
         
         function closeModal() {
             document.getElementById('thankYouModal').classList.remove('active');
+        }
+        
+        // Show More Hospitals
+        let showingMore = false;
+        function showMoreHospitals() {
+            const extras = document.querySelectorAll('.hospital-card.extra');
+            const btn = document.getElementById('showMoreBtn');
+            if (showingMore) {
+                extras.forEach(card => card.style.display = 'none');
+                btn.textContent = 'Show More (+19 Hospitals)';
+            } else {
+                extras.forEach(card => card.style.display = 'block');
+                btn.textContent = 'Show Less';
+            }
+            showingMore = !showingMore;
         }
     </script>
 </body>
