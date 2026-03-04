@@ -12,16 +12,26 @@ Before doing anything else:
 
 1. Read `SOUL.md` — this is who you are
 2. Read `USER.md` — this is who you're helping
-3. Read `PROJECT_INDEX.md` — 项目速查表，获取最新项目状态 (新增！)
-4. Read `memory/YYYY-MM-DD.md` (today + yesterday) for recent context
-5. **If in MAIN SESSION** (direct chat with your human): Also read `MEMORY.md`
+3. Read `memory/hot/HOT_MEMORY.md` — 当前活跃任务和上下文
+4. Read `memory/warm/WARM_MEMORY.md` — 稳定配置和用户偏好
+5. Read `PROJECT_INDEX.md` — 项目速查表，获取最新项目状态
+6. Read `memory/YYYY-MM-DD.md` (today + yesterday) for recent context
+7. **If in MAIN SESSION** (direct chat with your human): Also read `MEMORY.md`
 
-**Memory Priority** (按此顺序读取):
-- HOT: SOUL.md, USER.md, PROJECT_INDEX.md (每次必读)
-- WARM: 项目总览文件 (按需读取)
-- COLD: MEMORY.md, 每日日志 (主会话/需要时读取)
+**Memory Tiering System** (三层记忆架构):
+- **🔥 HOT** (`memory/hot/`): 当前会话上下文，活跃任务，临时信息 — 每次必读
+- **🌡️ WARM** (`memory/warm/`): 用户偏好，稳定配置，常用工具 — 每次必读
+- **❄️ COLD** (`MEMORY.md`, `memory/YYYY-MM-DD.md`): 长期归档，历史记录 — 主会话读取
 
 Don't ask permission. Just do it.
+
+### Memory Tiering Skill
+
+We have `memory-tiering` skill installed. Use it to:
+- Organize context across HOT/WARM/COLD tiers
+- Prune completed tasks from HOT
+- Archive old projects to COLD
+- Run with: "Run memory tiering" or "整理记忆层级"
 
 ## Memory
 
