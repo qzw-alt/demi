@@ -12,8 +12,14 @@ Before doing anything else:
 
 1. Read `SOUL.md` — this is who you are
 2. Read `USER.md` — this is who you're helping
-3. Read `memory/YYYY-MM-DD.md` (today + yesterday) for recent context
-4. **If in MAIN SESSION** (direct chat with your human): Also read `MEMORY.md`
+3. Read `PROJECT_INDEX.md` — 项目速查表，获取最新项目状态 (新增！)
+4. Read `memory/YYYY-MM-DD.md` (today + yesterday) for recent context
+5. **If in MAIN SESSION** (direct chat with your human): Also read `MEMORY.md`
+
+**Memory Priority** (按此顺序读取):
+- HOT: SOUL.md, USER.md, PROJECT_INDEX.md (每次必读)
+- WARM: 项目总览文件 (按需读取)
+- COLD: MEMORY.md, 每日日志 (主会话/需要时读取)
 
 Don't ask permission. Just do it.
 
