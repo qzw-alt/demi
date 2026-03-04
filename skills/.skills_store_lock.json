@@ -1,0 +1,29 @@
+{
+    "version": 1,
+    "skills": {
+        "tavily-search": {
+            "name": "Tavily Web Search",
+            "zip_url": "https://skillhub-1251783334.cos.ap-guangzhou.myqcloud.com/skills/tavily-search.zip",
+            "source": "skillhub",
+            "version": "1.0.0"
+        },
+        "summarize": {
+            "name": "Summarize",
+            "zip_url": "https://skillhub-1251783334.cos.ap-guangzhou.myqcloud.com/skills/summarize.zip",
+            "source": "skillhub",
+            "version": "1.0.0"
+        },
+        "agent-browser": {
+            "name": "Agent Browser",
+            "zip_url": "https://skillhub-1251783334.cos.ap-guangzhou.myqcloud.com/skills/agent-browser.zip",
+            "source": "skillhub",
+            "version": "0.2.0"
+        },
+        "github": {
+            "name": "Github",
+            "zip_url": "https://skillhub-1251783334.cos.ap-guangzhou.myqcloud.com/skills/github.zip",
+            "source": "skillhub",
+            "version": "1.0.0"
+        }
+    }
+}

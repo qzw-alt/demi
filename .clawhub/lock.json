@@ -3,7 +3,7 @@
   "skills": {
     "agent-browser": {
       "version": "0.2.0",
-      "installedAt": 1770803375381
+      "installedAt": 1772620960087
     },
     "memory-tiering": {
       "version": "1.0.0",
@@ -23,31 +23,47 @@
     },
     "tavily-search": {
       "version": "1.0.0",
-      "installedAt": 1772370800564
+      "installedAt": 1772620954504
     },
     "summarize": {
       "version": "1.0.0",
-      "installedAt": 1772370801480
+      "installedAt": 1772620957714
     },
     "find-skills": {
       "version": "0.1.0",
-      "installedAt": 1772370802258
+      "installedAt": 1772620961653
     },
     "github": {
       "version": "1.0.0",
-      "installedAt": 1772370802913
+      "installedAt": 1772620965006
     },
     "obsidian": {
       "version": "1.0.0",
-      "installedAt": 1772370803628
+      "installedAt": 1772620966331
     },
     "notion": {
       "version": "1.0.0",
-      "installedAt": 1772370804559
+      "installedAt": 1772620967636
     },
     "weather": {
       "version": "1.0.0",
-      "installedAt": 1772370805269
+      "installedAt": 1772620970570
+    },
+    "tencentcloud-lighthouse-skill": {
+      "version": "1.0.0",
+      "installedAt": 1772620972645
+    },
+    "tencent-docs": {
+      "version": "1.0.2",
+      "installedAt": 1772620974464
+    },
+    "wordpress-publishing-skill-for-claude": {
+      "version": "0.1.0",
+      "installedAt": 1772637667183
+    },
+    "wordpress-pro": {
+      "version": "0.1.0",
+      "installedAt": 1772637675210
     }
   }
 }
