@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Hospitals by Specialty | China Hospitals Guide</title>
+    <meta name="description" content="Find the best hospitals in China by specialty tags. 34 top-tier hospitals with international departments. Filter by cardiology, orthopedics, maternity, oncology, and more.">
+    <link rel="canonical" href="https://chinahospitalsguide.com/hospitals.html">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #1e3c72;
+            --secondary: #2a5298;
+            --accent: #ff6b6b;
+            --text: #333;
+            --light: #f8f9fa;
+            --border: #e0e0e0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+        }
+        nav {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .page-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .page-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .filter-section {
+            background: var(--light);
+            padding: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .filter-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .search-box {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto 1.5rem;
+            position: relative;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid var(--border);
+            border-radius: 50px;
+            font-size: 1rem;
+        }
+        .search-box::before {
+            content: "🔍";
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .specialty-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .specialty-tag {
+            padding: 0.5rem 1rem;
+            background: white;
+            border: 2px solid var(--secondary);
+            color: var(--secondary);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        .specialty-tag:hover, .specialty-tag.active {
+            background: var(--secondary);
+            color: white;
+        }
+        .results-count {
+            text-align: center;
+            padding: 1rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .hospitals-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .hospital-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+        .hospital-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid var(--border);
+        }
+        .hospital-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+        }
+        .hospital-card.hidden {
+            display: none;
+        }
+        .hospital-name {
+            color: var(--primary);
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .hospital-location {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        .hospital-info {
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+        .hospital-info strong {
+            color: var(--secondary);
+        }
+        .hospital-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+        .hospital-tag {
+            background: #e3f2fd;
+            color: var(--secondary);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            cursor: pointer;
+        }
+        .hospital-tag:hover {
+            background: var(--secondary);
+            color: white;
+        }
+        .disclaimer {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 1.5rem;
+            margin: 2rem auto;
+            border-radius: 0 8px 8px 0;
+            max-width: 1200px;
+        }
+        footer {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+        @media (max-width: 768px) {
+            .hospital-grid {
+                grid-template-columns: 1fr;
+            }
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">🏥 China Hospitals Guide</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="hospitals.html">Hospitals</a></li>
+                <li><a href="cost-comparison.html">Cost Comparison</a></li>
+                <li><a href="stories.html">Patient Stories</a></li>
+                <li><a href="blog/index.html">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <h1>Find Hospitals by Specialty</h1>
+        <p>34 world-class hospitals across 6 major cities. Click tags to filter, or search by name, city, or specialty.</p>
+    </header>
+
+    <section class="filter-section">
+        <div class="filter-container">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search hospitals, cities, or specialties...">
+            </div>
+            <div class="specialty-tags" id="specialtyTags"></div>
+        </div>
+    </section>
+
+    <div class="results-count" id="resultsCount">Showing all 34 hospitals</div>
+
+    <div class="disclaimer">
+        <p><strong>Disclaimer:</strong> All hospital information and cost estimates are based on publicly available data and patient feedback. Actual services, availability, and fees may vary. Please contact the hospital's international department directly for the most current and accurate information.</p>
+    </div>
+
+    <main class="hospitals-section">
+        <div class="hospital-grid" id="hospitalGrid"></div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 China Hospitals Guide. All rights reserved.</p>
+        <p>Helping international patients access world-class healthcare in China.</p>
+    </footer>
+
+    <script>
+        const hospitals = [
+            { name: "Fu Wai Hospital", city: "Beijing", district: "Xicheng", phone: "010-68314466", rank: "#1 Cardiology in China", airport: "45-60min from Capital", tags: ["cardiology", "heart-surgery", "general"] },
+            { name: "Anzhen Hospital", city: "Beijing", district: "Chaoyang", phone: "010-64456131", rank: "Top Cardiovascular Center", airport: "40-55min from Capital", tags: ["cardiology", "heart-surgery"] },
+            { name: "Zhongshan Hospital (Shanghai)", city: "Shanghai", district: "Xuhui", phone: "021-64041990", rank: "Top 3 Cardiology, Top 5 Oncology", airport: "55-75min from Pudong", tags: ["cardiology", "oncology", "general"] },
+            { name: "Jishuitan Hospital", city: "Beijing", district: "Xicheng", phone: "010-58516688", rank: "#1 Orthopedics in China", airport: "40-50min from Capital", tags: ["orthopedics", "joint-replacement", "spine-surgery"] },
+            { name: "Shanghai Sixth Hospital", city: "Shanghai", district: "Xuhui", phone: "021-64369181", rank: "#2 Orthopedics", airport: "50-60min from Pudong", tags: ["orthopedics", "sports-medicine", "joint-replacement"] },
+            { name: "Peking University Third Hospital", city: "Beijing", district: "Haidian", phone: "010-82266699", rank: "#4 Obstetrics, #1 Fertility, Top Orthopedics", airport: "45min from Capital", tags: ["orthopedics", "maternity", "fertility", "sports-medicine"] },
+            { name: "Fudan University Women's Hospital (Red House)", city: "Shanghai", district: "Huangpu", phone: "021-33189900", rank: "#2 Obstetrics in China", airport: "60min from Pudong", tags: ["maternity", "obstetrics", "prenatal-diagnosis", "fertility"] },
+            { name: "Zhejiang University Women's Hospital", city: "Hangzhou", district: "Shangcheng", phone: "0571-87061501", rank: "Top Obstetrics", airport: "50min from Xiaoshan", tags: ["maternity", "obstetrics", "prenatal-diagnosis", "fertility"] },
+            { name: "Cancer Hospital, CAMS", city: "Beijing", district: "Chaoyang", phone: "010-87788288", rank: "#1 Oncology in China", airport: "40-50min from Capital", tags: ["oncology", "cancer-surgery", "radiotherapy"] },
+            { name: "Tiantan Hospital", city: "Beijing", district: "Fengtai", phone: "010-59976688", rank: "#1 Neurosurgery", airport: "50-70min from Capital", tags: ["neurosurgery", "neurology", "general"] },
+            { name: "Huashan Hospital", city: "Shanghai", district: "Jing'an", phone: "021-52889999", rank: "#2 Neurosurgery", airport: "65-85min from Pudong", tags: ["neurosurgery", "neurology"] },
+            { name: "Beijing Children's Hospital", city: "Beijing", district: "Xicheng", phone: "010-59616161", rank: "#1 Pediatrics", airport: "45-60min from Capital", tags: ["pediatrics", "childrens-health"] },
+            { name: "Peking Union Medical College Hospital", city: "Beijing", district: "Dongcheng", phone: "010-69156114", rank: "#1 Comprehensive Hospital", airport: "45-60min from Capital", tags: ["general", "all-specialties"] },
+            { name: "China-Japan Friendship Hospital", city: "Beijing", district: "Chaoyang", phone: "010-84205288", rank: "Top International Department", airport: "40-55min from Capital", tags: ["general", "international"] },
+            { name: "Ruijin Hospital", city: "Shanghai", district: "Huangpu", phone: "021-64370045", rank: "Top VIP Center", airport: "50-70min from Pudong", tags: ["general", "vip-services"] },
+            { name: "Renji Hospital", city: "Shanghai", district: "Pudong", phone: "021-58752345", rank: "Top General Hospital", airport: "30-45min from Pudong", tags: ["general", "gastroenterology"] },
+            { name: "Huadong Hospital", city: "Shanghai", district: "Jing'an", phone: "021-62483180", rank: "Top Geriatrics", airport: "60-80min from Pudong", tags: ["general", "geriatrics"] },
+            { name: "Shanghai Ninth Hospital", city: "Shanghai", district: "Huangpu", phone: "021-23271699", rank: "Top Plastic Surgery", airport: "50-70min from Pudong", tags: ["plastic-surgery", "general"] },
+            { name: "Guangdong Provincial People's Hospital", city: "Guangzhou", district: "Yuexiu", phone: "020-83827812", rank: "Top Cardiology South China", airport: "45-60min from Baiyun", tags: ["cardiology", "general"] },
+            { name: "Nanfang Hospital", city: "Guangzhou", district: "Baiyun", phone: "020-61641888", rank: "Top General Hospital", airport: "40-55min from Baiyun", tags: ["general", "kidney-disease"] },
+            { name: "Zhongshan Sixth Hospital", city: "Guangzhou", district: "Tianhe", phone: "020-38254111", rank: "Top Gastroenterology", airport: "45-60min from Baiyun", tags: ["gastroenterology", "general"] },
+            { name: "Zhujiang Hospital", city: "Guangzhou", district: "Haizhu", phone: "020-61643888", rank: "Top Neurosurgery South China", airport: "45-60min from Baiyun", tags: ["neurosurgery", "general"] },
+            { name: "First Affiliated Hospital of Guangzhou TCM", city: "Guangzhou", district: "Baiyun", phone: "020-36591222", rank: "Top Traditional Chinese Medicine", airport: "35-50min from Baiyun", tags: ["tcm", "general"] },
+            { name: "First Affiliated Hospital of Sun Yat-sen University", city: "Guangzhou", district: "Yuexiu", phone: "020-87755766", rank: "Top Comprehensive Hospital", airport: "50-70min from Baiyun", tags: ["general", "all-specialties"] },
+            { name: "First Affiliated Hospital of Guangzhou Medical University", city: "Guangzhou", district: "Liwan", phone: "020-83062222", rank: "Top Respiratory Medicine", airport: "40-55min from Baiyun", tags: ["respiratory", "general"] },
+            { name: "Peking University People's Hospital", city: "Beijing", district: "Xicheng", phone: "010-88326666", rank: "Top General Hospital", airport: "50-70min from Capital", tags: ["general", "hematology"] },
+            { name: "Beijing Chaoyang Hospital", city: "Beijing", district: "Chaoyang", phone: "010-85231000", rank: "Top Respiratory Medicine", airport: "40-55min from Capital", tags: ["respiratory", "general"] },
+            { name: "301 Hospital (PLA General Hospital)", city: "Beijing", district: "Haidian", phone: "010-68182255", rank: "Military Hospital", airport: "55-75min from Capital", tags: ["general", "military"] },
+            { name: "Shenzhen People's Hospital", city: "Shenzhen", district: "Luohu", phone: "0755-25533018", rank: "Top Hospital in Shenzhen", airport: "50-70min from Bao'an", tags: ["general", "all-specialties"] },
+            { name: "Peking University Shenzhen Hospital", city: "Shenzhen", district: "Futian", phone: "0755-83923333", rank: "Top General Hospital", airport: "45-60min from Bao'an", tags: ["general", "all-specialties"] },
+            { name: "Shenzhen Second People's Hospital", city: "Shenzhen", district: "Futian", phone: "0755-83366388", rank: "Top Orthopedics Shenzhen", airport: "40-55min from Bao'an", tags: ["orthopedics", "general"] },
+            { name: "Shenzhen Traditional Chinese Medicine Hospital", city: "Shenzhen", district: "Futian", phone: "0755-88359666", rank: "Top TCM Shenzhen", airport: "45-60min from Bao'an", tags: ["tcm", "general"] },
+            { name: "Shenzhen Maternity & Child Healthcare Hospital", city: "Shenzhen", district: "Futian", phone: "0755-83360733", rank: "Top Maternity Shenzhen", airport: "40-55min from Bao'an", tags: ["maternity", "pediatrics"] },
+            { name: "West China Hospital", city: "Chengdu", district: "Wuhou", phone: "028-85422114", rank: "Top Hospital West China", airport: "45-60min from Tianfu", tags: ["general", "all-specialties"] }
+        ];
+
+        const specialtyNames = {
+            "cardiology": "Cardiology", "heart-surgery": "Heart Surgery",
+            "orthopedics": "Orthopedics", "joint-replacement": "Joint Replacement",
+            "spine-surgery": "Spine Surgery", "sports-medicine": "Sports Medicine",
+            "maternity": "Maternity", "obstetrics": "Obstetrics",
+            "prenatal-diagnosis": "Prenatal Diagnosis", "fertility": "Fertility/IVF",
+            "oncology": "Oncology", "cancer-surgery": "Cancer Surgery",
+            "radiotherapy": "Radiotherapy", "neurosurgery": "Neurosurgery",
+            "neurology": "Neurology", "pediatrics": "Pediatrics",
+            "childrens-health": "Children's Health", "general": "General Medicine",
+            "all-specialties": "All Specialties", "international": "International Dept",
+            "vip-services": "VIP Services", "gastroenterology": "Gastroenterology",
+            "geriatrics": "Geriatrics", "plastic-surgery": "Plastic Surgery",
+            "kidney-disease": "Kidney Disease", "hematology": "Hematology",
+            "respiratory": "Respiratory Medicine", "military": "Military Hospital",
+            "tcm": "Traditional Chinese Medicine"
+        };
+
+        let activeTags = new Set();
+
+        function getSpecialtyCounts() {
+            const counts = {};
+            hospitals.forEach(h => {
+                h.tags.forEach(tag => {
+                    counts[tag] = (counts[tag] || 0) + 1;
+                });
+            });
+            return counts;
+        }
+
+        function generateSpecialtyTags() {
+            const counts = getSpecialtyCounts();
+            const container = document.getElementById('specialtyTags');
+            const sortedSpecialties = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 15);
+
+            sortedSpecialties.forEach(([tag, count]) => {
+                const btn = document.createElement('button');
+                btn.className = 'specialty-tag';
+                btn.setAttribute('data-tag', tag);
+                btn.innerHTML = `${specialtyNames[tag] || tag} (${count})`;
+                btn.onclick = () => toggleTag(tag);
+                container.appendChild(btn);
+            });
+        }
+
+        function toggleTag(tag) {
+            if (activeTags.has(tag)) {
+                activeTags.delete(tag);
+            } else {
+                activeTags.add(tag);
+            }
+            updateUI();
+        }
+
+        function updateUI() {
+            document.querySelectorAll('.specialty-tag').forEach(btn => {
+                const tag = btn.getAttribute('data-tag');
+                btn.classList.toggle('active', activeTags.has(tag));
+            });
+            filterHospitals();
+        }
+
+        function filterHospitals() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.hospital-card');
+            let visibleCount = 0;
+
+            hospitals.forEach((hospital, index) => {
+                const card = cards[index];
+                const matchesSearch = !searchTerm || 
+                    hospital.name.toLowerCase().includes(searchTerm) ||
+                    hospital.city.toLowerCase().includes(searchTerm) ||
+                    hospital.tags.some(tag => tag.includes(searchTerm) || (specialtyNames[tag] || '').toLowerCase().includes(searchTerm));
+
+                const matchesTags = activeTags.size === 0 || 
+                    hospital.tags.some(tag => activeTags.has(tag));
+
+                if (matchesSearch && matchesTags) {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            document.getElementById('resultsCount').textContent = 
+                activeTags.size === 0 && !searchTerm 
+                    ? `Showing all ${hospitals.length} hospitals`
+                    : `Showing ${visibleCount} of ${hospitals.length} hospitals`;
+        }
+
+        function generateHospitalCards() {
+            const container = document.getElementById('hospitalGrid');
+            
+            hospitals.forEach(hospital => {
+                const card = document.createElement('div');
+                card.className = 'hospital-card';
+                
+                const tagsHtml = hospital.tags.map(tag => 
+                    `<span class="hospital-tag" onclick="toggleTag('${tag}')">${specialtyNames[tag] || tag}</span>`
+                ).join('');
+                
+                card.innerHTML = `
+                    <div class="hospital-name">${hospital.name}</div>
+                    <div class="hospital-location">📍 ${hospital.city} | ${hospital.district} District</div>
+                    <div class="hospital-info"><strong>Phone:</strong> ${hospital.phone}</div>
+                    <div class="hospital-info"><strong>Rank:</strong> ${hospital.rank}</div>
+                    <div class="hospital-info"><strong>Airport:</strong> ${hospital.airport}</div>
+                    <div class="hospital-tags">${tagsHtml}</div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        document.getElementById('searchInput').addEventListener('input', filterHospitals);
+
+        generateSpecialtyTags();
+        generateHospitalCards();
+    </script>
+</body>
+</html>
