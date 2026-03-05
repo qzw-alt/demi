@@ -31,7 +31,7 @@
     },
     "find-skills": {
       "version": "0.1.0",
-      "installedAt": 1772620961653
+      "installedAt": 1772723336676
     },
     "github": {
       "version": "1.0.0",
@@ -64,6 +64,22 @@
     "wordpress-pro": {
       "version": "0.1.0",
       "installedAt": 1772637675210
+    },
+    "self-improving-agent": {
+      "version": "1.0.11",
+      "installedAt": 1772723334319
+    },
+    "proactive-agent": {
+      "version": "3.1.0",
+      "installedAt": 1772723359318
+    },
+    "skill-creator": {
+      "version": "0.1.0",
+      "installedAt": 1772723363546
+    },
+    "stock-analysis": {
+      "version": "6.2.0",
+      "installedAt": 1772723365630
     }
   }
 }

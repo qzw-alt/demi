@@ -1,29 +1,59 @@
 {
-    "version": 1,
-    "skills": {
-        "tavily-search": {
-            "name": "Tavily Web Search",
-            "zip_url": "https://skillhub-1251783334.cos.ap-guangzhou.myqcloud.com/skills/tavily-search.zip",
-            "source": "skillhub",
-            "version": "1.0.0"
-        },
-        "summarize": {
-            "name": "Summarize",
-            "zip_url": "https://skillhub-1251783334.cos.ap-guangzhou.myqcloud.com/skills/summarize.zip",
-            "source": "skillhub",
-            "version": "1.0.0"
-        },
-        "agent-browser": {
-            "name": "Agent Browser",
-            "zip_url": "https://skillhub-1251783334.cos.ap-guangzhou.myqcloud.com/skills/agent-browser.zip",
-            "source": "skillhub",
-            "version": "0.2.0"
-        },
-        "github": {
-            "name": "Github",
-            "zip_url": "https://skillhub-1251783334.cos.ap-guangzhou.myqcloud.com/skills/github.zip",
-            "source": "skillhub",
-            "version": "1.0.0"
-        }
+  "version": 1,
+  "skills": {
+    "tavily-search": {
+      "name": "Tavily Web Search",
+      "zip_url": "https://skillhub-1251783334.cos.ap-guangzhou.myqcloud.com/skills/tavily-search.zip",
+      "source": "skillhub",
+      "version": "1.0.0"
+    },
+    "summarize": {
+      "name": "Summarize",
+      "zip_url": "https://skillhub-1251783334.cos.ap-guangzhou.myqcloud.com/skills/summarize.zip",
+      "source": "skillhub",
+      "version": "1.0.0"
+    },
+    "agent-browser": {
+      "name": "Agent Browser",
+      "zip_url": "https://skillhub-1251783334.cos.ap-guangzhou.myqcloud.com/skills/agent-browser.zip",
+      "source": "skillhub",
+      "version": "0.2.0"
+    },
+    "github": {
+      "name": "Github",
+      "zip_url": "https://skillhub-1251783334.cos.ap-guangzhou.myqcloud.com/skills/github.zip",
+      "source": "skillhub",
+      "version": "1.0.0"
+    },
+    "self-improving-agent": {
+      "name": "self-improving-agent",
+      "zip_url": "https://skillhub-1251783334.cos.ap-guangzhou.myqcloud.com/skills/self-improving-agent.zip",
+      "source": "skillhub",
+      "version": "1.0.11"
+    },
+    "find-skills": {
+      "name": "Find Skills",
+      "zip_url": "https://skillhub-1251783334.cos.ap-guangzhou.myqcloud.com/skills/find-skills.zip",
+      "source": "skillhub",
+      "version": "0.1.0"
+    },
+    "proactive-agent": {
+      "name": "Proactive Agent",
+      "zip_url": "https://skillhub-1251783334.cos.ap-guangzhou.myqcloud.com/skills/proactive-agent.zip",
+      "source": "skillhub",
+      "version": "3.1.0"
+    },
+    "skill-creator": {
+      "name": "Skill Creator",
+      "zip_url": "https://skillhub-1251783334.cos.ap-guangzhou.myqcloud.com/skills/skill-creator.zip",
+      "source": "skillhub",
+      "version": "0.1.0"
+    },
+    "stock-analysis": {
+      "name": "Stock Analysis",
+      "zip_url": "https://skillhub-1251783334.cos.ap-guangzhou.myqcloud.com/skills/stock-analysis.zip",
+      "source": "skillhub",
+      "version": "6.2.0"
     }
+  }
 }
