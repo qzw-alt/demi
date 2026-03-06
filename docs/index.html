@@ -680,7 +680,7 @@
             });
         });
         
-        // Form submission - sends to Google Forms
+        // Form submission - redirect to Google Forms
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -694,8 +694,7 @@
             const message = form.querySelector('textarea[name="message"]').value;
             
             // Build Google Forms pre-fill URL
-            // Note: You need to update the entry IDs to match your Google Form
-            const baseUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSdQr-gdtd_A_M4XrBxKj7ak4OdrdzOQ5Zx1B1Q_6Yn4CNKmUA/formResponse';
+            const baseUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSdQr-gdtd_A_M4XrBxKj7ak4OdrdzOQ5Zx1B1Q_6Yn4CNKmUA/viewform?usp=pp_url';
             const params = new URLSearchParams({
                 'entry.2005620554': name,
                 'entry.1045781291': email,
@@ -705,22 +704,8 @@
                 'entry.839337380': message
             });
             
-            // Submit to Google Forms via iframe (background)
-            const iframe = document.createElement('iframe');
-            iframe.style.display = 'none';
-            iframe.src = baseUrl + '?' + params.toString();
-            document.body.appendChild(iframe);
-            
-            // Show thank you modal
-            document.getElementById('thankYouModal').classList.add('active');
-            
-            // Reset form
-            form.reset();
-            
-            // Clean up iframe after submission
-            setTimeout(() => {
-                document.body.removeChild(iframe);
-            }, 3000);
+            // Redirect to Google Forms with pre-filled data
+            window.location.href = baseUrl + '&' + params.toString();
         });
         
         function closeModal() {
