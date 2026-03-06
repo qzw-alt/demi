@@ -684,28 +684,8 @@
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Get form data
-            const form = this;
-            const name = form.querySelector('input[name="name"]').value;
-            const email = form.querySelector('input[name="email"]').value;
-            const country = form.querySelector('input[name="country"]').value;
-            const condition = form.querySelector('input[name="condition"]').value;
-            const city = form.querySelector('select[name="city"]').value;
-            const message = form.querySelector('textarea[name="message"]').value;
-            
-            // Build Google Forms pre-fill URL
-            const baseUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSdQr-gdtd_A_M4XrBxKj7ak4OdrdzOQ5Zx1B1Q_6Yn4CNKmUA/viewform?usp=pp_url';
-            const params = new URLSearchParams({
-                'entry.2005620554': name,
-                'entry.1045781291': email,
-                'entry.1065046570': country,
-                'entry.1166974658': condition,
-                'entry.2757716': city,
-                'entry.839337380': message
-            });
-            
-            // Redirect to Google Forms with pre-filled data
-            window.location.href = baseUrl + '&' + params.toString();
+            // Redirect to Google Forms
+            window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLSdQr-gdtd_A_M4XrBxKj7ak4OdrdzOQ5Zx1B1Q_6Yn4CNKmUA/viewform';
         });
         
         function closeModal() {
