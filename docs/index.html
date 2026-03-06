@@ -683,15 +683,19 @@
         // Form submission
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            // Show thank you modal
-            document.getElementById('thankYouModal').classList.add('active');
-            // Track conversion event
-            gtag('event', 'generate_lead', {
-                'event_category': 'form',
-                'event_label': 'guide_request'
-            });
-            // Reset form
-            this.reset();
+            // Get form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+            // Build Google Forms pre-fill URL
+            const googleFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSdQr-gdtd_A_M4XrBxKj7ak4OdrdzOQ5Zx1B1Q_6Yn4CNKmUA/viewform?usp=pp_url' +
+                '&entry.2005620554=' + encodeURIComponent(data.name || '') +
+                '&entry.1045781291=' + encodeURIComponent(data.email || '') +
+                '&entry.1065046570=' + encodeURIComponent(data.country || '') +
+                '&entry.1166974658=' + encodeURIComponent(data.condition || '') +
+                '&entry.2757716=' + encodeURIComponent(data.city || '') +
+                '&entry.839337380=' + encodeURIComponent(data.message || '');
+            // Redirect to Google Forms
+            window.location.href = googleFormUrl;
         });
         
         function closeModal() {
