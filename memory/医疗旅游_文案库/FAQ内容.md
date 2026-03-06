@@ -1,443 +1,374 @@
 # 医疗旅游文案库 - FAQ内容
 
-> 最后更新: 2026-03-04
-> 整理人: Demini
+> 整理日期：2026-03-05
+> 用途：网站FAQ页面、客服回复、咨询准备
+> 语言：中英双语
 
 ---
 
-## 🎯 FAQ分类
+## 🛂 签证与入境
 
-1. [费用相关](#费用相关)
-2. [医院医生](#医院医生)
-3. [签证旅行](#签证旅行)
-4. [语言沟通](#语言沟通)
-5. [术后康复](#术后康复)
-6. [保险支付](#保险支付)
-7. [安全质量](#安全质量)
+### Q1: 来中国就医需要办理什么签证？
 
----
+**中文回答：**
+需要办理**M字签证（商务签证）**或**Q2字签证（探亲签证）**。我们可以为您出具医疗邀请函，协助签证申请。
 
-## 费用相关
-
-### Q1: 在中国做手术比我的国家便宜多少？
-
-**A:** 根据手术类型不同，费用节省比例在50%-85%之间：
-
-| 手术类型 | 美国费用 | 中国费用 | 节省比例 |
-|----------|----------|----------|----------|
-| 膝关节置换 | $40,000-60,000 | $12,000-18,000 | 60-75% |
-| 髋关节置换 | $35,000-55,000 | $12,000-20,000 | 55-75% |
-| 心脏搭桥 | $80,000-150,000 | $18,000-30,000 | 75-85% |
-| 脊柱融合 | $50,000-100,000 | $15,000-25,000 | 65-80% |
-
-费用包含：手术费、住院费、检查费、药品费、康复费
+**English Answer:**
+You need an **M visa (Business Visa)** or **Q2 visa (Family Visit Visa)**. We can provide a medical invitation letter to assist with your visa application.
 
 ---
 
-### Q2: 费用是否包含住宿和交通？
+### Q2: 医疗邀请函怎么办理？
 
-**A:** 医疗费用不包含国际机票和酒店住宿。但我们可以协助您：
-- 推荐医院附近的合作酒店(通常有折扣)
-- 安排机场接送服务
-- 提供医院周边住宿指南
+**中文回答：**
+1. 提供护照复印件和初步诊断报告
+2. 我们联系合作医院出具邀请函
+3. 通常3-5个工作日完成
+4. 邀请函会寄送到您指定的地址
 
-预估额外费用：
-- 酒店：$50-150/晚 (根据星级)
-- 餐饮：$20-50/天
-- 当地交通：$10-30/天
+**English Answer:**
+1. Provide passport copy and preliminary diagnosis
+2. We contact partner hospitals to issue the invitation
+3. Usually completed within 3-5 business days
+4. The letter will be sent to your designated address
 
 ---
 
-### Q3: 是否有隐藏费用？
+### Q3: 签证被拒怎么办？
 
-**A:** 我们承诺价格透明，所有费用在治疗前明确告知：
+**中文回答：**
+- 我们可以协助重新准备材料
+- 提供更详细的医疗证明
+- 必要时联系医院出具补充说明
+- 成功率通常很高（>95%）
 
-**包含在报价中：**
-- 手术费用
-- 住院费用(标准病房)
-- 术前检查
-- 手术耗材
-- 麻醉费用
-- 基本药品
-- 术后复查(1次)
+**English Answer:**
+- We can help re-prepare documents
+- Provide more detailed medical certificates
+- Contact hospitals for supplementary letters if needed
+- Success rate is typically high (>95%)
 
-**可能产生的额外费用：**
-- 并发症处理(如有)
+---
+
+## 🏥 医院与医生
+
+### Q4: 如何选择合适的医院？
+
+**中文回答：**
+我们会根据您的病情推荐：
+- **骨科**：北京积水潭医院、上海六院、华西医院
+- **心血管**：北京阜外医院、北京安贞医院
+- **肿瘤**：中国医学科学院肿瘤医院、中山肿瘤防治中心
+- **妇产科**：北京协和、上海红房子、北医三院
+
+**English Answer:**
+We recommend based on your condition:
+- **Orthopedics**: Beijing Jishuitan, Shanghai Sixth, West China Hospital
+- **Cardiovascular**: Fuwai Hospital, Anzhen Hospital
+- **Oncology**: Cancer Hospital CAMS, Sun Yat-sen Cancer Center
+- **Obstetrics**: PUMCH, Shanghai Red House, Peking University Third Hospital
+
+---
+
+### Q5: 医生的资质如何？
+
+**中文回答：**
+- 均为三甲医院主任医师/教授
+- 多数有海外培训经历
+- 年手术量数百至上千例
+- 发表国际论文，参与国际学术交流
+
+**English Answer:**
+- All are chief physicians/professors at top-tier hospitals
+- Most have overseas training experience
+- Perform hundreds to thousands of surgeries annually
+- Publish international papers and participate in global academic exchanges
+
+---
+
+### Q6: 语言沟通有问题吗？
+
+**中文回答：**
+- 国际部提供英语服务
+- 可安排专业医疗翻译
+- 重要文件提供英文版本
+- 部分医院支持日语、韩语、阿拉伯语
+
+**English Answer:**
+- International departments provide English service
+- Professional medical interpreters available
+- Important documents in English
+- Some hospitals support Japanese, Korean, and Arabic
+
+---
+
+## 💰 费用与支付
+
+### Q7: 治疗费用大概多少？
+
+**中文回答：**
+参考费用（人民币）：
+- 膝关节置换：10-15万
+- 髋关节置换：12-18万
+- 心脏搭桥：20-40万
+- 脊柱手术：15-30万
+
+*仅为美国费用的20-30%*
+
+**English Answer:**
+Reference costs (RMB):
+- Knee replacement: ¥100,000-150,000
+- Hip replacement: ¥120,000-180,000
+- Heart bypass: ¥200,000-400,000
+- Spine surgery: ¥150,000-300,000
+
+*Only 20-30% of US costs*
+
+---
+
+### Q8: 费用包含什么？
+
+**中文回答：**
+通常包含：
+- 手术费
+- 住院费（标准病房）
+- 基础检查费
+- 常规药物费
+
+不包含：
+- 特殊材料（如进口关节假体）
 - VIP病房升级
-- 额外检查(非必要)
-- 延长住院时间
+- 陪护家属费用
+- 交通食宿
+
+**English Answer:**
+Typically includes:
+- Surgery fees
+- Hospital stay (standard room)
+- Basic examinations
+- Routine medications
+
+Not included:
+- Special materials (e.g., imported prosthetics)
+- VIP room upgrades
+- Family accommodation
+- Travel and meals
 
 ---
 
-## 医院医生
+### Q9: 如何支付？接受什么货币？
 
-### Q4: 中国医院的医疗水平如何？
+**中文回答：**
+- 接受人民币现金、银行卡
+- 支持Visa、MasterCard
+- 部分医院接受美元现金
+- 建议提前兑换人民币或使用国际信用卡
 
-**A:** 中国顶级医院的医疗水平已达到世界一流：
-
-**国际认可：**
-- 北京协和医院连续多年位列复旦榜全国第一
-- 四川大学华西医院综合实力亚洲领先
-- 上海多家医院专科排名全球前列
-
-**技术优势：**
-- 年手术量巨大，医生经验丰富
-- 引进国际先进设备和技术
-- 部分领域(如断肢再植)世界领先
-
-**数据支撑：**
-- 中国医生年均手术量是欧美医生的2-3倍
-- 顶级医院拥有JCI国际认证
-- 多篇论文发表于国际顶级医学期刊
+**English Answer:**
+- RMB cash and bank cards accepted
+- Visa and MasterCard supported
+- Some hospitals accept USD cash
+- Recommend exchanging RMB or using international credit cards
 
 ---
 
-### Q5: 医生是否会说英语？
+### Q10: 有保险直付吗？
 
-**A:** 国际部/特需部的医生具备英语沟通能力：
-
-**沟通保障：**
-- 国际部医生经过英语培训
-- 复杂病情配备专业医学翻译
-- 重要医疗文件提供英文版本
-- 24小时翻译热线支持
-
-**建议：**
-- 初诊时可要求英语医生
-- 提前准备病情英文描述
-- 重要问题可书面沟通
-
----
-
-### Q6: 如何选择合适的医院和医生？
-
-**A:** 我们根据您的病情推荐最适合的医院和医生：
-
-**选择依据：**
-1. **专科排名** - 选择该专科全国排名前列的医院
-2. **医生经验** - 选择年手术量大的专家
-3. **地理位置** - 考虑交通便利性
-4. **个人偏好** - 考虑医院环境、服务等因素
-
-**我们的服务：**
-- 免费病情评估
-- 医院医生推荐
-- 第二诊疗意见
-- 预约安排
-
----
-
-## 签证旅行
-
-### Q7: 来中国就医需要什么签证？
-
-**A:** 需要申请**医疗签证(M字签证)**：
-
-**所需材料：**
-- 护照(有效期6个月以上)
-- 签证申请表
-- 医院预约证明/邀请函
-- 资金证明
-- 往返机票预订单
-
-**办理流程：**
-1. 联系医院国际部获取邀请函
-2. 准备签证材料
-3. 向中国大使馆/领事馆申请
-4. 通常3-5个工作日出签
-
-**签证有效期：**
-- 单次入境：最长180天
-- 多次入境：根据病情需要可申请
-
----
-
-### Q8: 治疗期间家人可以陪同吗？
-
-**A:** 当然可以，我们建议有家人陪同：
-
-**陪同签证：**
-- 家人可申请旅游签证(L字签证)
-- 或申请与患者相同的医疗签证
-
-**陪同优势：**
-- 术后照顾更方便
-- 心理支持
-- 协助沟通
-
-**医院政策：**
-- 大多数医院允许1-2名家属陪护
-- 部分医院提供陪护床位
-
----
-
-### Q9: 从中国机场到医院方便吗？
-
-**A:** 非常方便，我们提供全程交通协助：
-
-**机场到市区：**
-- 北京首都机场：地铁/机场快线/出租车
-- 上海浦东机场：磁悬浮/地铁/出租车
-- 广州白云机场：地铁/出租车
-
-**我们的服务：**
-- 机场接送服务(可预约)
-- 医院位置导航
-- 当地交通指南
-
-**预估时间：**
-- 机场到市区医院：30-90分钟
-- 费用：$20-50 (出租车)
-
----
-
-## 语言沟通
-
-### Q10: 我不会说中文，就医会有困难吗？
-
-**A:** 国际患者就医有完善的中文支持：
-
-**语言服务：**
-- 国际部配备英语/日语/韩语工作人员
-- 专业医学翻译陪同就诊
-- 医疗文件英文版本
-- 24小时翻译热线
-
-**沟通方式：**
-- 重要事项书面确认
-- 翻译APP辅助
-- 手势和图片沟通
-
-**建议：**
-- 提前准备病情英文描述
-- 下载翻译APP(Google Translate)
-- 重要问题请翻译协助
-
----
-
-### Q11: 医疗文件会提供英文版本吗？
-
-**A:** 是的，所有重要医疗文件都提供英文版本：
-
-**英文文件包括：**
-- 诊断报告
-- 手术记录
-- 出院小结
-- 用药说明
-- 复查建议
-- 发票和费用清单
-
-**用途：**
-- 回国后继续治疗
-- 保险理赔
-- 个人档案
-
----
-
-## 术后康复
-
-### Q12: 术后需要在中国停留多久？
-
-**A:** 根据手术类型不同，建议停留时间：
-
-| 手术类型 | 住院时间 | 建议总停留时间 |
-|----------|----------|----------------|
-| 关节置换 | 7-14天 | 3-4周 |
-| 心脏手术 | 10-14天 | 4-6周 |
-| 脊柱手术 | 10-18天 | 4-6周 |
-| 肿瘤手术 | 7-14天 | 3-4周 |
-
-**停留安排：**
-- 住院期间：医院内康复
-- 出院后：酒店/康复中心继续恢复
-- 复查确认：可安全飞行后回国
-
----
-
-### Q13: 回国后如何继续康复？
-
-**A:** 我们提供完整的术后随访方案：
-
-**离院前：**
-- 详细的康复指导(英文)
-- 康复视频教程
-- 用药说明
-- 复查时间表
-
-**回国后：**
-- 远程视频复诊
-- 邮件咨询
-- 与当地医生对接
-- 康复进度跟踪
-
-**紧急联系：**
-- 24小时医疗热线
-- 紧急情况处理指导
-
----
-
-### Q14: 术后可以立即坐飞机回国吗？
-
-**A:** 需要根据手术类型和恢复情况决定：
-
-**一般建议：**
-| 手术类型 | 最早飞行时间 | 建议飞行时间 |
-|----------|--------------|--------------|
-| 关节置换 | 2周后 | 3-4周后 |
-| 心脏手术 | 4周后 | 6周后 |
-| 脊柱手术 | 2周后 | 4周后 |
-| 肿瘤手术 | 1-2周后 | 2-3周后 |
-
-**飞行注意事项：**
-- 提前申请轮椅服务
-- 选择靠过道座位
-- 定期活动下肢(防血栓)
-- 携带医疗证明
-
----
-
-## 保险支付
-
-### Q15: 国际医疗保险可以报销吗？
-
-**A:** 大多数国际保险可以直付或报销：
-
-**支持直付的保险：**
+**中文回答：**
+支持的主要保险公司：
 - MSH万欣和
 - 安联Allianz
-- 友邦AIA
 - 招商信诺Cigna
+- 友邦AIA
 - 平安健康
-- Bupa
 
-**报销流程：**
-1. 治疗前确认保险覆盖范围
-2. 医院直接与保险公司结算(直付)
-3. 或先自付后凭发票报销
+就诊前请确认您的保险是否在直付名单内。
 
-**建议：**
-- 出发前联系保险公司确认
-- 了解免赔额和报销比例
-- 保留所有医疗票据
+**English Answer:**
+Major supported insurers:
+- MSH
+- Allianz
+- Cigna
+- AIA
+- Ping An Health
 
----
-
-### Q16: 可以使用信用卡支付吗？
-
-**A:** 可以，中国医院支持多种支付方式：
-
-**支付方式：**
-- 国际信用卡(Visa/MasterCard)
-- 中国银联卡
-- 支付宝/微信支付(国际版)
-- 银行转账
-- 现金(人民币)
-
-**注意事项：**
-- 部分医院国际部支持外币支付
-- 建议提前确认支付方式
-- 大额支付建议提前通知银行
+Please confirm if your insurance is on the direct billing list before treatment.
 
 ---
 
-## 安全质量
+## 📅 预约与流程
 
-### Q17: 中国医院的卫生和安全标准如何？
+### Q11: 需要提前多久预约？
 
-**A:** 顶级医院达到国际标准：
+**中文回答：**
+- 常规手术：提前2-4周
+- 热门专家：提前4-6周
+- 急诊情况：可安排加急通道
+- 建议尽早预约以便安排行程
 
-**认证标准：**
-- JCI国际医院认证
-- 三甲医院评级(最高等级)
-- ISO质量管理体系
-
-**感染控制：**
-- 严格的消毒流程
-- 层流手术室
-- 一次性医疗用品
-- 抗生素管理规范
-
-**安全记录：**
-- 手术并发症率低于国际标准
-- 院内感染率严格控制
-- 医疗差错率极低
+**English Answer:**
+- Routine surgery: 2-4 weeks in advance
+- Popular specialists: 4-6 weeks in advance
+- Emergency cases: Expedited channels available
+- Recommend booking early to arrange travel
 
 ---
 
-### Q18: 如果手术出现并发症怎么办？
+### Q12: 整个流程是怎样的？
 
-**A:** 我们有完善的并发症处理机制：
+**中文回答：**
+1. **咨询阶段**：提交病历，获取方案建议
+2. **确认阶段**：确定医院和医生，签署服务协议
+3. **准备阶段**：办理签证，安排行程
+4. **就医阶段**：接机、入院、手术、康复
+5. **随访阶段**：回国后远程随访
 
-**预防措施：**
-- 术前全面评估
-- 选择经验丰富的医生
-- 先进设备和技术
-
-**处理流程：**
-1. 立即启动应急预案
-2. 多学科专家会诊
-3. 必要时的二次手术
-4. 延长住院观察
-
-**费用说明：**
-- 因医院原因导致的并发症：医院承担
-- 患者自身原因：按实际费用结算
-- 建议购买医疗意外险
+**English Answer:**
+1. **Consultation**: Submit medical records, receive recommendations
+2. **Confirmation**: Confirm hospital and doctor, sign service agreement
+3. **Preparation**: Apply for visa, arrange travel
+4. **Treatment**: Airport pickup, admission, surgery, recovery
+5. **Follow-up**: Remote follow-up after returning home
 
 ---
 
-### Q19: 如何确保医疗质量？
+### Q13: 需要在中国停留多久？
 
-**A:** 多重保障确保医疗质量：
+**中文回答：**
+参考停留时间：
+- 关节置换：2-3周
+- 心脏手术：3-4周
+- 脊柱手术：2-4周
+- 肿瘤治疗：根据疗程而定
 
-**医院层面：**
-- 三甲医院严格评审
-- 定期质量检查
-- 医生资质审核
-
-**医生层面：**
-- 主任医师级别专家
-- 年手术量要求
-- 持续医学教育
-
-**患者层面：**
-- 第二诊疗意见
-- 术前详细沟通
-- 知情同意书
-
-**第三方：**
-- 国际JCI认证
-- 患者满意度调查
-- 医疗纠纷调解机制
+**English Answer:**
+Reference stay duration:
+- Joint replacement: 2-3 weeks
+- Heart surgery: 3-4 weeks
+- Spine surgery: 2-4 weeks
+- Cancer treatment: Depends on treatment plan
 
 ---
 
-## 其他问题
+## 🏨 住宿与生活
 
-### Q20: 如何开始咨询？
+### Q14: 医院提供住宿吗？
 
-**A:** 三步开始您的医疗之旅：
+**中文回答：**
+- 住院期间住在医院病房
+- 家属可陪护（部分医院提供陪护床）
+- 术前术后可住医院合作酒店
+- 长期康复可安排康复公寓
 
-**第一步：提交资料**
-- 填写咨询表
-- 上传病历资料(英文或中文)
-- 描述治疗需求
-
-**第二步：评估推荐**
-- 医疗团队评估病情
-- 推荐合适医院和医生
-- 提供治疗方案和费用估算
-
-**第三步：确认预约**
-- 确认治疗方案
-- 安排预约时间
-- 协助签证和行程
-
-**联系方式：**
-- 邮箱: contact@chinahospitalsguide.com
-- 微信: ChinaHospitalsGuide
-- 电话: +86 XXX XXXX XXXX
+**English Answer:**
+- Stay in hospital ward during admission
+- Family can accompany (some hospitals provide companion beds)
+- Partner hotels available before/after surgery
+- Rehabilitation apartments for long-term recovery
 
 ---
 
-*本FAQ持续更新，如有其他问题请联系我们*
+### Q15: 家属可以陪同吗？
+
+**中文回答：**
+- 手术期间建议1-2名家属陪同
+- 国际部病房允许24小时陪护
+- 我们可以协助安排家属住宿
+- 提供翻译协助沟通
+
+**English Answer:**
+- Recommend 1-2 family members accompany during surgery
+- International wards allow 24-hour accompaniment
+- We can help arrange family accommodation
+- Translation assistance provided
+
+---
+
+## 🔒 安全与保障
+
+### Q16: 手术安全吗？
+
+**中文回答：**
+- 三甲医院手术成功率>98%
+- 感染率低于国际标准
+- 医生经验丰富，年手术量高
+- 配备国际标准的急救设备
+
+**English Answer:**
+- Top-tier hospitals have >98% surgical success rates
+- Infection rates below international standards
+- Experienced doctors with high annual surgery volumes
+- International-standard emergency equipment
+
+---
+
+### Q17: 如果出现问题怎么办？
+
+**中文回答：**
+- 医院有完善的应急预案
+- 24小时急诊服务
+- 我们提供全程协调支持
+- 建议购买医疗旅行保险
+
+**English Answer:**
+- Hospitals have comprehensive emergency protocols
+- 24-hour emergency services
+- We provide full coordination support
+- Recommend purchasing medical travel insurance
+
+---
+
+### Q18: 术后如何随访？
+
+**中文回答：**
+- 出院时提供详细的康复指导
+- 定期远程视频复诊
+- 当地医院检查报告解读
+- 必要时安排二次来华复查
+
+**English Answer:**
+- Detailed recovery instructions upon discharge
+- Regular remote video follow-ups
+- Interpretation of local examination reports
+- Arrange return visits to China if necessary
+
+---
+
+## 🌐 其他问题
+
+### Q19: 中国医疗质量可靠吗？
+
+**中文回答：**
+- 中国三甲医院达到国际标准
+- 多家医院通过JCI认证
+- 复旦榜排名参考国际声誉
+- 年服务数十万国际患者
+
+**English Answer:**
+- China's top-tier hospitals meet international standards
+- Many hospitals have JCI accreditation
+- Fudan rankings reference international reputation
+- Serve hundreds of thousands of international patients annually
+
+---
+
+### Q20: 为什么价格这么低？
+
+**中文回答：**
+- 中国医疗成本结构不同
+- 医生薪酬体系差异
+- 药品和器械国产化率高
+- 政府补贴公立医院
+- 并非质量差异，而是体系优势
+
+**English Answer:**
+- Different healthcare cost structure in China
+- Different physician compensation systems
+- High localization rate of drugs and devices
+- Government subsidies for public hospitals
+- Not quality difference, but systemic advantages
+
+---
+
+*最后更新：2026-03-05*
+*建议定期根据患者反馈更新FAQ*

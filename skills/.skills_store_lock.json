@@ -54,6 +54,30 @@
       "zip_url": "https://skillhub-1251783334.cos.ap-guangzhou.myqcloud.com/skills/stock-analysis.zip",
       "source": "skillhub",
       "version": "6.2.0"
+    },
+    "blogwatcher": {
+      "name": "Blogwatcher",
+      "zip_url": "https://skillhub-1251783334.cos.ap-guangzhou.myqcloud.com/skills/blogwatcher.zip",
+      "source": "skillhub",
+      "version": "1.0.0"
+    },
+    "humanizer": {
+      "name": "Humanizer",
+      "zip_url": "https://skillhub-1251783334.cos.ap-guangzhou.myqcloud.com/skills/humanizer.zip",
+      "source": "skillhub",
+      "version": "1.0.0"
+    },
+    "automation-workflows": {
+      "name": "Automation Workflows",
+      "zip_url": "https://skillhub-1251783334.cos.ap-guangzhou.myqcloud.com/skills/automation-workflows.zip",
+      "source": "skillhub",
+      "version": "0.1.0"
+    },
+    "xhs": {
+      "name": "小红书 - RedNote",
+      "zip_url": "https://skillhub-1251783334.cos.ap-guangzhou.myqcloud.com/skills/xhs.zip",
+      "source": "skillhub",
+      "version": "1.2.5"
     }
   }
 }
