@@ -707,6 +707,71 @@
             showingMore = !showingMore;
         }
     </script>
+    
+    <!-- Floating Customer Service Buttons -->
+    <style>
+        .floating-buttons {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .floating-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .floating-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+        }
+        .telegram-btn {
+            background: #0088cc;
+            color: white;
+        }
+        .chat-tooltip {
+            position: absolute;
+            right: 70px;
+            background: #333;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+        .floating-btn:hover .chat-tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+    
+    <div class="floating-buttons">
+        <a href="https://wa.me/YOUR_WHATSAPP_NUMBER" class="floating-btn whatsapp-btn" target="_blank">
+            💬
+            <span class="chat-tooltip">Chat on WhatsApp</span>
+        </a>
+        <a href="https://t.me/YOUR_TELEGRAM_USERNAME" class="floating-btn telegram-btn" target="_blank">
+            ✈️
+            <span class="chat-tooltip">Chat on Telegram</span>
+        </a>
+    </div>
 </body>
 </html>
 
