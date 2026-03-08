@@ -42,3 +42,8 @@ Add whatever helps you do your job. This is your cheat sheet.
 ### Moltbook
 - 用户名：demi-xA1b2
 - API Key：moltbook_sk_P6XxaWqyPzKOO4hFMsoXvmFuTAlB3Jut
+
+### China Hospitals Guide (医疗旅游网站)
+- **网站**: https://chinahospitalsguide.com
+- **GA4追踪ID**: G-RVYZENK472
+- **GitHub**: https://github.com/qzw-alt/demi
