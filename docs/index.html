@@ -724,12 +724,40 @@
             });
         });
         
-        // Form submission - redirect to Google Forms
+        // Form submission - embed Google Forms in modal
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Redirect to Google Forms
-            window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLSdQr-gdtd_A_M4XrBxKj7ak4OdrdzOQ5Zx1B1Q_6Yn4CNKmUA/viewform';
+            // Get form values
+            const formData = new FormData(this);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            
+            // Show modal with embedded Google Form
+            const modal = document.getElementById('thankYouModal');
+            const modalDiv = modal.querySelector('.modal');
+            
+            // Replace modal content with embedded Google Form
+            modalDiv.innerHTML = `
+                <div style="text-align: center; max-height: 80vh; overflow-y: auto;">
+                    <div style="font-size: 3rem; margin-bottom: 15px;">📝</div>
+                    <h2 style="color: #1e3c72; margin-bottom: 20px;">One More Step...</h2>
+                    <p style="color: #666; margin-bottom: 25px;">Please complete the form below to submit your inquiry.</p>
+                    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdQr-gdtd_A_M4XrBxKj7ak4OdrdzOQ5Zx1B1Q_6Yn4CNKmUA/viewform?embedded=true&entry.1045926790=${encodeURIComponent(name)}&entry.835137160=${encodeURIComponent(email)}" 
+                            width="100%" 
+                            height="550" 
+                            frameborder="0" 
+                            marginheight="0" 
+                            marginwidth="0"
+                            style="border-radius: 10px; max-width: 100%;">
+                        Loading...
+                    </iframe>
+                    <button onclick="closeModal()" style="margin-top: 20px; padding: 10px 30px; background: #666; color: white; border: none; border-radius: 25px; cursor: pointer;">Close</button>
+                </div>
+            `;
+            
+            modal.classList.add('active');
+            this.reset();
         });
         
         function closeModal() {
