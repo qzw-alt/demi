@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "skills": {
+    "agent-browser": {
+      "version": "0.2.0",
+      "installedAt": 1772620960087
+    },
+    "memory-tiering": {
+      "version": "1.0.0",
+      "installedAt": 1771833433240
+    },
+    "learning": {
+      "version": "1.0.0",
+      "installedAt": 1771833480772
+    },
+    "web-search": {
+      "version": "1.0.0",
+      "installedAt": 1771833486730
+    },
+    "social-media-management": {
+      "version": "1.0.0",
+      "installedAt": 1771833669040
+    },
+    "tavily-search": {
+      "version": "1.0.0",
+      "installedAt": 1772620954504
+    },
+    "summarize": {
+      "version": "1.0.0",
+      "installedAt": 1772620957714
+    },
+    "find-skills": {
+      "version": "0.1.0",
+      "installedAt": 1772723336676
+    },
+    "github": {
+      "version": "1.0.0",
+      "installedAt": 1772620965006
+    },
+    "obsidian": {
+      "version": "1.0.0",
+      "installedAt": 1772620966331
+    },
+    "notion": {
+      "version": "1.0.0",
+      "installedAt": 1772620967636
+    },
+    "weather": {
+      "version": "1.0.0",
+      "installedAt": 1772620970570
+    },
+    "tencentcloud-lighthouse-skill": {
+      "version": "1.0.0",
+      "installedAt": 1772620972645
+    },
+    "tencent-docs": {
+      "version": "1.0.2",
+      "installedAt": 1772620974464
+    },
+    "wordpress-publishing-skill-for-claude": {
+      "version": "0.1.0",
+      "installedAt": 1772637667183
+    },
+    "wordpress-pro": {
+      "version": "0.1.0",
+      "installedAt": 1772637675210
+    },
+    "self-improving-agent": {
+      "version": "1.0.11",
+      "installedAt": 1772723334319
+    },
+    "proactive-agent": {
+      "version": "3.1.0",
+      "installedAt": 1772723359318
+    },
+    "skill-creator": {
+      "version": "0.1.0",
+      "installedAt": 1772723363546
+    },
+    "stock-analysis": {
+      "version": "6.2.0",
+      "installedAt": 1772723365630
+    },
+    "blogwatcher": {
+      "version": "1.0.0",
+      "installedAt": 1772772366842
+    },
+    "humanizer": {
+      "version": "1.0.0",
+      "installedAt": 1772772372239
+    },
+    "automation-workflows": {
+      "version": "0.1.0",
+      "installedAt": 1772772377432
+    },
+    "xhs": {
+      "version": "1.2.5",
+      "installedAt": 1772772382368
+    }
+  }
+}

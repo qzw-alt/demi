@@ -1,0 +1,20 @@
+{
+  "name": "memory-simple",
+  "version": "1.0.0",
+  "description": "Simple JSON-based memory system for OpenClaw - lightweight alternative to LanceDB",
+  "main": "scripts/capture.js",
+  "scripts": {
+    "capture": "node scripts/capture.js",
+    "recall": "node scripts/recall.js",
+    "test": "node scripts/test.js"
+  },
+  "keywords": [
+    "openclaw",
+    "memory",
+    "json",
+    "embedding"
+  ],
+  "author": "Demi",
+  "license": "MIT",
+  "dependencies": {}
+}

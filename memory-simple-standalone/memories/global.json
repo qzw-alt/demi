@@ -1,0 +1,13 @@
+{
+  "memories": [],
+  "metadata": {
+    "version": "1.0.0",
+    "createdAt": "2026-03-04T19:56:00Z",
+    "description": "Global memory storage for memory-simple"
+  },
+  "stats": {
+    "totalMemories": 0,
+    "lastCapture": null,
+    "lastRecall": null
+  }
+}

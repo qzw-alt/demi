@@ -1,0 +1,48 @@
+{
+  "embedding": {
+    "provider": "zhipu",
+    "apiKey": "84b1936d14a84cfa83631aea1c78a56d.vQTK9kogx83kv2aQ",
+    "model": "embedding-3",
+    "dimensions": 2048
+  },
+  "storage": {
+    "globalMemoryPath": "memories/global.json",
+    "sessionMemoryPath": "memories/sessions",
+    "maxMemories": 1000,
+    "autoCleanup": true,
+    "cleanupThreshold": 900
+  },
+  "capture": {
+    "enabled": true,
+    "keywords": [
+      "喜欢", "讨厌", "记得", "记住", "重要", "决定", "选择",
+      "love", "hate", "remember", "important", "decide", "choose",
+      "prefer", "always", "never", "usually", "normally"
+    ],
+    "minContentLength": 10,
+    "maxContentLength": 500,
+    "saveInterval": 300
+  },
+  "recall": {
+    "enabled": true,
+    "topK": 5,
+    "minSimilarity": 0.7,
+    "recencyWeight": 0.3,
+    "similarityWeight": 0.7
+  },
+  "noiseFilter": {
+    "enabled": true,
+    "greetings": [
+      "hi", "hello", "hey", "你好", "您好", "在吗", "在",
+      "good morning", "good afternoon", "good evening"
+    ],
+    "metaQuestions": [
+      "remember", "记得", "do you know", "你知道吗",
+      "can you recall", "你能想起"
+    ],
+    "refusalPatterns": [
+      "i don't have", "i don't know", "我没有", "我不知道",
+      "unable to", "不能", "无法"
+    ]
+  }
+}
