@@ -78,6 +78,30 @@
       "zip_url": "https://skillhub-1251783334.cos.ap-guangzhou.myqcloud.com/skills/xhs.zip",
       "source": "skillhub",
       "version": "1.2.5"
+    },
+    "image-generation": {
+      "name": "AI Image Generation",
+      "zip_url": "http://lightmake.site/api/v1/download?slug=image-generation",
+      "source": "skillhub",
+      "version": "1.0.3"
+    },
+    "video": {
+      "name": "Video",
+      "zip_url": "http://lightmake.site/api/v1/download?slug=video",
+      "source": "skillhub",
+      "version": "1.0.1"
+    },
+    "heygen-avatar-lite": {
+      "name": "HeyGen AI Avatar Video (Lite)",
+      "zip_url": "http://lightmake.site/api/v1/download?slug=heygen-avatar-lite",
+      "source": "skillhub",
+      "version": "1.1.1"
+    },
+    "youtube-search": {
+      "name": "Youtube Search",
+      "zip_url": "http://lightmake.site/api/v1/download?slug=youtube-search",
+      "source": "skillhub",
+      "version": "1.4.1"
     }
   }
 }
