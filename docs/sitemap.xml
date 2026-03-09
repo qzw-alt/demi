@@ -170,7 +170,25 @@
     </url>
     <url>
         <loc>https://chinahospitalsguide.com/blog/liver-treatment-china.html</loc>
-        <lastmod>2026-03-08</lastmod>
+        <lastmod>2026-03-09</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://chinahospitalsguide.com/blog/cataract-surgery-china.html</loc>
+        <lastmod>2026-03-09</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://chinahospitalsguide.com/blog/epilepsy-treatment-china.html</loc>
+        <lastmod>2026-03-09</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://chinahospitalsguide.com/blog/kidney-dialysis-china.html</loc>
+        <lastmod>2026-03-09</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
