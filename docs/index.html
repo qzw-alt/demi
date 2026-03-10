@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Tourism China | World-Class Healthcare at 50-80% Off</title>
+    <meta name="description" content="Save 50-80% on world-class healthcare in China. 40+ top hospitals with English service, no waiting lists. Free hospital guide.">
+    <meta name="keywords" content="medical tourism, china healthcare, hospital guide, affordable surgery, cardiology, orthopedics, cancer treatment">
+    <meta name="author" content="Medical Tourism China">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://chinahospitalsguide.com/">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Medical Tourism China | World-Class Healthcare at 50-80% Off">
+    <meta property="og:description" content="Save 50-80% on world-class healthcare in China. 40+ top hospitals with English service, no waiting lists. Free hospital guide.">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Medical Tourism China | World-Class Healthcare at 50-80% Off">
+    <meta name="twitter:description" content="Save 50-80% on world-class healthcare in China. 40+ top hospitals with English service, no waiting lists.">
+    <meta name="twitter:image" content="https://chinahospitalsguide.com/og-image.jpg">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://chinahospitalsguide.com">
+    <meta property="og:image" content="https://chinahospitalsguide.com/og-image.jpg">
+    
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RVYZENK472"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-RVYZENK472');
+    </script>
+    
+    <!-- Schema Markup -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "MedicalBusiness",
+        "name": "China Hospitals Guide - Medical Tourism",
+        "description": "Save 50-80% on world-class healthcare in China. We guide international patients through every step of their medical journey.",
+        "url": "https://chinahospitalsguide.com",
+        "logo": "https://chinahospitalsguide.com/logo.png",
+        "image": "https://chinahospitalsguide.com/og-image.jpg",
+        "telephone": "+86-xxx-xxxx-xxxx",
+        "email": "contact@chinahospitalsguide.com",
+        "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "CN"
+        },
+        "serviceType": "Medical Tourism Services",
+        "areaServed": {
+            "@type": "Country",
+            "name": ["United States", "United Kingdom", "Canada", "Australia", "Europe"]
+        },
+        "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Medical Tourism Services",
+            "itemListElement": [
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "Service",
+                        "name": "Starter Guide",
+                        "description": "Complete hospital database and treatment guides"
+                    },
+                    "price": "30",
+                    "priceCurrency": "USD"
+                },
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "Service",
+                        "name": "Standard Package",
+                        "description": "Hospital booking and medical record translation"
+                    },
+                    "price": "299",
+                    "priceCurrency": "USD"
+                },
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "Service",
+                        "name": "Additional Services",
+                        "description": "Pay after arrival in China"
+                    },
+                    "price": "0",
+                    "priceCurrency": "USD",
+                    "availability": "https://schema.org/InStock"
+                }
+            ]
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "reviewCount": "500"
+        }
+    }
+    </script>
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #1e3c72;
+            --secondary: #2a5298;
+            --accent: #ff6b6b;
+            --success: #4CAF50;
+            --light: #f8f9fa;
+            --dark: #333;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+        }
+        
+        /* Loading Animation */
+        .loader-wrapper {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: var(--primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s;
+        }
+        
+        .loader {
+            width: 50px; height: 50px;
+            border: 5px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        .loader-wrapper.hidden { opacity: 0; pointer-events: none; }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero h1 { font-size: 3rem; margin-bottom: 20px; animation: slideUp 0.8s ease; }
+        .hero .subtitle { font-size: 1.3rem; max-width: 700px; margin: 0 auto 30px; animation: slideUp 0.8s ease 0.1s both; }
+        .hero .price-tag { background: rgba(255,255,255,0.2); display: inline-block; padding: 12px 30px; border-radius: 30px; font-size: 1.2rem; margin-bottom: 30px; animation: slideUp 0.8s ease 0.2s both; }
+        
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .cta-button {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 18px 50px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(255,107,107,0.4);
+            animation: slideUp 0.8s ease 0.3s both;
+        }
+        
+        .cta-button:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(255,107,107,0.5); }
+        
+        /* Trust Badges */
+        .trust-badges { background: rgba(255,255,255,0.1); padding: 20px; margin-top: 40px; border-radius: 15px; display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; animation: slideUp 0.8s ease 0.4s both; }
+        .badge { display: flex; align-items: center; gap: 10px; font-size: 0.95rem; }
+        .badge-icon { font-size: 1.5rem; }
+        
+        /* Stats */
+        .stats { background: var(--light); padding: 60px 20px; }
+        .stats-grid { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; text-align: center; }
+        .stat-number { font-size: 3rem; font-weight: bold; color: var(--primary); display: block; }
+        .stat-label { color: #666; font-size: 1rem; }
+        
+        /* Features */
+        .features { padding: 80px 20px; max-width: 1200px; margin: 0 auto; }
+        .section-title { text-align: center; font-size: 2.2rem; margin-bottom: 50px; color: var(--primary); }
+        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .feature-card { padding: 35px; border-radius: 15px; background: var(--light); text-align: center; transition: all 0.3s; border: 2px solid transparent; }
+        .feature-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 15px 40px rgba(30,60,114,0.15); }
+        .feature-card h3 { color: var(--primary); margin-bottom: 15px; font-size: 1.2rem; }
+        .feature-icon { font-size: 3rem; margin-bottom: 15px; }
+        
+        /* Testimonials */
+        .testimonials { background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white; padding: 80px 20px; }
+        .testimonials h2 { text-align: center; font-size: 2.2rem; margin-bottom: 50px; }
+        .testimonial-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        .testimonial-card { background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); padding: 30px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.2); }
+        .testimonial-text { font-style: italic; font-size: 1.05rem; margin-bottom: 20px; line-height: 1.8; }
+        .testimonial-author { display: flex; align-items: center; gap: 15px; }
+        .author-avatar { width: 50px; height: 50px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; }
+        .author-info strong { display: block; font-size: 1.1rem; }
+        .author-info span { opacity: 0.8; font-size: 0.9rem; }
+        
+        /* Hospital List */
+        .hospitals { background: #f0f4f8; padding: 80px 20px; }
+        .hospital-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; max-width: 1200px; margin: 0 auto; }
+        @media (max-width: 900px) {
+            .hospital-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 600px) {
+            .hospital-grid { grid-template-columns: 1fr; }
+        }
+        .hospital-card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); transition: all 0.3s; }
+        .hospital-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.12); }
+        .hospital-card.extra { display: none; }
+        .hospital-card h3 { color: var(--primary); font-size: 1.1rem; margin-bottom: 10px; }
+        .hospital-card .specialty { color: var(--accent); font-size: 0.9rem; font-weight: 600; margin-bottom: 10px; }
+        .hospital-card .city { color: #888; font-size: 0.9rem; }
+        .hospital-card .certification { margin-top: 12px; padding-top: 12px; border-top: 1px solid #eee; font-size: 0.85rem; color: #666; }
+        
+        /* Process */
+        .process { padding: 80px 20px; max-width: 1100px; margin: 0 auto; }
+        .process-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; max-width: 1100px; margin: 0 auto; }
+        
+        @media (max-width: 900px) {
+            .process-steps { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 500px) {
+            .process-steps { grid-template-columns: 1fr; }
+        }
+        .process-step { text-align: center; padding: 30px; }
+        .step-number { width: 60px; height: 60px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; margin: 0 auto 20px; }
+        .process-step h3 { color: var(--primary); margin-bottom: 10px; }
+        
+        /* Pricing */
+        .pricing { background: var(--light); padding: 80px 20px; }
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; max-width: 1000px; margin: 0 auto; }
+        .pricing-card { background: white; padding: 35px; border-radius: 20px; text-align: center; border: 2px solid #e0e0e0; transition: all 0.3s; }
+        .pricing-card:hover { transform: translateY(-5px); }
+        .pricing-card.featured { border: 3px solid var(--accent); transform: scale(1.03); box-shadow: 0 15px 40px rgba(255,107,107,0.2); position: relative; }
+        .pricing-card.featured::before { content: 'MOST POPULAR'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--accent); color: white; padding: 5px 20px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; }
+        .pricing-card h3 { color: var(--primary); margin-bottom: 10px; font-size: 1.3rem; }
+        .price { font-size: 2.5rem; color: var(--primary); font-weight: bold; margin: 20px 0; }
+        .price span { font-size: 1rem; color: #666; font-weight: normal; }
+        .pricing-card ul { list-style: none; text-align: left; margin-bottom: 25px; }
+        .pricing-card li { padding: 10px 0; border-bottom: 1px solid #f0f0f0; font-size: 0.95rem; }
+        .pricing-card li::before { content: "✓ "; color: var(--success); font-weight: bold; margin-right: 8px; }
+        
+        /* FAQ */
+        .faq { padding: 80px 20px; max-width: 800px; margin: 0 auto; }
+        .faq-item { background: var(--light); border-radius: 12px; margin-bottom: 15px; overflow: hidden; }
+        .faq-question { padding: 20px 25px; background: none; border: none; width: 100%; text-align: left; font-size: 1.1rem; font-weight: 600; color: var(--primary); cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .faq-answer { padding: 0 25px 20px; color: #666; line-height: 1.8; display: none; }
+        .faq-item.active .faq-answer { display: block; }
+        .faq-toggle { transition: transform 0.3s; }
+        .faq-item.active .faq-toggle { transform: rotate(180deg); }
+        
+        /* Form */
+        .form-section { background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); padding: 80px 20px; }
+        .form-section h2 { text-align: center; color: white; font-size: 2rem; margin-bottom: 15px; }
+        .form-subtitle { text-align: center; color: rgba(255,255,255,0.9); margin-bottom: 40px; font-size: 1.1rem; }
+        .form-container { max-width: 600px; margin: 0 auto; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--dark); }
+        input, select, textarea { width: 100%; padding: 14px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem; transition: border-color 0.3s; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary); }
+        button[type="submit"] { width: 100%; background: var(--accent); color: white; padding: 16px; border: none; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: all 0.3s; }
+        button[type="submit"]:hover { background: #ff5252; transform: translateY(-2px); }
+        
+        /* Thank You Modal */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; justify-content: center; align-items: center; z-index: 10000; }
+        .modal-overlay.active { display: flex; }
+        .modal { background: white; padding: 50px; border-radius: 20px; text-align: center; max-width: 500px; animation: modalIn 0.5s ease; }
+        @keyframes modalIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+        .modal-icon { font-size: 5rem; margin-bottom: 20px; }
+        .modal h2 { color: var(--primary); margin-bottom: 15px; }
+        .modal p { color: #666; margin-bottom: 25px; line-height: 1.8; }
+        .modal-close { background: var(--primary); color: white; padding: 12px 30px; border: none; border-radius: 25px; font-size: 1rem; cursor: pointer; }
+        
+        /* Floating Contact */
+
+        
+        /* Footer */
+        footer { background: var(--dark); color: white; padding: 60px 20px 30px; }
+        .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 40px; }
+        footer h3 { margin-bottom: 20px; color: white; }
+        footer p { opacity: 0.9; margin-bottom: 10px; font-size: 0.95rem; }
+        .footer-bottom { text-align: center; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); opacity: 0.7; font-size: 0.9rem; }
+        .privacy-link { color: white; text-decoration: underline; margin-left: 15px; }
+        .refund-policy { background: #e8f5e9; padding: 15px; border-radius: 10px; margin-top: 15px; font-size: 0.9rem; }
+        .refund-policy strong { color: var(--success); }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .hero .subtitle { font-size: 1.1rem; }
+            .trust-badges { flex-direction: column; gap: 20px; }
+            .pricing-card.featured { transform: none; }
+        }
+        
+        /* ========== 移动端优化 2026-03-05 ========== */
+        @media (max-width: 768px) {
+            /* 按钮优化 */
+            .cta-button {
+                padding: 20px 40px;
+                width: 90%;
+                max-width: 350px;
+                display: block;
+                margin: 0 auto;
+                font-size: 1.1rem;
+            }
+            
+            /* 字体优化 */
+            .hero h1 { font-size: 2rem; line-height: 1.3; }
+            .hero .subtitle { font-size: 1rem; }
+            .section-title { font-size: 1.8rem; margin-bottom: 30px; }
+            
+            /* 布局优化 */
+            .hospital-grid,
+            .pricing-grid,
+            .feature-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            /* 卡片优化 */
+            .hospital-card,
+            .pricing-card,
+            .feature-card {
+                padding: 20px;
+                margin: 0 5px;
+            }
+            
+            .pricing-card.featured {
+                order: -1;
+                transform: scale(1.02);
+            }
+            
+            /* 表单优化 */
+            input, select, textarea {
+                padding: 16px;
+                font-size: 16px;
+            }
+            .form-group {
+                margin-bottom: 20px;
+            }
+            
+            /* 触摸反馈 */
+            .cta-button:active,
+            .hospital-card:active {
+                transform: scale(0.98);
+            }
+            
+            /* 统计数字 */
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+            .stat-number { font-size: 2.5rem; }
+        }
+        
+        /* 超小屏幕优化 */
+        @media (max-width: 480px) {
+            .hero { padding: 60px 15px; }
+            .hero h1 { font-size: 1.7rem; }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .trust-badges {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .cta-button {
+                padding: 18px 30px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Animation -->
+    <div class="loader-wrapper" id="loader">
+        <div class="loader"></div>
+    </div>
+    
+    <!-- Hero -->
+    <section class="hero">
+        <h1>🏥 Medical Tourism China</h1>
+        <p class="subtitle">Access world-class healthcare in China at 50-80% lower costs. We guide you through every step of your medical journey.</p>
+        <div class="price-tag"><span style="text-decoration: line-through; opacity: 0.6; font-size: 0.7em;">From $59</span> <strong>$30</strong> USD <span style="background: #ff9800; color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.6em; margin-left: 5px;">SAVE 50%</span></div>
+        <br>
+        <a href="#contact" class="cta-button">Get My Free Hospital Guide</a>
+        
+        <div class="trust-badges">
+            <div class="badge"><span class="badge-icon">🛡️</span><span>100% Satisfaction Guarantee</span></div>
+            <div class="badge"><span class="badge-icon">⚡</span><span>Appointment in 3-7 Days</span></div>
+            <div class="badge"><span class="badge-icon">🌐</span><span>English Speaking Staff</span></div>
+            <div class="badge"><span class="badge-icon">💬</span><span>24/7 Support</span></div>
+        </div>
+        <div style="margin-top: 25px; background: rgba(255,107,107,0.9); display: inline-block; padding: 8px 20px; border-radius: 20px; font-size: 0.95rem;">
+            ⏰ Limited slots for April-May 2026 appointments!
+        </div>
+    </section>
+    
+    <!-- Stats -->
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-item"><span class="stat-number">500+</span><span class="stat-label">Patients Helped</span></div>
+            <div class="stat-item"><span class="stat-number">98%</span><span class="stat-label">Satisfaction Rate</span></div>
+            <div class="stat-item"><span class="stat-number">34</span><span class="stat-label">Partner Hospitals</span></div>
+            <div class="stat-item"><span class="stat-number">50-80%</span><span class="stat-label">Cost Savings</span></div>
+        </div>
+    </section>
+    
+    <!-- Why Choose Us -->
+    <section class="features">
+        <h2 class="section-title">Why Choose Medical Tourism in China?</h2>
+        <div class="feature-grid">
+            <div class="feature-card"><div class="feature-icon">🏆</div><h3>World-Class Quality</h3><p>Top hospitals ranked among the best in Asia with internationally certified specialists and JCI accreditation</p></div>
+            <div class="feature-card"><div class="feature-icon">💰</div><h3>50-80% Savings</h3><p>High-quality medical treatment at a fraction of US/European costs without compromising quality</p></div>
+            <div class="feature-card"><div class="feature-icon">⚡</div><h3>No Waiting Lists</h3><p>Get appointments within 3-7 days, not months. We prioritize your health timeline.</p></div>
+            <div class="feature-card"><div class="feature-icon">🌐</div><h3>English Service</h3><p>Dedicated international departments with English-speaking doctors and coordinators</p></div>
+            <div class="feature-card"><div class="feature-icon">🛡️</div><h3>Insurance Accepted</h3><p>Direct billing with most international insurance companies. We handle the paperwork.</p></div>
+            <div class="feature-card"><div class="feature-icon">✈️</div><h3>Easy Access</h3><p>Major cities with international airports and convenient transport from airport to hospital</p></div>
+        </div>
+    </section>
+    
+    <!-- Trust Badges -->
+    <section style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); padding: 40px 20px; text-align: center; color: white;">
+        <div style="max-width: 1000px; margin: 0 auto;">
+            <h2 style="color: white; border: none; margin-bottom: 30px;">⭐⭐⭐⭐⭐ What Our Patients Say</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+                <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 15px;">
+                    <div style="font-size: 1.2em; margin-bottom: 15px;">⭐⭐⭐⭐⭐</div>
+                    <p style="font-style: italic; margin-bottom: 15px;">"Saved $45,000 on my hip replacement. The hospital was world-class and the coordination was flawless. Highly recommend!"</p>
+                    <strong>— Sarah M., USA</strong><br>
+                    <small>Hip Replacement, Beijing</small>
+                </div>
+                <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 15px;">
+                    <div style="font-size: 1.2em; margin-bottom: 15px;">⭐⭐⭐⭐⭐</div>
+                    <p style="font-style: italic; margin-bottom: 15px;">"My wife and I spent $8,000 for IVF that would have cost $45,000 in the US. Beautiful baby girl on the way!"</p>
+                    <strong>— Michael T., Canada</strong><br>
+                    <small>IVF Treatment, Shanghai</small>
+                </div>
+                <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 15px;">
+                    <div style="font-size: 1.2em; margin-bottom: 15px;">⭐⭐⭐⭐⭐</div>
+                    <p style="font-style: italic; margin-bottom: 15px;">"Professional, caring, and affordable. They arranged my father's cancer treatment in just 5 days. Forever grateful."</p>
+                    <strong>— Jennifer L., UK</strong><br>
+                    <small>Cancer Treatment, Guangzhou</small>
+                </div>
+            </div>
+            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2);">
+                <div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;">
+                    <div>
+                        <div style="font-size: 2.5em; font-weight: bold;">500+</div>
+                        <div>Patients Helped</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 2.5em; font-weight: bold;">98%</div>
+                        <div>Satisfaction Rate</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 2.5em; font-weight: bold;">4.9/5</div>
+                        <div>Average Rating</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <h2>What Our Patients Say</h2>
+        <div class="testimonial-grid">
+            <a href="stories/james-wilson.html" style="text-decoration: none; color: inherit;">
+                <div class="testimonial-card" style="cursor: pointer; transition: transform 0.3s;">
+                    <p class="testimonial-text">"I saved over $40,000 on my heart surgery in Beijing. The team arranged everything - from airport pickup to hospital admission. Truly life-changing service."</p>
+                    <div class="testimonial-author"><div class="author-avatar">J</div><div class="author-info"><strong>James Wilson</strong><span>USA → Beijing, Cardiology</span></div></div>
+                    <div style="text-align: center; margin-top: 15px; color: #2a5298; font-weight: bold;">Read full story →</div>
+                </div>
+            </a>
+            <a href="stories/maria-garcia.html" style="text-decoration: none; color: inherit;">
+                <div class="testimonial-card" style="cursor: pointer; transition: transform 0.3s;">
+                    <p class="testimonial-text">"The English coordination made everything so easy. Dr. Zhang explained everything in detail. The quality of care was outstanding."</p>
+                    <div class="testimonial-author"><div class="author-avatar">M</div><div class="author-info"><strong>Maria Garcia</strong><span>Spain → Shanghai, Orthopedics</span></div></div>
+                    <div style="text-align: center; margin-top: 15px; color: #2a5298; font-weight: bold;">Read full story →</div>
+                </div>
+            </a>
+            <a href="stories/robert-chen.html" style="text-decoration: none; color: inherit;">
+                <div class="testimonial-card" style="cursor: pointer; transition: transform 0.3s;">
+                    <p class="testimonial-text">"From visa invitation to hospital discharge, everything was handled perfectly. Highly recommend to anyone considering medical tourism in China."</p>
+                    <div class="testimonial-author"><div class="author-avatar">R</div><div class="author-info"><strong>Robert Chen</strong><span>Australia → Guangzhou, Cancer Treatment</span></div></div>
+                    <div style="text-align: center; margin-top: 15px; color: #2a5298; font-weight: bold;">Read full story →</div>
+                </div>
+            </a>
+        </div>
+    </section>
+    
+    <!-- Top Hospitals -->
+    <section class="hospitals">
+        <h2 class="section-title">Top Hospitals We Work With</h2>
+        <div class="hospital-grid">
+            <!-- 精选6家顶级医院 -->
+            <div class="hospital-card"><h3>Beijing Fuwai Hospital</h3><div class="specialty">#1 Cardiology in China</div><div class="city">🏙️ Beijing</div><div class="certification">🏆 JCI Accredited • ISO 9001</div></div>
+            <div class="hospital-card"><h3>Beijing Jishuitan Hospital</h3><div class="specialty">#1 Orthopedics in China</div><div class="city">🏙️ Beijing</div><div class="certification">🏆 National Orthopedic Center</div></div>
+            <div class="hospital-card"><h3>Shanghai Huashan Hospital</h3><div class="specialty">#1 Neurology in China</div><div class="city">🏙️ Shanghai</div><div class="certification">🏆 Top Hospital in China</div></div>
+            <div class="hospital-card"><h3>Guangzhou Sun Yat-sen VI</h3><div class="specialty">#1 GI Surgery in the World</div><div class="city">🏙️ Guangzhou</div><div class="certification">🏆 World's Top 10 Hospital</div></div>
+            <div class="hospital-card"><h3>West China Hospital</h3><div class="specialty">#2 Best Hospital in China</div><div class="city">🏙️ Chengdu</div><div class="certification">🏆 Top Neurology Center</div></div>
+            <div class="hospital-card"><h3>Beijing Xiehe Hospital</h3><div class="specialty">#1 Rheumatology in China</div><div class="city">🏙️ Beijing</div><div class="certification">🏆 Top 3 Hospital</div></div>
+        </div>
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="hospitals.html" style="background: var(--primary); color: white; padding: 15px 40px; border: none; border-radius: 30px; font-size: 1rem; cursor: pointer; text-decoration: none; display: inline-block;">Explore All 34 Hospitals →</a>
+        </div>
+    </section>
+    
+    <!-- Process -->
+    <section class="process">
+        <h2 class="section-title">How It Works</h2>
+        <div class="process-steps">
+            <div class="process-step"><div class="step-number">1</div><h3>Submit Your Request</h3><p>Tell us about your medical condition and preferences</p></div>
+            <div class="process-step"><div class="step-number">2</div><h3>Get Expert Advice</h3><p>We recommend the best hospital and doctor for your case</p></div>
+            <div class="process-step"><div class="step-number">3</div><h3>Book Appointment</h3><p>We arrange your appointment within 3-7 days</p></div>
+            <div class="process-step"><div class="step-number">4</div><h3>Travel & Treatment</h3><p>We assist with visa, airport pickup, and full accompaniment</p></div>
+        </div>
+    </section>
+    
+    <!-- Pricing -->
+    <section class="pricing">
+        <h2 class="section-title">Our Service Packages</h2>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>📋 Starter Guide</h3>
+                <div class="price"><span style="text-decoration: line-through; opacity: 0.6; font-size: 0.6em;">$59</span> $30<span>/one-time</span></div>
+                <ul>
+                    <li>✅ Hospital database (34 hospitals)</li>
+                    <li>✅ Cost comparison guides</li>
+                    <li>✅ Visa application guide</li>
+                    <li>✅ Airport transport info</li>
+                    <li>✅ Treatment process manual</li>
+                    <li>✅ Basic Q&A support (email)</li>
+                </ul>
+            </div>
+            <div class="pricing-card featured">
+                <h3>⭐ Standard</h3>
+                <div class="price"><span style="text-decoration: line-through; opacity: 0.6; font-size: 0.6em;">$399</span> $299<span>/one-time</span> <span style="background: #ff9800; color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.5em;">SAVE $100</span></div>
+                <ul>
+                    <li>✅ Everything in Starter</li>
+                    <li>✅ Hospital appointment booking</li>
+                    <li>✅ Medical record translation (10 pages)</li>
+                    <li>✅ Pre-visit doctor communication</li>
+                    <li>✅ Visa invitation letter (if S2 visa needed)</li>
+                    <li>✅ Travel planning assistance</li>
+                    <li>✅ Priority support (24h response)</li>
+                </ul>
+                <div style="background: #e8f5e9; padding: 12px; border-radius: 8px; margin-top: 15px; font-size: 0.9em; border-left: 4px solid #4CAF50;">
+                    <strong>💡 Not sure about your condition?</strong><br>
+                    We'll consult with hospitals to determine your treatment plan and visa requirements.
+                </div>
+            </div>
+            <div class="pricing-card">
+                <h3>🛬 Additional Services</h3>
+                <div class="price">Pay in China<span style="font-size: 1rem;"></span></div>
+                <p style="color: #666; font-size: 0.9em; margin: 10px 0;">Book after arriving in China</p>
+                <ul>
+                    <li>✅ Airport drop-off (送机): $50</li>
+                    <li>✅ Hospital accompaniment (陪诊): $30/hour</li>
+                    <li>✅ Medical interpretation (医疗翻译): $25/hour</li>
+                    <li>✅ Discharge assistance (出院协助): $100</li>
+                    <li>✅ Hotel booking (酒店预订): $50</li>
+                    <li>✅ Post-treatment rehab (康复陪护): $200</li>
+                    <li>✅ 24/7 on-ground support</li>
+                </ul>
+                <div style="background: #fff3e0; padding: 12px; border-radius: 8px; margin-top: 15px; font-size: 0.9em; border-left: 4px solid #ff9800;">
+                    <strong>💡 Pay after arrival</strong><br>
+                    Pay directly in China when you need these services.
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FAQ -->
+    <section class="faq">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        
+        <div class="faq-item">
+            <button class="faq-question">What visa do I need for medical treatment in China?<span class="faq-toggle">▼</span></button>
+            <div class="faq-answer">
+                <p><strong>Good news: You can start with a simple Tourist Visa (L Visa)!</strong></p>
+                <ul style="margin: 10px 0; padding-left: 20px;">
+                    <li>🟢 <strong>Tourist Visa (L Visa)</strong> — Perfect for most treatments. You can enter China, see doctors, and even use your international insurance for direct payment. Only need to switch if hospitalization exceeds your visa duration.</li>
+                    <li>🟡 <strong>S2 Medical Visa</strong> — For extended hospitalization (>10 days). We can help you convert from L to S2 visa <em>while you're already in China</em> — no need to leave the country.</li>
+                </ul>
+                <p><strong>How it works:</strong></p>
+                <ol style="margin: 10px 0; padding-left: 20px;">
+                    <li>Apply for L Visa (easiest to get)</li>
+                    <li>Enter China and consult with hospitals</li>
+                    <li>If you need extended treatment, we help you convert to S2 visa locally</li>
+                </ol>
+                <p><strong>Insurance tip:</strong> International insurance works with L Visa too! The visa type doesn't affect your insurance coverage.</p>
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <button class="faq-question">How long does it take to get an appointment?<span class="faq-toggle">▼</span></button>
+            <div class="faq-answer">Typically 3-7 days. For urgent cases, we can often arrange within 24-48 hours. We'll give you a confirmed date before you book your flight.</div>
+        </div>
+        
+        <div class="faq-item">
+            <button class="faq-question">What happens if I need to change hospitals?<span class="faq-toggle">▼</span></button>
+            <div class="faq-answer">Standard package includes 1 FREE hospital change. Additional changes are $10 per change. We'll help you transfer all records and arrange new appointments.</div>
+        </div>
+        
+        <div class="faq-item">
+            <button class="faq-question">Is my medical information kept confidential?<span class="faq-toggle">▼</span></button>
+            <div class="faq-answer">Absolutely. We take privacy seriously. Your medical information is only shared with hospitals you've approved. We comply with international privacy standards.</div>
+        </div>
+        
+        <div class="faq-item">
+            <button class="faq-question">What payment methods do you accept?<span class="faq-toggle">▼</span></button>
+            <div class="faq-answer">We accept PayPal and major credit cards. Payment is made after you approve our recommendations.</div>
+        </div>
+        
+        <div class="faq-item">
+            <button class="faq-question">Can I get a refund if I change my mind?<span class="faq-toggle">▼</span></button>
+            <div class="faq-answer">Yes! Full refund within 7 days if no services have been provided. After services begin, refund is prorated based on work completed.</div>
+        </div>
+        
+        <!-- Final CTA -->
+        <div style="text-align: center; margin-top: 40px; padding: 30px; background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); border-radius: 15px;">
+            <h3 style="color: white; margin-bottom: 15px;">🚀 Ready to start your medical journey?</h3>
+            <p style="color: rgba(255,255,255,0.9); margin-bottom: 20px;">Get your free personalized guide today</p>
+            <a href="#contact" class="cta-button" style="background: white; color: var(--primary);">Start My Medical Journey</a>
+        </div>
+    </section>
+    
+    <!-- Contact Form - 简道云嵌入 -->
+    <section class="form-section" id="contact">
+        <h2>📝 Get Your Personalized Guide</h2>
+        <p class="form-subtitle">Free consultation • No obligation • Reply within 24 hours</p>
+        
+        <div class="form-container" style="padding: 0; background: transparent; box-shadow: none; max-width: 800px;">
+            <iframe 
+                src="https://tzu2c79rqy.jiandaoyun.com/f/69ad77bb9fad89d6a1fdb769?embed=true" 
+                width="100%" 
+                height="900px" 
+                frameborder="0"
+                style="border: none; border-radius: 15px; background: white; box-shadow: 0 10px 40px rgba(0,0,0,0.1);">
+            </iframe>
+        </div>
+    </section>
+    
+    <!-- Thank You Modal -->
+    <div class="modal-overlay" id="thankYouModal">
+        <div class="modal">
+            <div class="modal-icon">✅</div>
+            <h2>Thank You!</h2>
+            <p>We've received your request. Our team will contact you within 24 hours with personalized recommendations.</p>
+            <p>Check your email for confirmation.</p>
+            <button class="modal-close" onclick="closeModal()">Got it!</button>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div>
+                <h3>🏥 Medical Tourism China</h3>
+                <p>Your trusted partner for medical travel in China.</p>
+                <p>Professional • Reliable • Caring</p>
+            </div>
+            <div>
+                <h3>Quick Links</h3>
+                <p><a href="hospitals.html" style="color:white;">Our Hospitals</a></p>
+                <p><a href="cost-comparison.html" style="color:white;">Cost Comparison</a></p>
+                <p><a href="#process" style="color:white;">How It Works</a></p>
+                <p><a href="#pricing" style="color:white;">Pricing</a></p>
+                <p><a href="#faq" style="color:white;">FAQ</a></p>
+                <p><a href="blog/index.html" style="color:white;">Blog</a></p>
+            </div>
+            <div>
+                <h3>Contact</h3>
+                <p>📧 Email: info@chinahospitalsguide.com</p>
+                <p>💬 WhatsApp: Available after submission</p>
+                <p>🌐 Available 24/7</p>
+            </div>
+        </div>
+        <div class="refund-policy">
+            <strong>🛡️ 7-Day Money-Back Guarantee</strong> - Not satisfied? Full refund within 7 days if no services provided.
+        </div>
+        <div class="footer-bottom">
+            © 2026 Medical Tourism China. All rights reserved.
+            <a href="about.html" class="privacy-link">About Us</a> | 
+            <a href="real-stories.html" class="privacy-link">Real Stories</a> | 
+            <a href="privacy.html" class="privacy-link">Privacy Policy</a> | <a href="terms.html" style="color:white;">Terms of Service</a> 
+            <a href="contact.html" class="privacy-link">Contact Us</a>
+        </div>
+    </footer>
+    
+    <script>
+        // Loading animation
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('loader').classList.add('hidden');
+            }, 1000);
+        });
+        
+        // FAQ accordion
+        document.querySelectorAll('.faq-question').forEach(function(button) {
+            button.addEventListener('click', function() {
+                this.parentElement.classList.toggle('active');
+            });
+        });
+        
+        // Form submission - 简道云表单已嵌入页面，无需额外处理
+        // 表单数据会直接提交到简道云后台
+        
+        function closeModal() {
+            document.getElementById('thankYouModal').classList.remove('active');
+        }
+        
+        // Show More Hospitals
+        let showingMore = false;
+        function showMoreHospitals() {
+            const extras = document.querySelectorAll('.hospital-card.extra');
+            const btn = document.getElementById('showMoreBtn');
+            if (showingMore) {
+                extras.forEach(card => card.style.display = 'none');
+                btn.textContent = 'Show More (+19 Hospitals)';
+            } else {
+                extras.forEach(card => card.style.display = 'block');
+                btn.textContent = 'Show Less';
+            }
+            showingMore = !showingMore;
+        }
+    </script>
+    
+    <!-- Floating Customer Service Buttons -->
+    <style>
+        .floating-buttons {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .floating-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .floating-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+        }
+        .telegram-btn {
+            background: #0088cc;
+            color: white;
+        }
+        .chat-tooltip {
+            position: absolute;
+            right: 70px;
+            background: #333;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+        .floating-btn:hover .chat-tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+    
+    <div class="floating-buttons">
+        <!-- Pre-arrival: Consultation -->
+        <a href="https://wa.me/447947060056" class="floating-btn whatsapp-btn" target="_blank" style="background: #25D366;">
+            💬
+            <span class="chat-tooltip">💡 Pre-arrival: Get free consultation</span>
+        </a>
+        <!-- In-China: On-ground Support -->
+        <a href="https://wa.me/8615763107083" class="floating-btn whatsapp-btn" target="_blank" style="background: #0088cc;">
+            🇨🇳
+            <span class="chat-tooltip">🛬 In China: Need help? Chat here</span>
+        </a>
+    </div>
+</body>
+</html>
+
