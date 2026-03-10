@@ -280,11 +280,7 @@
         .modal-close { background: var(--primary); color: white; padding: 12px 30px; border: none; border-radius: 25px; font-size: 1rem; cursor: pointer; }
         
         /* Floating Contact */
-        .floating-contact { position: fixed; bottom: 30px; right: 30px; z-index: 1000; display: flex; flex-direction: column; gap: 15px; }
-        .float-btn { width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; text-decoration: none; box-shadow: 0 5px 20px rgba(0,0,0,0.3); transition: all 0.3s; }
-        .float-btn:hover { transform: scale(1.1); }
-        .float-whatsapp { background: #25D366; color: white; }
-        .float-wechat { background: #07C160; color: white; }
+
         
         /* Footer */
         footer { background: var(--dark); color: white; padding: 60px 20px 30px; }
@@ -302,8 +298,6 @@
             .hero .subtitle { font-size: 1.1rem; }
             .trust-badges { flex-direction: column; gap: 20px; }
             .pricing-card.featured { transform: none; }
-            .floating-contact { bottom: 20px; right: 20px; }
-            .float-btn { width: 50px; height: 50px; font-size: 1.5rem; }
         }
         
         /* ========== 移动端优化 2026-03-05 ========== */
@@ -656,12 +650,6 @@
             </iframe>
         </div>
     </section>
-    
-    <!-- Floating Contact Buttons -->
-    <div class="floating-contact">
-        <a href="https://wa.me/" class="float-btn float-whatsapp" title="WhatsApp">💬</a>
-        <a href="#" class="float-btn float-wechat" title="WeChat">🔗</a>
-    </div>
     
     <!-- Thank You Modal -->
     <div class="modal-overlay" id="thankYouModal">
