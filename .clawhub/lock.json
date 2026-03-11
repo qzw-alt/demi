@@ -112,6 +112,10 @@
     "youtube-search": {
       "version": "1.4.1",
       "installedAt": 1773059903576
+    },
+    "memory-system-v2-1-0-0": {
+      "version": "1.0.0",
+      "installedAt": 1773233391323
     }
   }
 }

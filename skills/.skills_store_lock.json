@@ -102,6 +102,12 @@
       "zip_url": "http://lightmake.site/api/v1/download?slug=youtube-search",
       "source": "skillhub",
       "version": "1.4.1"
+    },
+    "memory-system-v2-1-0-0": {
+      "name": "Memory System V2 1.0.0",
+      "zip_url": "http://lightmake.site/api/v1/download?slug=memory-system-v2-1-0-0",
+      "source": "skillhub",
+      "version": "1.0.0"
     }
   }
 }
