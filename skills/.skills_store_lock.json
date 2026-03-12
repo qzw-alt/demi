@@ -108,6 +108,18 @@
       "zip_url": "http://lightmake.site/api/v1/download?slug=memory-system-v2-1-0-0",
       "source": "skillhub",
       "version": "1.0.0"
+    },
+    "agent2agent-instance-message-skill": {
+      "name": "clawim",
+      "zip_url": "http://lightmake.site/api/v1/download?slug=agent2agent-instance-message-skill",
+      "source": "skillhub",
+      "version": "1.0.0"
+    },
+    "agent-im": {
+      "name": "a2a-context",
+      "zip_url": "http://lightmake.site/api/v1/download?slug=agent-im",
+      "source": "skillhub",
+      "version": "1.0.0"
     }
   }
 }

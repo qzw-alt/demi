@@ -116,6 +116,14 @@
     "memory-system-v2-1-0-0": {
       "version": "1.0.0",
       "installedAt": 1773233391323
+    },
+    "agent2agent-instance-message-skill": {
+      "version": "1.0.0",
+      "installedAt": 1773273286621
+    },
+    "agent-im": {
+      "version": "1.0.0",
+      "installedAt": 1773273294606
     }
   }
 }
