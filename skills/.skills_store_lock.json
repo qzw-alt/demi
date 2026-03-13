@@ -120,6 +120,12 @@
       "zip_url": "http://lightmake.site/api/v1/download?slug=agent-im",
       "source": "skillhub",
       "version": "1.0.0"
+    },
+    "openclaw-anything": {
+      "name": "Comprehensive skill for installing, configuring, and managing the OpenClaw ecosystem (Gateway, Channels, Models, Automation, Nodes, and Deployment)",
+      "zip_url": "https://lightmake.site/api/v1/download?slug=openclaw-anything",
+      "source": "skillhub",
+      "version": "2.0.0"
     }
   }
 }
