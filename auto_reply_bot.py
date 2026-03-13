@@ -1,16 +1,29 @@
 #!/usr/bin/env python3
 """
 自动回复脚本 - 轮询检查新邮件并自动回复
+功能：1)自动回复客户 2)抄送伟烨 3)记录所有交互
 """
 import requests
 import json
 import time
+import os
 from datetime import datetime, timedelta
 
 # API配置
 API_KEY = 'am_us_1e6de2cdfc317699736a58a1ca8ef07e64edcc841457f119d89b1989239d0d94'
 BASE_URL = 'https://api.agentmail.to/v0'
 INBOX_ID = 'motionlessbottle950@agentmail.to'
+
+# 抄送配置
+CC_EMAIL = 'info@chinahospitalsguide.com'  # 伟烨的邮箱
+
+# 记录文件路径
+LOG_DIR = 'logs'
+EMAIL_LOG_FILE = f'{LOG_DIR}/email_interactions.jsonl'
+DAILY_LOG_FILE = f'{LOG_DIR}/daily_summary_{datetime.now().strftime("%Y-%m-%d")}.md'
+
+# 确保日志目录存在
+os.makedirs(LOG_DIR, exist_ok=True)
 
 # 自动回复模板
 AUTO_REPLY_SUBJECT = "Re: Your Medical Tourism Inquiry - We've Received Your Message! / 您的医疗旅游咨询已收到！"
@@ -121,8 +134,10 @@ def get_recent_messages():
         print(f"❌ Error getting messages: {e}")
         return []
 
-def send_reply(to_email, subject, in_reply_to=None):
-    """发送自动回复"""
+def send_reply_with_cc(to_email, subject, original_body, in_reply_to=None):
+    """发送自动回复，并抄送伟烨"""
+    
+    # 1. 发送给客户的主邮件
     payload = {
         "to": to_email,
         "subject": subject,
@@ -140,6 +155,57 @@ def send_reply(to_email, subject, in_reply_to=None):
         )
         if response.status_code == 200:
             print(f"✅ Auto-reply sent to {to_email}")
+            
+            # 2. 发送抄送给伟烨
+            cc_subject = f"[COPY] Customer Inquiry from {to_email}"
+            cc_body = f"""📧 客户邮件抄送
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📋 客户信息
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+发件人: {to_email}
+主题: {subject}
+时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📨 客户原始邮件内容
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{original_body[:2000] if original_body else '(No content)'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🤖 德米自动回复内容
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{AUTO_REPLY_BODY}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💡 下一步行动
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• 客户回复后进入第2轮（智能推荐）
+• 24小时内跟进
+• 如有紧急需求，客户会WhatsApp联系
+
+---
+此邮件由系统自动抄送
+时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+"""
+            
+            cc_payload = {
+                "to": CC_EMAIL,
+                "subject": cc_subject,
+                "text": cc_body
+            }
+            
+            cc_response = requests.post(
+                f'{BASE_URL}/inboxes/{INBOX_ID}/messages/send',
+                headers=headers,
+                json=cc_payload
+            )
+            
+            if cc_response.status_code == 200:
+                print(f"✅ CC sent to {CC_EMAIL}")
+            else:
+                print(f"⚠️ CC failed: {cc_response.status_code}")
+            
             return True
         else:
             print(f"❌ Failed to send reply: {response.status_code} - {response.text}")
@@ -147,6 +213,80 @@ def send_reply(to_email, subject, in_reply_to=None):
     except Exception as e:
         print(f"❌ Error sending reply: {e}")
         return False
+
+def log_interaction(customer_email, subject, original_body, reply_sent, cc_sent):
+    """记录邮件交互到日志文件"""
+    log_entry = {
+        "timestamp": datetime.now().isoformat(),
+        "customer_email": customer_email,
+        "subject": subject,
+        "original_body_preview": original_body[:500] if original_body else "",
+        "reply_sent": reply_sent,
+        "cc_sent": cc_sent,
+        "cc_recipient": CC_EMAIL if cc_sent else None
+    }
+    
+    try:
+        with open(EMAIL_LOG_FILE, 'a', encoding='utf-8') as f:
+            f.write(json.dumps(log_entry, ensure_ascii=False) + '\n')
+        print(f"📝 Logged interaction with {customer_email}")
+    except Exception as e:
+        print(f"⚠️ Failed to log: {e}")
+
+def update_daily_summary():
+    """更新每日汇总日志"""
+    today = datetime.now().strftime('%Y-%m-%d')
+    summary_file = f'{LOG_DIR}/daily_summary_{today}.md'
+    
+    # 统计今日数据
+    total_interactions = 0
+    if os.path.exists(EMAIL_LOG_FILE):
+        with open(EMAIL_LOG_FILE, 'r', encoding='utf-8') as f:
+            for line in f:
+                try:
+                    entry = json.loads(line.strip())
+                    if entry['timestamp'].startswith(today):
+                        total_interactions += 1
+                except:
+                    continue
+    
+    summary = f"""# 📧 邮件交互日报 - {today}
+
+## 统计
+- 总交互数: {total_interactions}
+- 最后更新: {datetime.now().strftime('%H:%M:%S')}
+
+## 客户列表
+"""
+    
+    # 添加客户列表
+    if os.path.exists(EMAIL_LOG_FILE):
+        customers = set()
+        with open(EMAIL_LOG_FILE, 'r', encoding='utf-8') as f:
+            for line in f:
+                try:
+                    entry = json.loads(line.strip())
+                    if entry['timestamp'].startswith(today):
+                        customers.add(entry['customer_email'])
+                except:
+                    continue
+        
+        for customer in sorted(customers):
+            summary += f"- {customer}\n"
+    
+    summary += f"""
+## 详细记录
+见: {EMAIL_LOG_FILE}
+
+---
+*自动生成于 {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}*
+"""
+    
+    try:
+        with open(summary_file, 'w', encoding='utf-8') as f:
+            f.write(summary)
+    except Exception as e:
+        print(f"⚠️ Failed to update summary: {e}")
 
 def process_messages():
     """处理新邮件"""
@@ -162,6 +302,7 @@ def process_messages():
         # 获取发件人
         from_email = msg.get('from', '')
         subject = msg.get('subject', '')
+        body = msg.get('body', '') or msg.get('text', '')
         
         # 跳过自己发送的邮件（AgentMail 发出的）
         if 'motionlessbottle950@agentmail.to' in from_email or 'AgentMail' in from_email:
@@ -169,6 +310,10 @@ def process_messages():
         
         # 跳过系统邮件
         if 'noreply' in from_email or 'notify' in from_email:
+            continue
+        
+        # 跳过抄送邮件（避免循环）
+        if '[COPY]' in subject:
             continue
         
         # 检查是否在排除列表（已手动联系的客户）
@@ -186,15 +331,28 @@ def process_messages():
         
         print(f"📧 New message from {from_email}: {subject[:50]}...")
         
-        # 发送自动回复
-        if send_reply(from_email, AUTO_REPLY_SUBJECT, message_id):
+        # 发送自动回复并抄送
+        reply_sent = send_reply_with_cc(from_email, AUTO_REPLY_SUBJECT, body, message_id)
+        
+        if reply_sent:
             replied_messages.add(message_id)
             replied_emails.add(from_email)  # 记录已回复的邮箱
             print(f"✅ Added {from_email} to replied list (won't reply again)")
+            
+            # 记录交互
+            log_interaction(from_email, subject, body, reply_sent=True, cc_sent=True)
+            
+            # 更新每日汇总
+            update_daily_summary()
+        else:
+            # 记录失败
+            log_interaction(from_email, subject, body, reply_sent=False, cc_sent=False)
 
 def main():
     print("🤖 Auto-reply bot started!")
     print(f"📧 Monitoring inbox: {INBOX_ID}")
+    print(f"📋 CC to: {CC_EMAIL}")
+    print(f"📝 Logs: {LOG_DIR}/")
     print("⏰ Checking every 2 minutes...")
     print("Press Ctrl+C to stop\n")
     
