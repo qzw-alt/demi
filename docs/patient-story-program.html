@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Story Program - Free Medical Coordination | China Hospitals Guide</title>
+    <meta name="description" content="Join our Patient Story Program. Receive free medical coordination services in exchange for sharing your treatment journey. Limited to 3 patients.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #1a5f4a;
+            --primary-light: #2d8a6e;
+            --primary-dark: #124a3a;
+            --accent: #c9a227;
+            --text: #2c3e50;
+            --text-light: #5a6c7d;
+            --bg: #fafbfc;
+            --white: #ffffff;
+            --border: #e8ecf0;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-hover: 0 8px 30px rgba(0,0,0,0.12);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+            background: var(--bg);
+        }
+        
+        /* Navigation */
+        nav {
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--white);
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.25rem;
+            opacity: 0.95;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .badge {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--text);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+        
+        /* Main Content */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        
+        .section {
+            margin-bottom: 4rem;
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .section-text {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Program Overview */
+        .program-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin: 3rem 0;
+        }
+        
+        .program-card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+        
+        .program-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .program-card ul {
+            list-style: none;
+        }
+        
+        .program-card li {
+            padding: 0.75rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .program-card li:last-child {
+            border-bottom: none;
+        }
+        
+        .program-card li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        .value-highlight {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--white);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+        
+        .value-highlight .price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            display: block;
+        }
+        
+        .value-highlight .label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        /* Eligibility */
+        .eligibility-box {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--accent);
+        }
+        
+        .eligibility-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .eligibility-item {
+            text-align: center;
+            padding: 1.5rem;
+        }
+        
+        .eligibility-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .eligibility-item h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .eligibility-item p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+        
+        /* How It Works */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .step {
+            text-align: center;
+            position: relative;
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin: 0 auto 1rem;
+        }
+        
+        .step h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .step p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+        
+        /* Story Usage */
+        .usage-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .usage-item {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        
+        .usage-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        
+        .usage-item h4 {
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+        
+        .usage-item p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--white);
+            padding: 4rem 2rem;
+            text-align: center;
+            border-radius: 12px;
+            margin-top: 4rem;
+        }
+        
+        .cta-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .cta-section p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        
+        .spots-left {
+            background: var(--accent);
+            color: var(--text);
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: var(--white);
+            color: var(--primary);
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .contact-info {
+            margin-top: 2rem;
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+        
+        /* FAQ */
+        .faq-item {
+            background: var(--white);
+            padding: 1.5rem 2rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .faq-item h4 {
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+        }
+        
+        .faq-item p {
+            color: var(--text-light);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--text);
+            color: var(--white);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: var(--white);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+        }
+        
+        .footer-text {
+            opacity: 0.6;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .program-grid,
+            .eligibility-grid,
+            .steps,
+            .usage-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">China Hospitals Guide</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="cost-comparison.html">Cost Comparison</a></li>
+                <li><a href="patient-stories.html">Patient Stories</a></li>
+                <li><a href="pricing.html">Pricing</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="badge">🎯 Limited Opportunity</div>
+        <h1>Patient Story Program</h1>
+        <p class="hero-subtitle">
+            Receive complimentary medical coordination services while helping future patients make informed decisions about their healthcare journey in China.
+        </p>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Introduction -->
+        <section class="section">
+            <h2 class="section-title">Why We're Doing This</h2>
+            <p class="section-text">
+                Every patient's journey is unique, and real stories help others understand what to expect when considering medical treatment abroad. We're looking for 3 patients willing to share their experience in exchange for free coordination services.
+            </p>
+            <p class="section-text">
+                Your story will help hundreds of future patients make confident decisions about their healthcare. In return, you'll receive our full Standard Package services at no cost.
+            </p>
+        </section>
+
+        <!-- Program Overview -->
+        <section class="section">
+            <h2 class="section-title">What You Receive</h2>
+            <div class="program-grid">
+                <div class="program-card">
+                    <h3>🎁 Free Services</h3>
+                    <ul>
+                        <li>Hospital appointment scheduling</li>
+                        <li>Medical record translation</li>
+                        <li>Pre-arrival video consultation</li>
+                        <li>Airport pickup coordination</li>
+                        <li>24/7 WhatsApp support</li>
+                        <li>Post-treatment follow-up</li>
+                        <li>Accommodation recommendations</li>
+                        <li>Visa invitation letter</li>
+                    </ul>
+                    <div class="value-highlight">
+                        <span class="price">$299</span>
+                        <span class="label">Value — Yours FREE</span>
+                    </div>
+                </div>
+                <div class="program-card">
+                    <h3>📝 What We Ask</h3>
+                    <ul>
+                        <li>Share your treatment journey</li>
+                        <li>Participate in video interviews</li>
+                        <li>Allow photo/video documentation</li>
+                        <li>Provide honest feedback</li>
+                        <li>Sign story usage agreement</li>
+                        <li>Complete post-treatment survey</li>
+                    </ul>
+                    <div class="value-highlight">
+                        <span class="price">Priceless</span>
+                        <span class="label">Helping Future Patients</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Eligibility -->
+        <section class="section">
+            <h2 class="section-title">Who We're Looking For</h2>
+            <div class="eligibility-box">
+                <p class="section-text">
+                    We're seeking patients with specific conditions who can represent the needs of our broader community. Priority given to:
+                </p>
+                <div class="eligibility-grid">
+                    <div class="eligibility-item">
+                        <div class="eligibility-icon">🫀</div>
+                        <h4>Cardiac Conditions</h4>
+                        <p>Heart surgery, valve replacement, coronary intervention</p>
+                    </div>
+                    <div class="eligibility-item">
+                        <div class="eligibility-icon">🦴</div>
+                        <h4>Orthopedic Needs</h4>
+                        <p>Joint replacement, spine surgery, sports injuries</p>
+                    </div>
+                    <div class="eligibility-item">
+                        <div class="eligibility-icon">🎯</div>
+                        <h4>Cancer Treatment</h4>
+                        <p>Oncology, proton therapy, specialized cancer care</p>
+                    </div>
+                </div>
+            </div>
+            <p class="section-text" style="margin-top: 1.5rem;">
+                <strong>Additional Requirements:</strong> Planning treatment within 2-3 months, comfortable sharing your story publicly, English communication preferred.
+            </p>
+        </section>
+
+        <!-- How It Works -->
+        <section class="section">
+            <h2 class="section-title">How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h4>Apply</h4>
+                    <p>Submit your application with medical details and timeline</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h4>Interview</h4>
+                    <p>Video call to discuss your needs and story sharing agreement</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h4>Coordinate</h4>
+                    <p>We arrange everything: hospital, appointments, logistics</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h4>Share</h4>
+                    <p>Document your journey and share your experience</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Story Usage -->
+        <section class="section">
+            <h2 class="section-title">How Your Story Helps Others</h2>
+            <p class="section-text">
+                Your experience will be shared across our platforms to help future patients understand the real journey of medical travel to China:
+            </p>
+            <div class="usage-grid">
+                <div class="usage-item">
+                    <div class="usage-icon">🌐</div>
+                    <div>
+                        <h4>Website Patient Stories</h4>
+                        <p>Featured story page with your treatment journey</p>
+                    </div>
+                </div>
+                <div class="usage-item">
+                    <div class="usage-icon">📹</div>
+                    <div>
+                        <h4>Video Testimonials</h4>
+                        <p>YouTube and social media video content</p>
+                    </div>
+                </div>
+                <div class="usage-item">
+                    <div class="usage-icon">📧</div>
+                    <div>
+                        <h4>Email Newsletters</h4>
+                        <p>Shared with our community of prospective patients</p>
+                    </div>
+                </div>
+                <div class="usage-item">
+                    <div class="usage-icon">📱</div>
+                    <div>
+                        <h4>Social Media</h4>
+                        <p>Instagram, Facebook, and LinkedIn posts</p>
+                    </div>
+                </div>
+            </div>
+            <p class="section-text" style="margin-top: 1.5rem;">
+                <strong>Your Privacy Matters:</strong> We never share medical records or sensitive health information. All story content is reviewed and approved by you before publication.
+            </p>
+        </section>
+
+        <!-- FAQ -->
+        <section class="section">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <h4>Is this really free? What's the catch?</h4>
+                <p>Yes, completely free. There's no catch — we receive valuable content that helps other patients, and you receive professional coordination services. Both sides benefit.</p>
+            </div>
+            <div class="faq-item">
+                <h4>What if I change my mind about sharing my story?</h4>
+                <p>You'll sign an agreement upfront, but we understand circumstances change. We ask for good faith participation, and all content is reviewed by you before publication.</p>
+            </div>
+            <div class="faq-item">
+                <h4>Can my family be included in the story?</h4>
+                <p>Absolutely. Family members often play a crucial role in medical travel decisions. Their perspective adds valuable context to your story.</p>
+            </div>
+            <div class="faq-item">
+                <h4>What happens after I apply?</h4>
+                <p>We'll review your application within 48 hours. If selected, we'll schedule a video call to discuss your specific needs and finalize the agreement.</p>
+            </div>
+            <div class="faq-item">
+                <h4>Do I need to pay for anything?</h4>
+                <p>Our coordination services are free. You'll still need to pay the hospital directly for your medical treatment, as well as your travel and accommodation costs.</p>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <h2>Ready to Share Your Journey?</h2>
+            <p>Join our Patient Story Program and receive complimentary medical coordination services while helping others make informed healthcare decisions.</p>
+            <div class="spots-left">⚡ Only 3 Spots Available</div>
+            <br>
+            <a href="mailto:motionlessbottle950@agentmail.to?subject=Patient Story Program Application" class="cta-button">Apply Now</a>
+            <div class="contact-info">
+                <p>Questions? Email us at <strong>motionlessbottle950@agentmail.to</strong></p>
+                <p>WhatsApp: <strong>+44 7947 060056</strong></p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="cost-comparison.html">Cost Comparison</a>
+                <a href="patient-stories.html">Patient Stories</a>
+                <a href="pricing.html">Pricing</a>
+                <a href="contact.html">Contact</a>
+                <a href="privacy.html">Privacy Policy</a>
+            </div>
+            <p class="footer-text">
+                © 2026 China Hospitals Guide. Helping international patients access world-class healthcare in China.
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

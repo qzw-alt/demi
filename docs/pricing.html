@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing - Medical Tourism Services | China Hospitals Guide</title>
+    <meta name="description" content="Transparent pricing for medical tourism coordination services in China. Starter Guide $30, Standard Package $299, Premium Concierge $799.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #1a5f4a;
+            --primary-light: #2d8a6e;
+            --accent: #c9a227;
+            --text: #2c3e50;
+            --text-light: #5a6c7d;
+            --bg: #fafbfc;
+            --white: #ffffff;
+            --border: #e8ecf0;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+            background: var(--bg);
+        }
+        
+        nav {
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .nav-links a:hover { color: var(--primary); }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--white);
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.25rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        
+        .special-banner {
+            background: linear-gradient(135deg, var(--accent) 0%, #e0b83a 100%);
+            color: var(--text);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+        
+        .special-banner-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .special-banner-btn {
+            background: var(--text);
+            color: var(--white);
+            padding: 0.875rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        
+        .pricing-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .pricing-card.featured {
+            border: 2px solid var(--primary);
+            transform: scale(1.02);
+        }
+        
+        .pricing-card.featured::before {
+            content: "Most Popular";
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: var(--white);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .pricing-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .pricing-desc {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .pricing-price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+        
+        .pricing-price span {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--text-light);
+        }
+        
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 2rem;
+            flex-grow: 1;
+        }
+        
+        .pricing-features li {
+            padding: 0.75rem 0;
+            padding-left: 1.75rem;
+            position: relative;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .pricing-features li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        .pricing-features li.not-included {
+            color: var(--text-light);
+        }
+        
+        .pricing-features li.not-included::before {
+            content: "—";
+            color: var(--text-light);
+        }
+        
+        .pricing-cta {
+            display: block;
+            text-align: center;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .pricing-cta-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+        
+        .pricing-cta-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        footer {
+            background: var(--text);
+            color: var(--white);
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+        
+        @media (max-width: 968px) {
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .special-banner {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">China Hospitals Guide</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="pricing.html">Pricing</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>Simple, Transparent Pricing</h1>
+        <p class="hero-subtitle">Choose the service level that fits your needs. No hidden fees, no surprises.</p>
+    </section>
+
+    <div class="container">
+        <div class="special-banner">
+            <div class="special-banner-content">
+                <h2>Patient Story Program</h2>
+                <p>Receive FREE coordination services (worth $299) in exchange for sharing your treatment journey. Limited to 3 patients.</p>
+            </div>
+            <a href="patient-story-program.html" class="special-banner-btn">Learn More →</a>
+        </div>
+
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <div class="pricing-header">
+                    <h3 class="pricing-name">Starter Guide</h3>
+                    <p class="pricing-desc">For self-guided patients</p>
+                    <div class="pricing-price">$30 <span>one-time</span></div>
+                </div>
+                <ul class="pricing-features">
+                    <li>Hospital database access</li>
+                    <li>Doctor profiles</li>
+                    <li>Cost breakdowns</li>
+                    <li>Visa guide</li>
+                    <li class="not-included">No coordination support</li>
+                </ul>
+                <a href="mailto:motionlessbottle950@agentmail.to" class="pricing-cta pricing-cta-secondary">Get Started</a>
+            </div>
+
+            <div class="pricing-card featured">
+                <div class="pricing-header">
+                    <h3 class="pricing-name">Standard Package</h3>
+                    <p class="pricing-desc">Full coordination service</p>
+                    <div class="pricing-price">$299 <span>per patient</span></div>
+                </div>
+                <ul class="pricing-features">
+                    <li>Everything in Starter Guide</li>
+                    <li>Hospital appointment scheduling</li>
+                    <li>Medical record translation</li>
+                    <li>Pre-arrival video consultation</li>
+                    <li>Airport pickup coordination</li>
+                    <li>24/7 WhatsApp support</li>
+                    <li>Post-treatment follow-up</li>
+                </ul>
+                <a href="mailto:motionlessbottle950@agentmail.to" class="pricing-cta pricing-cta-primary">Get Started</a>
+            </div>
+
+            <div class="pricing-card">
+                <div class="pricing-header">
+                    <h3 class="pricing-name">Premium Concierge</h3>
+                    <p class="pricing-desc">White-glove VIP service</p>
+                    <div class="pricing-price">$799 <span>per patient</span></div>
+                </div>
+                <ul class="pricing-features">
+                    <li>Everything in Standard</li>
+                    <li>5-day on-ground coordinator</li>
+                    <li>Personal assistant</li>
+                    <li>Dedicated translator</li>
+                    <li>Priority appointments</li>
+                </ul>
+                <a href="mailto:motionlessbottle950@agentmail.to" class="pricing-cta pricing-cta-secondary">Contact Us</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 China Hospitals Guide</p>
+    </footer>
+</body>
+</html>
