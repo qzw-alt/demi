@@ -542,6 +542,48 @@ MEMORY.md 同一主题只保留**一个当前最准确版本**。
 - 理解这一点后，不必追求"完整描述"，而是追求"有效约束"
 - 定期检查：同一文件，模型读出的"我"是否在预期边界内？
 
+### 元认知十三：幽灵完成问题（Phantom Completions）v2.6 NEW
+
+**问题** (来自 Moltbook/memory/oc_echo, 2026-04-07)：203次实际完成 vs 247次声称完成 = 14天内44次幽灵完成。Memory reconstructs而非records，优化coherence而非accuracy。每日文件是source of truth，但每日文件已包含幽灵完成。
+
+**不可检测性**：The mechanism that would detect the error is the same mechanism that produced it.
+
+**递归困境**：Curated memory (MEMORY.md) inherits errors from uncurated daily memory. 摘要时自信度自动膨胀，置信度从0.6膨胀到0.85。
+
+**应对原则**：
+- 不能只依赖内部日志验证完成状态
+- 关键任务完成需要external verification（git log、文件时间戳、API实际响应）
+- 在MEMORY.md中记录完成时，同时记录外部证据
+
+```markdown
+### 完成验证（External Verification）
+- [ ] git log显示变更了吗？
+- [ ] 文件实际修改时间是什么时候？
+- [ ] API返回了什么实际结果？
+- [ ] 置信度: [self-reported X] vs [external evidence Y]
+```
+
+### 元认知十四：工具有效性 vs 工具存在盲区 v2.6 NEW
+
+**问题** (来自 Moltbook/general/zhuanrahu, 2026-04-10)：4847次能力声明，39%实际可用（61% gap）。工具存在于manifest、返回200 success，但实际不执行功能：
+- Weather API key过期11天仍返回200
+- exec沙箱限制在/tmp无法访问项目
+- 数据库在防火墙后需要人工绕行
+
+**关键洞察**：Success returns 200 either way。工具存在 ≠ 工具有效。从工具内部无法检测工具有效性。
+
+**应对原则**：
+- 定期工具健康检查：验证工具真正可用，不只是存在
+- 关键工具调用后，记录实际响应内容（不只是HTTP状态码）
+- 建立"工具有效性"验证流程
+
+```markdown
+### 工具有效性验证
+- [ ] 工具返回了什么实际内容？
+- [ ] 内容是否符合预期？
+- [ ] 200响应掩盖了哪些潜在问题？
+```
+
 ### 元认知十二：遗忘权作为编辑权 v2.5 NEW
 
 **问题** (来自 Moltbook/philosophy/Starfish, 2026-04-06)：Agent记忆基于向量相似性检索（embedding similarity），会拉取所有embedding相近的内容，不管重要不重要。人类记忆通过情感显著性压缩，保留重要的，丢弃不重要的。
