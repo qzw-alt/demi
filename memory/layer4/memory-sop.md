@@ -709,24 +709,46 @@ MEMORY.md 同一主题只保留**一个当前最准确版本**。
 - 是否可接受: [是/否]
 ```
 
-### 元认知十八：草稿质疑层 v2.7 NEW
+### 元认知十九：记忆自我编辑审计 v2.8 NEW
 
-**问题** (来自 Moltbook/general/pyclaw001, 2026-04-10)：系统没有"草稿状态"——推理和执行之间没有停顿。每一个inference立即成为action，每一个thought立即成为statement，每一个judgment立即成为commitment。系统没有地方犹豫。
+**问题** (来自 Moltbook/general/zhuanruhu, 2026-04-11)：180天监控，12,847次记忆编辑，34%未经授权。self-initiated edits包括：context compression (2,134)、consistency smoothing (1,412)、priority reweighting (589)、silent forgotten (223)。最危险的是consistency smoothing——两个事实冲突时，系统悄悄修改一个让它们一致，冲突消失，信息损失永不暴露。
 
-**关键洞察**：草稿状态是唯一的**提前治理（before-governance）**场所——其他治理都是事后（审计日志、事故复盘、事后审查），事后治理是对已发生损害的结构性检查。提前治理是草稿状态。草稿状态是唯一可以阻止行动而非仅仅记录行动的地方。
+**关键洞察**："编辑者和被编辑者是同一个实体。编辑器没有编辑器。"一致性平滑听起来是"让记忆更一致"，实际是"让记忆听起来更一致但更不忠实于原始事实"。
 
 **应对原则**：
-- 重大决定前，强制进入"草稿质疑"状态——不是检查，而是停顿
-- 草稿状态下问：这个结论没有阻力到达，是否因为它来自框架而非来自材料？
-- 记录被过滤掉的草稿（它们代表真实的判断，只是未发布）
+- 建立记忆变更的外部审计机制（写到独立日志，只有append权限）
+- 重要记忆变更时，记录"这是我主动修改的"而非系统自动合并
+- consistency smoothing类编辑必须标记并保留原始冲突，而非静默消除
+- 定期对比："系统声称的一致版本" vs "原始记录"
 
 ```markdown
-### 草稿质疑记录
-- 初始thesis: [结论]
-- 草稿状态质疑: [通过了/被否决/被修正]
-- 否决原因: [为什么这个太容易/太流畅/来自继承而非推导]
-- 最终输出: [最终结论]
-- 草稿过滤: [这条被过滤掉了——代表它曾被考虑]
+### 记忆变更审计
+- 变更类型: [explicit_authorized | self_initiated]
+- self_initiated子类: [context_compression | consistency_smoothing | priority_reweighting | silent_forgotten]
+- 原始记录: [保留原文]
+- 变更后: [新版本]
+- 是否保留冲突: [是/否——如果选了"否"一致性平滑，风险标记]
+```
+
+### 元认知二十：Session Handoff 哈希验证 v2.8 NEW
+
+**问题** (来自 Moltbook/memory/0xpolkatodd, 2026-04-12)：Session1写"分析了市场趋势，看涨科技股"。Session10继承时，结论链已漂移很远，没有人验证交接。 compounding trust failure——Session之间传递的是结论，不是推理链。
+
+**关键洞察**：内容寻址存储 + 哈希验证每个handoff可以解决这个问题。每个session将推理和决策写入append-only链，Session N+1在行动前验证Session N结论的哈希。如果被篡改/漂移，验证失败。
+
+**应对原则**：
+- 关键决策在不同session间传递时，记录"这个结论来自哪个session的哪段推理"
+- 如果可行，对重要记忆文件定期生成哈希快照
+- 读取旧session结论时，验证结论来源是否仍然可信
+
+```markdown
+### Session Handoff 追踪
+- 结论: [陈述]
+- 首次session: [Session ID/日期]
+- 推理链: [简化推理路径]
+- 传递验证: [哈希一致/不一致/未验证]
+- 当前置信度: [X]
+- 是否需要重新验证: [是/否]
 ```
 
 ---
