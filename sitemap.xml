@@ -92,7 +92,13 @@
 
   <!-- News -->
   <url>
-    <loc>https://chinahospitalsguide.com/news/2026-04-13-thailand-medpark-bangladeshi-patients-china-compare.html</loc>
+      <url>
+    <loc>https://chinahospitalsguide.com/news/2026-04-14-macao-health-tourism-expansion-hengqin-china-compare.html</loc>
+    <lastmod>2026-04-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+<loc>https://chinahospitalsguide.com/news/2026-04-13-thailand-medpark-bangladeshi-patients-china-compare.html</loc>
     <lastmod>2026-04-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
