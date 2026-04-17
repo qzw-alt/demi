@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Procedure Cost Comparison: China vs US/UK/Europe | Save 50-85%</title>
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Cost Comparison 2026">
+    <meta name="twitter:description" content="Medical costs in China vs US, UK, Canada. See how much you can save on surgery, cancer treatment, IVF and more.">
+    <meta name="twitter:image" content="https://chinahospitalsguide.com/og-image.jpg">
+    <meta name="description" content="Compare surgery costs in China vs Western countries. See how much you can save on knee replacement, heart surgery, cancer treatment, and more.">
+    <meta name="keywords" content="surgery cost comparison, medical tourism savings, affordable surgery China, knee replacement cost, heart surgery cost">
+    <link rel="canonical" href="https://chinahospitalsguide.com/cost-comparison.html">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Medical Procedure Cost Comparison: China vs US/UK/Europe | Save 50-85%">
+    <meta property="og:description" content="Compare surgery costs in China vs Western countries. See how much you can save on medical procedures.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://chinahospitalsguide.com/cost-comparison.html">
+    <meta property="og:image" content="https://chinahospitalsguide.com/og-image.jpg">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #1e3c72;
+            --secondary: #2a5298;
+            --accent: #ff6b6b;
+            --success: #4CAF50;
+            --warning: #ff9800;
+            --light: #f8f9fa;
+        }
+        body {
+            padding-top: 120px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+        
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+            border-radius: 20px;
+            margin-bottom: 50px;
+        }
+        .hero h1 { font-size: 2.8em; margin-bottom: 20px; }
+        .hero .subtitle { font-size: 1.3em; opacity: 0.9; margin-bottom: 40px; }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .stat-card {
+            background: rgba(255,255,255,0.15);
+            padding: 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        .stat-number { font-size: 2.5em; font-weight: bold; color: #ffd700; }
+        .stat-label { font-size: 0.95em; opacity: 0.9; }
+        
+        /* Section */
+        .section {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            color: var(--primary);
+            font-size: 2em;
+            margin-bottom: 25px;
+            border-left: 4px solid var(--secondary);
+            padding-left: 15px;
+        }
+        .section h3 {
+            color: var(--primary);
+            font-size: 1.4em;
+            margin: 30px 0 15px;
+        }
+        
+        /* Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .comparison-table th {
+            background: var(--primary);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        .comparison-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .comparison-table tr:hover { background: #f5f5f5; }
+        .price-us { color: #e53935; font-weight: bold; }
+        .price-uk { color: #ff9800; font-weight: bold; }
+        .price-china { color: #4CAF50; font-weight: bold; font-size: 1.1em; }
+        .savings { color: #ffd700; font-weight: bold; background: #1e3c72; padding: 5px 10px; border-radius: 20px; }
+        
+        /* Cost Breakdown */
+        .cost-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+        .cost-card {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 4px solid var(--secondary);
+        }
+        .cost-card h4 { color: var(--primary); margin-bottom: 15px; }
+        .cost-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px dashed #ddd;
+        }
+        .cost-total {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid var(--primary);
+        }
+        
+        /* Case Study */
+        .case-study {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid var(--secondary);
+        }
+        .case-study h4 { color: var(--primary); margin-bottom: 10px; }
+        .savings-highlight {
+            background: var(--success);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 30px;
+            display: inline-block;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        /* City Comparison */
+        .city-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+        .city-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .city-card h4 { color: var(--primary); margin-bottom: 10px; }
+        .cost-level {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-top: 10px;
+        }
+        .cost-high { background: #ffebee; color: #c62828; }
+        .cost-medium { background: #fff3e0; color: #ef6c00; }
+        .cost-low { background: #e8f5e9; color: #2e7d32; }
+        
+        /* FAQ */
+        .faq-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        .faq-item h4 { color: var(--primary); margin-bottom: 10px; }
+        
+        /* CTA */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 60px 40px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 40px;
+        }
+        .cta-section h2 { color: white; border: none; padding: 0; }
+        .cta-button {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 18px 50px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-top: 25px;
+            transition: transform 0.3s;
+        }
+        .cta-button:hover { transform: translateY(-3px); }
+        
+        /* Trust Badges */
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95em;
+            opacity: 0.9;
+        }
+        
+        /* Back Link */
+        .back-link {
+            display: inline-block;
+            margin-top: 40px;
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2em; }
+            .hero .subtitle { font-size: 1.1em; }
+            .section { padding: 25px; }
+            .comparison-table { font-size: 0.9em; }
+            .comparison-table th, .comparison-table td { padding: 10px; }
+        }
+        .navbar { background: rgba(30, 60, 114, 0.95); backdrop-filter: blur(10px); padding: 0; position: fixed; top: 0; left: 0; right: 0; z-index: 1000; box-shadow: 0 2px 20px rgba(0,0,0,0.1); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; height: 70px; }
+        .nav-logo { font-size: 1.5rem; font-weight: bold; color: white; text-decoration: none; display: flex; align-items: center; gap: 10px; }
+        .nav-logo:hover { color: #ff6b6b; }
+        .nav-links { display: flex; list-style: none; gap: 0; margin: 0; padding: 0; }
+        .nav-links a { color: rgba(255,255,255,0.9); text-decoration: none; padding: 25px 20px; display: block; transition: all 0.3s; font-weight: 500; position: relative; }
+        .nav-links a:hover { color: white; background: rgba(255,255,255,0.1); }
+        .nav-links a.active { color: #ff6b6b; }
+        .nav-links a.active::after { content: ''; position: absolute; bottom: 0; left: 20px; right: 20px; height: 3px; background: #ff6b6b; }
+        .nav-cta { background: #ff6b6b; color: white; padding: 10px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; transition: all 0.3s; }
+        .nav-cta:hover { background: #ff5252; transform: translateY(-2px); }
+        .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 10px; }
+        .nav-toggle span { width: 25px; height: 3px; background: white; transition: all 0.3s; }
+        @media (max-width: 768px) { .nav-toggle { display: flex; } .nav-links { position: absolute; top: 70px; left: 0; right: 0; background: rgba(30, 60, 114, 0.98); flex-direction: column; max-height: 0; overflow: hidden; transition: max-height 0.3s; padding: 0; } .nav-links.active { max-height: 600px; padding: 10px 0; } .nav-links li { width: 100%; } .nav-links a { padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); display: block; text-align: center; } .nav-cta { display: none; } }
+        .page-header { padding-top: 130px !important; }
+      
+    </style>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RVYZENK472"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-RVYZENK472');
+</script>
+    <!-- BreadcrumbList Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://chinahospitalsguide.com/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Cost Comparison",
+                "item": "https://chinahospitalsguide.com/cost-comparison.html"
+            }
+        ]
+    }
+    </script>
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2521119288266043"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">🏥 China Hospitals Guide</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="hospitals.html">Hospitals</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="how-it-works.html">How It Works</a></li>
+                <li><a href="blog/">Blog</a></li>
+                <li><a href="news/">News</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <a href="contact-new.html" class="nav-cta">Get Started</a>
+            <div class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1>Medical Procedure Cost Comparison</h1>
+            <p class="subtitle">See how much you can save with world-class healthcare in China</p>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">50-85%</div>
+                    <div class="stat-label">Average Savings</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">40+</div>
+                    <div class="stat-label">Top Hospitals</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">30+</div>
+                    <div class="stat-label">Countries Served</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Patient Satisfaction</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Comparison Table -->
+        <div class="section">
+            <h2>💰 Surgery Cost Comparison: China vs US/UK</h2>
+            <p>Compare the costs of common medical procedures. All prices are in USD and represent total procedure costs including hospital stay.</p>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Procedure</th>
+                        <th>USA</th>
+                        <th>UK Private</th>
+                        <th>China</th>
+                        <th>Savings</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Knee Replacement</strong></td>
+                        <td class="price-us">$35,000-50,000</td>
+                        <td class="price-uk">£25,000-35,000</td>
+                        <td class="price-china">$8,000-12,000</td>
+                        <td><span class="savings">70-75%</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Hip Replacement</strong></td>
+                        <td class="price-us">$35,000-50,000</td>
+                        <td class="price-uk">£25,000-35,000</td>
+                        <td class="price-china">$8,000-12,000</td>
+                        <td><span class="savings">70-75%</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Heart Bypass</strong></td>
+                        <td class="price-us">$100,000-150,000</td>
+                        <td class="price-uk">£35,000-50,000</td>
+                        <td class="price-china">$12,000-18,000</td>
+                        <td><span class="savings">85-88%</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Heart Valve Replacement</strong></td>
+                        <td class="price-us">$80,000-120,000</td>
+                        <td class="price-uk">£30,000-45,000</td>
+                        <td class="price-china">$10,000-15,000</td>
+                        <td><span class="savings">85-87%</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cancer Treatment</strong></td>
+                        <td class="price-us">$50,000-100,000</td>
+                        <td class="price-uk">£20,000-40,000</td>
+                        <td class="price-china">$8,000-20,000</td>
+                        <td><span class="savings">70-80%</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Spine Surgery</strong></td>
+                        <td class="price-us">$40,000-80,000</td>
+                        <td class="price-uk">£25,000-50,000</td>
+                        <td class="price-china">$10,000-18,000</td>
+                        <td><span class="savings">70-75%</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>IVF Treatment</strong></td>
+                        <td class="price-us">$15,000-25,000</td>
+                        <td class="price-uk">£8,000-15,000</td>
+                        <td class="price-china">$3,000-8,000</td>
+                        <td><span class="savings">50-70%</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cataract Surgery</strong></td>
+                        <td class="price-us">$3,000-6,000</td>
+                        <td class="price-uk">£2,500-4,000</td>
+                        <td class="price-china">$800-1,500</td>
+                        <td><span class="savings">65-75%</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Cost Breakdown -->
+        <div class="section">
+            <h2>📊 Detailed Cost Breakdown</h2>
+            
+            <h3>Knee Replacement Surgery</h3>
+            <div class="cost-breakdown">
+                <div class="cost-card">
+                    <h4>🇺🇸 USA Costs</h4>
+                    <div class="cost-item"><span>Surgery Fee</span><span>$25,000</span></div>
+                    <div class="cost-item"><span>Hospital Stay (3-5 days)</span><span>$8,000</span></div>
+                    <div class="cost-item"><span>Anesthesia</span><span>$3,000</span></div>
+                    <div class="cost-item"><span>Implant</span><span>$8,000-12,000</span></div>
+                    <div class="cost-item"><span>Rehabilitation</span><span>$3,000-5,000</span></div>
+                    <div class="cost-total price-us">Total: $47,000-53,000</div>
+                </div>
+                <div class="cost-card">
+                    <h4>🇨🇳 China Costs</h4>
+                    <div class="cost-item"><span>Surgery Fee</span><span>$3,000</span></div>
+                    <div class="cost-item"><span>Hospital Stay (7-10 days)</span><span>$1,500</span></div>
+                    <div class="cost-item"><span>Anesthesia</span><span>$800</span></div>
+                    <div class="cost-item"><span>Implant (Import Brand)</span><span>$3,000-5,000</span></div>
+                    <div class="cost-item"><span>Rehabilitation</span><span>$500-1,000</span></div>
+                    <div class="cost-total price-china">Total: $8,000-12,000</div>
+                </div>
+            </div>
+            <p style="text-align: center; font-size: 1.2em; margin-top: 20px;"><strong>You Save: $35,000-41,000 (75%)</strong></p>
+            
+            <h3>Heart Bypass Surgery</h3>
+            <div class="cost-breakdown">
+                <div class="cost-card">
+                    <h4>🇺🇸 USA Costs</h4>
+                    <div class="cost-item"><span>Surgery Fee</span><span>$80,000</span></div>
+                    <div class="cost-item"><span>ICU Stay (5-7 days)</span><span>$25,000</span></div>
+                    <div class="cost-item"><span>Anesthesia</span><span>$5,000</span></div>
+                    <div class="cost-item"><span>Pre-op Tests</span><span>$8,000</span></div>
+                    <div class="cost-item"><span>Medications</span><span>$5,000</span></div>
+                    <div class="cost-total price-us">Total: $123,000-150,000</div>
+                </div>
+                <div class="cost-card">
+                    <h4>🇨🇳 China Costs</h4>
+                    <div class="cost-item"><span>Surgery Fee</span><span>$8,000</span></div>
+                    <div class="cost-item"><span>Hospital Stay (7-10 days)</span><span>$3,000</span></div>
+                    <div class="cost-item"><span>Anesthesia</span><span>$1,500</span></div>
+                    <div class="cost-item"><span>Pre-op Tests</span><span>$1,500</span></div>
+                    <div class="cost-item"><span>Medications</span><span>$1,000</span></div>
+                    <div class="cost-total price-china">Total: $15,000-18,000</div>
+                </div>
+            </div>
+            <p style="text-align: center; font-size: 1.2em; margin-top: 20px;"><strong>You Save: $105,000-132,000 (85%)</strong></p>
+        </div>
+        
+        <!-- Why China Costs Less -->
+        <div class="section">
+            <h2>🤔 Why Does China Cost Less?</h2>
+            
+            <h3>1. Lower Operating Costs</h3>
+            <ul style="margin-left: 20px; margin-bottom: 20px;">
+                <li>Doctor salaries are reasonable relative to local cost of living</li>
+                <li>Hospital rent and operational costs are lower</li>
+                <li>Medical equipment procurement and maintenance costs less</li>
+            </ul>
+            
+            <h3>2. Economies of Scale</h3>
+            <ul style="margin-left: 20px; margin-bottom: 20px;">
+                <li>Chinese hospitals perform high volumes of procedures</li>
+                <li>Standardized processes reduce costs</li>
+                <li>Localized supply chains</li>
+            </ul>
+            
+            <h3>3. Government Support</h3>
+            <ul style="margin-left: 20px; margin-bottom: 20px;">
+                <li>Significant investment in healthcare infrastructure</li>
+                <li>Policies supporting medical tourism development</li>
+                <li>Streamlined medical approval processes</li>
+            </ul>
+            
+            <h3>4. Quality Without Compromise</h3>
+            <ul style="margin-left: 20px;">
+                <li>Same imported medical devices and implants</li>
+                <li>Highly experienced surgeons (often 500+ procedures/year)</li>
+                <li>Modern, JCI-accredited facilities</li>
+            </ul>
+        </div>
+        
+        <!-- Real Case Studies -->
+        <div class="section">
+            <h2>👥 Real Patient Savings</h2>
+            
+            <div class="case-study">
+                <h4>🇬🇧 James from UK - Knee Replacement</h4>
+                <p><strong>UK Private Quote:</strong> £32,000 + 6-month wait</p>
+                <p><strong>China Total Cost:</strong> £6,000 (surgery) + £1,500 (travel & accommodation)</p>
+                <div class="savings-highlight">Saved: £24,500 + 5 months</div>
+            </div>
+            
+            <div class="case-study">
+                <h4>🇨🇦 Robert from Canada - Heart Bypass</h4>
+                <p><strong>Canada Quote:</strong> $120,000 CAD + 6-month wait</p>
+                <p><strong>China Total Cost:</strong> $35,000 CAD (all-inclusive)</p>
+                <div class="savings-highlight">Saved: $85,000 CAD + 5 months</div>
+            </div>
+            
+            <div class="case-study">
+                <h4>🇪🇸 Maria from Spain - Hip Replacement</h4>
+                <p><strong>Spain Private Quote:</strong> €28,000</p>
+                <p><strong>China Total Cost:</strong> €8,500 (all-inclusive)</p>
+                <div class="savings-highlight">Saved: €19,500</div>
+            </div>
+        </div>
+        
+        <!-- Hidden Costs -->
+        <div class="section">
+            <h2>💡 Additional Costs to Budget For</h2>
+            
+            <h3>✅ What's Included in China Package</h3>
+            <ul style="margin-left: 20px; margin-bottom: 20px;">
+                <li>Surgery and anesthesia</li>
+                <li>All hospital stay expenses</li>
+                <li>Pre-surgery examinations</li>
+                <li>Post-surgery follow-up</li>
+                <li>English-speaking coordinator</li>
+                <li>Airport pickup (selected packages)</li>
+            </ul>
+            
+            <h3>💰 Additional Expenses (Budget For)</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Expense</th>
+                        <th>Estimated Cost (USD)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>International Flights (Round-trip)</td>
+                        <td>$800 - 2,000</td>
+                    </tr>
+                    <tr>
+                        <td>China Medical Visa (S2 Visa)</td>
+                        <td>$140 - 200</td>
+                    </tr>
+                    <tr>
+                        <td>Accommodation (Non-hospital nights)</td>
+                        <td>$50 - 150/night</td>
+                    </tr>
+                    <tr>
+                        <td>Meals (Outside hospital)</td>
+                        <td>$20 - 50/day</td>
+                    </tr>
+                    <tr>
+                        <td>Local Transportation</td>
+                        <td>$20 - 50/day</td>
+                    </tr>
+                    <tr>
+                        <td>Travel Insurance</td>
+                        <td>$100 - 300</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>🏠 Post-Return Costs</h3>
+            <ul style="margin-left: 20px;">
+                <li>Follow-up examinations in your home country</li>
+                <li>Physical therapy and rehabilitation</li>
+                <li>Prescription medications</li>
+            </ul>
+        </div>
+        
+        <!-- City Comparison -->
+        <div class="section">
+            <h2>🏙️ Cost Comparison by City</h2>
+            <div class="city-grid">
+                <div class="city-card">
+                    <h4>Beijing</h4>
+                    <p>Top-tier hospitals</p>
+                    <p>Complex cases</p>
+                    <span class="cost-level cost-high">Medical: High</span>
+                </div>
+                <div class="city-card">
+                    <h4>Shanghai</h4>
+                    <p>International standards</p>
+                    <p>Comprehensive care</p>
+                    <span class="cost-level cost-high">Medical: High</span>
+                </div>
+                <div class="city-card">
+                    <h4>Guangzhou</h4>
+                    <p>Good value</p>
+                    <p>Quality care</p>
+                    <span class="cost-level cost-medium">Medical: Medium</span>
+                </div>
+                <div class="city-card">
+                    <h4>Shenzhen</h4>
+                    <p>Modern facilities</p>
+                    <p>Newest equipment</p>
+                    <span class="cost-level cost-medium">Medical: Medium</span>
+                </div>
+                <div class="city-card">
+                    <h4>Chengdu</h4>
+                    <p>Best value</p>
+                    <p>Top hospital (West China)</p>
+                    <span class="cost-level cost-low">Medical: Low</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- FAQ -->
+        <div class="section">
+            <h2>❓ Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <h4>Why is medical care so much cheaper in China? Is the quality lower?</h4>
+                <p>The lower costs stem from operational efficiencies and economies of scale, not quality compromises. Top Chinese hospitals use imported equipment, have highly experienced doctors, and hold JCI accreditation meeting international standards.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h4>Are translation services included?</h4>
+                <p>Yes! Our service packages include English-speaking coordinators, and hospital international departments provide English services.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h4>What if complications arise during surgery?</h4>
+                <p>These hospitals have comprehensive emergency protocols. Some packages include complication insurance coverage.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h4>Can I negotiate the price?</h4>
+                <p>Hospital fees are standardized, but we can help you choose the most cost-effective option for your needs.</p>
+            </div>
+        </div>
+        
+        <!-- CTA Section -->
+        <div class="cta-section">
+            <h2>Ready to Save Thousands on Your Medical Procedure?</h2>
+            <p style="font-size: 1.2em; opacity: 0.9; margin-top: 15px;">Join 500+ patients who saved $50,000+ on world-class healthcare</p>
+            <a href="/" class="cta-button">Get Your Free Cost Estimate →</a>
+            <div class="trust-badges">
+                <div class="trust-badge">✓ No obligation</div>
+                <div class="trust-badge">✓ Free consultation</div>
+                <div class="trust-badge">✓ Response within 24 hours</div>
+            </div>
+        </div>
+        
+        <!-- Related Links -->
+        <div class="section">
+            <h2>📚 Related Articles</h2>
+            <ul style="list-style: none; padding: 0;">
+                <li style="margin-bottom: 15px;">👉 <a href="blog/knee-replacement-cost-china.html" style="color: var(--secondary); font-weight: bold;">Knee Replacement Cost in China 2026 | Save 70%</a></li>
+                <li style="margin-bottom: 15px;">👉 <a href="blog/hip-replacement-cost-china.html" style="color: var(--secondary); font-weight: bold;">Hip Replacement Cost in China 2026 | Save 60-70%</a></li>
+                <li style="margin-bottom: 15px;">👉 <a href="blog/heart-surgery-cost-china.html" style="color: var(--secondary); font-weight: bold;">Heart Surgery Cost in China 2026 | Save 85%</a></li>
+                <li style="margin-bottom: 15px;">👉 <a href="stories.html" style="color: var(--secondary); font-weight: bold;">Real Patient Stories & Savings</a></li>
+                <li>👉 <a href="blog/china-hospital-rankings-2026.html" style="color: var(--secondary); font-weight: bold;">China Hospital Rankings 2026</a></li>
+            </ul>
+        </div>
+        
+        <!-- Disclaimer -->
+        <div class="section" style="background: #fff3e0; border-left: 4px solid #ff9800; padding: 25px; border-radius: 0 12px 12px 0;">
+            <h3 style="color: #e65100; margin-bottom: 15px;">⚠️ Important Disclaimer</h3>
+            <p style="color: #666; font-size: 0.95em; line-height: 1.8;">
+                <strong>All costs shown are estimates based on publicly available information and patient feedback.</strong> Actual fees vary by hospital, doctor, procedure complexity, and individual circumstances. 
+            </p>
+            <p style="color: #666; font-size: 0.95em; line-height: 1.8; margin-top: 10px;">
+                Prices are subject to change. Please contact the hospital's international department directly for current, accurate pricing. We recommend getting a formal quote before making travel arrangements.
+            </p>
+            <p style="color: #666; font-size: 0.9em; margin-top: 15px; font-style: italic;">
+                Last updated: March 2026
+            </p>
+        </div>
+        
+        <a href="/" class="back-link">← Back to Home</a>
+    </div>
+<script>
+        document.getElementById('navToggle').addEventListener('click', function() {
+            document.getElementById('navLinks').classList.toggle('active');
+        });
+        document.querySelectorAll('.nav-links a').forEach(function(link) {
+            link.addEventListener('click', function() {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>

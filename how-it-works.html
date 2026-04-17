@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How It Works | Medical Tourism to China - China Hospitals Guide</title>
+    <meta name="description" content="Professional medical tourism consulting service for China. Expert guidance, hospital matching, and treatment coordination. Transparent fees, no hospital commissions.">
+    <link rel="canonical" href="https://chinahospitalsguide.com/how-it-works.html">
+    
+    <style>
+        :root {
+            --primary: #1e3c72;
+            --primary-light: #2a5298;
+            --accent: #c84b31;
+            --accent-light: #e85d4a;
+            --success: #22c55e;
+            --text: #2d3748;
+            --text-light: #4a5568;
+            --bg: #f8f9fa;
+            --white: #ffffff;
+            --border: #e2e8f0;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.7; color: var(--text); background: var(--bg); }
+            padding-top: 70px;
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+        
+        .page-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--white);
+            padding: 80px 20px;
+            text-align: center;
+        }
+        .page-header h1 { font-size: 2.8rem; margin-bottom: 15px; }
+        .page-header p { font-size: 1.3rem; opacity: 0.9; max-width: 650px; margin: 0 auto; }
+        
+        .content { background: var(--white); padding: 80px 20px; }
+        
+        .trust-banner {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border: 2px solid #22c55e;
+            border-radius: 16px;
+            padding: 30px 40px;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .trust-banner h3 { font-size: 1.5rem; color: #15803d; margin-bottom: 10px; }
+        .trust-banner p { font-size: 1.1rem; color: #166534; }
+        
+        .steps-container { position: relative; }
+        
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 40px;
+            margin-bottom: 60px;
+            position: relative;
+        }
+        .step:last-child { margin-bottom: 0; }
+        
+        .step-number {
+            flex-shrink: 0;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+            position: relative;
+            z-index: 2;
+        }
+        .step:last-child .step-number { background: linear-gradient(135deg, var(--success) 0%, #16a34a 100%); }
+        
+        .step-content { flex: 1; }
+        .step h2 { font-size: 1.6rem; color: var(--primary); margin-bottom: 15px; }
+        .step p { font-size: 1.1rem; color: var(--text-light); margin-bottom: 20px; line-height: 1.8; }
+        
+        .step-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .step-feature {
+            background: var(--bg);
+            padding: 15px 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.88rem;
+        }
+        .step-feature::before { content: "✓"; color: var(--success); font-weight: 700; }
+        
+        .connector {
+            position: absolute;
+            left: 39px;
+            top: 80px;
+            width: 2px;
+            height: calc(100% - 80px);
+            background: linear-gradient(to bottom, var(--primary) 0%, var(--border) 100%);
+            z-index: 1;
+        }
+        .step:last-child .connector { display: none; }
+        
+        .pricing-section {
+            background: var(--bg);
+            border-radius: 16px;
+            padding: 40px;
+            margin: 50px 0;
+        }
+        .pricing-section h2 { font-size: 1.8rem; color: var(--primary); margin-bottom: 25px; text-align: center; }
+        
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        .pricing-card {
+            background: var(--white);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+        }
+        .pricing-card.featured {
+            border-color: var(--primary);
+            box-shadow: 0 4px 20px rgba(30, 60, 114, 0.15);
+        }
+        .pricing-card h3 { font-size: 1.2rem; color: var(--text); margin-bottom: 15px; }
+        .pricing-card .price { font-size: 2rem; font-weight: 700; color: var(--primary); margin-bottom: 15px; }
+        .pricing-card .price span { font-size: 1rem; font-weight: 400; color: var(--text-light); }
+        .pricing-card ul { list-style: none; text-align: left; }
+        .pricing-card li { padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 0.88rem; }
+        .pricing-card li::before { content: "✓ "; color: var(--success); font-weight: 700; }
+        
+        .why-us {
+            background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+            border: 1px solid #fed7aa;
+            border-radius: 16px;
+            padding: 40px;
+            margin: 50px 0;
+        }
+        .why-us h2 { font-size: 1.8rem; color: var(--accent); margin-bottom: 25px; text-align: center; }
+        
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+        .why-item {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        .why-item h4 { font-size: 1.1rem; color: var(--primary); margin-bottom: 10px; }
+        .why-item p { font-size: 0.88rem; color: var(--text-light); }
+        
+        .cta-section {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            color: var(--white);
+            padding: 50px;
+            border-radius: 16px;
+            text-align: center;
+            margin: 50px 0;
+        }
+        .cta-section h3 { font-size: 1.8rem; margin-bottom: 15px; }
+        .cta-section p { font-size: 1.1rem; margin-bottom: 25px; opacity: 0.95; }
+        .cta-btn { 
+            display: inline-block; 
+            background: var(--white); 
+            color: var(--accent); 
+            padding: 15px 40px; 
+            border-radius: 8px; 
+            text-decoration: none; 
+            font-weight: 700; 
+            font-size: 1.1rem;
+            transition: transform 0.2s;
+        }
+        .cta-btn:hover { transform: translateY(-3px); }
+        
+        .faq-section { margin-top: 60px; }
+        .faq-section h2 { font-size: 1.8rem; color: var(--primary); margin-bottom: 30px; text-align: center; }
+        
+        .faq-item {
+            background: var(--bg);
+            border-radius: 12px;
+            padding: 25px 30px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--primary);
+        }
+        .faq-item h4 { font-size: 1.15rem; color: var(--primary); margin-bottom: 10px; }
+        .faq-item p { color: var(--text-light); font-size: 1rem; }
+        
+        .page-footer { background: var(--bg); padding: 30px 0; text-align: center; color: var(--text-light); font-size: 0.9rem; }
+        .page-footer a { color: var(--primary); }
+        
+        @media (max-width: 768px) {
+            .page-header h1 { font-size: 2rem; }
+            .step { flex-direction: column; align-items: center; text-align: center; gap: 20px; }
+            .connector { display: none; }
+            .step-features { grid-template-columns: 1fr; }
+            .cta-section { padding: 30px 20px; }
+            .pricing-cards { grid-template-columns: 1fr; }
+        }
+        .navbar { background: rgba(30, 60, 114, 0.95); backdrop-filter: blur(10px); padding: 0; position: fixed; top: 0; left: 0; right: 0; z-index: 1000; box-shadow: 0 2px 20px rgba(0,0,0,0.1); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; height: 70px; }
+        .nav-logo { white-space: nowrap; font-size: 1.5rem; font-weight: bold; color: white; text-decoration: none; display: flex; align-items: center; gap: 10px; }
+        .nav-logo:hover { color: #ff6b6b; }
+        .nav-links { display: flex; list-style: none; gap: 0; margin: 0; padding: 0; flex-wrap: nowrap; }
+        .nav-links li { display: flex; }
+        .nav-links a { color: rgba(255,255,255,0.9); text-decoration: none; padding: 25px 10px; display: block; transition: all 0.3s; font-weight: 500; position: relative; font-size: 0.9rem; }
+        .nav-links a:hover { color: white; background: rgba(255,255,255,0.1); }
+        .nav-links a.active { color: #ff6b6b; }
+        .nav-links a.active::after { content: ''; position: absolute; bottom: 0; left: 20px; right: 20px; height: 3px; background: #ff6b6b; }
+        .nav-cta { background: #ff6b6b; color: white; padding: 10px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; transition: all 0.3s; }
+        .nav-cta:hover { background: #ff5252; transform: translateY(-2px); }
+        .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 10px; }
+        .nav-toggle span { width: 25px; height: 3px; background: white; transition: all 0.3s; }
+        @media (max-width: 768px) { .nav-toggle { display: flex; } .nav-links { position: absolute; top: 70px; left: 0; right: 0; background: rgba(30, 60, 114, 0.98); flex-direction: column; max-height: 0; overflow: hidden; transition: max-height 0.3s; padding: 0; } .nav-links.active { max-height: 600px; padding: 10px 0; } .nav-links li { width: 100%; } .nav-links a { padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); display: block; text-align: center; } .nav-cta { display: none; } }
+
+      
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">🏥 China Hospitals Guide</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="hospitals.html">Hospitals</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="how-it-works.html">Process</a></li>
+                <li><a href="blog/">Blog</a></li>
+                <li><a href="news/">News</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="course.html">Course</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <a href="pricing.html" class="nav-cta">Pricing</a>
+            <div class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+    <header class="page-header">
+        <div class="container">
+            <h1>How It Works</h1>
+            <p>Expert medical tourism consulting for China. Independent advice, transparent pricing, no hospital commissions.</p>
+        </div>
+    </header>
+    
+    <main class="content">
+        <div class="container">
+            
+            <div class="trust-banner">
+                <h3>🛡️ Independent & Transparent</h3>
+                <p><strong>We are NOT affiliated with any hospital.</strong> We provide independent consulting services and charge transparent consulting fees. Our recommendations are based solely on your medical needs, not hospital commissions.</p>
+            </div>
+            
+            <div class="steps-container">
+                <div class="connector"></div>
+                
+                <!-- Step 1 -->
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h2>📋 Submit Your Inquiry</h2>
+                        <p>Tell us about your medical condition and treatment needs. Our medical consultants will review your case and provide independent expert advice on the most suitable hospitals and specialists in China.</p>
+                        <div class="step-features">
+                            <div class="step-feature">Free initial assessment</div>
+                            <div class="step-feature">Share medical documents</div>
+                            <div class="step-feature">Specify preferences</div>
+                            <div class="step-feature">No commitment required</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 2 -->
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h2>📊 Receive Expert Analysis</h2>
+                        <p>Our consulting team provides you with detailed analysis of your options: hospital comparisons, doctor credentials, treatment plans, and transparent cost estimates. You get professional medical consulting — not hospital marketing.</p>
+                        <div class="step-features">
+                            <div class="step-feature">Hospital comparison report</div>
+                            <div class="step-feature">Doctor credentials verified</div>
+                            <div class="step-feature">Treatment plan outline</div>
+                            <div class="step-feature">Transparent cost breakdown</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 3 -->
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h2>✅ Choose & Approve</h2>
+                        <p>You decide which hospital and treatment plan best fits your needs and budget. We handle all coordination: appointment scheduling, visa documentation, and travel logistics. Our consulting fee is clearly stated upfront — no hidden costs.</p>
+                        <div class="step-features">
+                            <div class="step-feature">You make the final decision</div>
+                            <div class="step-feature">Appointment coordination</div>
+                            <div class="step-feature">Visa assistance</div>
+                            <div class="step-feature">Transparent pricing</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 4 -->
+                <div class="step">
+                    <div class="step-number">✓</div>
+                    <div class="step-content">
+                        <h2>✈️ Travel & Treatment</h2>
+                        <p>We provide ongoing consulting support throughout your medical journey. Airport pickup coordination, interpreter arrangement, and 24/7 consulting hotline. We're your independent advocate — not the hospital's agent.</p>
+                        <div class="step-features">
+                            <div class="step-feature">Airport pickup coordination</div>
+                            <div class="step-feature">Medical interpreter</div>
+                            <div class="step-feature">24/7 consulting hotline</div>
+                            <div class="step-feature">Independent advocacy</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <section class="pricing-section">
+                <h2>💰 Consulting Fees</h2>
+                <p style="text-align:center; margin-bottom:30px; color: var(--text-light);">Transparent consulting fees. No hospital commissions, no hidden charges.</p>
+                
+                <div class="pricing-cards">
+                    <div class="pricing-card">
+                        <h3>📋 Basic Consultation</h3>
+                        <div class="price">$30 <span>/ case</span></div>
+                        <ul>
+                            <li>Medical case review</li>
+                            <li>Hospital options overview</li>
+                            <li>Treatment cost estimates</li>
+                            <li>Email support (5 days)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="pricing-card featured">
+                        <h3>🎯 Full Consultation</h3>
+                        <div class="price">$299 <span>/ case</span></div>
+                        <ul>
+                            <li>Everything in Basic</li>
+                            <li>Hospital comparison analysis</li>
+                            <li>Doctor credentials verification</li>
+                            <li>Treatment plan outline</li>
+                            <li>Written consulting report</li>
+                            <li>Email support (14 days)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <p style="text-align:center; margin-top:25px; font-size:0.95rem; color: var(--text-light);">
+                    * Hospital treatment costs are paid directly to the hospital. We do not take commissions from hospitals.
+                </p>
+            </section>
+            
+            <section class="why-us">
+                <h2>Why Choose Our Consulting Service?</h2>
+                <div class="why-grid">
+                    <div class="why-item">
+                        <h4>🏛️ Independent</h4>
+                        <p>We have NO financial relationship with any hospital. Our advice is based solely on your medical needs.</p>
+                    </div>
+                    <div class="why-item">
+                        <h4>📋 Professional</h4>
+                        <p>Medical consultants with healthcare background. Doctor credentials independently verified.</p>
+                    </div>
+                    <div class="why-item">
+                        <h4>💰 Transparent</h4>
+                        <p>Clear consulting fees upfront. You know exactly what you're paying for.</p>
+                    </div>
+                    <div class="why-item">
+                        <h4>🛡️ Your Advocate</h4>
+                        <p>We represent YOUR interests, not the hospital's. You get honest assessment, not sales pitches.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <div class="cta-section">
+                <h3>Get Expert Medical Tourism Consulting</h3>
+                <p>Submit your case for a free initial assessment. No commitment, no hospital commissions.</p>
+                <a href="/contact-new.html" class="cta-btn">Submit Your Case →</a>
+            </div>
+            
+            <section class="faq-section">
+                <h2>Frequently Asked Questions</h2>
+                
+                <div class="faq-item">
+                    <h4>How are you different from other medical tourism services?</h4>
+                    <p><strong>Most medical tourism agencies earn commissions from hospitals.</strong> We do NOT. We charge transparent consulting fees and have no financial relationship with any hospital. This means you get honest, unbiased recommendations based solely on your medical needs.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h4>Do I pay the hospital directly?</h4>
+                    <p>Yes. Hospital treatment costs are paid directly to the hospital — just like you would at home. We do not handle hospital payments or take commissions from hospitals.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h4>What if I don't speak Chinese?</h4>
+                    <p>We arrange professional medical interpreters at all major hospitals. Our coordinators also communicate with you in English throughout the entire process.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h4>Can I choose any hospital I want?</h4>
+                    <p>Absolutely. We provide recommendations, but you make the final decision. We coordinate with whichever hospital you choose.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h4>Is the consulting fee refundable?</h4>
+                    <p>Our Basic consultation fee ($30) covers the initial case review. The Full Consultation fee ($299) covers comprehensive analysis and the written report. Fees are non-refundable once we've begun work on your case.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h4>What hospitals do you work with?</h4>
+                    <p>We provide consulting for all major hospitals in China, including public tertiary hospitals, specialized centers, and international-standard facilities. We match you with the most appropriate hospital for your specific condition — not the hospital that pays us.</p>
+                </div>
+            </section>
+            
+        </div>
+    </main>
+    
+    <footer class="page-footer">
+        <div class="container">
+            <p>📍 <a href="/">China Hospitals Guide</a> | <a href="/contact-new.html">Contact Us</a> | <a href="/resources.html">Resources</a></p>
+            <p style="margin-top:10px;">Independent medical tourism consulting service. Not affiliated with any hospital.</p>
+        </div>
+    </footer>
+<script>
+        document.getElementById('navToggle').addEventListener('click', function() {
+            document.getElementById('navLinks').classList.toggle('active');
+        });
+        document.querySelectorAll('.nav-links a').forEach(function(link) {
+            link.addEventListener('click', function() {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>

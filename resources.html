@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Tourism Resources | China Hospitals Guide</title>
+    <meta name="description" content="Essential resources for medical tourism in China. Find authoritative information on JCI certified hospitals, WHO guidelines, health authorities, and international healthcare standards.">
+    <link rel="canonical" href="https://chinahospitalsguide.com/resources.html">
+    
+    <style>
+        :root {
+            --primary: #1e3c72;
+            --primary-light: #2a5298;
+            --accent: #c84b31;
+            --text: #2d3748;
+            --text-light: #4a5568;
+            --bg: #f8f9fa;
+            --white: #ffffff;
+            --border: #e2e8f0;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.7; color: var(--text); background: var(--bg); }
+            padding-top: 70px;
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+        
+        .page-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--white);
+            padding: 60px 0;
+            text-align: center;
+        }
+        .page-header h1 { font-size: 2.5rem; margin-bottom: 15px; }
+        .page-header p { font-size: 1.2rem; opacity: 0.9; max-width: 600px; margin: 0 auto; }
+        
+        .content { background: var(--white); padding: 60px 0; }
+        
+        .section { margin-bottom: 50px; }
+        .section h2 {
+            font-size: 1.6rem;
+            color: var(--primary);
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 350px));
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 20px;
+        }
+        
+        .resource-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 25px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .resource-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .resource-card h3 {
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        .resource-card p {
+            font-size: 0.88rem;
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+        .resource-card a {
+            display: inline-block;
+            background: var(--primary);
+            color: var(--white);
+            padding: 8px 18px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        .resource-card a:hover { background: var(--accent); }
+        
+        .badge {
+            display: inline-block;
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .badge.official { background: #dcfce7; color: #15803d; }
+        .badge.directory { background: #fef3c7; color: #b45309; }
+        
+        .intro-box {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-left: 4px solid var(--primary);
+            padding: 25px 30px;
+            margin-bottom: 40px;
+            border-radius: 0 12px 12px 0;
+        }
+        .intro-box p { font-size: 1.05rem; color: var(--text); }
+        
+        .page-footer {
+            background: var(--bg);
+            padding: 30px 0;
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        .page-footer a { color: var(--primary); }
+        
+        @media (max-width: 768px) {
+            .page-header h1 { font-size: 1.8rem; }
+            .resource-grid { grid-template-columns: 1fr; }
+        }
+        .navbar { background: rgba(30, 60, 114, 0.95); backdrop-filter: blur(10px); padding: 0; position: fixed; top: 0; left: 0; right: 0; z-index: 1000; box-shadow: 0 2px 20px rgba(0,0,0,0.1); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; height: 70px; }
+        .nav-logo { white-space: nowrap; font-size: 1.5rem; font-weight: bold; color: white; text-decoration: none; display: flex; align-items: center; gap: 10px; }
+        .nav-logo:hover { color: #ff6b6b; }
+        .nav-links { display: flex; list-style: none; gap: 0; margin: 0; padding: 0; flex-wrap: nowrap; }
+        .nav-links a { color: rgba(255,255,255,0.9); text-decoration: none; padding: 25px 20px; display: block; transition: all 0.3s; font-weight: 500; position: relative; }
+        .nav-links a:hover { color: white; background: rgba(255,255,255,0.1); }
+        .nav-links a.active { color: #ff6b6b; }
+        .nav-links a.active::after { content: ''; position: absolute; bottom: 0; left: 20px; right: 20px; height: 3px; background: #ff6b6b; }
+        .nav-cta { background: #ff6b6b; color: white; padding: 10px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; transition: all 0.3s; }
+        .nav-cta:hover { background: #ff5252; transform: translateY(-2px); }
+        .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 10px; }
+        .nav-toggle span { width: 25px; height: 3px; background: white; transition: all 0.3s; }
+        @media (max-width: 768px) { .nav-toggle { display: flex; } .nav-links { position: absolute; top: 70px; left: 0; right: 0; background: rgba(30, 60, 114, 0.98); flex-direction: column; max-height: 0; overflow: hidden; transition: max-height 0.3s; padding: 0; } .nav-links.active { max-height: 600px; padding: 10px 0; } .nav-links li { width: 100%; } .nav-links a { padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); display: block; text-align: center; } .nav-cta { display: none; } }
+        .page-header { padding-top: 130px !important; }
+      
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">🏥 China Hospitals Guide</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="hospitals.html">Hospitals</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="how-it-works.html">Process</a></li>
+                <li><a href="blog/">Blog</a></li>
+                <li><a href="news/">News</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="course.html">Course</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <a href="pricing.html" class="nav-cta">Pricing</a>
+            <div class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+    <header class="page-header">
+        <div class="container">
+            <h1>📚 Medical Tourism Resources</h1>
+            <p>Authoritative information sources, international standards, and official health authorities for your medical journey to China.</p>
+        </div>
+    </header>
+    
+    <main class="content">
+        <div class="container">
+            
+            <div class="intro-box">
+                <p>Planning medical travel requires reliable information. We've compiled these authoritative resources — from international accreditation standards to official health authorities — to help you make informed decisions about healthcare in China.</p>
+            </div>
+            
+            <!-- International Standards & Accreditation -->
+            <section class="section">
+                <h2>🏆 International Standards & Accreditation</h2>
+                <div class="resource-grid">
+                    
+                    <div class="resource-card">
+                        <span class="badge official">Official</span>
+                        <h3>Joint Commission International (JCI)</h3>
+                        <p>Search and verify JCI-accredited hospitals worldwide. JCI certification is the gold standard for international healthcare quality.</p>
+                        <a href="https://www.jointcommissioninternational.org" target="_blank" rel="noopener">Verify Hospital Accreditation →</a>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <span class="badge official">Official</span>
+                        <h3>International Society for Quality in Health Care (ISQua)</h3>
+                        <p>Global organization dedicated to improving patient safety and quality of care through accreditation and external evaluation.</p>
+                        <a href="https://www.isqua.org" target="_blank" rel="noopener">Learn About Standards →</a>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <span class="badge">Healthcare</span>
+                        <h3>International Health Care Standards</h3>
+                        <p>Overview of major international healthcare accreditation systems and their requirements for medical facilities.</p>
+                        <a href="https://www.jcionline.com" target="_blank" rel="noopener">Explore Standards →</a>
+                    </div>
+                    
+                </div>
+            </section>
+            
+            <!-- WHO & Health Authorities -->
+            <section class="section">
+                <h2>🌐 World Health Organization & Health Authorities</h2>
+                <div class="resource-grid">
+                    
+                    <div class="resource-card">
+                        <span class="badge official">Official</span>
+                        <h3>World Health Organization (WHO)</h3>
+                        <p>Official WHO information on health topics, medical tourism considerations, and global health regulations.</p>
+                        <a href="https://www.who.int/health-topics/health-tourism" target="_blank" rel="noopener">WHO Health Tourism Info →</a>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <span class="badge official">Official</span>
+                        <h3>China National Health Commission</h3>
+                        <p>Official information on China's healthcare system, hospital certifications, and medical regulations.</p>
+                        <a href="http://www.nhc.gov.cn" target="_blank" rel="noopener">Visit Official Website →</a>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <span class="badge official">Official</span>
+                        <h3>China National Medical Products Administration</h3>
+                        <p>Oversight of medical devices, pharmaceuticals, and health products in China. Important for understanding treatment safety.</p>
+                        <a href="https://www.nmpa.gov.cn" target="_blank" rel="noopener">Drug & Device Info →</a>
+                    </div>
+                    
+                </div>
+            </section>
+            
+            <!-- China JCI Certified Hospitals -->
+            <section class="section">
+                <h2>🇨🇳 JCI Certified Hospitals in China</h2>
+                <div class="resource-grid">
+                    
+                    <div class="resource-card">
+                        <span class="badge directory">Directory</span>
+                        <h3>JCI Accredited Hospitals in China</h3>
+                        <p>Complete list of JCI-accredited medical institutions across China, verified by Joint Commission International.</p>
+                        <a href="https://www.jointcommissioninternational.org/locations/china/" target="_blank" rel="noopener">Find Hospitals in China →</a>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <span class="badge official">Official</span>
+                        <h3>Chinese Hospital Association</h3>
+                        <p>National association representing hospitals in China. Resources on hospital quality standards and best practices.</p>
+                        <a href="http://www.cha.org.cn" target="_blank" rel="noopener">Visit CHA Website →</a>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <span class="badge">Reference</span>
+                        <h3>China Hospital Quality Standards</h3>
+                        <p>Information on China's hospital quality rating system and clinical pathway standards.</p>
+                        <a href="http://www.nhc.gov.cn/wjw/" target="_blank" rel="noopener">Quality Standards →</a>
+                    </div>
+                    
+                </div>
+            </section>
+            
+            <!-- Medical Tourism Associations -->
+            <section class="section">
+                <h2>🤝 Medical Tourism Associations</h2>
+                <div class="resource-grid">
+                    
+                    <div class="resource-card">
+                        <span class="badge directory">Association</span>
+                        <h3>Medical Tourism Association (MTA)</h3>
+                        <p>Global association promoting medical tourism. Resources for patients and providers in the medical travel industry.</p>
+                        <a href="https://www.medicaltourismassociation.com" target="_blank" rel="noopener">MTA Resources →</a>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <span class="badge directory">Association</span>
+                        <h3>Global Healthcare Accreditation (GHA)</h3>
+                        <p>Accreditation and certification for medical travel and health tourism. Standards for cross-border healthcare services.</p>
+                        <a href="https://www.globalhealthcareaccreditation.com" target="_blank" rel="noopener">Learn About GHA →</a>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <span class="badge directory">Association</span>
+                        <h3>International Medical Travel Association</h3>
+                        <p>Global platform connecting patients, providers, and facilitators in the medical tourism industry.</p>
+                        <a href="https://www.imta-consumers.org" target="_blank" rel="noopener">IMTA Resources →</a>
+                    </div>
+                    
+                </div>
+            </section>
+            
+            <!-- Travel & Visa Information -->
+            <section class="section">
+                <h2>✈️ Travel & Visa Information</h2>
+                <div class="resource-grid">
+                    
+                    <div class="resource-card">
+                        <span class="badge official">Official</span>
+                        <h3>China Visa Requirements</h3>
+                        <p>Official information on visa types, application processes, and current visa-free transit policies for China.</p>
+                        <a href="https://www.visaforchina.cn" target="_blank" rel="noopener">Visa Information →</a>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <span class="badge official">Official</span>
+                        <h3>China Immigration Policy</h3>
+                        <p>Latest updates on China's immigration policies, including transit visa exemptions and medical visa provisions.</p>
+                        <a href="http://www.gov.cn/zhengce/foreign.htm" target="_blank" rel="noopener">Immigration News →</a>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <span class="badge">Travel</span>
+                        <h3>International Patient Travel Guidelines</h3>
+                        <p>Essential travel considerations for medical patients including flight booking, accommodation, and local transportation.</p>
+                        <a href="https://www.iatatravelcentre.com" target="_blank" rel="noopener">IATA Travel Centre →</a>
+                    </div>
+                    
+                </div>
+            </section>
+            
+            <!-- Research & Statistics -->
+            <section class="section">
+                <h2>📊 Medical Tourism Research & Statistics</h2>
+                <div class="resource-grid">
+                    
+                    <div class="resource-card">
+                        <span class="badge">Research</span>
+                        <h3>Patients Beyond Borders</h3>
+                        <p>Comprehensive resource on medical tourism destination guides, cost comparisons, and quality indicators.</p>
+                        <a href="https://www.patientsbeyondborders.com" target="_blank" rel="noopener">Explore Destinations →</a>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <span class="badge">Statistics</span>
+                        <h3>OECD Health Statistics</h3>
+                        <p>International comparison of healthcare systems, treatment costs, and health outcomes across countries.</p>
+                        <a href="https://www.oecd.org/health/health-data.htm" target="_blank" rel="noopener">Health Data →</a>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <span class="badge">Research</span>
+                        <h3>International Healthcare Research</h3>
+                        <p>Academic research and studies on medical tourism trends, patient outcomes, and quality of care comparisons.</p>
+                        <a href="https://www.ncbi.nlm.nih.gov/pmc/" target="_blank" rel="noopener">PubMed Central →</a>
+                    </div>
+                    
+                </div>
+            </section>
+            
+            <!-- Patient Rights & Safety -->
+            <section class="section">
+                <h2>⚖️ Patient Rights & Safety</h2>
+                <div class="resource-grid">
+                    
+                    <div class="resource-card">
+                        <span class="badge official">Official</span>
+                        <h3>International Patient Safety Goals</h3>
+                        <p>WHO guidelines on patient safety and international standards for healthcare quality and safety.</p>
+                        <a href="https://www.who.int/news-room/fact-sheets/detail/patient-safety" target="_blank" rel="noopener">Patient Safety Info →</a>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <span class="badge">Advocacy</span>
+                        <h3>International Society for Patient Rights</h3>
+                        <p>Resources on patient rights, informed consent, and patient advocacy in healthcare settings worldwide.</p>
+                        <a href="https://www.isop.net" target="_blank" rel="noopener">Patient Rights →</a>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <span class="badge">Insurance</span>
+                        <h3>Travel & Health Insurance Resources</h3>
+                        <p>Understanding insurance coverage for international medical treatment and travel health insurance options.</p>
+                        <a href="https://www.care兄.com" target="_blank" rel="noopener">Insurance Guide →</a>
+                    </div>
+                    
+                </div>
+            </section>
+            
+        </div>
+    </main>
+    
+    <footer class="page-footer">
+        <div class="container">
+            <p>📍 <a href="/">China Hospitals Guide</a> | <a href="/contact-new.html">Contact Us</a></p>
+            <p style="margin-top:10px;">⚠️ Disclaimer: These resources are provided for informational purposes. Always verify information with official sources and consult with qualified healthcare professionals.</p>
+        </div>
+    </footer>
+<script>
+        document.getElementById('navToggle').addEventListener('click', function() {
+            document.getElementById('navLinks').classList.toggle('active');
+        });
+        document.querySelectorAll('.nav-links a').forEach(function(link) {
+            link.addEventListener('click', function() {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
