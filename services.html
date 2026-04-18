@@ -20,40 +20,12 @@
     <meta name="twitter:description" content="Professional medical tourism coordination in China. We match you with top hospitals and provide end-to-end support.">
     <meta name="twitter:image" content="https://chinahospitalsguide.com/og-image.jpg">
     
+    <!-- Shared CSS -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Page-specific CSS -->
     <style>
-        :root {
-            --primary: #1e3c72;
-            --secondary: #2a5298;
-            --accent: #ff6b6b;
-            --text: #333;
-            --light: #f8f9fa;
-            --success: #27ae60;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: var(--text); }
-            padding-top: 120px;
-        
-        /* Navigation */
-        nav { background: white; padding: 15px 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
-        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary); text-decoration: none; }
-        .nav-links { display: flex; gap: 30px; list-style: none; }
-        .nav-links a { text-decoration: none; color: var(--text); font-weight: 500; transition: color 0.3s; }
-        .nav-links a:hover { color: var(--accent); }
-        .mobile-menu { display: none; font-size: 1.5rem; cursor: pointer; }
-        
-        @media (max-width: 768px) {
-            .nav-links { display: none; position: absolute; top: 60px; left: 0; right: 0; background: white; flex-direction: column; padding: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
-            .nav-links.active { display: flex; }
-            .mobile-menu { display: block; }
-        }
-        
-        /* Hero */
-        .hero { background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white; padding: 80px 20px; text-align: center; }
-        .hero h1 { font-size: 2.5rem; margin-bottom: 20px; }
-        .hero p { font-size: 1.2rem; max-width: 700px; margin: 0 auto; opacity: 0.9; }
-        
-        /* Core Value */
+        /* Core Value Section */
         .core-value { padding: 80px 20px; max-width: 900px; margin: 0 auto; text-align: center; }
         .core-value h2 { font-size: 2rem; color: var(--primary); margin-bottom: 30px; }
         .core-value p { font-size: 1.1rem; color: #555; margin-bottom: 20px; max-width: 700px; margin-left: auto; margin-right: auto; }
@@ -62,7 +34,7 @@
         .value-card h3 { color: var(--primary); margin-bottom: 15px; font-size: 1.2rem; }
         .value-card p { font-size: 1rem; color: #666; margin: 0; }
         
-        /* Services */
+        /* Services Section */
         .services { padding: 80px 20px; max-width: 1100px; margin: 0 auto; }
         .section-title { text-align: center; font-size: 2rem; color: var(--primary); margin-bottom: 50px; }
         
@@ -95,7 +67,7 @@
         .service-card li:last-child { border-bottom: none; }
         .service-card li::before { content: "✓ "; color: var(--success); font-weight: bold; margin-right: 8px; }
         
-        /* Pricing */
+        /* Pricing Section */
         .pricing { background: var(--light); padding: 80px 20px; }
         .pricing-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
         
@@ -130,13 +102,8 @@
         .pricing-card li::before { content: "✓ "; color: var(--success); font-weight: bold; margin-right: 8px; }
         .pricing-card li.missing::before { content: "— "; color: #ccc; font-weight: normal; margin-right: 8px; }
         .pricing-card li.missing { color: #aaa; }
-        .btn { display: inline-block; padding: 12px 30px; border-radius: 25px; text-decoration: none; font-weight: bold; font-size: 1rem; transition: transform 0.3s; }
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-primary:hover { transform: translateY(-2px); background: var(--secondary); }
-        .btn-outline { border: 2px solid var(--primary); color: var(--primary); }
-        .btn-outline:hover { background: var(--primary); color: white; }
         
-        /* Why Our Service Has Value */
+        /* Why Value Section */
         .why-value { padding: 80px 20px; max-width: 900px; margin: 0 auto; text-align: center; }
         .why-value h2 { font-size: 2rem; color: var(--primary); margin-bottom: 50px; }
         .why-item { display: flex; gap: 25px; margin-bottom: 35px; text-align: left; align-items: flex-start; }
@@ -144,39 +111,31 @@
         .why-item h4 { color: var(--primary); margin-bottom: 8px; font-size: 1.1rem; }
         .why-item p { color: #555; font-size: 0.88rem; margin: 0; }
         
-        /* CTA */
-        .cta { background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white; padding: 80px 20px; text-align: center; }
-        .cta h2 { font-size: 2rem; margin-bottom: 20px; }
-        .cta p { font-size: 1.1rem; margin-bottom: 30px; opacity: 0.9; max-width: 600px; margin-left: auto; margin-right: auto; }
-        .cta-btn { display: inline-block; background: white; color: var(--primary); padding: 15px 40px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 1.1rem; transition: transform 0.3s; }
-        .cta-btn:hover { transform: translateY(-3px); }
-        
-        /* Footer */
-        footer { background: #1a1a2e; color: white; padding: 40px 20px; text-align: center; }
-        .footer-links { display: flex; justify-content: center; gap: 30px; margin-bottom: 20px; flex-wrap: wrap; }
-        .footer-links a { color: white; text-decoration: none; opacity: 0.8; }
-        .footer-links a:hover { opacity: 1; }
-        .navbar { background: rgba(30, 60, 114, 0.95); backdrop-filter: blur(10px); padding: 0; position: fixed; top: 0; left: 0; right: 0; z-index: 1000; box-shadow: 0 2px 20px rgba(0,0,0,0.1); }
-        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; height: 70px; }
-        .nav-logo { white-space: nowrap; font-size: 1.5rem; font-weight: bold; color: white; text-decoration: none; display: flex; align-items: center; gap: 10px; }
-        .nav-logo:hover { color: #ff6b6b; }
-        .nav-links { display: flex; list-style: none; gap: 0; margin: 0; padding: 0; flex-wrap: nowrap; }
-        .nav-links a { color: rgba(255,255,255,0.9); text-decoration: none; padding: 25px 20px; display: block; transition: all 0.3s; font-weight: 500; position: relative; }
-        .nav-links a:hover { color: white; background: rgba(255,255,255,0.1); }
-        .nav-links a.active { color: #ff6b6b; }
-        .nav-links a.active::after { content: ''; position: absolute; bottom: 0; left: 20px; right: 20px; height: 3px; background: #ff6b6b; }
-        .nav-cta { background: #ff6b6b; color: white; padding: 10px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; transition: all 0.3s; }
-        .nav-cta:hover { background: #ff5252; transform: translateY(-2px); }
-        .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 10px; }
-        .nav-toggle span { width: 25px; height: 3px; background: white; transition: all 0.3s; }
-        @media (max-width: 768px) { .nav-toggle { display: flex; } .nav-links { position: absolute; top: 70px; left: 0; right: 0; background: rgba(30, 60, 114, 0.98); flex-direction: column; max-height: 0; overflow: hidden; transition: max-height 0.3s; padding: 0; } .nav-links.active { max-height: 600px; padding: 10px 0; } .nav-links li { width: 100%; } .nav-links a { padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); display: block; text-align: center; } .nav-cta { display: none; } }
+        /* Utility */
         .page-header { padding-top: 130px !important; }
-      
     </style>
 
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2521119288266043"
      crossorigin="anonymous"></script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "serviceType": "Medical Tourism Coordination",
+        "name": "China Hospitals Guide - Medical Tourism Services",
+        "description": "Professional medical tourism coordination in China. We match you with top hospitals and provide end-to-end support.",
+        "provider": {
+            "@type": "Organization",
+            "name": "China Hospitals Guide",
+            "url": "https://chinahospitalsguide.com"
+        },
+        "areaServed": "Worldwide",
+        "url": "https://chinahospitalsguide.com/services.html"
+    }
+    </script>
+
 </head>
 <body>
     <nav class="navbar">
@@ -190,8 +149,7 @@
                 <li><a href="blog/">Blog</a></li>
                 <li><a href="news/">News</a></li>
                 <li><a href="resources.html">Resources</a></li>
-                <li><a href="course.html">Course</a></li>
-                <li><a href="contact.html">Contact</a></li>
+<li><a href="contact.html">Contact</a></li>
             </ul>
             <a href="pricing.html" class="nav-cta">Pricing</a>
             <div class="nav-toggle" id="navToggle">
@@ -359,12 +317,6 @@
     </footer>
 
     <script>
-        function toggleMenu() {
-            document.getElementById('navLinks').classList.toggle('active');
-        }
-    </script>
-<div style="text-align:center;padding:30px 0;border-top:1px solid #eee;margin-top:40px;"><a href="index.html" style="color:#1e3c72;text-decoration:none;font-size:14px;">← Back to Home</a></div>
-<script>
         document.getElementById('navToggle').addEventListener('click', function() {
             document.getElementById('navLinks').classList.toggle('active');
         });

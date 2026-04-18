@@ -7,9 +7,12 @@
     <meta name="description" content="Professional medical tourism consulting service for China. Expert guidance, hospital matching, and treatment coordination. Transparent fees, no hospital commissions.">
     <link rel="canonical" href="https://chinahospitalsguide.com/how-it-works.html">
     
+    <!-- Shared CSS -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Page-specific CSS -->
     <style>
         :root {
-            --primary: #1e3c72;
             --primary-light: #2a5298;
             --accent: #c84b31;
             --accent-light: #e85d4a;
@@ -21,9 +24,6 @@
             --border: #e2e8f0;
         }
         
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.7; color: var(--text); background: var(--bg); }
-            padding-top: 70px;
         .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
         
         .page-header {
@@ -208,23 +208,6 @@
             .cta-section { padding: 30px 20px; }
             .pricing-cards { grid-template-columns: 1fr; }
         }
-        .navbar { background: rgba(30, 60, 114, 0.95); backdrop-filter: blur(10px); padding: 0; position: fixed; top: 0; left: 0; right: 0; z-index: 1000; box-shadow: 0 2px 20px rgba(0,0,0,0.1); }
-        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; height: 70px; }
-        .nav-logo { white-space: nowrap; font-size: 1.5rem; font-weight: bold; color: white; text-decoration: none; display: flex; align-items: center; gap: 10px; }
-        .nav-logo:hover { color: #ff6b6b; }
-        .nav-links { display: flex; list-style: none; gap: 0; margin: 0; padding: 0; flex-wrap: nowrap; }
-        .nav-links li { display: flex; }
-        .nav-links a { color: rgba(255,255,255,0.9); text-decoration: none; padding: 25px 10px; display: block; transition: all 0.3s; font-weight: 500; position: relative; font-size: 0.9rem; }
-        .nav-links a:hover { color: white; background: rgba(255,255,255,0.1); }
-        .nav-links a.active { color: #ff6b6b; }
-        .nav-links a.active::after { content: ''; position: absolute; bottom: 0; left: 20px; right: 20px; height: 3px; background: #ff6b6b; }
-        .nav-cta { background: #ff6b6b; color: white; padding: 10px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; transition: all 0.3s; }
-        .nav-cta:hover { background: #ff5252; transform: translateY(-2px); }
-        .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 10px; }
-        .nav-toggle span { width: 25px; height: 3px; background: white; transition: all 0.3s; }
-        @media (max-width: 768px) { .nav-toggle { display: flex; } .nav-links { position: absolute; top: 70px; left: 0; right: 0; background: rgba(30, 60, 114, 0.98); flex-direction: column; max-height: 0; overflow: hidden; transition: max-height 0.3s; padding: 0; } .nav-links.active { max-height: 600px; padding: 10px 0; } .nav-links li { width: 100%; } .nav-links a { padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); display: block; text-align: center; } .nav-cta { display: none; } }
-
-      
     </style>
 </head>
 <body>
@@ -239,8 +222,7 @@
                 <li><a href="blog/">Blog</a></li>
                 <li><a href="news/">News</a></li>
                 <li><a href="resources.html">Resources</a></li>
-                <li><a href="course.html">Course</a></li>
-                <li><a href="contact.html">Contact</a></li>
+<li><a href="contact.html">Contact</a></li>
             </ul>
             <a href="pricing.html" class="nav-cta">Pricing</a>
             <div class="nav-toggle" id="navToggle">
@@ -389,7 +371,7 @@
             <div class="cta-section">
                 <h3>Get Expert Medical Tourism Consulting</h3>
                 <p>Submit your case for a free initial assessment. No commitment, no hospital commissions.</p>
-                <a href="/contact-new.html" class="cta-btn">Submit Your Case →</a>
+                <a href="contact.html" class="cta-btn">Submit Your Case →</a>
             </div>
             
             <section class="faq-section">
@@ -431,11 +413,12 @@
     
     <footer class="page-footer">
         <div class="container">
-            <p>📍 <a href="/">China Hospitals Guide</a> | <a href="/contact-new.html">Contact Us</a> | <a href="/resources.html">Resources</a></p>
+            <p>📍 <a href="/">China Hospitals Guide</a> | <a href="/contact.html">Contact Us</a> | <a href="/resources.html">Resources</a></p>
             <p style="margin-top:10px;">Independent medical tourism consulting service. Not affiliated with any hospital.</p>
         </div>
     </footer>
-<script>
+
+    <script>
         document.getElementById('navToggle').addEventListener('click', function() {
             document.getElementById('navLinks').classList.toggle('active');
         });

@@ -82,6 +82,18 @@
             font-weight: 500;
             font-size: 0.88rem;
         }
+            
+            .nav-links .nav-cta-mobile {
+                display: block;
+                margin: 10px 20px;
+                padding: 12px 25px;
+                background: #ff6b6b;
+                color: white;
+                border-radius: 25px;
+                text-align: center;
+                font-weight: bold;
+                text-decoration: none;
+            }
         .nav-links a:hover { color: white; background: rgba(255,255,255,0.1); }
         .nav-links a.active { color: #ff6b6b; }
         .nav-cta {
@@ -247,6 +259,18 @@
             .nav-links { position: absolute; top: 70px; left: 0; right: 0; background: rgba(30,60,114,0.98); flex-direction: column; max-height: 0; overflow: hidden; transition: max-height 0.3s; }
             .nav-links.active { max-height: 500px; }
             .nav-links a { padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); display: block; text-align: center; }
+            
+            .nav-links .nav-cta-mobile {
+                display: block;
+                margin: 10px 20px;
+                padding: 12px 25px;
+                background: #ff6b6b;
+                color: white;
+                border-radius: 25px;
+                text-align: center;
+                font-weight: bold;
+                text-decoration: none;
+            }
             .nav-cta { display: none; }
         }
     </style>
@@ -263,8 +287,7 @@
                 <li><a href="../blog/">Blog</a></li>
                 <li><a href="./" class="active">News</a></li>
                 <li><a href="../resources.html">Resources</a></li>
-                <li><a href="../course.html">Course</a></li>
-                <li><a href="../contact.html">Contact</a></li>
+<li><a href="../contact.html">Contact</a></li>
             </ul>
             <a href="../pricing.html" class="nav-cta">Pricing</a>
             <div class="nav-toggle" id="navToggle"><span></span><span></span><span></span></div>
