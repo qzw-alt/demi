@@ -11,33 +11,248 @@
     <meta name="description" content="Free downloadable checklist for medical tourism in China. Everything you need to prepare for your medical journey.">
     <link rel="canonical" href="https://chinahospitalsguide.com/checklist.html">
     
-    <!-- Facebook Pixel Code -->
-    <script>
-        !function(f,b,e,v,n,t,s)
-        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-        n.queue=[];t=b.createElement(e);t.async=!0;
-        t.src=v;s=b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t,s)}(window, document,'script',
-        'https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', 'YOUR_PIXEL_ID'); // Replace with your Pixel ID
-        fbq('track', 'PageView');
-    </script>
-    <noscript>
-        <img height="1" width="1" style="display:none" 
-        src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
-    </noscript>
-    <!-- End Facebook Pixel Code -->
-    
-    
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            padding-top: 120px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            line-height: 1.6; 
+            color: #333; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 40px 20px; 
+        }
+        .header { 
+            text-align: center; 
+            margin-bottom: 40px; 
+            padding: 60px 40px; 
+            background: white; 
+            border-radius: 20px; 
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .header h1 { 
+            font-size: 2.5em; 
+            margin-bottom: 15px; 
+            color: #1e3c72;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .header .subtitle { 
+            font-size: 1.2em; 
+            color: #666; 
+            margin-bottom: 30px;
+        }
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .content { 
+            background: white; 
+            padding: 50px; 
+            border-radius: 20px; 
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .checklist-section {
+            margin-bottom: 40px;
+        }
+        .checklist-section h2 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .checklist-section h2 span {
+            font-size: 1.5em;
+        }
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+        .checklist-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-top: 3px;
+            cursor: pointer;
+        }
+        .checklist-item label {
+            flex: 1;
+            cursor: pointer;
+        }
+        .checklist-item strong {
+            color: #1e3c72;
+        }
+        .highlight-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 5px solid #667eea;
+        }
+        .highlight-box h3 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+        }
+        .tip-box {
+            background: #fff3e0;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #ff9800;
+        }
+        .tip-box strong {
+            color: #e65100;
+        }
+        .download-section {
+            text-align: center;
+            padding: 50px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            border-radius: 20px;
+            margin-top: 40px;
+            color: white;
+        }
+        .download-section h2 {
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+        .download-section p {
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+            color: white;
+            padding: 20px 50px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2em;
+            box-shadow: 0 10px 30px rgba(255,107,107,0.4);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255,107,107,0.5);
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+        }
+        .back-link:hover {
+            opacity: 1;
+        }
+        @media print {
+            body { background: white; }
+            .download-section { display: none; }
+            .container { max-width: 100%; }
+            .content { box-shadow: none; }
+        }
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.8em; }
+            .content { padding: 30px; }
+        }
+        .navbar { background: rgba(30, 60, 114, 0.95); backdrop-filter: blur(10px); padding: 0; position: fixed; top: 0; left: 0; right: 0; z-index: 1000; box-shadow: 0 2px 20px rgba(0,0,0,0.1); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; height: 70px; }
+        .nav-logo { font-size: 1.5rem; font-weight: bold; color: white; text-decoration: none; display: flex; align-items: center; gap: 10px; }
+        .nav-logo:hover { color: #ff6b6b; }
+        .nav-links { display: flex; list-style: none; gap: 0; margin: 0; padding: 0; }
+        .nav-links a { color: rgba(255,255,255,0.9); text-decoration: none; padding: 25px 20px; display: block; transition: all 0.3s; font-weight: 500; position: relative; }
+        .nav-links a:hover { color: white; background: rgba(255,255,255,0.1); }
+        .nav-links a.active { color: #ff6b6b; }
+        .nav-links a.active::after { content: ''; position: absolute; bottom: 0; left: 20px; right: 20px; height: 3px; background: #ff6b6b; }
+        .nav-cta { background: #ff6b6b; color: white; padding: 10px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; transition: all 0.3s; }
+        .nav-cta:hover { background: #ff5252; transform: translateY(-2px); }
+        .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 10px; }
+        .nav-toggle span { width: 25px; height: 3px; background: white; transition: all 0.3s; }
+        @media (max-width: 768px) { .nav-toggle { display: flex; } .nav-links { position: absolute; top: 70px; left: 0; right: 0; background: rgba(30, 60, 114, 0.98); flex-direction: column; max-height: 0; overflow: hidden; transition: max-height 0.3s; padding: 0; } .nav-links.active { max-height: 400px; padding: 10px 0; } .nav-links li { width: 100%; } .nav-links a { padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); display: block; text-align: center; } .nav-cta { display: none; } }
+        .page-header { padding-top: 130px !important; }
+      
+    </style>
 
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2521119288266043"
      crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="styles.css"></head>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RVYZENK472"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-RVYZENK472');
+</script>
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2521119288266043"
+     crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
 <body>
+    <!-- BreadcrumbList Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://chinahospitalsguide.com/"},
+            {"@type": "ListItem", "position": 2, "name": "Checklist", "item": "https://chinahospitalsguide.com/checklist.html"}
+        ]
+    }
+    </script>    
+    <!-- Organization Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "China Hospitals Guide",
+        "alternateName": "Medical Tourism China",
+        "url": "https://chinahospitalsguide.com",
+        "logo": "https://chinahospitalsguide.com/logo.png",
+        "description": "Independent medical tourism coordinator helping international patients access world-class healthcare in China",
+        "foundingDate": "2026",
+        "areaServed": {
+            "@type": "Country",
+            "name": "China"
+        },
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "Customer Service",
+            "availableLanguage": ["English", "Chinese"],
+            "contactOption": ["WhatsApp", "WeChat"],
+            "telephone": "+44-7947-060056"
+        },
+        "sameAs": [
+            "https://wa.me/447947060056",
+            "weixin://dl/chat?+861****7083"
+        ]
+    }
+    </script>
+
     <nav class="navbar">
         <div class="nav-container">
             <a href="index.html" class="nav-logo">🏥 China Hospitals Guide</a>

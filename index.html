@@ -36,25 +36,6 @@
         gtag('config', 'G-RVYZENK472');
     </script>
     
-    <!-- Facebook Pixel Code -->
-    <script>
-        !function(f,b,e,v,n,t,s)
-        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-        n.queue=[];t=b.createElement(e);t.async=!0;
-        t.src=v;s=b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t,s)}(window, document,'script',
-        'https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', 'YOUR_PIXEL_ID'); // Replace with your Pixel ID
-        fbq('track', 'PageView');
-    </script>
-    <noscript>
-        <img height="1" width="1" style="display:none" 
-        src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID&ev=PageView&noscript=1"/>
-    </noscript>
-    <!-- End Facebook Pixel Code -->
-    
     <!-- EmailJS SDK -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script type="text/javascript">
@@ -118,7 +99,7 @@
         "url": "https://chinahospitalsguide.com",
         "logo": "https://chinahospitalsguide.com/logo.png",
         "image": "https://chinahospitalsguide.com/og-image.jpg",
-        "telephone": "+86-xxx-xxxx-xxxx",
+        "telephone": "+44-7947-060056",
         "email": "contact@chinahospitalsguide.com",
         "address": {
             "@type": "PostalAddress",
@@ -270,27 +251,24 @@
         <a href="#contact" class="cta-button">Get Free Consultation</a>
         
         <!-- Trust Indicators -->
-        <div style="margin-top: 40px; display: flex; flex-wrap: wrap; justify-content: center; gap: 30px;">
-            <div style="text-align: center;"><div style="font-size: 2rem;">🏥</div><div style="color: white; font-weight: bold;">40+ Top Hospitals</div></div>
-            <div style="text-align: center;"><div style="font-size: 2rem;">⚕️</div><div style="color: white; font-weight: bold;">JCI Accredited</div></div>
-            <div style="text-align: center;"><div style="font-size: 2rem;">🌍</div><div style="color: white; font-weight: bold;">English Support</div></div>
-            <div style="text-align: center;"><div style="font-size: 2rem;">✓</div><div style="color: white; font-weight: bold;">500+ Patients Helped</div></div>
+        <div class="hero-trust">
+            <div class="hero-trust-item"><div class="hero-trust-icon">🏥</div><div class="hero-trust-text">40+ Top Hospitals</div></div>
+            <div class="hero-trust-item"><div class="hero-trust-icon">⚕️</div><div class="hero-trust-text">JCI Accredited</div></div>
+            <div class="hero-trust-item"><div class="hero-trust-icon">🌍</div><div class="hero-trust-text">English Support</div></div>
+            <div class="hero-trust-item"><div class="hero-trust-icon">✓</div><div class="hero-trust-text">500+ Patients Helped</div></div>
         </div>
         
         <!-- Hero Quick Form -->
-        <div style="margin-top: 40px; background: rgba(255,255,255,0.1); padding: 30px; border-radius: 20px; max-width: 600px; margin-left: auto; margin-right: auto; backdrop-filter: blur(10px);">
-            <h3 style="color: white; margin-bottom: 20px; font-size: 1.3rem;">🏥 Get Your Free Cost Estimate</h3>
-            <form id="heroForm" style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center;">
-                <input type="email" id="heroEmail" placeholder="Your email address" required 
-                    style="flex: 1; min-width: 200px; padding: 15px 20px; border: none; border-radius: 10px; font-size: 1rem;">
-                <input type="text" id="heroCondition" placeholder="What treatment do you need?" required
-                    style="flex: 1; min-width: 200px; padding: 15px 20px; border: none; border-radius: 10px; font-size: 1rem;">
-                
-                <button type="submit" class="cta-button" style="flex: 0 0 auto; margin: 0;">
+        <div class="hero-form-box">
+            <h3 class="hero-form-title">🏥 Get Your Free Cost Estimate</h3>
+            <form id="heroForm" class="hero-form">
+                <input type="email" id="heroEmail" placeholder="Your email address" required class="hero-form-input">
+                <input type="text" id="heroCondition" placeholder="What treatment do you need?" required class="hero-form-input">
+                <button type="submit" class="cta-button hero-form-btn">
                     Get Free Consultation →
                 </button>
             </form>
-            <p style="color: rgba(255,255,255,0.7); font-size: 0.85rem; margin-top: 15px;">
+            <p class="hero-form-note">
                 ✅ No spam. Response within 24 hours. 100% free.
             </p>
         </div>
@@ -321,11 +299,6 @@
                     alert('Thank you! We\'ll send you a personalized cost estimate within 24 hours.');
                     document.getElementById('heroForm').reset();
                     
-                    // Track conversion
-                    if (typeof fbq !== 'undefined') {
-                        fbq('track', 'Lead', { content_name: 'Hero Quick Form' });
-                    }
-                    
                 } catch (error) {
                     console.error('Error:', error);
                     alert('Sorry, there was an error. Please try again or use the full form below.');
@@ -342,9 +315,9 @@
         </div>
         
         <!-- Real-time Activity -->
-        <div style="margin-top: 25px; background: rgba(255,255,255,0.15); padding: 15px 30px; border-radius: 30px; display: inline-block;">
-            <span style="display: inline-flex; align-items: center; gap: 10px;">
-                <span style="width: 10px; height: 10px; background: #4CAF50; border-radius: 50%; animation: blink 1.5s infinite;"></span>
+        <div class="live-activity">
+            <span class="live-activity-inner">
+                <span class="live-dot"></span>
                 <span id="liveCounter">12 patients</span> viewing this page now
             </span>
         </div>
@@ -361,26 +334,26 @@
     </section>
     
     <!-- Quick Access Section -->
-    <section style="background: white; padding: 40px 20px; box-shadow: 0 2px 20px rgba(0,0,0,0.08);">
-        <div style="max-width: 1000px; margin: 0 auto;">
-            <h2 style="text-align: center; color: #1e3c72; font-size: 1.6rem; margin-bottom: 30px;">Find Hospital by City</h2>
-            <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
-                <a href="hospitals.html?city=Beijing" style="display: inline-block; background: linear-gradient(135deg, #1e3c72, #2a5298); color: white; padding: 15px 30px; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s; box-shadow: 0 4px 15px rgba(30,60,114,0.3);">🏙️ Beijing</a>
-                <a href="hospitals.html?city=Shanghai" style="display: inline-block; background: linear-gradient(135deg, #1e3c72, #2a5298); color: white; padding: 15px 30px; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s; box-shadow: 0 4px 15px rgba(30,60,114,0.3);">🌆 Shanghai</a>
-                <a href="hospitals.html?city=Guangzhou" style="display: inline-block; background: linear-gradient(135deg, #1e3c72, #2a5298); color: white; padding: 15px 30px; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s; box-shadow: 0 4px 15px rgba(30,60,114,0.3);">🏙️ Guangzhou</a>
-                <a href="hospitals.html?city=Shenzhen" style="display: inline-block; background: linear-gradient(135deg, #1e3c72, #2a5298); color: white; padding: 15px 30px; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s; box-shadow: 0 4px 15px rgba(30,60,114,0.3);">🌃 Shenzhen</a>
-                <a href="hospitals.html?city=Hangzhou" style="display: inline-block; background: linear-gradient(135deg, #1e3c72, #2a5298); color: white; padding: 15px 30px; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s; box-shadow: 0 4px 15px rgba(30,60,114,0.3);">🌿 Hangzhou</a>
-                <a href="hospitals.html?city=Chengdu" style="display: inline-block; background: linear-gradient(135deg, #1e3c72, #2a5298); color: white; padding: 15px 30px; border-radius: 50px; text-decoration: none; font-weight: 600; transition: all 0.3s; box-shadow: 0 4px 15px rgba(30,60,114,0.3);">🦕 Chengdu</a>
+    <section class="quick-access">
+        <div class="quick-access-container">
+            <h2 class="quick-access-title">Find Hospital by City</h2>
+            <div class="city-buttons">
+                <a href="hospitals.html?city=Beijing" class="city-btn">🏙️ Beijing</a>
+                <a href="hospitals.html?city=Shanghai" class="city-btn">🌆 Shanghai</a>
+                <a href="hospitals.html?city=Guangzhou" class="city-btn">🏙️ Guangzhou</a>
+                <a href="hospitals.html?city=Shenzhen" class="city-btn">🌃 Shenzhen</a>
+                <a href="hospitals.html?city=Hangzhou" class="city-btn">🌿 Hangzhou</a>
+                <a href="hospitals.html?city=Chengdu" class="city-btn">🦕 Chengdu</a>
             </div>
             
-            <h2 style="text-align: center; color: #1e3c72; font-size: 1.6rem; margin: 40px 0 30px;">Or Browse by Department</h2>
-            <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
-                <a href="hospitals.html?dept=cardiology" style="display: inline-block; background: #f8f9fa; color: #1e3c72; padding: 12px 25px; border-radius: 50px; text-decoration: none; font-weight: 500; border: 2px solid #1e3c72; transition: all 0.3s;">❤️ Cardiology</a>
-                <a href="hospitals.html?dept=oncology" style="display: inline-block; background: #f8f9fa; color: #1e3c72; padding: 12px 25px; border-radius: 50px; text-decoration: none; font-weight: 500; border: 2px solid #1e3c72; transition: all 0.3s;">🎗️ Oncology</a>
-                <a href="hospitals.html?dept=orthopedics" style="display: inline-block; background: #f8f9fa; color: #1e3c72; padding: 12px 25px; border-radius: 50px; text-decoration: none; font-weight: 500; border: 2px solid #1e3c72; transition: all 0.3s;">🦴 Orthopedics</a>
-                <a href="hospitals.html?dept=neurosurgery" style="display: inline-block; background: #f8f9fa; color: #1e3c72; padding: 12px 25px; border-radius: 50px; text-decoration: none; font-weight: 500; border: 2px solid #1e3c72; transition: all 0.3s;">🧠 Neurosurgery</a>
-                <a href="hospitals.html?dept=ivf" style="display: inline-block; background: #f8f9fa; color: #1e3c72; padding: 12px 25px; border-radius: 50px; text-decoration: none; font-weight: 500; border: 2px solid #1e3c72; transition: all 0.3s;">👶 IVF / Fertility</a>
-                <a href="hospitals.html?dept=pediatrics" style="display: inline-block; background: #f8f9fa; color: #1e3c72; padding: 12px 25px; border-radius: 50px; text-decoration: none; font-weight: 500; border: 2px solid #1e3c72; transition: all 0.3s;">🧒 Pediatrics</a>
+            <h2 class="quick-access-title">Or Browse by Department</h2>
+            <div class="dept-buttons">
+                <a href="hospitals.html?dept=cardiology" class="dept-btn">❤️ Cardiology</a>
+                <a href="hospitals.html?dept=oncology" class="dept-btn">🎗️ Oncology</a>
+                <a href="hospitals.html?dept=orthopedics" class="dept-btn">🦴 Orthopedics</a>
+                <a href="hospitals.html?dept=neurosurgery" class="dept-btn">🧠 Neurosurgery</a>
+                <a href="hospitals.html?dept=ivf" class="dept-btn">👶 IVF / Fertility</a>
+                <a href="hospitals.html?dept=pediatrics" class="dept-btn">🧒 Pediatrics</a>
             </div>
         </div>
     </section>
@@ -389,31 +362,55 @@
     <!-- Why Choose Us -->
     <section class="features">
         <h2 class="section-title">Why Patients Choose Professional Coordination</h2>        
-        <div style="background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); padding: 30px; border-radius: 15px; margin-bottom: 40px; text-align: center;">
-            <h3 style="color: #2e7d32; margin-bottom: 20px;">🏥 Recent Patient Outcomes</h3>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
-                <div style="background: white; padding: 20px; border-radius: 10px;">
-                    <div style="font-size: 1.8rem; color: #4CAF50; font-weight: bold;">✓ Successful</div>
-                    <div style="color: #666; font-size: 0.9rem;">Knee Replacement<br>Beijing</div>
+        <div class="outcomes-banner">
+            <h3 class="outcomes-title">🏥 Recent Patient Outcomes</h3>
+            <div class="outcomes-grid">
+                <div class="outcome-card">
+                    <div class="outcome-status">✓ Successful</div>
+                    <div class="outcome-detail">Knee Replacement<br>Beijing</div>
                 </div>
-                <div style="background: white; padding: 20px; border-radius: 10px;">
-                    <div style="font-size: 1.8rem; color: #4CAF50; font-weight: bold;">✓ Successful</div>
-                    <div style="color: #666; font-size: 0.9rem;">Heart Surgery<br>Shanghai</div>
+                <div class="outcome-card">
+                    <div class="outcome-status">✓ Successful</div>
+                    <div class="outcome-detail">Heart Surgery<br>Shanghai</div>
                 </div>
-                <div style="background: white; padding: 20px; border-radius: 10px;">
-                    <div style="font-size: 1.8rem; color: #4CAF50; font-weight: bold;">✓ Successful</div>
-                    <div style="color: #666; font-size: 0.9rem;">IVF Treatment<br>Guangzhou</div>
+                <div class="outcome-card">
+                    <div class="outcome-status">✓ Successful</div>
+                    <div class="outcome-detail">IVF Treatment<br>Guangzhou</div>
                 </div>
             </div>
         </div>
         
         <div class="feature-grid">
-            <div class="feature-card"><div class="feature-icon">💰</div><h3>Transparent, Competitive Pricing</h3><p>Competitive treatment costs with full transparency. We provide detailed cost estimates upfront—no surprise billing. Compare the value of getting world-class treatment with professional coordination included.</p></div>
-            <div class="feature-card"><div class="feature-icon">🏆</div><h3>World-Class Standards</h3><p>China's top hospitals rank alongside the best in the world. Many have JCI accreditation and feature in the prestigious Fudan Hospital Rankings.</p></div>
-            <div class="feature-card"><div class="feature-icon">⚡</div><h3>Minimal Waiting Times</h3><p>Skip the months-long waiting lists. Most procedures can be scheduled within 1-2 weeks, not months. Your health can't wait.</p></div>
-            <div class="feature-card"><div class="feature-icon">🌐</div><h3>English-Speaking Support</h3><p>Dedicated international patient coordinators provide full translation services from consultation to recovery. Language is never a barrier.</p></div>
-            <div class="feature-card"><div class="feature-icon">🛡️</div><h3>Comprehensive Care</h3><p>From visa invitation letters to airport pickup, accommodation assistance, and post-operative follow-up—we handle everything so you can focus on healing.</p></div>
-            <div class="feature-card"><div class="feature-icon">✈️</div><h3>Easy Access</h3><p>Major cities with international airports and convenient transport from airport to hospital. We coordinate every step of your journey.</p></div>
+            <div class="feature-card">
+                <div class="feature-icon">💰</div>
+                <h3>Transparent, Competitive Pricing</h3>
+                <p>Competitive treatment costs with full transparency. We provide detailed cost estimates upfront—no surprise billing. Compare the value of getting world-class treatment with professional coordination included.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🏆</div>
+                <h3>World-Class Standards</h3>
+                <p>China's top hospitals rank alongside the best in the world. Many have JCI accreditation and feature in the prestigious Fudan Hospital Rankings.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Minimal Waiting Times</h3>
+                <p>Skip the months-long waiting lists. Most procedures can be scheduled within 1-2 weeks, not months. Your health can't wait.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌐</div>
+                <h3>English-Speaking Support</h3>
+                <p>Dedicated international patient coordinators provide full translation services from consultation to recovery. Language is never a barrier.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3>Comprehensive Care</h3>
+                <p>From visa invitation letters to airport pickup, accommodation assistance, and post-operative follow-up—we handle everything so you can focus on healing.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">✈️</div>
+                <h3>Easy Access</h3>
+                <p>Major cities with international airports and convenient transport from airport to hospital. We coordinate every step of your journey.</p>
+            </div>
         </div>
     </section>
     
@@ -421,25 +418,25 @@
     <section class="testimonials">
         <h2>What Our Patients Say</h2>
         <div class="testimonial-grid">
-            <a href="stories/james-wilson.html" style="text-decoration: none; color: inherit;">
-                <div class="testimonial-card" style="cursor: pointer; transition: transform 0.3s;">
+            <a href="stories/james-wilson.html" class="testimonial-link">
+                <div class="testimonial-card">
                     <p class="testimonial-text">"I saved over $40,000 on my heart surgery in Beijing. The team arranged everything - from airport pickup to hospital admission. Truly life-changing service."</p>
                     <div class="testimonial-author"><div class="author-avatar">J</div><div class="author-info"><strong>James Wilson</strong><span>USA → Beijing, Cardiology</span></div></div>
-                    <div style="text-align: center; margin-top: 15px; color: #2a5298; font-weight: bold;">Read full story →</div>
+                    <div class="testimonial-cta">Read full story →</div>
                 </div>
             </a>
-            <a href="stories/maria-garcia.html" style="text-decoration: none; color: inherit;">
-                <div class="testimonial-card" style="cursor: pointer; transition: transform 0.3s;">
+            <a href="stories/maria-garcia.html" class="testimonial-link">
+                <div class="testimonial-card">
                     <p class="testimonial-text">"The English coordination made everything so easy. Dr. Zhang explained everything in detail. The quality of care was outstanding."</p>
                     <div class="testimonial-author"><div class="author-avatar">M</div><div class="author-info"><strong>Maria Garcia</strong><span>Spain → Shanghai, Orthopedics</span></div></div>
-                    <div style="text-align: center; margin-top: 15px; color: #2a5298; font-weight: bold;">Read full story →</div>
+                    <div class="testimonial-cta">Read full story →</div>
                 </div>
             </a>
-            <a href="stories/sophie-b.html" style="text-decoration: none; color: inherit;">
-                <div class="testimonial-card" style="cursor: pointer; transition: transform 0.3s;">
+            <a href="stories/sophie-b.html" class="testimonial-link">
+                <div class="testimonial-card">
                     <p class="testimonial-text">"The surgery was incredibly fast—just 5 minutes per eye. The next day my vision was 20/20. Now I don't need glasses at all. Only one-third the cost of France!"</p>
                     <div class="testimonial-author"><div class="author-avatar">S</div><div class="author-info"><strong>Sophie Bernard</strong><span>France → Shanghai, Eye Surgery</span></div></div>
-                    <div style="text-align: center; margin-top: 15px; color: #2a5298; font-weight: bold;">Read full story →</div>
+                    <div class="testimonial-cta">Read full story →</div>
                 </div>
             </a>
         </div>
@@ -451,7 +448,7 @@
         <div class="hospital-grid">
             <!-- 精选6家顶级医院 -->
             <div class="hospital-card">
-                <img src="images/hospitals/fuwai-hospital.jpg" alt="Beijing Fuwai Hospital" class="hospital-image">
+                <img src="images/hospitals/fuwai-hospital.jpg" alt="Beijing Fuwai Hospital" class="hospital-image" loading="lazy" width="400" height="200">
                 <h3>Beijing Fuwai Hospital</h3>
                 <div class="specialty">#1 Cardiology in China</div>
                 <div class="city">🏙️ Beijing</div>
@@ -459,7 +456,7 @@
             </div>
             
             <div class="hospital-card">
-                <img src="images/hospitals/jishuitan-hospital.jpg" alt="Beijing Jishuitan Hospital" class="hospital-image">
+                <img src="images/hospitals/jishuitan-hospital.jpg" alt="Beijing Jishuitan Hospital" class="hospital-image" loading="lazy" width="400" height="200">
                 <h3>Beijing Jishuitan Hospital</h3>
                 <div class="specialty">#1 Orthopedics in China</div>
                 <div class="city">🏙️ Beijing</div>
@@ -467,7 +464,7 @@
             </div>
             
             <div class="hospital-card">
-                <img src="images/hospitals/huashan-hospital.jpg" alt="Shanghai Huashan Hospital" class="hospital-image">
+                <img src="images/hospitals/huashan-hospital.jpg" alt="Shanghai Huashan Hospital" class="hospital-image" loading="lazy" width="400" height="200">
                 <h3>Shanghai Huashan Hospital</h3>
                 <div class="specialty">#1 Neurology in China</div>
                 <div class="city">🏙️ Shanghai</div>
@@ -475,7 +472,7 @@
             </div>
             
             <div class="hospital-card">
-                <img src="images/hospitals/sun-yat-sen-hospital.jpg" alt="Sun Yat-sen University Cancer Center" class="hospital-image">
+                <img src="images/hospitals/sun-yat-sen-hospital.jpg" alt="Sun Yat-sen University Cancer Center" class="hospital-image" loading="lazy" width="400" height="200">
                 <h3>Guangzhou Sun Yat-sen VI</h3>
                 <div class="specialty">#1 GI Surgery in the World</div>
                 <div class="city">🏙️ Guangzhou</div>
@@ -483,7 +480,7 @@
             </div>
             
             <div class="hospital-card">
-                <img src="images/hospitals/west-china-hospital.jpg" alt="West China Hospital" class="hospital-image">
+                <img src="images/hospitals/west-china-hospital.jpg" alt="West China Hospital" class="hospital-image" loading="lazy" width="400" height="200">
                 <h3>West China Hospital</h3>
                 <div class="specialty">#2 Best Hospital in China</div>
                 <div class="city">🏙️ Chengdu</div>
@@ -491,15 +488,15 @@
             </div>
             
             <div class="hospital-card">
-                <img src="images/hospitals/xiehe-hospital.jpg" alt="Beijing Xiehe Hospital" class="hospital-image">
+                <img src="images/hospitals/xiehe-hospital.jpg" alt="Beijing Xiehe Hospital" class="hospital-image" loading="lazy" width="400" height="200">
                 <h3>Beijing Xiehe Hospital</h3>
                 <div class="specialty">#1 Rheumatology in China</div>
                 <div class="city">🏙️ Beijing</div>
                 <div class="certification">🏆 Top 3 Hospital</div>
             </div>
         </div>
-        <div style="text-align: center; margin-top: 30px;">
-            <a href="hospitals.html" style="background: var(--primary); color: white; padding: 15px 40px; border: none; border-radius: 30px; font-size: 1rem; cursor: pointer; text-decoration: none; display: inline-block;">Explore All 40+ Hospitals →</a>
+        <div class="hospitals-cta-wrap">
+            <a href="hospitals.html" class="hospitals-cta">Explore All 40+ Hospitals →</a>
         </div>
     </section>
     
@@ -510,22 +507,22 @@
         <p class="form-subtitle">Free consultation • No obligation • Reply within 24 hours</p>
         
         <!-- Risk Reversal Banner -->
-        <div style="max-width: 700px; margin: 0 auto 30px; background: rgba(255,255,255,0.15); padding: 20px; border-radius: 15px; text-align: center;">
-            <div style="display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap;">
-                <span style="font-size: 2rem;">🛡️</span>
-                <div style="text-align: left;">
-                    <strong style="color: white; font-size: 1.1rem;">100% Risk-Free Guarantee</strong>
-                    <p style="color: rgba(255,255,255,0.9); margin: 5px 0 0 0; font-size: 0.88rem;">Starter Guide ($30) non-refundable. Standard Package: $269 refund if cancelled 72+ hours before service.</p>
+        <div class="risk-banner">
+            <div class="risk-banner-inner">
+                <span class="risk-banner-icon">🛡️</span>
+                <div class="risk-banner-text">
+                    <strong>100% Risk-Free Guarantee</strong>
+                    <p>Starter Guide ($30) non-refundable. Standard Package: $269 refund if cancelled 72+ hours before service.</p>
                 </div>
             </div>
         </div>
         
         <!-- Lead Magnet Banner -->
-        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 15px; margin-bottom: 30px; text-align: center; color: white;">
-            <div style="font-size: 3rem; margin-bottom: 10px;">📋</div>
-            <h3 style="margin-bottom: 10px; font-size: 1.5em;">FREE: China Medical Tourism Checklist</h3>
-            <p style="margin-bottom: 20px; opacity: 0.95;">Your complete step-by-step guide covering everything from visa to discharge. 6 phases, 30+ actionable items.</p>
-            <a href="checklist.html" target="_blank" style="display: inline-block; background: white; color: #667eea; padding: 15px 35px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 1.1em; box-shadow: 0 5px 20px rgba(0,0,0,0.2); transition: transform 0.3s;">
+        <div class="lead-magnet">
+            <div class="lead-magnet-icon">📋</div>
+            <h3 class="lead-magnet-title">FREE: China Medical Tourism Checklist</h3>
+            <p class="lead-magnet-desc">Your complete step-by-step guide covering everything from visa to discharge. 6 phases, 30+ actionable items.</p>
+            <a href="checklist.html" target="_blank" class="lead-magnet-btn">
                 📥 Get Free Checklist
             </a>
         </div>
@@ -679,14 +676,7 @@
                 document.getElementById('inquiryForm').style.display = 'none';
                 document.getElementById('successMessage').style.display = 'block';
                 
-                // Track form submission with Facebook Pixel
-                if (typeof fbq !== 'undefined') {
-                    fbq('track', 'Lead', {
-                        content_name: 'Free Consultation',
-                        content_category: 'Medical Tourism Inquiry'
-                    });
-                }
-                
+
             } catch (error) {
                 console.error('Error:', error);
                 alert('Sorry, there was an error submitting your form. Please try again or contact us directly.');
@@ -711,17 +701,17 @@
     </div>
     
     <!-- Exit Intent Popup -->
-    <div id="exitPopup" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 10000; justify-content: center; align-items: center;">
-        <div style="background: white; padding: 40px; border-radius: 20px; max-width: 500px; text-align: center; animation: slideIn 0.3s ease;">
-            <div style="font-size: 4rem; margin-bottom: 20px;">🎁</div>
-            <h2 style="color: var(--primary); margin-bottom: 15px;">Wait! Don't Miss Out</h2>
-            <p style="color: #666; margin-bottom: 20px; line-height: 1.6;">Get our <strong>FREE Hospital Selection Guide</strong> ($29 value) + <strong>Cost Comparison Report</strong> when you submit your inquiry today.</p>
-            <div style="background: #fff3e0; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
-                <p style="color: #e65100; margin: 0; font-weight: 600;">⏰ Limited: Only 50 guides left this month</p>
+    <div id="exitPopup">
+        <div class="exit-popup-content">
+            <div class="exit-popup-icon">🎁</div>
+            <h2 class="exit-popup-title">Wait! Don't Miss Out</h2>
+            <p class="exit-popup-text">Get our <strong>FREE Hospital Selection Guide</strong> ($29 value) + <strong>Cost Comparison Report</strong> when you submit your inquiry today.</p>
+            <div class="exit-popup-urgency">
+                <p>⏰ Limited: Only 50 guides left this month</p>
             </div>
-            <a href="#contact" onclick="closeExitPopup()" style="display: inline-block; background: var(--accent); color: white; padding: 15px 40px; border-radius: 30px; text-decoration: none; font-weight: bold; margin-bottom: 15px;">Get My Free Guide</a>
+            <a href="#contact" onclick="closeExitPopup()" class="exit-popup-cta">Get My Free Guide</a>
             <br>
-            <a href="#" onclick="closeExitPopup()" style="color: #999; font-size: 0.9rem;">No thanks, I'll pay full price later</a>
+            <a href="#" onclick="closeExitPopup()" class="exit-popup-dismiss">No thanks, I'll pay full price later</a>
         </div>
     </div>
     
@@ -740,7 +730,7 @@
     </script>
     
     <!-- Version Badge -->
-    <div style="position: fixed; bottom: 20px; right: 20px; background: rgba(30, 60, 114, 0.9); color: white; padding: 8px 15px; border-radius: 20px; font-size: 0.85rem; z-index: 9998; box-shadow: 0 2px 10px rgba(0,0,0,0.2);">
+    <div class="version-badge">
         v2.1.0
     </div>
     
@@ -754,15 +744,14 @@
             </div>
             <div>
                 <h3>Quick Links</h3>
-                <p><a href="hospitals.html" style="color:white;">Our Hospitals</a></p>
-                <p><a href="cost-comparison.html" style="color:white;">Cost Comparison</a></p>
-                <p><a href="how-it-works.html" style="color:white;">Process</a></p>
-                <p><a href="pricing.html" style="color:white;">Pricing</a></p>
-                <p><a href="contact.html" style="color:white;">FAQ</a></p>
-                <p><a href="how-it-works.html" style="color:white;">Process</a></p>
-                <p><a href="blog/choose-hospital-china.html" style="color:white;">Blog</a></p>
-                <p><a href="news/" style="color:white;">Medical News</a></p>
-                <p><a href="resources.html" style="color:white;">Resources</a></p>
+                <p><a href="hospitals.html" class="footer-link">Our Hospitals</a></p>
+                <p><a href="cost-comparison.html" class="footer-link">Cost Comparison</a></p>
+                <p><a href="how-it-works.html" class="footer-link">Process</a></p>
+                <p><a href="pricing.html" class="footer-link">Pricing</a></p>
+                <p><a href="contact.html" class="footer-link">FAQ</a></p>
+                <p><a href="blog/choose-hospital-china.html" class="footer-link">Blog</a></p>
+                <p><a href="news/" class="footer-link">Medical News</a></p>
+                <p><a href="resources.html" class="footer-link">Resources</a></p>
             </div>
             <div>
                 <h3>Contact</h3>
@@ -771,16 +760,16 @@
             </div>
         </div>
         <div class="refund-policy">
-            <strong>🛡️ Refund Policy</strong> - Starter Guide ($30): Non-refundable. Standard Package ($299): Refund $269 if cancelled 72+ hours before service. <a href="pricing.html" style="color: var(--primary);">View full policy</a>
+            <strong>🛡️ Refund Policy</strong> - Starter Guide ($30): Non-refundable. Standard Package ($299): Refund $269 if cancelled 72+ hours before service. <a href="pricing.html" class="refund-policy-link">View full policy</a>
         </div>
         <div class="footer-bottom">
-            <p style="margin-bottom:8px;opacity:0.7;">Best Hospitals in China | Medical Tourism China | International Patients</p>
+            <p class="footer-bottom-meta">Best Hospitals in China | Medical Tourism China | International Patients</p>
             © 2026 China Hospitals Guide. All rights reserved.
             <a href="about.html" class="privacy-link">About Us</a> | 
             <a href="real-stories.html" class="privacy-link">Real Stories</a> | 
-            <a href="privacy.html" class="privacy-link">Privacy Policy</a> | <a href="terms.html" style="color:white;">Terms of Service</a> 
+            <a href="privacy.html" class="privacy-link">Privacy Policy</a> | <a href="terms.html" class="footer-link">Terms of Service</a> 
             <a href="contact.html" class="privacy-link">Contact Us</a>
-            <span style="margin-left: 20px; background: rgba(255,255,255,0.2); padding: 3px 10px; border-radius: 10px; font-size: 0.8rem;">v2.1.0</span>
+            <span class="footer-version">v2.1.0</span>
         </div>
     </footer>
     
@@ -864,24 +853,24 @@
     
     <div class="floating-buttons">
         <!-- Pre-arrival: Consultation -->
-        <a href="https://wa.me/447947060056" class="floating-btn whatsapp-btn" target="_blank" style="background: #25D366;">
+        <a href="https://wa.me/447947060056" class="floating-btn whatsapp-btn whatsapp-pre" target="_blank">
             💬
             <span class="chat-tooltip">💡 Pre-arrival: Get free consultation</span>
         </a>
         <!-- In-China: On-ground Support -->
-        <a href="https://wa.me/8615763107083" class="floating-btn whatsapp-btn" target="_blank" style="background: #0088cc;">
+        <a href="https://wa.me/8615763107083" class="floating-btn whatsapp-btn whatsapp-cn" target="_blank">
             🇨🇳
             <span class="chat-tooltip">🛬 In China: Need help? Chat here</span>
         </a>
     </div>
     <!-- Floating Pricing Button (Desktop only) -->
-    <a href="pricing.html" id="floatingPricing" style="position: fixed; top: 200px; right: 0; background: linear-gradient(135deg, #1e3c72, #2a5298); color: white; padding: 8px 12px; border-radius: 8px 0 0 8px; text-decoration: none; font-weight: bold; font-size: 0.75rem; box-shadow: -3px 3px 15px rgba(0,0,0,0.2); z-index: 9996; writing-mode: vertical-rl; text-orientation: mixed; letter-spacing: 2px; display: none;">
+    <a href="pricing.html" id="floatingPricing">
         💰 Pricing
     </a>
     <!-- Floating CTA Button -->
-    <div id="floatingCTA" style="position: fixed; bottom: 90px; right: 20px; z-index: 9997; display: none;">
-        <a href="#contact" style="display: flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%); color: white; padding: 15px 25px; border-radius: 50px; text-decoration: none; font-weight: bold; box-shadow: 0 5px 20px rgba(255,107,107,0.4); animation: floatPulse 2s infinite;">
-            <span style="font-size: 1.3rem;">💬</span>
+    <div id="floatingCTA">
+        <a href="#contact">
+            <span>💬</span>
             <span>Get Free Quote</span>
         </a>
     </div>
@@ -901,17 +890,17 @@
     </script>
     
     <!-- Mobile Fixed Bottom Bar -->
-    <div class="mobile-bottom-bar" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 10px 15px; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); z-index: 9998; justify-content: space-around; align-items: center;">
-        <a href="https://wa.me/447947060056" style="display: flex; flex-direction: column; align-items: center; color: #25D366; text-decoration: none; font-size: 0.75rem;">
-            <span style="font-size: 1.5rem;">💬</span>
+    <div class="mobile-bottom-bar">
+        <a href="https://wa.me/447947060056">
+            <span>💬</span>
             WhatsApp
         </a>
-        <a href="#contact" style="display: flex; flex-direction: column; align-items: center; color: #1e3c72; text-decoration: none; font-size: 0.75rem;">
-            <span style="font-size: 1.5rem;">📝</span>
+        <a href="#contact">
+            <span>📝</span>
             Form
         </a>
-        <a href="#contact" style="display: flex; flex-direction: column; align-items: center; color: #ff6b6b; text-decoration: none; font-size: 0.75rem;">
-            <span style="font-size: 1.5rem;">✉️</span>
+        <a href="#contact">
+            <span>✉️</span>
             Email
         </a>
     </div>
