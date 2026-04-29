@@ -6,7 +6,10 @@
 - **域名:** https://oriental-destiny.com
 - **平台:** GitHub Pages
 - **Sitemap:** https://oriental-destiny.com/sitemap.xml (6个页面)
-- **源码仓库:** 位置待确认
+
+## 仓库
+- **源码仓库:** https://github.com/qzw-alt/oriental-destiny
+- **备份仓库:** https://github.com/qzw-alt/demi
 
 ## SEO问题（待修复）
 - 无canonical标签

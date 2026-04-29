@@ -7,9 +7,9 @@
 - **平台:** GitHub Pages
 - **Sitemap:** 71个页面
 
-## 仓库分工（必须遵守）
-- **网站仓库:** `chinahospitalsguide` — 只上传网站文件
-- **备份仓库:** `demi` — 备份所有文件
+## 仓库
+- **网站仓库:** https://github.com/qzw-alt/chinahospitalsguide
+- **备份仓库:** https://github.com/qzw-alt/demi
 
 ## 部署流程
 1. 编辑 `/root/.hermes/workspace/website/`
@@ -18,10 +18,9 @@
 4. 等待5分钟检查
 
 ## SEO索引任务
-- 71个URL分14天提交
-- 每天5个，核心页面优先
-- Day1-5已完成（核心页）
-- Day6-14待提交（News文章+stories）
+- 71个URL分14天提交（每天5个）
+- Day1-5已完成（核心页面）
+- Day6-14待提交（News文章+stories页）
 
 ## 待办
 - [ ] 继续提交News文章（Day6-14，每天5个）
