@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Treatments in China | Top Specialties & Costs | China Hospitals Guide</title>
+    <meta name="description" content="Explore top medical treatments in China: cancer care, IVF, cardiac surgery, and orthopedics. Save 60-80% vs Western prices with world-class hospitals. Free consultation.">
+    <link rel="canonical" href="https://chinahospitalsguide.com/treatments/">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        /* Navbar */
+        .navbar { background: rgba(30, 60, 114, 0.95); backdrop-filter: blur(10px); position: fixed; top: 0; left: 0; right: 0; z-index: 1000; box-shadow: 0 2px 20px rgba(0,0,0,0.1); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; height: 70px; }
+        .nav-logo { font-size: 1.3rem; font-weight: bold; color: white; text-decoration: none; }
+        .nav-links { display: flex; list-style: none; gap: 0; }
+        .nav-links a { color: rgba(255,255,255,0.9); text-decoration: none; padding: 25px 18px; display: block; font-weight: 500; font-size: 0.88rem; }
+        .nav-links a:hover { background: rgba(255,255,255,0.1); color: white; }
+        .nav-cta { background: #ff6b6b; color: white; padding: 10px 22px; border-radius: 25px; text-decoration: none; font-weight: bold; font-size: 0.9rem; }
+        
+        /* Header */
+        .header { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; padding: 130px 0 80px; text-align: center; }
+        .header h1 { font-size: 2.8em; margin-bottom: 20px; font-weight: 800; }
+        .header p { font-size: 1.2em; opacity: 0.9; max-width: 650px; margin: 0 auto 35px; }
+        .header .stats-row { display: flex; justify-content: center; gap: 50px; flex-wrap: wrap; margin-top: 30px; }
+        .header .stat { text-align: center; }
+        .header .stat-num { font-size: 2em; font-weight: 700; display: block; }
+        .header .stat-label { font-size: 0.85rem; opacity: 0.8; }
+        
+        /* Breadcrumb */
+        .breadcrumb { background: #f1f5f9; padding: 15px 0; font-size: 0.9em; }
+        .breadcrumb a { color: #3b82f6; text-decoration: none; }
+        .breadcrumb span { color: #64748b; margin: 0 10px; }
+        
+        /* Section */
+        .section { padding: 70px 0; }
+        .section:nth-child(even) { background: #f8fafc; }
+        .section h2 { font-size: 2em; color: #1e3a8a; margin-bottom: 15px; text-align: center; }
+        .section .section-sub { text-align: center; color: #64748b; font-size: 1.1em; margin-bottom: 45px; max-width: 650px; margin-left: auto; margin-right: auto; }
+        
+        /* Treatment Cards Grid */
+        .treatment-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        
+        .treatment-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        .treatment-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+        }
+        
+        .card-header { padding: 30px 30px 20px; }
+        .card-icon { font-size: 3em; margin-bottom: 15px; }
+        .card-header h3 { font-size: 1.5em; color: #1e3a8a; margin-bottom: 8px; font-weight: 700; }
+        .card-header p { color: #64748b; font-size: 0.95em; }
+        
+        .card-body { padding: 0 30px 25px; flex: 1; }
+        .card-body ul { list-style: none; padding: 0; }
+        .card-body li { padding: 9px 0; border-bottom: 1px solid #f1f5f9; font-size: 0.9rem; color: #475569; display: flex; align-items: center; gap: 10px; }
+        .card-body li:last-child { border-bottom: none; }
+        .card-body li::before { content: "✓"; color: #059669; font-weight: bold; flex-shrink: 0; }
+        
+        .card-cost { background: #f8fafc; padding: 20px 30px; border-top: 1px solid #e2e8f0; }
+        .card-cost .from { font-size: 0.8rem; color: #64748b; margin-bottom: 5px; }
+        .card-cost .price { font-size: 1.4em; font-weight: 700; color: #1e3a8a; }
+        .card-cost .vs { font-size: 0.82rem; color: #059669; margin-top: 4px; }
+        
+        .card-footer { padding: 20px 30px 25px; }
+        .card-btn { display: block; text-align: center; background: #1e3a8a; color: white; padding: 13px 20px; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: background 0.3s; }
+        .card-btn:hover { background: #2563eb; }
+        .card-btn.secondary { background: white; color: #1e3a8a; border: 2px solid #1e3a8a; }
+        .card-btn.secondary:hover { background: #f0f4ff; }
+        
+        .card-footer-row { display: flex; gap: 10px; }
+        .card-footer-row .card-btn { flex: 1; }
+        
+        /* Why China Section */
+        .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; margin-top: 40px; }
+        .why-item { background: white; border-radius: 12px; padding: 30px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .why-item .why-icon { font-size: 2.5em; margin-bottom: 15px; }
+        .why-item h4 { color: #1e3a8a; margin-bottom: 10px; font-size: 1.1em; }
+        .why-item p { color: #64748b; font-size: 0.9rem; }
+        
+        /* CTA */
+        .cta-section { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; padding: 70px 0; text-align: center; }
+        .cta-section h2 { font-size: 2.2em; margin-bottom: 15px; }
+        .cta-section p { font-size: 1.1em; opacity: 0.9; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .cta-btn { display: inline-block; background: #f59e0b; color: #1e3a8a; padding: 15px 40px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 1.1em; transition: transform 0.3s; }
+        .cta-btn:hover { transform: translateY(-2px); }
+        
+        /* Footer */
+        .site-footer { background: #f7f9fc; border-top: 1px solid #e5eaf1; padding: 40px 20px 32px; }
+        .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 20px; margin-bottom: 20px; }
+        .footer-links a { color: #1e3c72; text-decoration: none; font-size: 0.9rem; }
+        .footer-links a:hover { text-decoration: underline; }
+        .footer-copy { color: #6b7280; font-size: 0.85rem; text-align: center; }
+        
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2em; }
+            .header .stats-row { gap: 30px; }
+            .treatment-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RVYZENK472"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-RVYZENK472');
+    </script>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-logo">China Hospitals Guide</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../services.html">Services</a></li>
+                <li><a href="../pricing.html">Pricing</a></li>
+                <li><a href="../hospitals.html">Hospitals</a></li>
+                <li><a href="../contact.html">Contact</a></li>
+            </ul>
+            <a href="../contact-new.html" class="nav-cta">Start Here</a>
+        </div>
+    </nav>
+    
+    <header class="header">
+        <div class="container">
+            <h1>Medical Treatments in China</h1>
+            <p>World-class treatment across the most sought-after medical specialties — at 60-80% lower cost than Western countries.</p>
+            <div class="stats-row">
+                <div class="stat">
+                    <span class="stat-num">4</span>
+                    <span class="stat-label">Specialties</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-num">50+</span>
+                    <span class="stat-label">Partner Hospitals</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-num">60-80%</span>
+                    <span class="stat-label">Cost Savings</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-num">100k+</span>
+                    <span class="stat-label">International Patients</span>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <div class="breadcrumb">
+        <div class="container">
+            <a href="../index.html">Home</a>
+            <span>›</span>
+            <span>Treatments</span>
+        </div>
+    </div>
+    
+    <section class="section">
+        <div class="container">
+            <h2>Browse by Specialty</h2>
+            <p class="section-sub">Select a treatment category to learn about specific procedures, top hospitals, costs, and patient outcomes.</p>
+            
+            <div class="treatment-grid">
+                
+                <!-- Cancer -->
+                <div class="treatment-card">
+                    <div class="card-header">
+                        <div class="card-icon">🎗️</div>
+                        <h3>Cancer Treatment</h3>
+                        <p>Oncology care including surgery, chemotherapy, immunotherapy & proton therapy</p>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Surgical oncology (tumor resection)</li>
+                            <li>Chemotherapy & targeted therapy</li>
+                            <li>Immunotherapy (PD-1/PD-L1 inhibitors)</li>
+                            <li>Proton & particle therapy</li>
+                            <li>Radiation oncology</li>
+                            <li>Genetic testing & personalized medicine</li>
+                        </ul>
+                    </div>
+                    <div class="card-cost">
+                        <div class="from">Surgery from</div>
+                        <div class="price">$10,000 – $30,000</div>
+                        <div class="vs">vs. $50,000–$150,000 in the US</div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-footer-row">
+                            <a href="cancer.html" class="card-btn">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Cardiac -->
+                <div class="treatment-card">
+                    <div class="card-header">
+                        <div class="card-icon">🫀</div>
+                        <h3>Cardiac Surgery</h3>
+                        <p>Heart surgery and cardiovascular treatments by top Chinese cardiologists</p>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Coronary artery bypass grafting (CABG)</li>
+                            <li>Heart valve replacement & repair</li>
+                            <li>Percutaneous coronary intervention (PCI)</li>
+                            <li>Cardiac ablation for arrhythmias</li>
+                            <li>Aortic aneurysm surgery</li>
+                            <li>Minimally invasive heart surgery</li>
+                        </ul>
+                    </div>
+                    <div class="card-cost">
+                        <div class="from">CABG from</div>
+                        <div class="price">$15,000 – $40,000</div>
+                        <div class="vs">vs. $70,000–$200,000 in the US</div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-footer-row">
+                            <a href="cardiac.html" class="card-btn">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- IVF -->
+                <div class="treatment-card">
+                    <div class="card-header">
+                        <div class="card-icon">👶</div>
+                        <h3>IVF & Reproductive</h3>
+                        <p>In vitro fertilization and reproductive treatments with high success rates</p>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>IVF with ICSI (intracytoplasmic injection)</li>
+                            <li>Preimplantation genetic testing (PGT)</li>
+                            <li>Egg & sperm donation programs</li>
+                            <li>Surrogacy arrangements</li>
+                            <li>Fertility preservation</li>
+                            <li>Male infertility treatments</li>
+                        </ul>
+                    </div>
+                    <div class="card-cost">
+                        <div class="from">IVF cycle from</div>
+                        <div class="price">$5,000 – $12,000</div>
+                        <div class="vs">vs. $20,000–$40,000 in the US</div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-footer-row">
+                            <a href="ivf.html" class="card-btn">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Orthopedics -->
+                <div class="treatment-card">
+                    <div class="card-header">
+                        <div class="card-icon">🦴</div>
+                        <h3>Orthopedics & Spine</h3>
+                        <p>Joint replacement, spine surgery, and sports medicine</p>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Total hip & knee replacement</li>
+                            <li>Shoulder & elbow surgery</li>
+                            <li>Spinal fusion & disc replacement</li>
+                            <li>Arthroscopic (keyhole) surgery</li>
+                            <li>Sports medicine & ACL repair</li>
+                            <li>Bone tumor treatment</li>
+                        </ul>
+                    </div>
+                    <div class="card-cost">
+                        <div class="from">Knee replacement from</div>
+                        <div class="price">$6,000 – $18,000</div>
+                        <div class="vs">vs. $30,000–$70,000 in the US</div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-footer-row">
+                            <a href="orthopedics.html" class="card-btn">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    
+    <section class="section">
+        <div class="container">
+            <h2>Why Choose China for Medical Treatment?</h2>
+            <p class="section-sub">China's medical tourism infrastructure serves over 100,000 international patients annually.</p>
+            
+            <div class="why-grid">
+                <div class="why-item">
+                    <div class="why-icon">🏥</div>
+                    <h4>World-Class Hospitals</h4>
+                    <p>Many hospitals are JCI-accredited with state-of-the-art equipment matching or exceeding Western standards.</p>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon">💰</div>
+                    <h4>Affordable Pricing</h4>
+                    <p>Medical procedures cost 60-80% less than in the US, UK, or Australia — with no compromise on quality.</p>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon">👨‍⚕️</div>
+                    <h4>Expert Specialists</h4>
+                    <p>Chinese surgeons perform some of the highest procedure volumes in the world, building exceptional expertise.</p>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon">🌐</div>
+                    <h4>Full Coordination</h4>
+                    <p>We handle appointments, translation, accommodation, and transportation — everything from arrival to recovery.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="cta-section">
+        <div class="container">
+            <h2>Get a Free Treatment Estimate</h2>
+            <p>Tell us your condition and preferred treatment. We'll match you with the best hospital and provide a detailed cost estimate within 24 hours.</p>
+            <a href="../contact-new.html" class="cta-btn">Request Free Consultation →</a>
+        </div>
+    </section>
+    
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="../index.html">Home</a>
+                <a href="../services.html">Services</a>
+                <a href="../how-it-works.html">Process</a>
+                <a href="../pricing.html">Pricing</a>
+                <a href="../hospitals.html">Hospitals</a>
+                <a href="../contact.html">Contact</a>
+                <a href="../privacy.html">Privacy</a>
+                <a href="../terms.html">Terms</a>
+            </div>
+            <p class="footer-copy">Independent medical travel coordination for international patients.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
