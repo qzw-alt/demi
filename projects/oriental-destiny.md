@@ -5,9 +5,6 @@
 ## 站点信息
 - **域名:** https://oriental-destiny.com
 - **平台:** GitHub Pages
-- **Sitemap:** https://oriental-destiny.com/sitemap.xml (6个页面)
-
-## 仓库
 - **源码仓库:** https://github.com/qzw-alt/oriental-destiny
 - **备份仓库:** https://github.com/qzw-alt/demi
 
@@ -19,14 +16,13 @@
 - [x] instant_reading.html底部加 full_bazi_reading.html、kua_calculator.html 链接
 - [x] products.html底部加 full_bazi_reading.html 链接
 - [x] report_demo.html底部加 instant_reading.html、full_bazi_reading.html 链接
+- [x] 新增5个内容页并提交sitemap
+  - feng-shui-bracelet-meaning.html
+  - what-is-day-master.html
+  - bazi-reading-vs-zodiac.html
+  - five-elements-explained.html
+  - instant-reading-preview.html
 
 ### ⏳ 待完成
-- [ ] 写6个内容页（工具页/解读页/对比页）
-
-## 内容页建议
-1. feng-shui-bracelet-meaning.html
-2. what-is-day-master.html
-3. bazi-reading-vs-zodiac.html
-4. kua-number-calculator.html
-5. five-elements-explained.html
-6. instant-reading-preview.html
+- [ ] 在Google Search Console提交新的sitemap
+- [ ] 写更多内容页（视流量情况）
