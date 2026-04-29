@@ -7,9 +7,9 @@
 - **平台:** GitHub Pages
 - **Sitemap:** https://oriental-destiny.com/sitemap.xml (6个页面)
 
-## 仓库
-- **源码仓库:** https://github.com/qzw-alt/oriental-destiny
-- **备份仓库:** https://github.com/qzw-alt/demi
+## 仓库规则（必须遵守）
+- **网站仓库:** `qzw-alt/oriental-destiny` — 只上传网站文件，其他无关内容不放
+- **备份仓库:** `qzw-alt/demi` — 放记忆、配置等所有备份
 
 ## SEO问题（待修复）
 - 无canonical标签

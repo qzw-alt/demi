@@ -7,9 +7,9 @@
 - **平台:** GitHub Pages
 - **Sitemap:** 71个页面
 
-## 仓库
-- **网站仓库:** https://github.com/qzw-alt/chinahospitalsguide
-- **备份仓库:** https://github.com/qzw-alt/demi
+## 仓库规则（必须遵守）
+- **网站仓库:** `qzw-alt/chinahospitalsguide` — 只上传网站文件，其他无关内容不放
+- **备份仓库:** `qzw-alt/demi` — 放记忆、配置等所有备份
 
 ## 部署流程
 1. 编辑 `/root/.hermes/workspace/website/`
