@@ -7,34 +7,21 @@
 - **平台:** GitHub Pages
 - **Sitemap:** https://oriental-destiny.com/sitemap.xml (6个页面)
 
-## 仓库规则（必须遵守）
-- **网站仓库:** `qzw-alt/oriental-destiny` — 只上传网站文件，其他无关内容不放
-- **备份仓库:** `qzw-alt/demi` — 放记忆、配置等所有备份
-
-## SEO问题（待修复）
-- 无canonical标签
-- 无结构化数据(Organization/WebSite)
-- 内链孤立：full_bazi_reading.html、kua_calculator.html无站内入口
-- 缺内容型页面（工具页/解读页/对比页）
-
-## 内链现状
-| 页面 | 入口 |
-|------|------|
-| index.html | 全部页面 |
-| instant_reading.html | 首页、产品页 |
-| report_demo.html | 首页、instant_reading |
-| products.html | instant_reading |
-| checkout.html | 首页、instant、产品 |
-| **full_bazi_reading.html** | ❌ 孤立 |
-| **kua_calculator.html** | ❌ 孤立 |
+## 仓库
+- **源码仓库:** https://github.com/qzw-alt/oriental-destiny
+- **备份仓库:** https://github.com/qzw-alt/demi
 
 ## SEO任务清单
-- [ ] 每个页面加 `<link rel="canonical">`
-- [ ] index.html加Organization+WebSite结构化数据
-- [ ] instant_reading.html底部加 full_bazi_reading.html、kua_calculator.html 链接
-- [ ] products.html底部加 full_bazi_reading.html 链接
-- [ ] report_demo.html底部加 instant_reading.html、full_bazi_reading.html 链接
-- [ ] 写6个内容页
+
+### ✅ 已完成
+- [x] 每个页面加 `<link rel="canonical">` — 7个页面全部完成
+- [x] index.html加Organization+WebSite结构化数据
+- [x] instant_reading.html底部加 full_bazi_reading.html、kua_calculator.html 链接
+- [x] products.html底部加 full_bazi_reading.html 链接
+- [x] report_demo.html底部加 instant_reading.html、full_bazi_reading.html 链接
+
+### ⏳ 待完成
+- [ ] 写6个内容页（工具页/解读页/对比页）
 
 ## 内容页建议
 1. feng-shui-bracelet-meaning.html
