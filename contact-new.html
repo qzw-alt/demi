@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Your Case | Medical Tourism Consultation - China Hospitals Guide</title>
+    <meta name="description" content="Submit your medical case for a free initial consultation. We'll review your needs and provide expert guidance on treatment options in China.">
+    <link rel="canonical" href="https://chinahospitalsguide.com/contact-new.html">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    
+    
+
+    <link rel="stylesheet" href="styles.css"></head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">🏥 China Hospitals Guide</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="hospitals.html">Hospitals</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="how-it-works.html">How It Works</a></li>
+                <li><a href="blog/">Blog</a></li>
+                <li><a href="news/">News</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <a href="contact-new.html" class="nav-cta">Get Started</a>
+            <div class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+    <header class="page-header">
+        <div class="container">
+            <h1>Submit Your Case</h1>
+            <p>Get a free initial consultation within 24 hours</p>
+        </div>
+    </header>
+    
+    <main class="content">
+        <div class="container">
+            
+            <div class="form-intro">
+                <p><strong>💰 Service:</strong> We charge consulting fees ($30 for Basic, $299 for Full Consultation). Hospital treatment costs are paid directly to the hospital. <strong>We are NOT affiliated with any hospital</strong> — you get independent, professional advice.</p>
+            </div>
+            
+            <form id="consultForm">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>First Name <span>*</span></label>
+                        <input type="text" id="firstname" name="firstname" required placeholder="John">
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name <span>*</span></label>
+                        <input type="text" id="lastname" name="lastname" required placeholder="Smith">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Email <span>*</span></label>
+                        <input type="email" id="email" name="email" required placeholder="john@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Phone / WhatsApp</label>
+                        <input type="tel" id="phone" name="phone" placeholder="+1 234 567 8900">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Country <span>*</span></label>
+                    <select id="country" name="country" required>
+                        <option value="">Select your country...</option>
+                        <option value="United States">United States</option>
+                        <option value="United Kingdom">United Kingdom</option>
+                        <option value="Canada">Canada</option>
+                        <option value="Australia">Australia</option>
+                        <option value="Japan">Japan</option>
+                        <option value="South Korea">South Korea</option>
+                        <option value="Germany">Germany</option>
+                        <option value="France">France</option>
+                        <option value="Singapore">Singapore</option>
+                        <option value="Malaysia">Malaysia</option>
+                        <option value="Indonesia">Indonesia</option>
+                        <option value="Philippines">Philippines</option>
+                        <option value="Thailand">Thailand</option>
+                        <option value="Vietnam">Vietnam</option>
+                        <option value="Russia">Russia</option>
+                        <option value="Middle East">Middle East (UAE, Saudi, etc.)</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Medical Condition / Treatment Needed <span>*</span></label>
+                    <select id="treatment_category" name="treatment_category" required>
+                        <option value="">Select treatment type...</option>
+                        <option value="Cancer Treatment / Oncology">Cancer Treatment / Oncology</option>
+                        <option value="Proton Therapy">Proton Therapy</option>
+                        <option value="Cardiac Surgery / Cardiology">Cardiac Surgery / Cardiology</option>
+                        <option value="Orthopedics / Joint Replacement">Orthopedics / Joint Replacement</option>
+                        <option value="Neurology / Neurosurgery">Neurology / Neurosurgery</option>
+                        <option value="IVF / Fertility Treatment">IVF / Fertility Treatment</option>
+                        <option value="Plastic / Cosmetic Surgery">Plastic / Cosmetic Surgery</option>
+                        <option value="Dental Treatment">Dental Treatment</option>
+                        <option value="Eye Surgery / LASIK">Eye Surgery / LASIK</option>
+                        <option value="Traditional Chinese Medicine">Traditional Chinese Medicine</option>
+                        <option value="General Health Checkup">General Health Checkup</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Describe Your Medical Situation <span>*</span></label>
+                    <textarea id="medical_details" name="medical_details" required placeholder="Please describe your condition, previous treatments, what you're looking for, and any specific questions. The more details you provide, the better our consultation can be."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>How did you hear about us?</label>
+                    <select id="source" name="source">
+                        <option value="">Select...</option>
+                        <option value="Google Search">Google Search</option>
+                        <option value="Social Media">Social Media</option>
+                        <option value="Friend / Referral">Friend / Referral</option>
+                        <option value="Medical Tourism Directory">Medical Tourism Directory</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Preferred Consultation Package <span>*</span></label>
+                    <div class="radio-group">
+                        <label class="radio-item">
+                            <input type="radio" name="package" value="Basic Consultation ($30)" required>
+                            <span><strong>Basic Consultation ($30)</strong> — Case review + hospital options overview</span>
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="package" value="Full Consultation ($299)">
+                            <span><strong>Full Consultation ($299)</strong> — Comprehensive analysis + written report + follow-up support</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <button type="submit" class="submit-btn" id="submitBtn">📧 Submit Consultation Request</button>
+                
+                <p class="privacy-note">Your information is kept strictly confidential and used only for providing consultation services.</p>
+            
+            </form>
+            
+            <div class="success-message" id="successMessage">
+                <h3>✅ Submission Received!</h3>
+                <p>Thank you for your inquiry. Our team will review your case and contact you within 24 hours with personalized recommendations.</p>
+                <p style="margin-top:15px;">Please check your email for confirmation.</p>
+            </div>
+            
+        </div>
+    </main>
+    
+    <footer class="page-footer">
+        <div class="container">
+            <p>📍 <a href="/">China Hospitals Guide</a> | <a href="/how-it-works.html">How It Works</a> | <a href="/resources.html">Resources</a></p>
+            <p style="margin-top:10px;">Independent medical tourism consulting service. Not affiliated with any hospital.</p>
+        </div>
+    </footer>
+    
+    <script>
+        emailjs.init("5fO60dvOGsKzPk_Ir");
+        
+        document.getElementById('consultForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            var submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = '⏳ Submitting...';
+            
+            var formData = {
+                firstname: document.getElementById('firstname').value,
+                lastname: document.getElementById('lastname').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value || 'Not provided',
+                country: document.getElementById('country').value,
+                treatment_category: document.getElementById('treatment_category').value,
+                medical_details: document.getElementById('medical_details').value,
+                source: document.getElementById('source').value || 'Not specified',
+                package: document.querySelector('input[name="package"]:checked')?.value || 'Not specified',
+                submit_time: new Date().toLocaleString(),
+                source_page: 'contact-new'
+            };
+            
+            try {
+                await emailjs.send('service_0gb6hmx', 'template_ezmtqvb', formData);
+                
+                document.getElementById('consultForm').style.display = 'none';
+                document.getElementById('successMessage').style.display = 'block';
+                
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Sorry, there was an error submitting your form. Please try again or email us directly at contact@chinahospitalsguide.com');
+                submitBtn.disabled = false;
+                submitBtn.textContent = '📧 Submit Consultation Request';
+            }
+        });
+    </script>
+<script>
+        document.getElementById('navToggle').addEventListener('click', function() {
+            document.getElementById('navLinks').classList.toggle('active');
+        });
+        document.querySelectorAll('.nav-links a').forEach(function(link) {
+            link.addEventListener('click', function() {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>

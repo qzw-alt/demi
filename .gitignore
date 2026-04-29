@@ -1,3 +1,39 @@
-node_modules/
-.DS_Store
+# Website ONLY files - DO NOT COMMIT these to website repo
+# These should stay in workspace only
+
+# OpenClaw workspace files
+.openclaw/
+AGENTS.md
+HEARTBEAT.md
+IDENTITY.md
+MEMORY.md
+SOUL.md
+TOOLS.md
+USER.md
+
+# Memory system
+# Keep memory/ for backup, only archive cold/ (90day+ historical)
+memory/cold/
+
+# Skills
+skills/
+
+# Deploy scripts
+deploy-*.sh
+
+# Temporary files
 *.log
+*.tmp
+search*.png
+china_cart*.md
+
+# Hidden files except .gitignore
+.*/
+!.gitignore
+
+# Embedded git repositories (managed separately)
+LLM101n/
+chinahospitalsguide/
+demi/
+memory-system-publish/
+website/
