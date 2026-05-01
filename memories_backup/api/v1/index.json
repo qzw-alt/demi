@@ -1,0 +1,38 @@
+{
+  "name": "China Hospitals Guide API",
+  "version": "1.0",
+  "description": "Machine-readable hospital directory for AI agents and developers",
+  "endpoints": {
+    "hospitals": {
+      "path": "/api/v1/hospitals.json",
+      "method": "GET",
+      "description": "Get all hospitals with trust scores and structured data",
+      "parameters": {
+        "city": "Filter by city (Beijing, Shanghai, Guangzhou, Shenzhen, Hangzhou, Chengdu)",
+        "specialty": "Filter by specialty tag (cardiology, oncology, orthopedics, etc.)",
+        "min_trust": "Minimum trust score (0.0-1.0)",
+        "jci_only": "Show only JCI-accredited hospitals (true/false)"
+      },
+      "example": "/api/v1/hospitals.json?city=Beijing&specialty=cardiology"
+    }
+  },
+  "trust_levels": {
+    "very_high": "0.95-1.00",
+    "high": "0.88-0.94",
+    "medium_high": "0.80-0.87",
+    "medium": "0.70-0.79",
+    "low": "below 0.70"
+  },
+  "data_sources": {
+    "official": "Data from official hospital website",
+    "multi_source": "Official + public ranking + cross-validation",
+    "dual_source": "Official website + public ranking",
+    "single_source": "Public ranking data only"
+  },
+  "usage_example": {
+    "description": "Example query from an AI agent",
+    "prompt": "I need a world-class cardiologist in Shanghai, budget $10,000, prefer JCI accredited",
+    "query": "/api/v1/hospitals.json?city=Shanghai&specialty=cardiology&min_trust=0.85",
+    "response_fields": ["name", "city", "rank", "trust.score", "trust.level", "tags"]
+  }
+}
