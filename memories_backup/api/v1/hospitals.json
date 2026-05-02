@@ -1,0 +1,2009 @@
+{
+  "meta": {
+    "version": "1.1",
+    "generated": "2026-04-06",
+    "updated": "2026-04-06",
+    "note": "Expanded from 34 to 50 hospitals - added tier-2 cities (Chengdu, Xi'an, Jinan, Nanjing, Tianjin) and specialty hospitals (eye, dental, TCM)",
+    "description": "China Hospitals Guide - Hospital Directory API",
+    "contact": "https://chinahospitalsguide.com/contact"
+  },
+  "hospitals": [
+    {
+      "id": "fuwai-hospital",
+      "name": "Fu Wai Hospital",
+      "name_zh": "中国医学科学院阜外医院",
+      "city": "Beijing",
+      "district": "Xicheng",
+      "airport_info": "45-60min from Beijing Capital International Airport",
+      "tags": [
+        "cardiology",
+        "heart-surgery",
+        "general"
+      ],
+      "rank": "#1 Cardiology in China",
+      "phone": "010-88398866",
+      "website": "https://www.fuwaihospital.org",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.94,
+        "level": "high",
+        "verified_fields": [
+          "name",
+          "city",
+          "district",
+          "rank",
+          "tags",
+          "airport_info",
+          "address",
+          "phone"
+        ],
+        "data_source": "multi_source",
+        "cross_validated": [
+          "official_website",
+          "public_ranking"
+        ],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "Rank #1 cardiology claim backed by public ranking data",
+          "Success rate claims from official sources",
+          "Airport time typical for Beijing traffic"
+        ]
+      },
+      "address": "北京市西城区北礼士路167号"
+    },
+    {
+      "id": "anzhen-hospital",
+      "name": "Anzhen Hospital",
+      "name_zh": "首都医科大学附属北京安贞医院",
+      "city": "Beijing",
+      "district": "Chaoyang",
+      "airport_info": "40-55min from Beijing Capital International Airport",
+      "tags": [
+        "cardiology",
+        "heart-surgery"
+      ],
+      "rank": "Top Cardiovascular Center",
+      "phone": "010-64412431",
+      "website": "http://www.anzhen.org",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.91,
+        "level": "high",
+        "verified_fields": [
+          "name",
+          "city",
+          "district",
+          "rank",
+          "tags",
+          "airport_info",
+          "address",
+          "phone"
+        ],
+        "data_source": "multi_source",
+        "cross_validated": [
+          "official_website",
+          "public_ranking"
+        ],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "Aortic specialist reputation from multiple patient testimonials",
+          "High-risk case acceptance is verifiable claim"
+        ]
+      },
+      "address": "北京市朝阳区安贞路2号"
+    },
+    {
+      "id": "zhongshan-hospital-shanghai",
+      "name": "Zhongshan Hospital (Shanghai)",
+      "name_zh": "复旦大学附属中山医院",
+      "city": "Shanghai",
+      "district": "Xuhui",
+      "airport_info": "55-75min from Shanghai Pudong International Airport",
+      "tags": [
+        "cardiology",
+        "oncology",
+        "general"
+      ],
+      "rank": "Top 3 Cardiology, Top 5 Oncology",
+      "phone": "021-64041990",
+      "website": "https://www.zs-hospital.sh.cn",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.92,
+        "level": "high",
+        "verified_fields": [
+          "name",
+          "city",
+          "district",
+          "rank",
+          "tags",
+          "airport_info",
+          "address",
+          "phone"
+        ],
+        "data_source": "multi_source",
+        "cross_validated": [
+          "official_website",
+          "public_ranking"
+        ],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "Fudan affiliation verifiable",
+          "Innovation hub reputation documented in multiple sources"
+        ]
+      },
+      "address": "上海市徐汇区枫林路180号"
+    },
+    {
+      "id": "jishuitan-hospital",
+      "name": "Jishuitan Hospital",
+      "name_zh": "北京积水潭医院",
+      "city": "Beijing",
+      "district": "Xicheng",
+      "airport_info": "40-50min from Beijing Capital International Airport",
+      "tags": [
+        "orthopedics",
+        "joint-replacement",
+        "spine-surgery"
+      ],
+      "rank": "#1 Orthopedics in China",
+      "phone": "010-58516688",
+      "website": "http://www.jst-hosp.com",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.93,
+        "level": "high",
+        "verified_fields": [
+          "name",
+          "city",
+          "district",
+          "rank",
+          "tags",
+          "airport_info",
+          "address",
+          "phone"
+        ],
+        "data_source": "multi_source",
+        "cross_validated": [
+          "official_website",
+          "public_ranking"
+        ],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "#1 orthopedics claim backed by Chinese public hospital rankings",
+          "Sports medicine specialization noted in multiple sources"
+        ]
+      },
+      "address": "北京市西城区新街口东街31号"
+    },
+    {
+      "id": "shanghai-sixth-hospital",
+      "name": "Shanghai Sixth Hospital",
+      "name_zh": "上海交通大学附属第六人民医院",
+      "city": "Shanghai",
+      "district": "Xuhui",
+      "airport_info": "50-60min from Shanghai Pudong International Airport",
+      "tags": [
+        "orthopedics",
+        "sports-medicine",
+        "joint-replacement"
+      ],
+      "rank": "#2 Orthopedics",
+      "phone": "021-64369181",
+      "website": "http://www.6thhospitalsh.com",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.89,
+        "level": "high",
+        "verified_fields": [
+          "name",
+          "city",
+          "district",
+          "rank",
+          "tags",
+          "airport_info",
+          "address",
+          "phone"
+        ],
+        "data_source": "dual_source",
+        "cross_validated": [
+          "public_ranking"
+        ],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "#2 orthopedics from public ranking data",
+          "Diabetic foot treatment specialization notable"
+        ]
+      },
+      "address": "上海市徐汇区宜山路600号（徐汇院区）"
+    },
+    {
+      "id": "pku-third-hospital",
+      "name": "Peking University Third Hospital",
+      "name_zh": "北京大学第三医院",
+      "city": "Beijing",
+      "district": "Haidian",
+      "airport_info": "45min from Beijing Capital International Airport",
+      "tags": [
+        "orthopedics",
+        "maternity",
+        "fertility",
+        "sports-medicine"
+      ],
+      "rank": "#4 Obstetrics, #1 Fertility, Top Orthopedics",
+      "phone": "010-82266699",
+      "website": "http://www.puh3.net.cn",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.91,
+        "level": "high",
+        "verified_fields": [
+          "name",
+          "city",
+          "district",
+          "rank",
+          "tags",
+          "airport_info",
+          "address",
+          "phone"
+        ],
+        "data_source": "multi_source",
+        "cross_validated": [
+          "official_website",
+          "public_ranking"
+        ],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "Fertility reputation well-documented",
+          "Sports medicine department notable"
+        ]
+      },
+      "address": "北京市海淀区花园北路49号"
+    },
+    {
+      "id": "fudan-womens-hospital",
+      "name": "Fudan University Women's Hospital (Red House)",
+      "name_zh": "复旦大学附属妇产科医院（红房子）",
+      "city": "Shanghai",
+      "district": "Huangpu",
+      "airport_info": "60min from Shanghai Pudong International Airport",
+      "tags": [
+        "maternity",
+        "obstetrics",
+        "prenatal-diagnosis",
+        "fertility"
+      ],
+      "rank": "#2 Obstetrics in China",
+      "phone": "021-33189900",
+      "website": "https://www.fdfck.com",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.9,
+        "level": "high",
+        "verified_fields": [
+          "name",
+          "city",
+          "district",
+          "rank",
+          "tags",
+          "airport_info",
+          "address",
+          "phone"
+        ],
+        "data_source": "multi_source",
+        "cross_validated": [
+          "official_website",
+          "public_ranking"
+        ],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "#2 obstetrics claim from public ranking",
+          "Well-known as 'Red House' brand in Shanghai"
+        ]
+      },
+      "address": "黄浦区方斜路419号（黄浦院区）；杨浦区沈阳路128号（杨浦院区）"
+    },
+    {
+      "id": "zhejiang-womens-hospital",
+      "name": "Zhejiang University Women's Hospital",
+      "name_zh": "浙江大学医学院附属妇产科医院",
+      "city": "Hangzhou",
+      "district": "Shangcheng",
+      "airport_info": "50min from Hangzhou Xiaoshan International Airport",
+      "tags": [
+        "maternity",
+        "obstetrics",
+        "prenatal-diagnosis",
+        "fertility"
+      ],
+      "rank": "Top Obstetrics",
+      "phone": "0571-87061501",
+      "website": "https://www.womanhospital.cn",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.88,
+        "level": "high",
+        "verified_fields": [
+          "name",
+          "city",
+          "district",
+          "rank",
+          "tags",
+          "address",
+          "phone"
+        ],
+        "data_source": "dual_source",
+        "cross_validated": [
+          "public_ranking"
+        ],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "Zhejiang province leading obstetrics hospital",
+          "Fertility department established"
+        ]
+      },
+      "address": "湖滨院区：杭州市上城区学士路1号"
+    },
+    {
+      "id": "cams-cancer-hospital",
+      "name": "Cancer Hospital, CAMS",
+      "name_zh": "中国医学科学院肿瘤医院",
+      "city": "Beijing",
+      "district": "Chaoyang",
+      "airport_info": "40-50min from Beijing Capital International Airport",
+      "tags": [
+        "oncology",
+        "cancer-surgery",
+        "radiotherapy"
+      ],
+      "rank": "#1 Oncology in China",
+      "phone": "010-67781331",
+      "website": "http://www.cicams.ac.cn",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.95,
+        "level": "very_high",
+        "verified_fields": [
+          "name",
+          "city",
+          "district",
+          "rank",
+          "tags",
+          "airport_info",
+          "address",
+          "phone"
+        ],
+        "data_source": "official",
+        "cross_validated": [
+          "official_website",
+          "public_ranking",
+          "who_reference"
+        ],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "CAMS affiliation provides highest credibility",
+          "#1 oncology claim widely documented",
+          "National cancer center designation"
+        ]
+      },
+      "address": "北京市朝阳区潘家园南里17号"
+    },
+    {
+      "id": "tiantan-hospital",
+      "name": "Tiantan Hospital",
+      "name_zh": "首都医科大学附属北京天坛医院",
+      "city": "Beijing",
+      "district": "Fengtai",
+      "airport_info": "50-70min from Beijing Capital International Airport",
+      "tags": [
+        "neurosurgery",
+        "neurology",
+        "general"
+      ],
+      "rank": "#1 Neurosurgery",
+      "phone": "010-59976611",
+      "website": "http://www.bjtth.org",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.94,
+        "level": "very_high",
+        "verified_fields": [
+          "name",
+          "city",
+          "district",
+          "rank",
+          "tags",
+          "airport_info",
+          "address",
+          "phone"
+        ],
+        "data_source": "official",
+        "cross_validated": [
+          "official_website",
+          "public_ranking"
+        ],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "#1 neurosurgery public ranking widely accepted",
+          "International neuroscience research reputation"
+        ]
+      },
+      "address": "北京市丰台区南四环西路119号"
+    },
+    {
+      "id": "huashan-hospital",
+      "name": "Huashan Hospital",
+      "name_zh": "复旦大学附属华山医院",
+      "city": "Shanghai",
+      "district": "Jing'an",
+      "airport_info": "65-85min from Shanghai Pudong International Airport",
+      "tags": [
+        "neurosurgery",
+        "neurology"
+      ],
+      "rank": "#2 Neurosurgery",
+      "phone": "021-52889999",
+      "website": "https://www.hshs.com.cn",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.93,
+        "level": "high",
+        "verified_fields": [
+          "name",
+          "city",
+          "district",
+          "rank",
+          "tags",
+          "airport_info",
+          "address",
+          "phone"
+        ],
+        "data_source": "multi_source",
+        "cross_validated": [
+          "official_website",
+          "public_ranking"
+        ],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "Fudan affiliation adds credibility",
+          "#2 neurosurgery documented in rankings"
+        ]
+      },
+      "address": "上海市静安区乌鲁木齐中路12号（总院）"
+    },
+    {
+      "id": "beijing-childrens-hospital",
+      "name": "Beijing Children's Hospital",
+      "name_zh": "国家儿童医学中心（北京）",
+      "city": "Beijing",
+      "district": "Xicheng",
+      "airport_info": "45-60min from Beijing Capital International Airport",
+      "tags": [
+        "pediatrics",
+        "childrens-health"
+      ],
+      "rank": "#1 Pediatrics",
+      "phone": "010-59612345",
+      "website": "http://www.bch.com.cn",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.96,
+        "level": "very_high",
+        "verified_fields": [
+          "name",
+          "city",
+          "district",
+          "rank",
+          "tags",
+          "airport_info",
+          "address",
+          "phone"
+        ],
+        "data_source": "official",
+        "cross_validated": [
+          "official_website",
+          "public_ranking",
+          "jci_verified"
+        ],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "JCI accredited",
+          "National Children's Medical Center designation",
+          "#1 pediatrics widely documented"
+        ]
+      },
+      "address": "北京市西城区南礼士路56号"
+    },
+    {
+      "id": "pumch",
+      "name": "Peking Union Medical College Hospital",
+      "name_zh": "北京协和医院",
+      "city": "Beijing",
+      "district": "Dongcheng",
+      "airport_info": "45-60min from Beijing Capital International Airport",
+      "tags": [
+        "general",
+        "all-specialties"
+      ],
+      "rank": "#1 Comprehensive Hospital",
+      "phone": "东单院区:010-69151188 / 西单院区:010-69158100",
+      "website": "https://www.pumch.cn",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.97,
+        "level": "very_high",
+        "verified_fields": [
+          "name",
+          "city",
+          "district",
+          "rank",
+          "tags",
+          "airport_info",
+          "address",
+          "phone"
+        ],
+        "data_source": "official",
+        "cross_validated": [
+          "official_website",
+          "public_ranking",
+          "who_reference"
+        ],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "Most prestigious hospital in China",
+          "#1 comprehensive claim universally accepted",
+          "Highest trust level in database"
+        ]
+      },
+      "address": "东单院区：北京市东城区帅府园一号；西单院区：北京市西城区大木仓胡同41号"
+    },
+    {
+      "id": "china-japan-friendship-hospital",
+      "name": "China-Japan Friendship Hospital",
+      "name_zh": "中日友好医院",
+      "city": "Beijing",
+      "district": "Chaoyang",
+      "airport_info": "40-55min from Beijing Capital International Airport",
+      "tags": [
+        "general",
+        "international"
+      ],
+      "rank": "Top International Department",
+      "phone": "本部:010-84205566 / 国际部:010-84205121",
+      "website": "https://www.zryhyy.com.cn",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.9,
+        "level": "high",
+        "verified_fields": [
+          "name",
+          "city",
+          "district",
+          "rank",
+          "tags",
+          "airport_info",
+          "address",
+          "phone"
+        ],
+        "data_source": "official",
+        "cross_validated": [
+          "official_website",
+          "jci_verified"
+        ],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "JCI accredited",
+          "International patient services well-established"
+        ]
+      },
+      "address": "北京市朝阳区樱花园东街2号"
+    },
+    {
+      "id": "ruijin-hospital",
+      "name": "Ruijin Hospital",
+      "name_zh": "上海交通大学医学院附属瑞金医院",
+      "city": "Shanghai",
+      "district": "Huangpu",
+      "airport_info": "50-70min from Shanghai Pudong International Airport",
+      "tags": [
+        "general",
+        "vip-services"
+      ],
+      "rank": "Top VIP Center",
+      "phone": "021-64370045",
+      "website": "https://www.rjh.com.cn",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.89,
+        "level": "high",
+        "verified_fields": [
+          "name",
+          "city",
+          "district",
+          "rank",
+          "tags",
+          "airport_info",
+          "address",
+          "phone"
+        ],
+        "data_source": "dual_source",
+        "cross_validated": [
+          "official_website",
+          "public_ranking"
+        ],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "VIP services documented in multiple sources"
+        ]
+      },
+      "address": "上海市黄浦区瑞金二路197号"
+    },
+    {
+      "id": "renji-hospital",
+      "name": "Renji Hospital",
+      "name_zh": "上海交通大学医学院附属仁济医院",
+      "city": "Shanghai",
+      "district": "Pudong",
+      "airport_info": "30-45min from Shanghai Pudong International Airport",
+      "tags": [
+        "general",
+        "gastroenterology"
+      ],
+      "rank": "Top General Hospital",
+      "phone": "021-58752345",
+      "website": "https://www.renji.com",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.88,
+        "level": "high",
+        "verified_fields": [
+          "name",
+          "city",
+          "district",
+          "rank",
+          "tags",
+          "airport_info",
+          "address",
+          "phone"
+        ],
+        "data_source": "dual_source",
+        "cross_validated": [
+          "official_website",
+          "public_ranking"
+        ],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "Gastroenterology reputation documented"
+        ]
+      },
+      "address": "西院区：上海市黄浦区山东中路145号；东院区：上海市浦东新区浦建路160号"
+    },
+    {
+      "id": "huadong-hospital",
+      "name": "Huadong Hospital",
+      "name_zh": "复旦大学附属华东医院",
+      "city": "Shanghai",
+      "district": "Jing'an",
+      "airport_info": "60-80min from Shanghai Pudong International Airport",
+      "tags": [
+        "general",
+        "geriatrics"
+      ],
+      "rank": "Top Geriatrics",
+      "phone": "021-62483180",
+      "website": "http://www.huadonghospital.com",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.85,
+        "level": "medium_high",
+        "verified_fields": [
+          "name",
+          "city",
+          "district",
+          "rank",
+          "tags",
+          "address",
+          "phone"
+        ],
+        "data_source": "single_source",
+        "cross_validated": [
+          "public_ranking"
+        ],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "Geriatrics specialization notable in Shanghai"
+        ]
+      },
+      "address": "上海市静安区延安西路221号（总院）"
+    },
+    {
+      "id": "shanghai-ninth-hospital",
+      "name": "Shanghai Ninth Hospital",
+      "name_zh": "上海交通大学医学院附属第九人民医院",
+      "city": "Shanghai",
+      "district": "Huangpu",
+      "airport_info": "50-70min from Shanghai Pudong International Airport",
+      "tags": [
+        "plastic-surgery",
+        "general"
+      ],
+      "rank": "Top Plastic Surgery",
+      "phone": "021-23271699",
+      "website": "https://www.ninthhospital.com.cn",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.87,
+        "level": "medium_high",
+        "verified_fields": [
+          "name",
+          "city",
+          "district",
+          "rank",
+          "tags",
+          "address",
+          "phone"
+        ],
+        "data_source": "dual_source",
+        "cross_validated": [
+          "public_ranking"
+        ],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "Plastic surgery reputation well-known domestically"
+        ]
+      },
+      "address": "南部院区：上海市黄浦区制造局路639号；北部院区：上海市宝山区漠河路280号"
+    },
+    {
+      "id": "guangdong-provincial-peoples-hospital",
+      "name": "Guangdong Provincial People's Hospital",
+      "name_zh": "广东省人民医院",
+      "city": "Guangzhou",
+      "district": "Yuexiu",
+      "airport_info": "45-60min from Guangzhou Baiyun International Airport",
+      "tags": [
+        "cardiology",
+        "general"
+      ],
+      "rank": "Top Cardiology South China",
+      "phone": "020-83827812",
+      "website": "http://www.e5413.com",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.86,
+        "level": "medium_high",
+        "verified_fields": [
+          "name",
+          "city",
+          "district",
+          "rank",
+          "tags",
+          "airport_info",
+          "address",
+          "phone"
+        ],
+        "data_source": "dual_source",
+        "cross_validated": [
+          "public_ranking"
+        ],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "Leading cardiology in South China region"
+        ]
+      },
+      "address": "广州市越秀区中山二路106号"
+    },
+    {
+      "id": "nanfang-hospital",
+      "name": "Nanfang Hospital",
+      "name_zh": "南方医科大学南方医院",
+      "city": "Guangzhou",
+      "district": "Baiyun",
+      "airport_info": "40-55min from Guangzhou Baiyun International Airport",
+      "tags": [
+        "general",
+        "kidney-disease"
+      ],
+      "rank": "Top General Hospital",
+      "phone": "020-61641888",
+      "website": "http://www.nfyy.com",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.85,
+        "level": "medium_high",
+        "verified_fields": [
+          "name",
+          "city",
+          "district",
+          "rank",
+          "tags",
+          "address",
+          "phone"
+        ],
+        "data_source": "single_source",
+        "cross_validated": [
+          "public_ranking"
+        ],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "Kidney disease specialization notable"
+        ]
+      },
+      "address": "广州市白云区广州大道北1838号"
+    },
+    {
+      "id": "zhongshan-sixth-hospital",
+      "name": "Zhongshan Sixth Hospital",
+      "name_zh": "中山大学附属第六医院",
+      "city": "Guangzhou",
+      "district": "Tianhe",
+      "airport_info": "45-60min from Guangzhou Baiyun International Airport",
+      "tags": [
+        "gastroenterology",
+        "general"
+      ],
+      "rank": "Top Gastroenterology",
+      "phone": "020-38254140",
+      "website": "http://www.zs6h.com",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.84,
+        "level": "medium_high",
+        "verified_fields": [
+          "name",
+          "city",
+          "district",
+          "rank",
+          "tags",
+          "address",
+          "phone"
+        ],
+        "data_source": "single_source",
+        "cross_validated": [
+          "public_ranking"
+        ],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "Gastroenterology reputation growing"
+        ]
+      },
+      "address": "广州市天河区员村二横路26号（院本部）"
+    },
+    {
+      "id": "zhujiang-hospital",
+      "name": "Zhujiang Hospital",
+      "name_zh": "南方医科大学珠江医院",
+      "city": "Guangzhou",
+      "district": "Haizhu",
+      "airport_info": "45-60min from Guangzhou Baiyun International Airport",
+      "tags": [
+        "neurosurgery",
+        "general"
+      ],
+      "rank": "Top Neurosurgery South China",
+      "phone": "020-61643888",
+      "website": "http://www.zjyy.com.cn",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.83,
+        "level": "medium_high",
+        "verified_fields": [
+          "name",
+          "city",
+          "district",
+          "rank",
+          "tags",
+          "address",
+          "phone"
+        ],
+        "data_source": "single_source",
+        "cross_validated": [
+          "public_ranking"
+        ],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "Neurosurgery notable in South China"
+        ]
+      },
+      "address": "广州市海珠区工业大道中253号"
+    },
+    {
+      "id": "first-affiliated-guangzhou-tcm",
+      "name": "First Affiliated Hospital of Guangzhou University of Chinese Medicine",
+      "name_zh": "广州中医药大学第一附属医院",
+      "city": "Guangzhou",
+      "district": "Baiyun",
+      "airport_info": "35-50min from Guangzhou Baiyun International Airport",
+      "tags": [
+        "tcm",
+        "general"
+      ],
+      "rank": "Top Traditional Chinese Medicine",
+      "phone": "020-36591912",
+      "website": "http://www.gzhtcm.com",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.85,
+        "level": "medium_high",
+        "verified_fields": [
+          "name",
+          "city",
+          "district",
+          "rank",
+          "tags",
+          "address",
+          "phone"
+        ],
+        "data_source": "dual_source",
+        "cross_validated": [
+          "official_website"
+        ],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "TCM integrated with modern medicine"
+        ]
+      },
+      "address": "广州市白云区机场路16号大院"
+    },
+    {
+      "id": "first-affiliated-sun-yat-sen",
+      "name": "First Affiliated Hospital of Sun Yat-sen University",
+      "name_zh": "中山大学附属第一医院",
+      "city": "Guangzhou",
+      "district": "Yuexiu",
+      "airport_info": "50-70min from Guangzhou Baiyun International Airport",
+      "tags": [
+        "general",
+        "all-specialties"
+      ],
+      "rank": "Top Comprehensive Hospital",
+      "phone": "020-87755766",
+      "website": "https://www.gzsums.net",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.9,
+        "level": "high",
+        "verified_fields": [
+          "name",
+          "city",
+          "district",
+          "rank",
+          "tags",
+          "airport_info",
+          "address",
+          "phone"
+        ],
+        "data_source": "multi_source",
+        "cross_validated": [
+          "official_website",
+          "public_ranking"
+        ],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "Sun Yat-sen University affiliation provides credibility",
+          "Top comprehensive hospital in Guangdong"
+        ]
+      },
+      "address": "广州市越秀区中山二路58号（院本部）"
+    },
+    {
+      "id": "first-affiliated-guangzhou-medical",
+      "name": "First Affiliated Hospital of Guangzhou Medical University",
+      "name_zh": "广州医科大学附属第一医院",
+      "city": "Guangzhou",
+      "district": "Liwan",
+      "airport_info": "40-55min from Guangzhou Baiyun International Airport",
+      "tags": [
+        "respiratory",
+        "general"
+      ],
+      "rank": "Top Respiratory Medicine",
+      "phone": "020-83062114",
+      "website": "http://www.fahyy.com",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.86,
+        "level": "medium_high",
+        "verified_fields": [
+          "name",
+          "city",
+          "district",
+          "rank",
+          "tags",
+          "address",
+          "phone"
+        ],
+        "data_source": "dual_source",
+        "cross_validated": [
+          "public_ranking"
+        ],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "Respiratory medicine reputation during COVID noted"
+        ]
+      },
+      "address": "沿江院区：广州市越秀区沿江西路151号；大坦沙院区：广州市荔湾区桥中中路28号"
+    },
+    {
+      "id": "pku-peoples-hospital",
+      "name": "Peking University People's Hospital",
+      "name_zh": "北京大学人民医院",
+      "city": "Beijing",
+      "district": "Xicheng",
+      "airport_info": "50-70min from Beijing Capital International Airport",
+      "tags": [
+        "general",
+        "hematology"
+      ],
+      "rank": "Top General Hospital",
+      "phone": "010-88326666",
+      "website": "http://www.pkuph.com.cn",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.88,
+        "level": "high",
+        "verified_fields": [
+          "name",
+          "city",
+          "district",
+          "rank",
+          "tags",
+          "airport_info",
+          "address",
+          "phone"
+        ],
+        "data_source": "dual_source",
+        "cross_validated": [
+          "official_website",
+          "public_ranking"
+        ],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "Peking University affiliation",
+          "Hematology department notable"
+        ]
+      },
+      "address": "西直门院区：北京市西城区西直门南大街11号；白塔寺院区：北京市西城区阜成门内大街133号"
+    },
+    {
+      "id": "beijing-chaoyang-hospital",
+      "name": "Beijing Chaoyang Hospital",
+      "name_zh": "首都医科大学附属北京朝阳医院",
+      "city": "Beijing",
+      "district": "Chaoyang",
+      "airport_info": "40-55min from Beijing Capital International Airport",
+      "tags": [
+        "respiratory",
+        "general"
+      ],
+      "rank": "Top Respiratory Medicine",
+      "phone": "010-85231777",
+      "website": "http://www.bjcyh.com.cn",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.85,
+        "level": "medium_high",
+        "verified_fields": [
+          "name",
+          "city",
+          "district",
+          "rank",
+          "tags",
+          "address",
+          "phone"
+        ],
+        "data_source": "single_source",
+        "cross_validated": [
+          "public_ranking"
+        ],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "Respiratory department well-known"
+        ]
+      },
+      "address": "北京市朝阳区工人体育场南路8号（本部）"
+    },
+    {
+      "id": "301-hospital",
+      "name": "301 Hospital (PLA General Hospital)",
+      "name_zh": "中国人民解放军总医院",
+      "city": "Beijing",
+      "district": "Haidian",
+      "airport_info": "55-75min from Beijing Capital International Airport",
+      "tags": [
+        "general",
+        "military"
+      ],
+      "rank": "Military Hospital",
+      "phone": "010-66887329",
+      "website": "http://www.301hospital.com.cn",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.88,
+        "level": "high",
+        "verified_fields": [
+          "name",
+          "city",
+          "district",
+          "rank",
+          "tags",
+          "airport_info",
+          "address",
+          "phone"
+        ],
+        "data_source": "dual_source",
+        "cross_validated": [
+          "official_website"
+        ],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "China's largest military hospital",
+          "All specialties available"
+        ]
+      },
+      "address": "北京市海淀区复兴路28号"
+    },
+    {
+      "id": "shenzhen-peoples-hospital",
+      "name": "Shenzhen People's Hospital",
+      "name_zh": "深圳市人民医院",
+      "city": "Shenzhen",
+      "district": "Luohu",
+      "airport_info": "50-70min from Shenzhen Bao'an International Airport",
+      "tags": [
+        "general",
+        "all-specialties"
+      ],
+      "rank": "Top Hospital in Shenzhen",
+      "phone": "0755-25533018",
+      "website": "http://www.sz-hospital.com",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.84,
+        "level": "medium_high",
+        "verified_fields": [
+          "name",
+          "city",
+          "district",
+          "rank",
+          "tags",
+          "address",
+          "phone"
+        ],
+        "data_source": "single_source",
+        "cross_validated": [
+          "public_ranking"
+        ],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "Leading hospital in Shenzhen"
+        ]
+      },
+      "address": "深圳市罗湖区东门北路1017号"
+    },
+    {
+      "id": "pku-shenzhen-hospital",
+      "name": "Peking University Shenzhen Hospital",
+      "name_zh": "北京大学深圳医院",
+      "city": "Shenzhen",
+      "district": "Futian",
+      "airport_info": "45-60min from Shenzhen Bao'an International Airport",
+      "tags": [
+        "general",
+        "all-specialties"
+      ],
+      "rank": "Top General Hospital",
+      "phone": "0755-83923333",
+      "website": "http://www.pkuszh.com",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.87,
+        "level": "medium_high",
+        "verified_fields": [
+          "name",
+          "city",
+          "district",
+          "rank",
+          "tags",
+          "address",
+          "phone"
+        ],
+        "data_source": "dual_source",
+        "cross_validated": [
+          "official_website",
+          "jci_verified"
+        ],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "JCI accredited",
+          "Peking University affiliation"
+        ]
+      },
+      "address": "深圳市福田区莲花路1120号"
+    },
+    {
+      "id": "shenzhen-second-peoples-hospital",
+      "name": "Shenzhen Second People's Hospital",
+      "name_zh": "深圳市第二人民医院",
+      "city": "Shenzhen",
+      "district": "Futian",
+      "airport_info": "40-55min from Shenzhen Bao'an International Airport",
+      "tags": [
+        "orthopedics",
+        "general"
+      ],
+      "rank": "Top Orthopedics Shenzhen",
+      "phone": "0755-83366388",
+      "website": "http://www.szey.com",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.82,
+        "level": "medium",
+        "verified_fields": [
+          "name",
+          "city",
+          "district",
+          "rank",
+          "tags",
+          "address",
+          "phone"
+        ],
+        "data_source": "single_source",
+        "cross_validated": [],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "Orthopedics specialization growing in reputation"
+        ]
+      },
+      "address": "深圳市福田区笋岗西路3002号"
+    },
+    {
+      "id": "shenzhen-tcm-hospital",
+      "name": "Shenzhen Traditional Chinese Medicine Hospital",
+      "name_zh": "深圳市中医院",
+      "city": "Shenzhen",
+      "district": "Futian",
+      "airport_info": "45-60min from Shenzhen Bao'an International Airport",
+      "tags": [
+        "tcm",
+        "general"
+      ],
+      "rank": "Top TCM Shenzhen",
+      "phone": "0755-88359666",
+      "website": "http://www.sztcm.com",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.81,
+        "level": "medium",
+        "verified_fields": [
+          "name",
+          "city",
+          "district",
+          "rank",
+          "tags",
+          "address",
+          "phone"
+        ],
+        "data_source": "single_source",
+        "cross_validated": [],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "TCM hospital, limited international patient data"
+        ]
+      },
+      "address": "福田院区：深圳市福田区福华路1号；光明院区：深圳市光明区长圳路东218号"
+    },
+    {
+      "id": "shenzhen-maternity-child-health",
+      "name": "Shenzhen Maternity & Child Healthcare Hospital",
+      "name_zh": "深圳市妇幼保健院",
+      "city": "Shenzhen",
+      "district": "Futian",
+      "airport_info": "40-55min from Shenzhen Bao'an International Airport",
+      "tags": [
+        "maternity",
+        "pediatrics"
+      ],
+      "rank": "Top Maternity Shenzhen",
+      "phone": "0755-82889999",
+      "website": "http://www.szmama.net",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.83,
+        "level": "medium",
+        "verified_fields": [
+          "name",
+          "city",
+          "district",
+          "rank",
+          "tags",
+          "address",
+          "phone"
+        ],
+        "data_source": "single_source",
+        "cross_validated": [],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "Leading maternity hospital in Shenzhen"
+        ]
+      },
+      "address": "红荔院区：深圳市福田区红荔路2004号；福强院区：深圳市福田区福强路3012号"
+    },
+    {
+      "id": "west-china-hospital",
+      "name": "West China Hospital",
+      "name_zh": "四川大学华西医院",
+      "city": "Chengdu",
+      "district": "Wuhou",
+      "airport_info": "45-60min from Chengdu Tianfu International Airport",
+      "tags": [
+        "general",
+        "all-specialties"
+      ],
+      "rank": "Top Hospital West China",
+      "phone": "028-85422114",
+      "website": "http://www.wchscu.cn",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.92,
+        "level": "high",
+        "verified_fields": [
+          "name",
+          "city",
+          "district",
+          "rank",
+          "tags",
+          "airport_info",
+          "address",
+          "phone"
+        ],
+        "data_source": "multi_source",
+        "cross_validated": [
+          "official_website",
+          "public_ranking"
+        ],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "#2 in China overall ranking",
+          "Most authoritative in Western China",
+          "Large patient volume documented"
+        ]
+      },
+      "address": "成都市武侯区国学巷37号（主院区）"
+    },
+    {
+      "id": "fuda-cancer-hospital",
+      "name": "Fuda Cancer Hospital",
+      "name_zh": "广州复大肿瘤医院",
+      "city": "Guangzhou",
+      "district": "Tianhe",
+      "airport_info": "60-90min from Guangzhou Baiyun International Airport",
+      "tags": [
+        "oncology",
+        "cryosurgery",
+        "nanoknife"
+      ],
+      "rank": "Top Private Cancer Hospital",
+      "phone": "020-38993955",
+      "website": "http://www.fudahospital.com",
+      "international": true,
+      "jci": true,
+      "trust": {
+        "score": 0.83,
+        "level": "medium_high",
+        "verified_fields": [
+          "name",
+          "city",
+          "specialty",
+          "address",
+          "phone"
+        ],
+        "data_source": "single_source",
+        "cross_validated": [],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "Cryosurgery and nanoknife (IRE) reputation documented in articles",
+          "Known for international patients"
+        ]
+      },
+      "address": "北院：广州市天河区棠德西路2号；南院：广州市海珠区聚德中路91号"
+    },
+    {
+      "id": "sun-yat-sen-cancer-hospital",
+      "name": "Sun Yat-sen University Cancer Center",
+      "name_zh": "中山大学肿瘤防治中心",
+      "city": "Guangzhou",
+      "district": "Yuexiu",
+      "airport_info": "45-60min from Guangzhou Baiyun International Airport",
+      "tags": [
+        "oncology",
+        "cancer-surgery",
+        "radiotherapy"
+      ],
+      "rank": "Top 3 Cancer Hospital in China",
+      "phone": "020-87343088",
+      "website": "http://www.sysucc.com.cn",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.91,
+        "level": "high",
+        "verified_fields": [
+          "name",
+          "city",
+          "district",
+          "rank",
+          "tags",
+          "address",
+          "phone"
+        ],
+        "data_source": "dual_source",
+        "cross_validated": [
+          "public_ranking"
+        ],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "Top cancer center in South China",
+          "Referenced in international patient articles"
+        ]
+      },
+      "address": "广州市越秀区东风东路651号"
+    },
+    {
+      "id": "beijing-tongren-hospital",
+      "name": "Beijing Tongren Hospital",
+      "name_zh": "首都医科大学附属北京同仁医院",
+      "city": "Beijing",
+      "district": "Dongcheng",
+      "airport_info": "40-55min from Beijing Capital International Airport",
+      "tags": [
+        "ophthalmology",
+        "ent",
+        "cardiology"
+      ],
+      "rank": "#1 Ophthalmology in China",
+      "phone": "010-58266699",
+      "website": "http://www.trhosp.com.cn",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.88,
+        "level": "high",
+        "verified_fields": [
+          "name",
+          "city",
+          "district",
+          "rank",
+          "tags",
+          "address",
+          "phone"
+        ],
+        "data_source": "dual_source",
+        "cross_validated": [
+          "public_ranking"
+        ],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "#1 ophthalmology ranking widely documented",
+          "ENT department also nationally recognized"
+        ]
+      },
+      "address": "北京市东城区东交民巷1号（西区）"
+    },
+    {
+      "id": "xijing-hospital",
+      "name": "Xijing Hospital",
+      "name_zh": "空军军医大学西京医院",
+      "city": "Xi'an",
+      "district": "Beilin",
+      "airport_info": "40-55min from Xi'an Xianyang International Airport",
+      "tags": [
+        "neurosurgery",
+        "cardiology",
+        "general"
+      ],
+      "rank": "Top 5 Neurosurgery in China",
+      "phone": "029-84775507",
+      "website": "http://www.fmmu.edu.cn",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.86,
+        "level": "medium_high",
+        "verified_fields": [
+          "name",
+          "city",
+          "specialty",
+          "address",
+          "phone"
+        ],
+        "data_source": "single_source",
+        "cross_validated": [],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "Referenced alongside West China and Qilu for neurosurgery coverage",
+          "Military medical university hospital"
+        ]
+      },
+      "address": "西安市新城区长乐西路127号"
+    },
+    {
+      "id": "qilu-hospital",
+      "name": "Qilu Hospital (Shandong University)",
+      "name_zh": "山东大学齐鲁医院",
+      "city": "Jinan",
+      "district": "Lixia",
+      "airport_info": "40-60min from Jinan Yaoqiang International Airport",
+      "tags": [
+        "general",
+        "oncology",
+        "neurosurgery"
+      ],
+      "rank": "Top Hospital in Shandong Province",
+      "phone": "0531-82166666",
+      "website": "http://www.qiluhospital.com",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.84,
+        "level": "medium_high",
+        "verified_fields": [
+          "name",
+          "city",
+          "rank",
+          "address",
+          "phone"
+        ],
+        "data_source": "single_source",
+        "cross_validated": [],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "Referenced as regional neurosurgery center in Western China article"
+        ]
+      },
+      "address": "济南市历下区文化西路107号"
+    },
+    {
+      "id": "shanghai-changhai-hospital",
+      "name": "Shanghai Changhai Hospital",
+      "name_zh": "海军军医大学第一附属医院（上海长海医院）",
+      "city": "Shanghai",
+      "district": "Yangpu",
+      "airport_info": "45-65min from Shanghai Pudong International Airport",
+      "tags": [
+        "general",
+        "urology",
+        "kidney-disease"
+      ],
+      "rank": "Top 10 General Hospital in China",
+      "phone": "021-31161616",
+      "website": "http://www.chhospital.com.cn",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.87,
+        "level": "medium_high",
+        "verified_fields": [
+          "name",
+          "city",
+          "rank",
+          "address",
+          "phone"
+        ],
+        "data_source": "single_source",
+        "cross_validated": [],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "Second Military Medical University affiliated",
+          "Strong urology and kidney disease departments"
+        ]
+      },
+      "address": "上海市杨浦区长海路168号"
+    },
+    {
+      "id": "sir-run-run-shaw-hospital",
+      "name": "Sir Run Run Shaw Hospital (Zhejiang University)",
+      "name_zh": "浙江大学医学院附属邵逸夫医院",
+      "city": "Hangzhou",
+      "district": "Shangcheng",
+      "airport_info": "40-55min from Hangzhou Xiaoshan International Airport",
+      "tags": [
+        "general",
+        "fertility",
+        "cardiology"
+      ],
+      "rank": "Top Hospital in Zhejiang Province",
+      "phone": "0571-86090073",
+      "website": "http://www.srrsh.com",
+      "international": true,
+      "jci": true,
+      "trust": {
+        "score": 0.86,
+        "level": "medium_high",
+        "verified_fields": [
+          "name",
+          "city",
+          "rank",
+          "jci",
+          "address",
+          "phone"
+        ],
+        "data_source": "dual_source",
+        "cross_validated": [
+          "public_ranking"
+        ],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "JCI accredited",
+          "Fertility department well-known"
+        ]
+      },
+      "address": "庆春院区：杭州市上城区庆春东路3号"
+    },
+    {
+      "id": "nanjing-drum-tower-hospital",
+      "name": "Nanjing Drum Tower Hospital",
+      "name_zh": "南京鼓楼医院",
+      "city": "Nanjing",
+      "district": "Gulou",
+      "airport_info": "40-60min from Nanjing Lukou International Airport",
+      "tags": [
+        "general",
+        "cardiology",
+        "oncology"
+      ],
+      "rank": "Top Hospital in Jiangsu Province",
+      "phone": "025-83106666",
+      "website": "http://www.njglyy.com",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.83,
+        "level": "medium_high",
+        "verified_fields": [
+          "name",
+          "city",
+          "specialty",
+          "address",
+          "phone"
+        ],
+        "data_source": "single_source",
+        "cross_validated": [],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "Referenced in article as provincial hospital network member"
+        ]
+      },
+      "address": "南京市鼓楼区中山路321号"
+    },
+    {
+      "id": "tianjin-eye-hospital",
+      "name": "Tianjin Eye Hospital",
+      "name_zh": "天津市眼科医院",
+      "city": "Tianjin",
+      "district": "Heping",
+      "airport_info": "30-45min from Tianjin Binhai International Airport",
+      "tags": [
+        "ophthalmology",
+        "cataract",
+        "lasik"
+      ],
+      "rank": "Top Ophthalmology Hospital in North China",
+      "phone": "022-27313334",
+      "website": "http://www.ooth.com.cn",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.8,
+        "level": "medium_high",
+        "verified_fields": [
+          "name",
+          "city",
+          "specialty",
+          "address",
+          "phone"
+        ],
+        "data_source": "single_source",
+        "cross_validated": [],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "Referenced in cataract surgery article",
+          "Specialized eye hospital"
+        ]
+      },
+      "address": "天津市和平区甘肃路4号"
+    },
+    {
+      "id": "tianjin-medical-university-cancer",
+      "name": "Tianjin Medical University Cancer Institute & Hospital",
+      "name_zh": "天津医科大学肿瘤医院",
+      "city": "Tianjin",
+      "district": "Heping",
+      "airport_info": "35-50min from Tianjin Binhai International Airport",
+      "tags": [
+        "oncology",
+        "radiotherapy",
+        "cancer-surgery"
+      ],
+      "rank": "Top Cancer Hospital in North China",
+      "phone": "022-23340123",
+      "website": "http://www.tjmuch.com",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.82,
+        "level": "medium",
+        "verified_fields": [
+          "name",
+          "city",
+          "specialty",
+          "address",
+          "phone"
+        ],
+        "data_source": "single_source",
+        "cross_validated": [],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "National cancer center network member",
+          "Radiotherapy specialization noted"
+        ]
+      },
+      "address": "天津市河西区体院北环湖西路1号"
+    },
+    {
+      "id": "aier-eye-hospital",
+      "name": "Aier Eye Hospital Group",
+      "name_zh": "爱尔眼科医院集团",
+      "city": "Beijing",
+      "district": "Chaoyang",
+      "airport_info": "40-55min from Beijing Capital International Airport",
+      "tags": [
+        "ophthalmology",
+        "lasik",
+        "cataract"
+      ],
+      "rank": "Largest Private Eye Hospital Chain in China",
+      "phone": "0731-85179288",
+      "website": "http://www.aierchina.com",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.8,
+        "level": "medium_high",
+        "verified_fields": [
+          "name",
+          "specialty",
+          "address",
+          "phone"
+        ],
+        "data_source": "single_source",
+        "cross_validated": [],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "Listed in eye surgery comparison article",
+          "Nationwide chain with international patient services"
+        ]
+      },
+      "address": "长沙市天心区芙蓉南路一段188号"
+    },
+    {
+      "id": "shanghai-dental-hospital",
+      "name": "Shanghai Jiao Tong University Dental Hospital",
+      "name_zh": "上海交通大学口腔医学院",
+      "city": "Shanghai",
+      "district": "Huangpu",
+      "airport_info": "45-60min from Shanghai Pudong International Airport",
+      "tags": [
+        "dental",
+        "oral-surgery",
+        "cosmetic-dental"
+      ],
+      "rank": "Top Dental Hospital in Shanghai",
+      "phone": "021-63509092",
+      "website": "http://www.9hospital.com.cn",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.81,
+        "level": "medium",
+        "verified_fields": [
+          "name",
+          "city",
+          "specialty",
+          "address",
+          "phone"
+        ],
+        "data_source": "single_source",
+        "cross_validated": [],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "Referenced in dental tourism article"
+        ]
+      },
+      "address": "上海市黄浦区北京东路356号"
+    },
+    {
+      "id": "shanghai-shuguang-hospital",
+      "name": "Shuguang Hospital (Shanghai University of Traditional Chinese Medicine)",
+      "name_zh": "上海中医药大学附属曙光医院",
+      "city": "Shanghai",
+      "district": "Huangpu",
+      "airport_info": "45-65min from Shanghai Pudong International Airport",
+      "tags": [
+        "tcm",
+        "general",
+        "fertility"
+      ],
+      "rank": "Top TCM Hospital in Shanghai",
+      "phone": "021-53821650",
+      "website": "http://www.sdjyy.com",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.8,
+        "level": "medium_high",
+        "verified_fields": [
+          "name",
+          "city",
+          "rank",
+          "address",
+          "phone"
+        ],
+        "data_source": "single_source",
+        "cross_validated": [],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "Referenced alongside Dongzhimen in TCM article"
+        ]
+      },
+      "address": "东院：上海市浦东新区张衡路528号；西院：上海市黄浦区普安路185号"
+    },
+    {
+      "id": "shanghai-longhua-hospital",
+      "name": "Longhua Hospital (Shanghai University of Traditional Chinese Medicine)",
+      "name_zh": "上海中医药大学附属龙华医院",
+      "city": "Shanghai",
+      "district": "Xuhui",
+      "airport_info": "50-70min from Shanghai Pudong International Airport",
+      "tags": [
+        "tcm",
+        "oncology",
+        "general"
+      ],
+      "rank": "Top TCM Hospital in China",
+      "phone": "021-64385700",
+      "website": "http://www.longhua-hospital.com",
+      "international": true,
+      "jci": true,
+      "trust": {
+        "score": 0.82,
+        "level": "medium_high",
+        "verified_fields": [
+          "name",
+          "city",
+          "rank",
+          "address",
+          "phone"
+        ],
+        "data_source": "dual_source",
+        "cross_validated": [
+          "public_ranking"
+        ],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "Oncology TCM integration noted in articles"
+        ]
+      },
+      "address": "上海市徐汇区宛平南路725号（总院）"
+    },
+    {
+      "id": "dongzhimen-hospital",
+      "name": "Dongzhimen Hospital (Beijing University of Chinese Medicine)",
+      "name_zh": "北京中医药大学东直门医院",
+      "city": "Beijing",
+      "district": "Dongzhimen",
+      "airport_info": "35-50min from Beijing Capital International Airport",
+      "tags": [
+        "tcm",
+        "neurology",
+        "general"
+      ],
+      "rank": "Top TCM Hospital in China",
+      "phone": "010-84018292",
+      "website": "http://www.dzmhospital.com",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.83,
+        "level": "medium_high",
+        "verified_fields": [
+          "name",
+          "city",
+          "rank",
+          "tags",
+          "address",
+          "phone"
+        ],
+        "data_source": "dual_source",
+        "cross_validated": [
+          "public_ranking"
+        ],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "Neurology TCM specialization documented"
+        ]
+      },
+      "address": "北京市东城区海运仓5号（东城院区）"
+    },
+    {
+      "id": "guangzhou-dental-hospital",
+      "name": "Guangzhou Dental Hospital",
+      "name_zh": "广州医科大学附属口腔医院",
+      "city": "Guangzhou",
+      "district": "Yuexiu",
+      "airport_info": "45-60min from Guangzhou Baiyun International Airport",
+      "tags": [
+        "dental",
+        "oral-surgery",
+        "cosmetic-dental"
+      ],
+      "rank": "Top Dental Hospital in South China",
+      "phone": "020-81299942",
+      "website": "http://www.gyqty.com",
+      "international": true,
+      "jci": false,
+      "trust": {
+        "score": 0.79,
+        "level": "medium",
+        "verified_fields": [
+          "name",
+          "city",
+          "specialty",
+          "address",
+          "phone"
+        ],
+        "data_source": "single_source",
+        "cross_validated": [],
+        "last_verified": "2026-04-06",
+        "notes": [
+          "Referenced in dental tourism article"
+        ]
+      },
+      "address": "广州市越秀区东风西路195号"
+    }
+  ]
+}

@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical News - China Hospitals Guide</title>
+    <meta name="description" content="Latest medical tourism news, healthcare innovations, and hospital updates from China and around the world.">
+    <link rel="canonical" href="https://chinahospitalsguide.com/news/">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+        .navbar {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-logo { white-space: nowrap;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #1e3c72;
+            text-decoration: none;
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 0;
+        }
+        .nav-links li { display: flex; }
+        .nav-links a {
+            color: #1e3c72;
+            text-decoration: none;
+            padding: 25px 18px;
+            display: block;
+            font-weight: 500;
+            font-size: 0.88rem;
+        }
+            
+            .nav-links .nav-cta-mobile {
+                display: block;
+                margin: 10px 20px;
+                padding: 12px 25px;
+                background: #ff6b6b;
+                color: white;
+                border-radius: 25px;
+                text-align: center;
+                font-weight: bold;
+                text-decoration: none;
+            }
+        .nav-links a:hover { color: #ff6b6b; background: rgba(30,60,114,0.05); }
+        .nav-links a.active { color: #ff6b6b; font-weight: 600; }
+        .nav-cta {
+            background: #ff6b6b;
+            color: white;
+            padding: 10px 22px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        .nav-cta:hover { background: #ff5252; transform: translateY(-2px); }
+        .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 10px; }
+        .nav-toggle span { width: 25px; height: 3px; background: #1e3c72; transition: all 0.3s; }
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        .news-list {
+            display: grid;
+            gap: 30px;
+        }
+        .news-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .news-item:hover {
+            transform: translateY(-5px);
+        }
+        .news-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .news-content {
+            padding: 25px;
+        }
+        .news-date {
+            color: #ff6b6b;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        .news-title {
+            font-size: 1.4rem;
+            color: #1e3c72;
+            margin: 10px 0;
+        }
+        .news-title a {
+            color: #1e3c72;
+            text-decoration: none;
+        }
+        .news-title a:hover {
+            color: #ff6b6b;
+        }
+        .news-excerpt {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        .read-more {
+            display: inline-block;
+            background: #ff6b6b;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        .read-more:hover {
+            background: #ff8e53;
+        }
+        .no-news {
+            text-align: center;
+            padding: 60px;
+            color: #666;
+        }
+        footer {
+            background: #1e3c72;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 60px;
+        }
+        footer a {
+            color: #ff6b6b;
+            text-decoration: none;
+        }
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.8rem; }
+            .nav-toggle { display: flex; }
+            .nav-links { position: absolute; top: 70px; left: 0; right: 0; background: rgba(30, 60, 114, 0.98); flex-direction: column; max-height: 0; overflow: hidden; transition: max-height 0.3s; padding: 0; }
+            .nav-links.active { max-height: 500px; padding: 10px 0; }
+            .nav-links li { width: 100%; }
+            .nav-links a { padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.1); display: block; text-align: center; color: white; }
+            
+            .nav-links .nav-cta-mobile {
+                display: block;
+                margin: 10px 20px;
+                padding: 12px 25px;
+                background: #ff6b6b;
+                color: white;
+                border-radius: 25px;
+                text-align: center;
+                font-weight: bold;
+                text-decoration: none;
+            }
+            .nav-cta { display: none; }
+        }
+    </style>
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2521119288266043"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-logo">🏥 China Hospitals Guide</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../hospitals.html">Hospitals</a></li>
+                <li><a href="../services.html">Services</a></li>
+                <li><a href="../how-it-works.html">Process</a></li>
+                <li><a href="../blog/">Blog</a></li>
+                <li><a href="./" class="active">News</a></li>
+                <li><a href="../resources.html">Resources</a></li>
+<li><a href="../contact.html">Contact</a></li>
+            </ul>
+            <a href="../pricing.html" class="nav-cta">Pricing</a>
+            <div class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="header">
+        <h1>📰 Medical News</h1>
+        <p>Latest healthcare innovations, hospital breakthroughs, and medical tourism updates</p>
+    </div>
+
+    <div class="container">
+        <div class="news-list">
+            
+            <article class="news-item">
+                <img src="../images/thailand-car-t.jpg" alt="China CAR-T therapy">
+                <div class="news-content">
+                    <span class="news-date">April 18, 2026</span>
+                    <h2 class="news-title">
+                        <a href="2026-04-18-china-medical-tourism-car-t-global-destination.html">
+                            China Emerges as Global Medical Tourism Hub: CAR-T Therapy Leading the Way
+                        </a>
+                    </h2>
+                    <p class="news-excerpt">
+                        China is rapidly emerging as a leading global medical tourism destination, with CAR-T cell therapy, advanced cardiac surgery, and comprehensive health checkups attracting international patients at a fraction of Western costs.
+                    </p>
+                    <a href="2026-04-18-china-medical-tourism-car-t-global-destination.html" class="read-more">Read More →</a>
+                </div>
+            </article>
+
+            <article class="news-item">
+                <img src="../images/cosmetic-surgery-risk.jpg" alt="Overseas cosmetic surgery risks 2026">
+                <div class="news-content">
+                    <span class="news-date">April 20, 2026</span>
+                    <h2 class="news-title">
+                        <a href="2026-04-20-cosmetic-surgery-abroad-dangers-china-compare.html">
+                            Doctors Sound Alarm: Overseas Cosmetic Surgery Risks Are 'Devastating' — Where Does China Fit In?
+                        </a>
+                    </h2>
+                    <p class="news-excerpt">
+                        Over three million people travel abroad for cheaper cosmetic procedures every year. Doctors are now warning of devastating complications: infections, scarring, blood clots, and repair bills that dwarf the original savings. As warnings intensify globally, China is emerging as a safer alternative through internationally accredited hospitals and rigorous clinical standards.
+                    </p>
+                    <a href="2026-04-20-cosmetic-surgery-abroad-dangers-china-compare.html" class="read-more">Read More →</a>
+                </div>
+            </article>
+
+            <article class="news-item">
+                <img src="../images/pakistan-medical.jpg" alt="Pakistan medical tourism">
+                <div class="news-content">
+                    <span class="news-date">April 17, 2026</span>
+                    <h2 class="news-title">
+                        <a href="2026-04-17-pakistan-medical-tourism-initiative-sifc-china-compare.html">
+                            Pakistan's New Medical Tourism Push: A Fresh Challenger to Asia's Healthcare Hub Race
+                        </a>
+                    </h2>
+                    <p class="news-excerpt">
+                        Pakistan is ramping up its medical tourism infrastructure through the SIFC initiative, positioning itself as a competitor to established Asian healthcare destinations. How does China's medical tourism advantage compare?
+                    </p>
+                    <a href="2026-04-17-pakistan-medical-tourism-initiative-sifc-china-compare.html" class="read-more">Read More →</a>
+                </div>
+            </article>
+
+            <article class="news-item">
+                <img src="../images/pancreatic-cancer.jpg" alt="Pancreatic cancer treatment">
+                <div class="news-content">
+                    <span class="news-date">April 17, 2026</span>
+                    <h2 class="news-title">
+                        <a href="2026-04-17-revolution-medicines-pancreatic-cancer-daraxonrasib-china-compare.html">
+                            Revolution Medicines' Daraxonrasib: A Breakthrough in Pancreatic Cancer — How Does China Compare?
+                        </a>
+                    </h2>
+                    <p class="news-excerpt">
+                        Revolution Medicines' new drug daraxonrasib shows promising results for pancreatic cancer treatment. China's oncology capabilities and clinical trial landscape offer important context for international patients seeking options.
+                    </p>
+                    <a href="2026-04-17-revolution-medicines-pancreatic-cancer-daraxonrasib-china-compare.html" class="read-more">Read More →</a>
+                </div>
+            </article>
+
+            <article class="news-item">
+                <img src="../images/thailand-health-insurance.jpg" alt="Thailand tourist health insurance 2026">
+                <div class="news-content">
+                    <span class="news-date">April 16, 2026</span>
+                    <h2 class="news-title">
+                        <a href="2026-04-16-thailand-health-insurance-requirement-2026-china-compare.html">
+                            Thailand's New Tourist Health Insurance Mandate: How Does China Respond?
+                        </a>
+                    </h2>
+                    <p class="news-excerpt">
+                        Thailand has announced mandatory health insurance for inbound tourists from 2026, reshaping Asia's medical tourism market. As Malaysia and India sharpen their requirements too, China is doubling down on scale, hospital infrastructure, and its new nine-ministry medical visa framework — a very different bet.
+                    </p>
+                    <a href="2026-04-16-thailand-health-insurance-requirement-2026-china-compare.html" class="read-more">Read More →</a>
+                </div>
+            </article>
+            
+            <article class="news-item">
+                <img src="../images/macao-hengqin-wellness.jpg" alt="Macao health tourism expansion Hengqin">
+                <div class="news-content">
+                    <span class="news-date">April 14, 2026</span>
+                    <h2 class="news-title">
+                        <a href="2026-04-14-macao-health-tourism-expansion-hengqin-china-compare.html">
+                            Macao's Health Tourism Expands with New Hospitals and TCM Routes: How Does Mainland China Compare?
+                        </a>
+                    </h2>
+                    <p class="news-excerpt">
+                        Macao unveiled major health tourism infrastructure at MITE 2026, including new hospitals from Peking Union Medical College and Wynn Palace, plus cross-border Macao-Hengqin wellness routes. As Macao builds its 'tourism plus big health' model, how does mainland China stack up for the same international medical traveller?
+                    </p>
+                    <a href="2026-04-14-macao-health-tourism-expansion-hengqin-china-compare.html" class="read-more">Read More →</a>
+                </div>
+            </article>
+            
+            <article class="news-item">
+                <img src="../images/colombia-robotic-surgery.jpg" alt="Colombia robotic surgery">
+                <div class="news-content">
+                    <span class="news-date">April 15, 2026</span>
+                    <h2 class="news-title">
+                        <a href="2026-04-15-colombia-antioquia-robotic-surgery-benchmark-china-compare.html">
+                            Colombia's Antioquia Emerges as Latin America's Robotic Surgery Benchmark: How Does China Compare?
+                        </a>
+                    </h2>
+                    <p class="news-excerpt">
+                        Colombia's Antioquia region has become a benchmark for robotic surgery in Latin America. As the region positions itself as a global surgical robotics hub, how does China — already a top-5 market for surgical robots — stack up for international patients seeking robotic procedures?
+                    </p>
+                    <a href="2026-04-15-colombia-antioquia-robotic-surgery-benchmark-china-compare.html" class="read-more">Read More →</a>
+                </div>
+            </article>
+            
+            
+            <article class="news-item">
+                <img src="../images/thailand-medpark-bangladeshi.jpg" alt="Thailand MedPark Hospital Bangladeshi patients">
+                <div class="news-content">
+                    <span class="news-date">April 13, 2026</span>
+                    <h2 class="news-title">
+                        <a href="2026-04-13-thailand-medpark-bangladeshi-patients-china-compare.html">
+                            Thailand's MedPark Hospital Courts Bangladeshi Patients: How Does China Compare?
+                        </a>
+                    </h2>
+                    <p class="news-excerpt">
+                        Thailand's MedPark Hospital is ramping up next-generation medical care for Bangladeshi patients, as 60% of Bangladeshi travellers to Thailand now seek treatment there. With Bangladesh's medical tourism market booming, could China be a viable alternative? We break down the comparison.
+                    </p>
+                    <a href="2026-04-13-thailand-medpark-bangladeshi-patients-china-compare.html" class="read-more">Read More →</a>
+                </div>
+            </article>
+            
+            <article class="news-item">
+                <img src="../images/esophageal-cancer-isde.jpg" alt="India ISDE 2026 esophageal cancer breakthroughs">
+                <div class="news-content">
+                    <span class="news-date">April 12, 2026</span>
+                    <h2 class="news-title">
+                        <a href="2026-04-12-india-esophageal-cancer-isde-2026-china-compare.html">
+                            India's ISDE 2026 Breakthrough: Robotic Surgery & Organ-Preserving Care That Costs a Fraction of the West
+                        </a>
+                    </h2>
+                    <p class="news-excerpt">
+                        Hyderabad hosted 150+ global oncologists for the world's premier esophageal disease conference. Breakthroughs on display — robotic esophagectomy, ESD, multimodal therapy — are rewriting what's possible. With China's own esophageal cancer burden rising, we compare clinical outcomes, costs, and international accessibility.
+                    </p>
+                    <a href="2026-04-12-india-esophageal-cancer-isde-2026-china-compare.html" class="read-more">Read More →</a>
+                </div>
+            </article>
+            
+            <article class="news-item">
+                <img src="../images/proton-therapy-cancer.jpg" alt="US proton therapy trial survival gain 2026">
+                <div class="news-content">
+                    <span class="news-date">April 11, 2026</span>
+                    <h2 class="news-title">
+                        <a href="2026-04-11-us-proton-therapy-trial-survival-china-compare.html">
+                            US Proton Therapy Trial Shows 10% Survival Gain: How Does China Compare?
+                        </a>
+                    </h2>
+                    <p class="news-excerpt">
+                        The NAPT 2026 conference revealed landmark Phase III trial data: intensity-modulated proton therapy improved 5-year survival by 10% for head and neck cancer patients versus conventional radiation. We compare US proton therapy capabilities with China's rapidly growing proton treatment ecosystem — covering technology, cost, insurance coverage, and accessibility.
+                    </p>
+                    <a href="2026-04-11-us-proton-therapy-trial-survival-china-compare.html" class="read-more">Read More →</a>
+                </div>
+            </article>
+            
+            <article class="news-item">
+                <img src="../images/tanzania-medical-tourism.jpg" alt="Tanzania medical tourism push 2026">
+                <div class="news-content">
+                    <span class="news-date">April 10, 2026</span>
+                    <h2 class="news-title">
+                        <a href="2026-04-10-tanzania-medical-tourism-push-china-compare.html">
+                            Tanzania's Medical Tourism Push: How Does China Compare?
+                        </a>
+                    </h2>
+                    <p class="news-excerpt">
+                        Tanzania's government announced fresh measures to promote medical tourism on April 8, 2026, targeting 3,018+ international patients and investing in PET/CT scanners, Cathlab, and super-specialist training for 1,483 healthcare workers. How does Tanzania's emerging healthcare push compare with China's established medical tourism ecosystem?
+                    </p>
+                    <a href="2026-04-10-tanzania-medical-tourism-push-china-compare.html" class="read-more">Read More →</a>
+                </div>
+            </article>
+            
+            <article class="news-item">
+                <img src="../images/vietnam-medical-tourism.jpg" alt="Vietnam medical tourism alliance 2026">
+                <div class="news-content">
+                    <span class="news-date">April 9, 2026</span>
+                    <h2 class="news-title">
+                        <a href="2026-04-09-vietnam-medical-tourism-alliance-china-compare.html">
+                            Vietnam Launches National Medical Tourism Alliance: How Does China Compare?
+                        </a>
+                    </h2>
+                    <p class="news-excerpt">
+                        Vietnam just launched a national Medical Tourism Alliance in Hanoi, aiming to keep $2-3 billion in patient spending domestic and attract international visitors. With the global medical tourism market hitting $312B in 2026, how does Vietnam's strategy stack up against China's established medical tourism infrastructure?
+                    </p>
+                    <a href="2026-04-09-vietnam-medical-tourism-alliance-china-compare.html" class="read-more">Read More →</a>
+                </div>
+            </article>
+            
+            <article class="news-item">
+                <img src="../images/china-surgical-robot.jpg" alt="China surgical robot CMEF 2026">
+                <div class="news-content">
+                    <span class="news-date">April 8, 2026</span>
+                    <h2 class="news-title">
+                        <a href="2026-04-08-china-surgical-robot-revolution-cme-f2026-compare.html">
+                            China's Surgical Robot Revolution: How Chinese Hospitals Are Operating on Patients 10,000 km Away
+                        </a>
+                    </h2>
+                    <p class="news-excerpt">
+                        As the 93rd CMEF opens in Shanghai (April 9-12), West China Hospital's international remote surgery center has made history — enabling Polish and Brazilian doctors to operate on patients in their home countries from 7,000-10,000 km away. With surgical robot exports surging 368% in 2025, China's medical robotics industry is reshaping global healthcare delivery.
+                    </p>
+                    <a href="2026-04-08-china-surgical-robot-revolution-cme-f2026-compare.html" class="read-more">Read More →</a>
+                </div>
+            </article>
+            
+            <article class="news-item">
+                <img src="../images/baxdrostat-hypertension.jpg" alt="UK baxdrostat blood pressure drug China comparison">
+                <div class="news-content">
+                    <span class="news-date">April 7, 2026</span>
+                    <h2 class="news-title">
+                        <a href="2026-04-07-baxdrostat-blood-pressure-china-compare.html">
+                            UK Scientists Reveal New Blood Pressure Drug That Works When Others Fail: How Does China Compare?
+                        </a>
+                    </h2>
+                    <p class="news-excerpt">
+                        A UCL-led Phase III trial reveals baxdrostat, a new aldosterone-blocking hypertension drug, cuts systolic blood pressure by 10 mmHg in patients unresponsive to existing treatments. With 226 million hypertensive patients in China, we compare the UK's breakthrough with China's own cardiovascular care landscape.
+                    </p>
+                    <a href="2026-04-07-baxdrostat-blood-pressure-china-compare.html" class="read-more">Read More →</a>
+                </div>
+            </article>
+            
+            <article class="news-item">
+                <img src="../images/bpc-157-peptide.jpg" alt="BPC-157 peptide therapy vs statins China comparison">
+                <div class="news-content">
+                    <span class="news-date">April 6, 2026</span>
+                    <h2 class="news-title">
+                        <a href="2026-04-06-bpc-157-peptide-evidence-gap-china-compare.html">
+                            BPC-157 Peptide Therapy vs Statins: The Evidence Gap — How Does China Compare?
+                        </a>
+                    </h2>
+                    <p class="news-excerpt">
+                        A growing number of US patients are choosing unproven peptide injections over statins backed by 170,000-participant trials. China's peptide research and regenerative medicine landscape offers a revealing counterpoint for international patients weighing their options.
+                    </p>
+                    <a href="2026-04-06-bpc-157-peptide-evidence-gap-china-compare.html" class="read-more">Read More →</a>
+                </div>
+            </article>
+            
+            <article class="news-item">
+                <img src="../images/singapore-bap1-cancer.jpg" alt="Singapore BAP1 cancer breakthrough China comparison">
+                <div class="news-content">
+                    <span class="news-date">April 5, 2026</span>
+                    <h2 class="news-title">
+                        <a href="2026-04-05-singapore-bap1-cancer-breakthrough-china-compare.html">
+                            Singapore's BAP1 Cancer Breakthrough: How Does China Compare?
+                        </a>
+                    </h2>
+                    <p class="news-excerpt">
+                        A landmark Singapore study published in Science Translational Medicine has uncovered a novel approach to treating aggressive BAP1-mutant cancers including mesothelioma and uveal melanoma. With China's precision oncology capabilities expanding rapidly, how do the two countries compare for international patients seeking treatment?
+                    </p>
+                    <a href="2026-04-05-singapore-bap1-cancer-breakthrough-china-compare.html" class="read-more">Read More →</a>
+                </div>
+            </article>
+            
+            <article class="news-item">
+                <img src="../images/china-hospital.jpg" alt="Lenacapavir HIV prevention subscription pricing China comparison">
+                <div class="news-content">
+                    <span class="news-date">April 4, 2026</span>
+                    <h2 class="news-title">
+                        <a href="2026-04-04-lenacapavir-subscription-pricing-hiv-prevention-china-compare.html">
+                            US Explores Subscription Pricing for Twice-Yearly HIV Prevention Shot: How Does China Compare?
+                        </a>
+                    </h2>
+                    <p class="news-excerpt">
+                        The US is piloting subscription-based pricing for lenacapavir, the twice-yearly injectable HIV prevention shot. With a list price of over $42,000 per year in the US, how does China's growing PrEP landscape compare on cost, access, and options?
+                    </p>
+                    <a href="2026-04-04-lenacapavir-subscription-pricing-hiv-prevention-china-compare.html" class="read-more">Read More →</a>
+                </div>
+            </article>
+            
+            <article class="news-item">
+                <img src="../images/space-station.jpg" alt="China space hospital research">
+                <div class="news-content">
+                    <span class="news-date">April 3, 2026</span>
+                    <h2 class="news-title">
+                        <a href="2026-04-03-china-space-hospital-research-compare.html">
+                            China's Space Hospital Research Takes Off: How Does It Compare to the US and Europe?
+                        </a>
+                    </h2>
+                    <p class="news-excerpt">
+                        China launched five medical research experiments into orbit on March 30, pushing toward the world's first space hospital. The program's ambition raises a question: how does China's emerging space medicine capability compare to decades of research in the US and Europe?
+                    </p>
+                    <a href="2026-04-03-china-space-hospital-research-compare.html" class="read-more">Read More →</a>
+                </div>
+            </article>
+            
+            <article class="news-item">
+                <img src="../images/thailand-car-t.jpg" alt="Thailand CAR-T cell therapy breakthrough">
+                <div class="news-content">
+                    <span class="news-date">April 2, 2026</span>
+                    <h2 class="news-title">
+                        <a href="2026-04-02-thailand-car-t-cell-therapy-breakthrough-china-compare.html">
+                            Thailand's CAR-T Cell Therapy Breakthrough: How Does China Compare?
+                        </a>
+                    </h2>
+                    <p class="news-excerpt">
+                        Thailand's Ramathibodi and Samitivej hospitals have teamed up to bring CAR-T cell therapy — one of the world's most advanced cancer treatments — to Southeast Asian patients. But China has been running CAR-T programs for years. See how the two compare on cost, indications, and clinical experience.
+                    </p>
+                    <a href="2026-04-02-thailand-car-t-cell-therapy-breakthrough-china-compare.html" class="read-more">Read More →</a>
+                </div>
+            </article>
+            
+            <article class="news-item">
+                <img src="../images/egypt-pyramids.jpg" alt="Egypt medical tourism">
+                <div class="news-content">
+                    <span class="news-date">April 1, 2026</span>
+                    <h2 class="news-title">
+                        <a href="2026-04-01-egypt-medical-tourism-boom.html">
+                            Egypt Emerges as Rising Star in Global Medical Tourism Market
+                        </a>
+                    </h2>
+                    <p class="news-excerpt">
+                        Egypt is rapidly positioning itself as a compelling alternative for international patients seeking quality healthcare combined with unforgettable travel experiences. See how it compares to China as a medical tourism destination.
+                    </p>
+                    <a href="2026-04-01-egypt-medical-tourism-boom.html" class="read-more">Read More →</a>
+                </div>
+            </article>
+            
+            <article class="news-item">
+                <img src="../images/china-hospital.jpg" alt="AI drug discovery China">
+                <div class="news-content">
+                    <span class="news-date">March 31, 2026</span>
+                    <h2 class="news-title">
+                        <a href="2026-03-31-insilico-ai-drug-discovery-2-75b-eli-lilly-china-compare.html">
+                            AI Pharma Race: Insilico's $2.75B Eli Lilly Deal — How Does China Compare?
+                        </a>
+                    </h2>
+                    <p class="news-excerpt">
+                        Insilico Medicine's $2.75B AI-driven drug discovery deal with Eli Lilly is the largest AI pharma collaboration in history. See how China stacks up as a hub for AI-powered clinical trials and drug development.
+                    </p>
+                    <a href="2026-03-31-insilico-ai-drug-discovery-2-75b-eli-lilly-china-compare.html" class="read-more">Read More →</a>
+                </div>
+            </article>
+            
+            <article class="news-item">
+                <img src="../images/india-medical.jpg" alt="India medical tourism">
+                <div class="news-content">
+                    <span class="news-date">March 30, 2026</span>
+                    <h2 class="news-title">
+                        <a href="2026-03-30-india-medical-tourism-13-billion-china-compare.html">
+                            India's Medical Tourism Boom: $13 Billion and Counting — How Does China Compare?
+                        </a>
+                    </h2>
+                    <p class="news-excerpt">
+                        India's medical tourism market surges to $13 billion in 2026 with 5 new government hubs. See how China compares in cost, quality, and accessibility for international patients seeking world-class care at accessible prices.
+                    </p>
+                    <a href="2026-03-30-india-medical-tourism-13-billion-china-compare.html" class="read-more">Read More →</a>
+                </div>
+            </article>
+            
+            <article class="news-item">
+                <img src="../images/china-hospital.jpg" alt="CAR-T cell therapy China">
+                <div class="news-content">
+                    <span class="news-date">March 29, 2026</span>
+                    <h2 class="news-title">
+                        <a href="2026-03-29-us-car-t-fda-breakthrough-china-compare.html">
+                            US T-Cell CAR-T Therapy Wins FDA Breakthrough: How Does China Compare?
+                        </a>
+                    </h2>
+                    <p class="news-excerpt">
+                        Washington University's WU-CART-007 earned FDA Breakthrough Therapy designation in March 2026 for aggressive T-cell leukemias, posting a 91% response rate. We compare this with China's approved CAR-T landscape - and what it means for international patients.
+                    </p>
+                    <a href="2026-03-29-us-car-t-fda-breakthrough-china-compare.html" class="read-more">Read More →</a>
+                </div>
+            </article>
+
+            <article class="news-item">
+                <img src="../images/china-hospital.jpg" alt="Fatty liver vitamin treatment">
+                <div class="news-content">
+                    <span class="news-date">March 28, 2026</span>
+                    <h2 class="news-title">
+                        <a href="2026-03-28-vitamin-fatty-liver-china-compare.html">
+                            Common Vitamin Shows Promise for Fatty Liver Disease: China vs US Treatment Comparison
+                        </a>
+                    </h2>
+                    <p class="news-excerpt">
+                        March 2026: US research reveals a common vitamin demonstrates significant efficacy against metabolic-associated fatty liver disease (MAFLD). We compare treatment approaches between China and the US, highlighting China's unique advantages for international patients.
+                    </p>
+                    <a href="2026-03-28-vitamin-fatty-liver-china-compare.html" class="read-more">Read More →</a>
+                </div>
+            </article>
+
+            <article class="news-item">
+                <img src="../images/china-hospital.jpg" alt="Hello China 2026 medical tourism">
+                <div class="news-content">
+                    <span class="news-date">March 27, 2026</span>
+                    <h2 class="news-title">
+                        <a href="2026-03-27-hello-china-2026-tcm-wellness.html">
+                            China Launches "Hello! China 2026" with Medical Tourism and TCM Wellness as Core Pillars
+                        </a>
+                    </h2>
+                    <p class="news-excerpt">
+                        China's official tourism initiative officially launches with medical tourism and TCM wellness designated as core strategic pillars. Hainan Province positions itself as the nation's premier integrated health destination, combining ancient TCM heritage with cutting-edge modern medicine.
+                    </p>
+                    <a href="2026-03-27-hello-china-2026-tcm-wellness.html" class="read-more">Read More →</a>
+                </div>
+            </article>
+
+            <article class="news-item">
+                <img src="../images/japan-medical.jpg" alt="Japanese patients in China">
+                <div class="news-content">
+                    <span class="news-date">March 27, 2026</span>
+                    <h2 class="news-title">
+                        <a href="2026-03-27-japan-patients-china-medical-treatment.html">
+                            Japan-China Travel Strain: Japanese Patients from Northern Japan Increasingly Choose Chinese Hospitals
+                        </a>
+                    </h2>
+                    <p class="news-excerpt">
+                        With Japan-China relations strained and flight routes reduced, growing numbers of Japanese patients from northern Japan are seeking advanced treatment in China. Proton therapy, cancer treatment, and specialized surgery at 40-60% lower costs.
+                    </p>
+                    <a href="2026-03-27-japan-patients-china-medical-treatment.html" class="read-more">Read More →</a>
+                </div>
+            </article>
+
+            <article class="news-item">
+                <img src="../images/china-hospital.jpg" alt="Brain-computer interface">
+                <div class="news-content">
+                    <span class="news-date">March 27, 2026</span>
+                    <h2 class="news-title">
+                        <a href="2026-03-27-china-bci-neuralink-compare.html">
+                            China Approves World's First Non-Invasive BCI Device: How Does It Compare to Neuralink?
+                        </a>
+                    </h2>
+                    <p class="news-excerpt">
+                        China's National Medical Products Administration approved the world's first non-invasive brain-computer interface medical device in March 2026. With 36 patients regaining hand function and costs at one-fifth of Neuralink's invasive approach, China is taking a different path in the BCI race.
+                    </p>
+                    <a href="2026-03-27-china-bci-neuralink-compare.html" class="read-more">Read More →</a>
+                </div>
+            </article>
+
+            <article class="news-item">
+                <img src="../images/japan-medical.jpg" alt="Japan medical facility">
+                <div class="news-content">
+                    <span class="news-date">March 24, 2026</span>
+                    <h2 class="news-title">
+                        <a href="2026-03-24-japan-stem-cell-diabetes-therapy-approval.html">
+                            Japan Set to Approve First Stem Cell Therapies for Diabetes: A New Era in Treatment
+                        </a>
+                    </h2>
+                    <p class="news-excerpt">
+                        Japan is on the verge of becoming the first country to approve stem cell therapies for diabetes treatment. The milestone could transform how doctors approach this chronic condition affecting millions worldwide.
+                    </p>
+                    <a href="2026-03-24-japan-stem-cell-diabetes-therapy-approval.html" class="read-more">Read More →</a>
+                </div>
+            </article>
+
+            <article class="news-item">
+                <img src="../images/singapore-skyline.jpg" alt="Singapore skyline">
+                <div class="news-content">
+                    <span class="news-date">March 24, 2026</span>
+                    <h2 class="news-title">
+                        <a href="2026-03-24-singapore-who-medical-device-certification-china-compare.html">
+                            Singapore Becomes First Country to Achieve WHO's Highest Medical Device Certification
+                        </a>
+                    </h2>
+                    <p class="news-excerpt">
+                        Singapore has made history by becoming the first country globally to achieve WHO's highest maturity level for medical device regulation.
+                    </p>
+                    <a href="2026-03-24-singapore-who-medical-device-certification-china-compare.html" class="read-more">Read More →</a>
+                </div>
+            </article>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 China Hospitals Guide. All rights reserved.</p>
+        <p><a href="../index.html">← Back to Homepage</a></p>
+    </footer>
+
+    <script>
+        var navToggle = document.getElementById('navToggle');
+        var navLinks = document.getElementById('navLinks');
+        if (navToggle && navLinks) {
+            navToggle.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+            });
+        }
+    </script>
+</body>
+</html>
