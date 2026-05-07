@@ -1,0 +1,3 @@
+before terminal: cat > ~/.config/feishu/credentials.json << 'EOF'
+{
+  "app_id
