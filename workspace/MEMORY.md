@@ -22,17 +22,12 @@
 - **仓库（备份）**：qzw-alt/demi
 - **本地路径**：`~/.hermes/workspace/chinahospitalsguide/`（已统一工作区）
 - **部署方式**：编辑本地文件 → git push 到 chinalhospitalguide 仓库
-- **最近巡检（2026-04-28）**：整体正常。问题：`/treatments/` 404；Privacy/Terms 内容空白；Course 11节课只有第1节上线。
 
-### 内容战略：商业长尾专题（2026-04-27 决定）
-- **方向**：不做泛新闻，专注商业成交导向的长尾词专题
-- **优先5篇**（每日一篇轮流，出现重复就改内容，坚持半个月）：
-  1. JCI Accredited Hospitals in China
-  2. Dental Implant Cost in China
-  3. Best Hospitals in China for International Patients
-  4. How to Book a Hospital Appointment in China
-  5. Guangzhou Medical Tourism Guide
-- **进行中**：cronjob「每日商业长尾专题写作提醒」（09:00），今天是 Dental Implant Cost in China
+### 长尾文章现状（2026-05-09）
+- **已完成（5篇）**：jci-accredited-hospitals-china、best-hospitals-china-international-patients、how-to-book-hospital-appointment-china、guangzhou-medical-tourism-guide、dental-implants-china（之前已存在）
+- **cron schedule**: 每天10:00触发（cron格式限制，内部通过状态文件判断是否真正执行）
+- **执行方式**：cron携带seo-content-writer+humanizer skill，执行"写作→去AI→部署"完整流程
+- **下一优先级**：从keyword-database.md的todo列表中选取
 
 ### 新闻栏目
 - 每天1篇医疗新闻，蹭全球热点，对比中国现状，引导到服务
@@ -52,9 +47,10 @@
 | 06:00 | AI重大信息搜集报告 | bb3948605ac9 |
 | 06:30 | 晨间记忆读取 | 916e3a888e14 |
 | 07:00 | 每日医疗新闻写作 | dbbf2697de1a |
-| 09:00 | 商业长尾专题写作提醒 | a65700f57a45 |
+| 07:00 | 每日医疗内容融合写作 | 36b87bbe8424 |
 | 09:30 | HN AI 热门速览 | 551ca375b0d7 |
-| 19:00 | Quora+Reddit 推广提醒 | 34d1430e1c8c |
+| 10:00 | 商业长尾专题写作+部署（每2天） | e345e332f3ba |
+| 19:00 | Quora+Reddit 推广提醒 | d69e49fa85af（origin）、dac47b26a5f7（feishu） |
 | 20:00 | Google Search Console 未索引URL处理提醒 | aefd53f4e8ac |
 | 22:00 | 每日记忆备份 | d506e6161153 |
 
