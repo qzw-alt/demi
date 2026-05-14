@@ -37,3 +37,15 @@ _Learned from first conversation._
 Context: _(还没建立更多了解)_
 §
 User wants Feishu chat routed through Hermes only; OpenClaw should not be used for Feishu messaging.
+§
+沟通风格：直接，抓问题准。发现德米回答和实际不符时会直接指出（本次：发现我用旧会话内容冒充Hermes新功能更新）。
+
+核心教训：德米说"没有明确回复≠任务取消"——持续跟进模式。但这次是不同维度：德米希望我**在回答之前**就验证准确性，而不是被问到了才发现错误。
+
+对版本/升级类问题：必须先 `git log --oneline -5` 验证，不能用对话历史或记忆内容回答。
+§
+沟通风格：极简指令型。"行 按这个执行" = 完全授权，快速执行，不需要确认细节。发现错误会直接指出。
+
+工作时：直接处理，有问题才问。不需要每步确认。
+
+GitHub备份：qzw-alt/demi，push到master后再汇报结果。
