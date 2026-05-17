@@ -54,8 +54,8 @@
 
 | 项目 | 状态 | 关键文件 |
 |------|------|---------|
-| 医疗旅游 | 🟢 运营中 | PROJECT_INDEX.md |
-| 龙康劲 | 🟢 运营中 | memory/龙康劲_index.md |
+| 医疗旅游 | 🟢 运营中 | chinahospitalsguide.com（qzw-alt/chinahospitalsguide） |
+| Reddit推广 | 🟢 每日运营 | 账号每日活跃/发帖 |
 
 ---
 

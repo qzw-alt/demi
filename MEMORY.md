@@ -83,6 +83,27 @@
 
 ---
 
+## 🌐 医疗旅游项目现状（2026-05-17）
+
+**网站**：chinahospitalsguide.com
+**源码**：`qzw-alt/chinahospitalsguide`
+
+**内容规模（2026-05-16）**：
+- 博客文章：79篇（含 SEO 长尾文章）
+- 新闻文章：持续更新到 2026-05-13
+- 覆盖：医院排名、治疗项目（试管婴儿、整形、牙科、心脏外科等）、费用对比
+
+**SEO 工作**：
+- 每周商业长尾内容写作（每2天一次，10:00 CST）
+- Google Search Console 监控（20:00 提醒未索引URL）
+- sitemap 持续更新
+
+**推广渠道**：
+- Reddit：每日活跃账号运营（每晚19:00提醒）
+- Quora+Reddit 推广提醒（19:00 CST）
+
+---
+
 ## 🔑 API Keys（operational）
 
 - **GitHub Token**: `GHP_MI_TOKEN`（环境变量）
