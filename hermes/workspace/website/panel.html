@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>德米工作面板 - China Hospitals Guide</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+        .subtitle {
+            color: rgba(255,255,255,0.8);
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        .card-title {
+            color: #1e3c72;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .card-desc {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .card-tags {
+            margin-top: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .tag {
+            background: #f0f4f8;
+            color: #2a5298;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 德米工作面板</h1>
+        <p class="subtitle">选择你要执行的任务类型</p>
+        
+        <div class="grid">
+            <!-- 深度搜索 -->
+            <div class="card" onclick="selectTask('deep-search')">
+                <div class="card-icon">🔍</div>
+                <div class="card-title">深度搜索</div>
+                <div class="card-desc">研究、找资料、深度分析医疗相关信息</div>
+                <div class="card-tags">
+                    <span class="tag">multi-search</span>
+                    <span class="tag">tavily</span>
+                </div>
+            </div>
+            
+            <!-- 内容创作 -->
+            <div class="card" onclick="selectTask('content')">
+                <div class="card-icon">📝</div>
+                <div class="card-title">内容创作</div>
+                <div class="card-desc">写博客文章、Facebook帖子、YouTube内容</div>
+                <div class="card-tags">
+                    <span class="tag">multi-search</span>
+                    <span class="tag">social-content</span>
+                    <span class="tag">humanizer</span>
+                </div>
+            </div>
+            
+            <!-- 视频脚本 -->
+            <div class="card" onclick="selectTask('video')">
+                <div class="card-icon">🎬</div>
+                <div class="card-title">视频脚本</div>
+                <div class="card-desc">为豆包等AI视频工具生成脚本</div>
+                <div class="card-tags">
+                    <span class="tag">multi-search</span>
+                    <span class="tag">content</span>
+                    <span class="tag">xhs</span>
+                </div>
+            </div>
+            
+            <!-- 客户调研 -->
+            <div class="card" onclick="selectTask('research')">
+                <div class="card-icon">🔎</div>
+                <div class="card-title">客户调研</div>
+                <div class="card-desc">寻找潜在患者、合作伙伴</div>
+                <div class="card-tags">
+                    <span class="tag">lead-research</span>
+                    <span class="tag">web-search</span>
+                    <span class="tag">memory</span>
+                </div>
+            </div>
+            
+            <!-- 竞品分析 -->
+            <div class="card" onclick="selectTask('competitor')">
+                <div class="card-icon">📊</div>
+                <div class="card-title">竞品分析</div>
+                <div class="card-desc">分析Medigo、PlacidWay等竞争对手</div>
+                <div class="card-tags">
+                    <span class="tag">multi-search</span>
+                    <span class="tag">summarize</span>
+                </div>
+            </div>
+            
+            <!-- 网站优化 -->
+            <div class="card" onclick="selectTask('website')">
+                <div class="card-icon">⚙️</div>
+                <div class="card-title">网站优化</div>
+                <div class="card-desc">测试网站功能、SEO检查、代码更新</div>
+                <div class="card-tags">
+                    <span class="tag">agent-browser</span>
+                    <span class="tag">web-search</span>
+                    <span class="tag">github</span>
+                </div>
+            </div>
+        </div>
+        
+        <p class="footer">
+            选择任务后，我会自动使用对应的技能组合来执行<br>
+            当前模型：Kimi K2.5 | 技能数：16
+        </p>
+    </div>
+    
+    <script>
+        function selectTask(task) {
+            const messages = {
+                'deep-search': '🔍 深度搜索任务已选择！我将使用 multi-search + tavily 来完成研究任务。请告诉我具体要搜索什么？',
+                'content': '📝 内容创作任务已选择！我将使用 multi-search + social-content + humanizer 来创作内容。请告诉我想要什么类型的内容？',
+                'video': '🎬 视频脚本任务已选择！我将使用 multi-search + content + xhs 来生成脚本。请告诉我视频主题是什么？',
+                'research': '🔎 客户调研任务已选择！我将使用 lead-research + web-search + memory 来寻找潜在客户。请告诉我目标人群是什么？',
+                'competitor': '📊 竞品分析任务已选择！我将使用 multi-search + summarize 来分析竞争对手。请告诉我想要分析哪个竞品？',
+                'website': '⚙️ 网站优化任务已选择！我将使用 agent-browser + web-search + github 来优化网站。请告诉我需要优化什么？'
+            };
+            alert(messages[task]);
+        }
+    </script>
+</body>
+</html>

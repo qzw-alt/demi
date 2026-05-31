@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Success Stories | China Hospitals Guide</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8f9fa; color: #333; line-height: 1.7; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        
+        /* Header */
+        .header { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; padding: 60px 0 80px; text-align: center; }
+        .header h1 { font-size: 2.8em; margin-bottom: 15px; font-weight: 600; }
+        .header .subtitle { font-size: 1.2em; opacity: 0.95; max-width: 700px; margin: 0 auto; }
+        
+        /* Stats Bar */
+        .stats-bar { background: white; padding: 40px 0; margin-top: -40px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); margin-bottom: 60px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; text-align: center; max-width: 900px; margin: 0 auto; }
+        .stat-item h3 { font-size: 2.5em; color: #1e3c72; margin-bottom: 5px; }
+        .stat-item p { color: #666; font-size: 0.95em; }
+        
+        /* Section Titles */
+        .section-title { text-align: center; margin-bottom: 50px; }
+        .section-title h2 { font-size: 2.2em; color: #1e3c72; margin-bottom: 15px; }
+        .section-title p { color: #666; max-width: 600px; margin: 0 auto; font-size: 1.1em; }
+        
+        /* Story Grid */
+        .story-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 35px; margin-bottom: 60px; }
+        
+        /* Story Card */
+        .story-card { background: white; border-radius: 20px; padding: 35px; box-shadow: 0 8px 30px rgba(0,0,0,0.08); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .story-card:hover { transform: translateY(-5px); box-shadow: 0 15px 50px rgba(0,0,0,0.12); }
+        
+        .card-header { display: flex; align-items: center; margin-bottom: 20px; }
+        .avatar { width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.8em; font-weight: 600; flex-shrink: 0; margin-right: 18px; }
+        .james { background: linear-gradient(135deg, #1e3c72, #2a5298); }
+        .maria { background: linear-gradient(135deg, #e91e63, #9c27b0); }
+        .robert { background: linear-gradient(135deg, #ff9800, #f57c00); }
+        .emma { background: linear-gradient(135deg, #00bcd4, #00838f); }
+        .david { background: linear-gradient(135deg, #4caf50, #2e7d32); }
+        .sarah { background: linear-gradient(135deg, #ab47bc, #7b1fa2); }
+        .michael { background: linear-gradient(135deg, #5c6bc0, #3949ab); }
+        .lisa { background: linear-gradient(135deg, #26a69a, #00796b); }
+        .thomas { background: linear-gradient(135deg, #ef5350, #c62828); }
+        .jennifer { background: linear-gradient(135deg, #ffa726, #f57c00); }
+        
+        .patient-info h3 { color: #1e3c72; font-size: 1.3em; margin-bottom: 5px; }
+        .patient-info .meta { color: #888; font-size: 0.9em; }
+        
+        .treatment-tag { display: inline-block; background: #e3f2fd; color: #1e3c72; padding: 5px 14px; border-radius: 20px; font-size: 0.85em; font-weight: 500; margin: 12px 0; }
+        
+        .story-excerpt { color: #555; margin-bottom: 15px; font-size: 0.98em; }
+        .story-highlight { background: #f5f5f5; padding: 15px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #2a5298; }
+        .story-highlight p { color: #333; font-style: italic; font-size: 0.95em; }
+        
+        .savings { color: #4CAF50; font-weight: 700; font-size: 1.25em; margin: 15px 0; display: flex; align-items: center; gap: 8px; }
+        .savings::before { content: "💰"; }
+        
+        .read-more { display: inline-block; background: linear-gradient(135deg, #1e3c72, #2a5298); color: white; padding: 12px 28px; border-radius: 25px; text-decoration: none; font-weight: 500; transition: opacity 0.3s; }
+        .read-more:hover { opacity: 0.9; }
+        
+        /* Why China Section */
+        .why-china { background: white; padding: 80px 0; margin: 40px 0; border-radius: 20px; }
+        .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; text-align: center; }
+        .why-item { padding: 20px; }
+        .why-icon { font-size: 3em; margin-bottom: 15px; }
+        .why-item h4 { color: #1e3c72; font-size: 1.2em; margin-bottom: 10px; }
+        .why-item p { color: #666; font-size: 0.95em; }
+        
+        /* Process Section */
+        .process { padding: 60px 0 80px; }
+        .process-steps { display: flex; justify-content: space-between; max-width: 1000px; margin: 0 auto; position: relative; }
+        .process-steps::before { content: ""; position: absolute; top: 40px; left: 10%; right: 10%; height: 3px; background: linear-gradient(90deg, #1e3c72, #2a5298); z-index: 0; }
+        .step { text-align: center; position: relative; z-index: 1; flex: 1; padding: 0 15px; }
+        .step-number { width: 80px; height: 80px; background: linear-gradient(135deg, #1e3c72, #2a5298); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8em; font-weight: 700; margin: 0 auto 20px; box-shadow: 0 5px 20px rgba(30,60,114,0.3); }
+        .step h4 { color: #1e3c72; font-size: 1.1em; margin-bottom: 8px; }
+        .step p { color: #666; font-size: 0.9em; max-width: 150px; margin: 0 auto; }
+        
+        /* Testimonial Quote */
+        .testimonial-section { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); padding: 80px 0; margin: 60px 0; border-radius: 20px; color: white; text-align: center; }
+        .testimonial-quote { font-size: 1.6em; font-style: italic; max-width: 800px; margin: 0 auto 30px; line-height: 1.6; }
+        .testimonial-author { font-size: 1.1em; opacity: 0.9; }
+        .testimonial-rating { margin-top: 15px; font-size: 1.5em; }
+        
+        /* FAQ Section */
+        .faq { padding: 60px 0 80px; }
+        .faq-grid { max-width: 800px; margin: 0 auto; }
+        .faq-item { background: white; border-radius: 15px; padding: 25px 30px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
+        .faq-item h4 { color: #1e3c72; font-size: 1.1em; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .faq-item h4::before { content: "❓"; }
+        .faq-item p { color: #555; font-size: 0.98em; padding-left: 30px; }
+        
+        /* CTA Section */
+        .cta { background: white; padding: 80px 0; margin: 40px 0; border-radius: 20px; text-align: center; }
+        .cta h2 { font-size: 2.2em; color: #1e3c72; margin-bottom: 15px; }
+        .cta p { color: #666; max-width: 600px; margin: 0 auto 30px; font-size: 1.1em; }
+        .cta-buttons { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+        .btn-primary { background: linear-gradient(135deg, #1e3c72, #2a5298); color: white; padding: 15px 40px; border-radius: 30px; text-decoration: none; font-weight: 600; font-size: 1.1em; transition: transform 0.3s; }
+        .btn-primary:hover { transform: scale(1.05); }
+        .btn-secondary { background: white; color: #1e3c72; padding: 15px 40px; border-radius: 30px; text-decoration: none; font-weight: 600; font-size: 1.1em; border: 2px solid #1e3c72; transition: transform 0.3s; }
+        .btn-secondary:hover { transform: scale(1.05); }
+        
+        /* Footer */
+        .footer { background: #1a1a2e; color: #a0a0a0; padding: 50px 0 30px; margin-top: 60px; }
+        .footer-content { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1000px; margin: 0 auto 30px; }
+        .footer h4 { color: white; margin-bottom: 15px; font-size: 1.1em; }
+        .footer a { color: #a0a0a0; text-decoration: none; display: block; margin-bottom: 10px; transition: color 0.3s; }
+        .footer a:hover { color: white; }
+        .footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid #333; max-width: 1000px; margin: 0 auto; font-size: 0.9em; }
+        .back-link { display: inline-block; margin-top: 30px; color: #2a5298; text-decoration: none; font-weight: 500; }
+        .back-link:hover { color: #1e3c72; }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2em; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+            .why-grid { grid-template-columns: 1fr; gap: 30px; }
+            .process-steps { flex-direction: column; gap: 30px; }
+            .process-steps::before { display: none; }
+            .footer-content { grid-template-columns: 1fr; text-align: center; }
+        }
+    </style>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RVYZENK472"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-RVYZENK472');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2521119288266043"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1>Patient Success Stories</h1>
+            <p class="subtitle">Real stories from real patients who transformed their lives through world-class medical care in China. Discover how thousands of international patients are saving money while receiving exceptional treatment.</p>
+        </div>
+    </header>
+    
+    <!-- Stats Bar -->
+    <div class="container">
+        <div class="stats-bar">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>15,000+</h3>
+                    <p>Patients Treated</p>
+                </div>
+                <div class="stat-item">
+                    <h3>50+</h3>
+                    <p>Partner Hospitals</p>
+                </div>
+                <div class="stat-item">
+                    <h3>95%</h3>
+                    <p>Satisfaction Rate</p>
+                </div>
+                <div class="stat-item">
+                    <h3>70%</h3>
+                    <p>Average Savings</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Section Title -->
+        <div class="section-title">
+            <h2>Inspiring Recovery Stories</h2>
+            <p>Each story represents a journey of hope, healing, and transformation. Read how patients from around the world found their path to better health in China.</p>
+        </div>
+        
+        <!-- Story Grid -->
+        <div class="story-grid">
+            <!-- Story 1: James Wilson -->
+            <div class="story-card">
+                <div class="card-header">
+                    <div class="avatar james">J</div>
+                    <div class="patient-info">
+                        <h3>James Wilson</h3>
+                        <p class="meta">60 years old • Manchester, UK</p>
+                    </div>
+                </div>
+                <span class="treatment-tag">Knee Replacement Surgery</span>
+                <p class="story-excerpt">A retired teacher who suffered for 15 years with debilitating knee pain. After countless consultations in the UK where he was quoted £22,000 for a knee replacement, James discovered a life-changing alternative in Beijing.</p>
+                <div class="story-highlight">
+                    <p>"After just 6 weeks of recovery, I was walking my daughter down the aisle without any pain. Something I never thought possible."</p>
+                </div>
+                <p class="story-excerpt">James chose Xiehe Hospital in Beijing, where he received a full knee replacement using state-of-the-art robotic-assisted surgery. The entire process, including 3 weeks of rehabilitation at the hospital, was completed for just £6,000.</p>
+                <div class="savings">Saved £16,000</div>
+                <a href="james-wilson.html" class="read-more">Read Full Story →</a>
+            </div>
+            
+            <!-- Story 2: Maria Garcia -->
+            <div class="story-card">
+                <div class="card-header">
+                    <div class="avatar maria">M</div>
+                    <div class="patient-info">
+                        <h3>Maria Garcia</h3>
+                        <p class="meta">45 years old • London, UK</p>
+                    </div>
+                </div>
+                <span class="treatment-tag">Lumbar Spine Surgery</span>
+                <p class="story-excerpt">An accountant whose career was threatened by chronic back pain that had plagued her for over a decade. After being told surgery would cost £35,000 privately in the UK, with an 18-month wait on the NHS, Maria sought alternatives.</p>
+                <div class="story-highlight">
+                    <p>"I was taking 8 painkillers a day just to get through work. Now, two years later, I'm completely pain-free and running 5k three times a week."</p>
+                </div>
+                <p class="story-excerpt">Maria traveled to Shanghai Ruijin Hospital where Dr. Liu performed a minimally invasive lumbar discectomy. The cutting-edge procedure, unavailable at this price point in Europe, cost just £10,000 including all travel arrangements.</p>
+                <div class="savings">Saved £25,000</div>
+                <a href="maria-garcia.html" class="read-more">Read Full Story →</a>
+            </div>
+            
+            <!-- Story 3: Robert Chen -->
+            <div class="story-card">
+                <div class="card-header">
+                    <div class="avatar robert">R</div>
+                    <div class="patient-info">
+                        <h3>Robert Chen</h3>
+                        <p class="meta">50 years old • Toronto, Canada</p>
+                    </div>
+                </div>
+                <span class="treatment-tag">Heart Bypass Surgery</span>
+                <p class="story-excerpt">A Chinese-Canadian businessman who needed urgent heart bypass surgery. Facing a 6-week wait and $95,000 CAD quote in Canada, Robert leveraged his heritage connections to find world-class cardiac care in Beijing.</p>
+                <div class="story-highlight">
+                    <p>"Fuwai Hospital's cardiac department is unparalleled. The surgeon had performed over 5,000 bypass surgeries. I couldn't have received better care anywhere in the world."</p>
+                </div>
+                <p class="story-excerpt">At Beijing Fuwai Hospital, Robert received a triple bypass from Dr. Wang, a surgeon with 30 years of experience and training from Cleveland Clinic. Total cost: $10,000 CAD, including airport transfers and a 4-week recovery stay.</p>
+                <div class="savings">Saved $85,000 CAD</div>
+                <a href="robert-chen.html" class="read-more">Read Full Story →</a>
+            </div>
+            
+            <!-- Story 4: Emma Thompson -->
+            <div class="story-card">
+                <div class="card-header">
+                    <div class="avatar emma">E</div>
+                    <div class="patient-info">
+                        <h3>Emma Thompson</h3>
+                        <p class="meta">38 years old • Sydney, Australia</p>
+                    </div>
+                </div>
+                <span class="treatment-tag">Breast Reconstruction</span>
+                <p class="story-excerpt">Following her battle with breast cancer, Emma needed reconstructive surgery but faced astronomical costs in Australia. Her plastic surgeon quoted $45,000 AUD, and the public system wait was over 2 years.</p>
+                <div class="story-highlight">
+                    <p>"The surgeon in Guangzhou trained at MD Anderson in Houston. The results exceeded my expectations, and I finally feel whole again."</p>
+                </div>
+                <p class="story-excerpt">Emma chose Guangzhou Royalstar Hospital, where she received DIEP flap reconstruction surgery—a complex procedure requiring microsurgery—from Dr. Chen, who trained in the USA. The total cost was $12,000 AUD.</p>
+                <div class="savings">Saved $33,000 AUD</div>
+                <a href="emma-thompson.html" class="read-more">Read Full Story →</a>
+            </div>
+            
+            <!-- Story 5: David Park -->
+            <div class="story-card">
+                <div class="card-header">
+                    <div class="avatar david">D</div>
+                    <div class="patient-info">
+                        <h3>David Park</h3>
+                        <p class="meta">55 years old • Los Angeles, USA</p>
+                    </div>
+                </div>
+                <span class="treatment-tag">Liver Cancer Treatment</span>
+                <p class="story-excerpt">Diagnosed with stage 2 liver cancer, David was told his treatment protocol including surgery, chemotherapy, and targeted therapy would exceed $280,000 in the US. Insurance would cover much of it, but the out-of-pocket costs were devastating.</p>
+                <div class="story-highlight">
+                    <p>"I'm a cancer survivor thanks to the cutting-edge treatment I received in Shanghai. The targeted therapy alone cost 80% less than my US deductible."</p>
+                </div>
+                <p class="story-excerpt">David traveled to Shanghai Zhongshan Hospital where he received a combination of surgical resection and personalized targeted therapy based on his genetic profile. The comprehensive treatment plan cost $45,000, including groundbreaking CAR-T cell therapy.</p>
+                <div class="savings">Saved $235,000</div>
+                <a href="david-park.html" class="read-more">Read Full Story →</a>
+            </div>
+            
+            <!-- Story 6: Sarah Mitchell -->
+            <div class="story-card">
+                <div class="card-header">
+                    <div class="avatar sarah">S</div>
+                    <div class="patient-info">
+                        <h3>Sarah Mitchell</h3>
+                        <p class="meta">32 years old • Edinburgh, UK</p>
+                    </div>
+                </div>
+                <span class="treatment-tag">Fertility Treatment (IVF)</span>
+                <p class="story-excerpt">After three failed IVF cycles in the UK costing over £20,000, Sarah and her husband were considering giving up on starting a family. A friend suggested they explore treatment abroad before their final attempt.</p>
+                <div class="story-highlight">
+                    <p>"We became parents to twins after one cycle in Guangzhou. The technology and expertise available there gave us our miracle."</p>
+                </div>
+                <p class="story-excerpt">Sarah underwent IVF with PGS (preimplantation genetic screening) at Guangzhou Women & Children's Hospital. The clinic boasted a 78% success rate compared to the UK average of 40% for her age group. Total cost for the complete package: £5,500.</p>
+                <div class="savings">Saved £14,500</div>
+                <a href="sarah-mitchell.html" class="read-more">Read Full Story →</a>
+            </div>
+            
+            <!-- Story 7: Michael Brown -->
+            <div class="story-card">
+                <div class="card-header">
+                    <div class="avatar michael">M</div>
+                    <div class="patient-info">
+                        <h3>Michael Brown</h3>
+                        <p class="meta">62 years old • Dublin, Ireland</p>
+                    </div>
+                </div>
+                <span class="treatment-tag">Hip Replacement</span>
+                <p class="story-excerpt">A retired builder whose hips were destroyed by decades of physical labor. Michael could barely walk 50 meters without stopping. In Ireland, bilateral hip replacement would cost €50,000 privately with a 2-year wait.</p>
+                <div class="story-highlight">
+                    <p>"I had both hips replaced in one surgery—a 6-hour operation. Six months later, I was hiking in the Irish mountains with my grandkids."</p>
+                </div>
+                <p class="story-excerpt">Michael traveled to Chengdu West China Hospital, one of China's most prestigious medical institutions. He received bilateral hip replacement using ceramic-on-ceramic implants from Germany. The surgery, hospital stay, and 3-month rehabilitation program cost €12,000.</p>
+                <div class="savings">Saved €38,000</div>
+                <a href="michael-brown.html" class="read-more">Read Full Story →</a>
+            </div>
+            
+            <!-- Story 8: Lisa Chen -->
+            <div class="story-card">
+                <div class="card-header">
+                    <div class="avatar lisa">L</div>
+                    <div class="patient-info">
+                        <h3>Lisa Chen</h3>
+                        <p class="meta">28 years old • Vancouver, Canada</p>
+                    </div>
+                </div>
+                <span class="treatment-tag">Spinal Scoliosis Surgery</span>
+                <p class="story-excerpt">Born with severe scoliosis, Lisa had lived with chronic pain and self-consciousness her entire life. Surgery in Canada was quoted at $120,000 CAD, and her insurance considered it "cosmetic" and refused coverage.</p>
+                <div class="story-highlight">
+                    <p>"I grew 3 inches after surgery and my back pain disappeared instantly. It's been 18 months and I finally feel comfortable in my own skin."</p>
+                </div>
+                <p class="story-excerpt">Lisa chose Peking Union Medical College Hospital in Beijing, consistently ranked as China's top orthopedic center. Dr. Zhang performed a spinal fusion using the latest vertebral body tethering technique, reducing recovery time by half. Cost: $22,000 CAD including airfare.</p>
+                <div class="savings">Saved $98,000 CAD</div>
+                <a href="lisa-chen.html" class="read-more">Read Full Story →</a>
+            </div>
+            
+            <!-- Story 9: Thomas Mueller -->
+            <div class="story-card">
+                <div class="card-header">
+                    <div class="avatar thomas">T</div>
+                    <div class="patient-info">
+                        <h3>Thomas Mueller</h3>
+                        <p class="meta">48 years old • Munich, Germany</p>
+                    </div>
+                </div>
+                <span class="treatment-tag">Gastric Sleeve Surgery</span>
+                <p class="story-excerpt">At 185kg, Thomas struggled with obesity-related health issues including type 2 diabetes and high blood pressure. German clinics quoted €25,000 for gastric sleeve surgery with a 6-month waitlist.</p>
+                <div class="story-highlight">
+                    <p>"I lost 70kg in 12 months. My diabetes is gone, my blood pressure is normal, and I feel 20 years younger. Best decision I ever made."</p>
+                </div>
+                <p class="story-excerpt">Thomas underwent laparoscopic gastric sleeve surgery at Shanghai Greenland Hospital by Dr. Wu, who has performed over 3,000 bariatric procedures. The comprehensive package including surgery, 2-week stay, nutritional counseling, and 6 months of follow-up support cost €7,500.</p>
+                <div class="savings">Saved €17,500</div>
+                <a href="thomas-mueller.html" class="read-more">Read Full Story →</a>
+            </div>
+            
+            <!-- Story 10: Jennifer Lee -->
+            <div class="story-card">
+                <div class="card-header">
+                    <div class="avatar jennifer">J</div>
+                    <div class="patient-info">
+                        <h3>Jennifer Lee</h3>
+                        <p class="meta">41 years old • Singapore</p>
+                    </div>
+                </div>
+                <span class="treatment-tag">Thyroid Cancer Treatment</span>
+                <p class="story-excerpt">Diagnosed with papillary thyroid cancer, Jennifer faced a difficult choice. Surgery in Singapore would cost $35,000 SGD with a 3-month wait. Her doctor recommended a facility in China that specialized in her cancer type.</p>
+                <div class="story-highlight">
+                    <p>"The surgeon in Guangzhou had seen more thyroid cancer cases in a year than most Western surgeons see in their entire career. Expertise matters."</p>
+                </div>
+                <p class="story-excerpt">Jennifer traveled to Guangzhou Cancer Hospital where she received a total thyroidectomy with central compartment lymph node dissection from Dr. Huang, a thyroid cancer specialist who trained at Memorial Sloan Kettering. Cost: $8,000 SGD, including comprehensive genetic testing.</p>
+                <div class="savings">Saved $27,000 SGD</div>
+                <a href="jennifer-lee.html" class="read-more">Read Full Story →</a>
+            </div>
+        </div>
+        
+        <!-- Why China Section -->
+        <section class="why-china">
+            <div class="section-title" style="padding: 0 20px;">
+                <h2>Why Patients Choose China</h2>
+                <p>World-class medical care with significant cost savings and no compromise on quality</p>
+            </div>
+            <div class="why-grid">
+                <div class="why-item">
+                    <div class="why-icon">🏥</div>
+                    <h4>JCI-Accredited Hospitals</h4>
+                    <p>Many Chinese hospitals meet or exceed international healthcare standards, with JCI accreditation ensuring safety and quality comparable to Western hospitals.</p>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon">👨‍⚕️</div>
+                    <h4>World-Class Specialists</h4>
+                    <p>Chinese surgeons often treat higher volumes of complex cases, leading to exceptional expertise. Many trained at top Western institutions like Harvard and Johns Hopkins.</p>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon">💊</div>
+                    <h4>Cutting-Edge Technology</h4>
+                    <p>Chinese hospitals invest heavily in the latest medical technology, including robotic surgery systems, proton therapy, and advanced diagnostic equipment.</p>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon">⏱️</div>
+                    <h4>Minimal Wait Times</h4>
+                    <p>Schedule surgery within days, not months. Private hospitals prioritize international patients and offer flexible appointment scheduling.</p>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon">🌐</div>
+                    <h4>Comprehensive Packages</h4>
+                    <p>Most medical tourism agencies offer all-inclusive packages covering surgery, hospital stay, translation services, airport transfers, and accommodation.</p>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon">🗣️</div>
+                    <h4>English-Speaking Staff</h4>
+                    <p>International patient departments provide dedicated coordinators, translators, and English-speaking medical teams throughout your journey.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Process Section -->
+        <section class="process">
+            <div class="section-title">
+                <h2>Your Journey to Healing</h2>
+                <p>Simple steps to access world-class medical care in China</p>
+            </div>
+            <div class="process-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h4>Submit Inquiry</h4>
+                    <p>Share your medical records and treatment needs through our secure portal</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h4>Expert Consultation</h4>
+                    <p>Receive personalized recommendations from top specialists within 48 hours</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h4>Travel Arrangements</h4>
+                    <p>We handle visas, flights, accommodation, and local transportation</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h4>Treatment & Recovery</h4>
+                    <p>Receive treatment and recover with continuous support from your care team</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <h4>Ongoing Care</h4>
+                    <p>Continue follow-up consultations remotely after returning home</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Testimonial Section -->
+        <section class="testimonial-section">
+            <div class="container">
+                <p class="testimonial-quote">"I was skeptical at first—how could surgery in China be as good as the US? But after my experience, I understand. The surgeon in Beijing has performed more heart valve replacements than anyone in North America. My outcome was perfect."</p>
+                <p class="testimonial-author">— Robert Anderson, Minneapolis, USA | Aortic Valve Replacement</p>
+                <div class="testimonial-rating">⭐⭐⭐⭐⭐</div>
+            </div>
+        </section>
+        
+        <!-- FAQ Section -->
+        <section class="faq">
+            <div class="section-title">
+                <h2>Frequently Asked Questions</h2>
+                <p>Everything you need to know about medical tourism in China</p>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h4>Is medical treatment in China safe?</h4>
+                    <p>Yes. Many Chinese hospitals are JCI-accredited (Joint Commission International), meaning they meet the same standards as top US and European hospitals. Look for hospitals with international patient departments and English-speaking staff for the safest experience.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>How much can I save by having surgery in China?</h4>
+                    <p>Savings typically range from 50-80% compared to Western countries. Common procedures like knee replacements cost £6,000-8,000 in China vs £20,000-25,000 in the UK. Heart surgery can cost $10,000-15,000 vs $100,000-200,000 in the US.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Do I need a visa for medical treatment in China?</h4>
+                    <p>Yes, you'll need a visa. Medical tourism visas (M visa) are available for patients seeking treatment in China. Most medical tourism agencies assist with the visa application process and can provide invitation letters from Chinese hospitals.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>How do I communicate with my medical team?</h4>
+                    <p>International patient departments provide English-speaking coordinators, translators, and often dedicated liaisons who accompany you to appointments. Many hospitals also offer video consultations before you travel.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>What happens if there are complications after I return home?</h4>
+                    <p>Reputable medical tourism agencies provide ongoing remote follow-up care after your procedure. This includes virtual consultations with your surgeon, coordination with local doctors for any necessary local follow-up, and emergency contact access.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Which hospitals do you recommend?</h4>
+                    <p>We partner with over 50 JCI-accredited hospitals across China, including Xiehe Hospital (Beijing), Ruijin Hospital (Shanghai), Fuwai Hospital (Beijing), West China Hospital (Chengdu), and many others. We match patients with the most appropriate facility for their specific condition.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>How do I know my medical records will be handled confidentially?</h4>
+                    <p>All partner hospitals comply with international patient privacy standards. Your medical records are protected under Chinese healthcare privacy laws and can be transmitted securely through encrypted systems. You're in control of who sees your information.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Can I bring a companion with me?</h4>
+                    <p>Absolutely. Most medical tourism packages allow you to bring family members or companions. The companion's travel and accommodation costs are usually separate, but hospitals can recommend nearby accommodation suitable for extended stays.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- CTA Section -->
+        <section class="cta">
+            <h2>Ready to Start Your Healing Journey?</h2>
+            <p>Join thousands of international patients who have discovered world-class medical care in China. Get a free consultation and personalized treatment plan today.</p>
+            <div class="cta-buttons">
+                <a href="/contact" class="btn-primary">Start Free Case Review</a>
+                <a href="/hospitals" class="btn-secondary">View Partner Hospitals</a>
+            </div>
+            <a href="/" class="back-link">← Back to Home</a>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <h4>Quick Links</h4>
+                    <a href="/">Home</a>
+                    <a href="/about">About Us</a>
+                    <a href="/hospitals">Hospitals</a>
+                    <a href="/treatments">Treatments</a>
+                    <a href="/stories">Success Stories</a>
+                </div>
+                <div>
+                    <h4>Treatments</h4>
+                    <a href="/treatments/orthopedics">Orthopedics</a>
+                    <a href="/treatments/cardiology">Cardiology</a>
+                    <a href="/treatments/oncology">Oncology</a>
+                    <a href="/treatments/ivf">Fertility (IVF)</a>
+                    <a href="/treatments/cosmetic">Cosmetic Surgery</a>
+                </div>
+                <div>
+                    <h4>Contact Us</h4>
+                    <a href="mailto:info@chinahospitalsguide.com">info@chinahospitalsguide.com</a>
+                    <a href="tel:+441234567890">+44 123 456 7890</a>
+                    <a href="/faq">FAQ</a>
+                    <a href="/privacy">Privacy Policy</a>
+                    <a href="/terms">Terms of Service</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 China Hospitals Guide. All rights reserved. | Medical tourism information provided for educational purposes only.</p>
+            </div>
+        </div>
+    </footer>
+    <div class="floating-buttons">
+        <a href="https://wa.me/8615763107083" class="floating-btn whatsapp-btn" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+            <span>💬</span>
+            <span class="chat-tooltip">Chat on WhatsApp</span>
+        </a>
+    </div>
+</body>
+</html>

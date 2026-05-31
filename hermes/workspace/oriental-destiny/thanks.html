@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TBGDZRZZEJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-TBGDZRZZEJ');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Your order has been received. We will review your birth chart and confirm the recommended direction before shipping. Worldwide delivery.">
+    <link rel="canonical" href="https://oriental-destiny.com/thanks.html">
+    <meta name="robots" content="noindex">
+    <meta property="og:title" content="Order Received | Oriental Destiny">
+    <meta property="og:description" content="Your personalized Feng Shui reading order is confirmed. We'll be in touch with your chart reading and direction recommendation shortly.">
+    <meta property="og:type" content="website">
+    <title>Oriental Destiny | Order Received</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <style>
+        :root {
+            --ink: #241915;
+            --paper: #fbf5ec;
+            --cinnabar: #a63a2c;
+            --jade: #2d6a4f;
+            --gold: #b78a42;
+            --line: rgba(36, 25, 21, 0.1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 36px 20px;
+            font-family: Georgia, "Times New Roman", serif;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at top, rgba(183, 138, 66, 0.16), transparent 32%),
+                linear-gradient(180deg, #f6e7d6 0%, var(--paper) 48%, #fffaf4 100%);
+            line-height: 1.75;
+        }
+
+        .card {
+            width: min(640px, 100%);
+            padding: 38px;
+            border-radius: 28px;
+            background: rgba(255, 253, 249, 0.92);
+            border: 1px solid var(--line);
+            box-shadow: 0 18px 48px rgba(70, 41, 24, 0.12);
+            text-align: center;
+        }
+
+        .brand {
+            display: inline-block;
+            margin-bottom: 22px;
+            color: var(--cinnabar);
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            font-size: 13px;
+            text-decoration: none;
+        }
+
+        .payment-confirmed {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 22px;
+            border-radius: 14px;
+            background: rgba(45, 106, 79, 0.1);
+            border: 1.5px solid rgba(45, 106, 79, 0.3);
+            margin-bottom: 22px;
+            font-size: 15px;
+            color: var(--jade);
+            font-weight: 600;
+        }
+
+        .payment-confirmed.show { display: flex; }
+
+        .payment-confirmed svg { flex-shrink: 0; }
+
+        h1 {
+            font-size: clamp(30px, 6vw, 44px);
+            line-height: 1.12;
+            margin-bottom: 14px;
+        }
+
+        .subtitle {
+            color: rgba(36, 25, 21, 0.74);
+            margin-bottom: 28px;
+        }
+
+        .info {
+            text-align: left;
+            display: grid;
+            gap: 12px;
+            padding: 22px;
+            border-radius: 20px;
+            background: rgba(242, 227, 208, 0.44);
+            margin-bottom: 28px;
+        }
+
+        .info p { color: rgba(36, 25, 21, 0.76); }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 50px;
+            padding: 0 24px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #b24636 0%, #8b251a 100%);
+            color: #fff8ef;
+            text-decoration: none;
+            font-weight: 700;
+            border: none;
+            font-size: 15px;
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        .btn:hover { opacity: 0.9; }
+
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid rgba(36, 25, 21, 0.2);
+            color: var(--ink);
+            box-shadow: none;
+        }
+
+        .instant-preview {
+            display: none;
+            background: rgba(183, 138, 66, 0.08);
+            border: 1px solid rgba(183, 138, 66, 0.2);
+            border-radius: 16px;
+            padding: 22px 24px;
+            margin: 24px 0;
+            text-align: left;
+        }
+
+        .instant-preview.show { display: block; }
+
+        .instant-preview h2 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        .instant-preview p {
+            color: rgba(36, 25, 21, 0.7);
+            margin-bottom: 16px;
+        }
+
+        .cta-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .manual-confirm {
+            display: none;
+            margin-top: 22px;
+            padding: 18px 22px;
+            border-radius: 16px;
+            background: rgba(183, 138, 66, 0.06);
+            border: 1px solid rgba(183, 138, 66, 0.18);
+            text-align: center;
+        }
+
+        .manual-confirm.show { display: block; }
+
+        .manual-confirm p {
+            margin-bottom: 12px;
+            color: rgba(36, 25, 21, 0.7);
+            font-size: 14px;
+        }
+
+        .note {
+            margin-top: 22px;
+            font-size: 12px;
+            color: rgba(36, 25, 21, 0.54);
+        }
+
+        .followup {
+            margin-bottom: 26px;
+            color: rgba(36, 25, 21, 0.74);
+            text-align: left;
+        }
+
+        footer {
+            margin-top: 18px;
+            font-size: 12px;
+            color: rgba(36, 25, 21, 0.55);
+        }
+
+        footer a {
+            color: rgba(36, 25, 21, 0.7);
+            margin: 0 6px;
+        }
+
+        @media (max-width: 720px) {
+            body {
+                padding: 20px 12px;
+            }
+            .card {
+                padding: 24px 18px;
+            }
+            h1 {
+                font-size: 26px;
+            }
+            .cta-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="card">
+        <a class="brand" href="index.html" data-i18n="th_brand">Oriental Destiny</a>
+
+        <div class="payment-confirmed" id="paymentBadge">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M6 10l3 3 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span data-i18n="th_badge">Payment Confirmed — Thank you!</span>
+        </div>
+
+        <h1 data-i18n="th_title">Your order details have been received.</h1>
+        <p class="subtitle" data-i18n="th_subtitle">We have received your $199 order. Your <strong>Chart Snapshot is ready now</strong> — view it below. A master will review your chart and send the <strong>complete annotated report by email within 6 hours</strong>. The jewelry recommendation and shipping follow after.</p>
+
+        <!-- Instant preview: shown when payment is confirmed -->
+        <div class="instant-preview" id="instantPreview">
+            <div style="font-weight: 600; color: var(--cinnabar); margin-bottom: 8px; font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase;" data-i18n="th_instant_title">Available now — no waiting</div>
+            <h2 data-i18n="th_instant_heading">Your Chart Snapshot is ready</h2>
+            <p data-i18n="th_instant_desc">View your core sentence, keywords, elemental breakdown, focus direction, and a system preliminary analysis — pre-filled with the details you submitted. The complete 7-chapter master-annotated report will arrive by email within 6 hours.</p>
+            <div class="cta-row">
+                <a class="btn" href="snapshot_report.html" id="viewReadingBtn" data-i18n="th_instant_cta">View My Chart Snapshot</a>
+                <a class="btn btn-outline" href="report_demo.html" data-i18n="th_instant_sample">Read Sample Report</a>
+            </div>
+        </div>
+
+        <div class="info">
+            <p data-i18n-html="th_basic_now"><strong>Now.</strong> Your Chart Snapshot is available immediately — view your core reading and chart data right now.</p>
+            <p data-i18n-html="th_basic_6hr"><strong>Within 6 hours.</strong> A master reviews your chart and sends the complete annotated report to your email (orders after 10 PM Eastern: by the following morning).</p>
+            <p data-i18n-html="th_basic_day1_3"><strong>Day 1–3.</strong> Your reading is used to choose a suitable material, bracelet, pendant, or guardian symbol.</p>
+            <p data-i18n-html="th_basic_day7_10"><strong>Day 7–10.</strong> We email the final jewelry recommendation and wait for your confirmation before any item is finalized. Once confirmed, your piece is shipped worldwide with tracking.</p>
+        </div>
+
+        <p class="followup" data-i18n="th_followup">Please keep an eye on your email after payment — we send updates from <a href="mailto:434338480@qq.com" style="color:var(--cinnabar);text-decoration:underline;">434338480@qq.com</a>. If you need to change birth details, add notes, or ask a question, reply to that address with your order email and we will pick it up.</p>
+
+        <div class="manual-confirm" id="manualConfirm">
+            <p data-i18n="th_manual_confirm_text">If you completed payment but were not redirected back here, click below to access your reading and confirm your order status.</p>
+            <button class="btn" id="manualPaidBtn" data-i18n="th_manual_confirm_btn">I paid — show my reading</button>
+        </div>
+
+        <a class="btn btn-outline" href="index.html" data-i18n="th_back_home">Back to Home</a>
+
+        <footer>
+            <a href="policies.html#shipping" data-i18n="footer_shipping">Shipping</a> ·
+            <a href="policies.html#refund" data-i18n="footer_refund">Refund</a> ·
+            <a href="policies.html#privacy" data-i18n="footer_privacy">Privacy</a> ·
+            <a href="mailto:434338480@qq.com" data-i18n="footer_contact">Contact</a>
+        </footer>
+        <p class="note" data-i18n="footer_disclaimer">Products and readings are for self-reflection and symbolic guidance only. Not medical, legal, financial, or professional advice. Results reflect traditional cultural frameworks, not guaranteed outcomes.</p>
+        <span class="od-version" style="display:block;margin-top:8px;opacity:0.55;font-size:11px;letter-spacing:0.04em;"></span>
+    </main>
+
+    <!-- Dream membership upgrade section -->
+    <div class="card" id="dreamUpgradeCard" style="display:none;margin-top:24px;text-align:center;">
+        <div style="font-size:18px;font-weight:700;margin-bottom:8px;color:var(--gold);">☯ Destiny Membership</div>
+        <p style="margin-bottom:16px;color:rgba(36,25,21,0.7);">Your 36 dream interpretations are being activated...</p>
+        <div id="dreamUpgradeSuccess" style="display:none;padding:20px;background:rgba(49,82,71,0.08);border-radius:12px;border:1px solid rgba(49,82,71,0.2);margin-bottom:16px;">
+            <div style="font-size:36px;margin-bottom:8px;">✓</div>
+            <div style="font-weight:600;color:var(--pine);margin-bottom:4px;">Membership Activated!</div>
+            <div style="font-size:14px;color:rgba(36,25,21,0.6);">You now have 36 dream interpretations.</div>
+            <a href="dashboard.html" style="display:inline-block;margin-top:12px;color:var(--cinnabar);font-weight:600;text-decoration:underline;">Go to Your Dashboard →</a>
+        </div>
+        <div id="dreamUpgradeRegister" style="display:none;">
+            <p style="color:rgba(36,25,21,0.6);margin-bottom:12px;">Create an account with your payment email to activate your 36 dream interpretations.</p>
+            <a href="register.html?redirect=dashboard.html" style="display:inline-block;padding:12px 28px;background:var(--cinnabar);color:#fff;border-radius:8px;font-size:14px;font-weight:600;">Create Free Account</a>
+        </div>
+    </div>
+
+    <script src="config.real.js"></script>
+<script src="config.js"></script>
+    <script src="auth.js"></script>
+    <script src="bazi_engine.js"></script>
+    <script src="api_deepseek.js"></script>
+    <script src="ai_bazi_layer.js"></script>
+    <script src="reading_state.js"></script>
+    <script src="i18n.js"></script>
+    <script src="bazi_translator.js"></script>
+    <script src="version.js"></script>
+    <script>
+    (function() {
+        const params = new URLSearchParams(window.location.search);
+        const paid = params.has('tx') || params.has('paymentId') || params.has('token');
+        const txId = params.get('tx') || params.get('paymentId') || params.get('token') || '';
+        const isInstantReport = params.get('product') === 'instant_report';
+
+        // ── $29 Instant Report Payment ──────────────────────────────────────
+        if (isInstantReport && paid) {
+            // Redirect to report viewer
+            gtag('event', 'purchase', {
+                currency: 'USD',
+                value: 29,
+                transaction_id: txId,
+                items: [{
+                    item_name: 'Instant BaZi Clarity Report',
+                    price: 29,
+                    quantity: 1
+                }]
+            });
+
+            // Try to save purchase record
+            if (window.Auth) {
+                Auth.init().then(function() {
+                    if (Auth.currentUser) {
+                        Auth.purchaseInstantReport(txId).then(function() {
+                            window.location.href = 'report_viewer.html';
+                        });
+                    } else {
+                        // Store intent in ReadingState, redirect to register
+                        if (window.ReadingState) {
+                            window.ReadingState.merge({
+                                pendingProduct: 'instant_report',
+                                purchaseTx: txId
+                            });
+                        }
+                        window.location.href = 'register.html?redirect=report_viewer.html';
+                    }
+                }).catch(function() {
+                    window.location.href = 'report_viewer.html';
+                });
+            } else {
+                window.location.href = 'report_viewer.html';
+            }
+            return;
+        }
+
+        // ── $199 Matched Service Payment ────────────────────────────────────
+
+        function unlockReading(transactionId) {
+            document.getElementById('paymentBadge').classList.add('show');
+            document.getElementById('instantPreview').classList.add('show');
+            document.getElementById('manualConfirm').classList.remove('show');
+
+            gtag('event', 'purchase', {
+                currency: 'USD',
+                value: 199,
+                transaction_id: transactionId || '',
+                items: [{
+                    item_name: 'Personalized Feng Shui Reading + Daoist Treasure',
+                    price: 199,
+                    quantity: 1
+                }]
+            });
+
+            const state = window.ReadingState ? window.ReadingState.read() : {};
+            const q = new URLSearchParams();
+            if (state.birth_date)       q.set('birth_date', state.birth_date);
+            if (state.birth_time)       q.set('birth_time', state.birth_time);
+            if (state.gender)            q.set('gender', state.gender);
+            if (state.birth_location)   q.set('birth_location', state.birth_location);
+            if (state.focus)            q.set('focus', state.focus);
+            if (state.notes)            q.set('notes', state.notes);
+            if (state.full_name)        q.set('full_name', state.full_name);
+
+            const qs = q.toString();
+            if (qs) {
+                document.getElementById('viewReadingBtn').href = 'snapshot_report.html?' + qs;
+            }
+        }
+
+        if (paid) {
+            unlockReading(txId);
+        } else {
+            // Show manual confirmation fallback
+            document.getElementById('manualConfirm').classList.add('show');
+            document.getElementById('manualPaidBtn').addEventListener('click', function() {
+                this.disabled = true;
+                this.textContent = 'Confirmed — unlocking…';
+                unlockReading('manual-' + Date.now());
+            });
+        }
+
+        // Dream membership upgrade detection
+        var state = window.ReadingState ? window.ReadingState.read() : {};
+        var isDreamMembership = params.get('product') === 'destiny_membership'
+            || (state && state.pendingProduct === 'destiny_membership');
+
+        if (isDreamMembership || paid) {
+            if (!isDreamMembership && state && state.pendingProduct === 'destiny_membership') {
+                isDreamMembership = true;
+            }
+        }
+
+        if (isDreamMembership && paid) {
+            var card = document.getElementById('dreamUpgradeCard');
+            if (card) card.style.display = '';
+
+            if (window.Auth) {
+                Auth.init().then(function() {
+                    if (Auth.currentUser) {
+                        Auth.upgradeToPaid(txId).then(function() {
+                            Auth.saveOrder({
+                                amount: 199,
+                                product: 'destiny_membership',
+                                paypalTxId: txId,
+                                status: 'completed'
+                            });
+                            document.getElementById('dreamUpgradeSuccess').style.display = '';
+                            if (window.ReadingState) {
+                                window.ReadingState.merge({ pendingProduct: null });
+                            }
+                        }).catch(function(e) {
+                            console.error('Membership upgrade failed:', e);
+                            document.getElementById('dreamUpgradeRegister').style.display = '';
+                        });
+                    } else {
+                        document.getElementById('dreamUpgradeRegister').style.display = '';
+                        if (window.ReadingState) {
+                            window.ReadingState.merge({
+                                pendingUpgrade: true,
+                                pendingProduct: 'destiny_membership',
+                                upgradeTx: txId
+                            });
+                        }
+                    }
+                });
+            } else {
+                document.getElementById('dreamUpgradeRegister').style.display = '';
+            }
+        }
+    })();
+    </script>
+</body>
+</html>

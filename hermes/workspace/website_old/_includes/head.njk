@@ -1,0 +1,38 @@
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1e3c72">
+    <title>{{ title }}</title>
+    <meta name="description" content="{{ description }}">
+    <link rel="canonical" href="{{ canonical or (site.url + page.url) }}">
+    <meta property="og:title" content="{{ ogTitle or title }}">
+    <meta property="og:description" content="{{ ogDescription or description }}">
+    <meta property="og:type" content="{{ ogType or 'website' }}">
+    <meta property="og:url" content="{{ canonical or (site.url + page.url) }}">
+    <meta property="og:image" content="{{ ogImage or (site.url + '/og-image.webp') }}">
+    <meta property="og:site_name" content="{{ site.name }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ twitterTitle or ogTitle or title }}">
+    <meta name="twitter:description" content="{{ twitterDescription or ogDescription or description }}">
+    <meta name="twitter:image" content="{{ twitterImage or ogImage or (site.url + '/og-image.webp') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="//www.googletagmanager.com">
+    <link rel="dns-prefetch" href="//pagead2.googlesyndication.com">
+    <link rel="preload" href="{{ '/styles.css' | url }}" as="style">
+    <link rel="stylesheet" href="{{ '/styles.css' | url }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap">
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.gaId }}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '{{ site.gaId }}');
+    </script>
+    {%- if schema %}
+    <script type="application/ld+json">
+    {{ schema | safe }}
+    </script>
+    {%- endif %}
+    {%- if extraHead %}
+    {{ extraHead | safe }}
+    {%- endif %}
