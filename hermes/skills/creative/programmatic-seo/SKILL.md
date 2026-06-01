@@ -1,18 +1,18 @@
 ---
 name: programmatic-seo
-description: "Programmatic SEO article writing for Chinese medical tourism website. Workflow: research → draft → humanize → publish → update sitemap."
-version: 1.0.0
+description: "Programmatic SEO article writing for content sites. Workflow: research → draft → humanize → publish → update sitemap. Currently serving oriental-destiny.com and chinahospitalsguide.com."
+version: 1.1.0
 author: Hermes Agent
 platforms: [linux]
 metadata:
   hermes:
-    tags: [seo, content, writing, chinese, medical, tourism, programmatic]
+    tags: [seo, content, writing, feng-shui, bazi, destiny, medical-tourism, programmatic]
     category: creative
 ---
 
-# Programmatic SEO: Chinese Medical Tourism Articles
+# Programmatic SEO: Article Writing for Content Sites
 
-Write and publish daily medical news articles for chinahospitalsguide.com.
+Write and publish daily SEO articles for oriental-destiny.com (feng shui / BaZi / destiny) and chinahospitalsguide.com (Chinese medical tourism).
 
 ## Workflow (6 Steps)
 
@@ -49,19 +49,27 @@ Save to news/ directory as `YYYY-MM-DD.html`
 - **Verify both** before proceeding to Step 6
 
 ### Step 6: Git Push
-Verify remote URL has credentials before pushing:
+First check which branch the remote uses (`main` vs `master`):
 ```bash
-cd /root/.hermes/workspace/website
 git remote -v
-# If no token in URL, push will silently fail
-# Fix: git remote set-url origin "https://$(cat ~/.git-credentials 2>/dev/null | grep -o 'github_pat_[^@]*')@github.com/qzw-alt/chinahospitalsguide.git"
-git add .
-git commit -m "news: $(date +%Y-%m-%d)"
-git push origin master
+git branch -a | head -5
 ```
-After push, wait 2-3 minutes then verify at `https://chinahospitalsguide.com/news/`.
+If the remote uses `main`, push to `origin main`, not `origin master`.
 
-**Pitfall**: Clones without a token in the remote URL silently fail on push. The cron job reports `ok` even when push fails. Always verify the remote URL before Step 6.
+Always verify the remote URL has credentials embedded — otherwise push silently fails:
+```bash
+git remote -v
+# If no token in URL (shows "github.com" without "token"), fix:
+git remote set-url origin "https://$(cat ~/.git-credentials 2>/dev/null | grep -o 'github_pat_[^@]*')@github.com/qzw-alt/REPO.git"
+```
+
+**Sitemap conflict prevention:** Before pulling or rebasing, check whether another agent has recently pushed. Concurrent sitemap edits cause rebase conflicts. If the remote is ahead, prefer a merge commit over a rebase, or work on a short-lived branch:
+```bash
+git checkout -b article-YYYY-MM-DD origin/main
+# work, commit, push to article-YYYY-MM-DD:main
+```
+
+After push, wait 2-3 minutes then verify the live URL returns HTTP 200.
 
 ### Step 7: Report
 After publish, report:
