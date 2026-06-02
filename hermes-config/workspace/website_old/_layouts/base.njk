@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="{{ lang or 'en' }}">
+<head>
+{% include "head.njk" %}
+{%- if pageStyle %}
+<style>
+{{ pageStyle | safe }}
+</style>
+{%- endif %}
+</head>
+<body>
+{% include "nav.njk" %}
+
+{{ content | safe }}
+
+{% include "footer.njk" %}
+{% include "scripts.njk" %}
+{% include "mobile-bottom-bar.njk" %}
+</body>
+</html>

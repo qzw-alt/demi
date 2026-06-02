@@ -1,0 +1,72 @@
+{
+  "updated_at": "2026-06-02T21:56:06.729768",
+  "platforms": {
+    "telegram": [],
+    "discord": [],
+    "whatsapp": [],
+    "slack": [],
+    "signal": [],
+    "mattermost": [],
+    "matrix": [],
+    "homeassistant": [],
+    "email": [],
+    "sms": [],
+    "dingtalk": [],
+    "msgraph_webhook": [],
+    "feishu": [
+      {
+        "id": "oc_82a1a36b7bacddfbcae28d273674900a",
+        "name": "oc_82a1a36b7bacddfbcae28d273674900a",
+        "type": "dm",
+        "thread_id": null
+      },
+      {
+        "id": "oc_82a1a36b7bacddfbcae28d273674900a:om_x100b6eff9987b4a0b24d2e2d59c74c4",
+        "name": "oc_82a1a36b7bacddfbcae28d273674900a / topic om_x100b6eff9987b4a0b24d2e2d59c74c4",
+        "type": "dm",
+        "thread_id": "om_x100b6eff9987b4a0b24d2e2d59c74c4"
+      },
+      {
+        "id": "oc_82a1a36b7bacddfbcae28d273674900a:om_x100b6ed6fa7ca480b4bda0ac9c597dc",
+        "name": "oc_82a1a36b7bacddfbcae28d273674900a / topic om_x100b6ed6fa7ca480b4bda0ac9c597dc",
+        "type": "dm",
+        "thread_id": "om_x100b6ed6fa7ca480b4bda0ac9c597dc"
+      },
+      {
+        "id": "oc_82a1a36b7bacddfbcae28d273674900a:omt_197ba382348d1ce7",
+        "name": "oc_82a1a36b7bacddfbcae28d273674900a / topic omt_197ba382348d1ce7",
+        "type": "dm",
+        "thread_id": "omt_197ba382348d1ce7"
+      },
+      {
+        "id": "oc_82a1a36b7bacddfbcae28d273674900a:om_x100b6ed71851dc80b34ee7f1d6b07ce",
+        "name": "oc_82a1a36b7bacddfbcae28d273674900a / topic om_x100b6ed71851dc80b34ee7f1d6b07ce",
+        "type": "dm",
+        "thread_id": "om_x100b6ed71851dc80b34ee7f1d6b07ce"
+      },
+      {
+        "id": "oc_82a1a36b7bacddfbcae28d273674900a:om_x100b6ed72f200c94b373f4f96eb5a52",
+        "name": "oc_82a1a36b7bacddfbcae28d273674900a / topic om_x100b6ed72f200c94b373f4f96eb5a52",
+        "type": "dm",
+        "thread_id": "om_x100b6ed72f200c94b373f4f96eb5a52"
+      },
+      {
+        "id": "oc_82a1a36b7bacddfbcae28d273674900a:omt_197bbed7fe0c5c9b",
+        "name": "oc_82a1a36b7bacddfbcae28d273674900a / topic omt_197bbed7fe0c5c9b",
+        "type": "dm",
+        "thread_id": "omt_197bbed7fe0c5c9b"
+      }
+    ],
+    "wecom": [],
+    "wecom_callback": [],
+    "weixin": [],
+    "bluebubbles": [],
+    "qqbot": [],
+    "yuanbao": [],
+    "google_chat": [],
+    "irc": [],
+    "line": [],
+    "simplex": [],
+    "teams": []
+  }
+}
