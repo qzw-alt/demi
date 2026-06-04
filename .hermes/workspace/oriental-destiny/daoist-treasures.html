@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TBGDZRZZEJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-TBGDZRZZEJ');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Browse 26 handcrafted Daoist treasures from Longhushan — pendants, rings, plaques, bells, amulets. Each piece matched to your BaZi chart after a personalized $199 reading. Ships worldwide.">
+    <link rel="canonical" href="https://oriental-destiny.com/daoist-treasures.html">
+    <meta property="og:title" content="Handcrafted Daoist Jewelry — Pendants, Rings & More | Oriental Destiny">
+    <meta property="og:description" content="Browse 26 handcrafted Daoist treasures from Longhushan — pendants, rings, plaques, bells, amulets. Matched to your BaZi chart. $199 reading. Ships worldwide.">
+    <meta property="og:type" content="website">
+    <title>Handcrafted Daoist Jewelry — Pendants, Rings & More | Oriental Destiny</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <style>
+        :root {
+            --ink: #241915;
+            --paper: #f8f1e7;
+            --cinnabar: #a63a2c;
+            --gold: #b78a42;
+            --pine: #315247;
+            --line: rgba(36, 25, 21, 0.1);
+            --shadow: 0 18px 48px rgba(70, 41, 24, 0.12);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: Georgia, "Times New Roman", serif;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at top, rgba(183, 138, 66, 0.16), transparent 34%),
+                linear-gradient(180deg, #f5e7d6 0%, var(--paper) 42%, #fbf7f1 100%);
+            line-height: 1.72;
+        }
+
+        a { color: inherit; text-decoration: none; }
+
+        .container {
+            width: min(1120px, calc(100% - 40px));
+            margin: 0 auto;
+        }
+
+        /* ─── TOPBAR ─── */
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            backdrop-filter: blur(14px);
+            background: rgba(248, 241, 231, 0.88);
+            border-bottom: 1px solid rgba(36, 25, 21, 0.08);
+        }
+        .topbar-inner {
+            padding: 28px 0 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+        .brand {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .brand-mark {
+            font-size: 1.15rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            color: var(--ink);
+        }
+        .brand-name {
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(36, 25, 21, 0.55);
+        }
+        .topnav {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .topnav a, .topnav .btn {
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+            padding: 0 16px;
+            border-radius: 999px;
+            border: 1px solid var(--line);
+            background: rgba(255, 253, 249, 0.82);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .topnav a:hover {
+            background: rgba(255, 253, 249, 1);
+            border-color: rgba(36, 25, 21, 0.2);
+        }
+        .btn-primary {
+            color: #fff8ef !important;
+            border: none !important;
+            background: linear-gradient(135deg, #b24636 0%, #8b251a 100%) !important;
+            box-shadow: 0 12px 26px rgba(166, 58, 44, 0.22);
+        }
+        .btn-primary:hover {
+            box-shadow: 0 16px 34px rgba(166, 58, 44, 0.32) !important;
+            transform: translateY(-1px);
+        }
+
+        /* ─── HERO ─── */
+        .hero {
+            padding: 72px 0 56px;
+            text-align: center;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            border-radius: 999px;
+            background: rgba(166, 58, 44, 0.1);
+            color: var(--cinnabar);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            margin-bottom: 22px;
+        }
+        .hero h1 {
+            font-size: clamp(34px, 5.5vw, 60px);
+            line-height: 1.08;
+            margin-bottom: 18px;
+            color: var(--ink);
+        }
+        .hero-sub {
+            font-size: 1.15rem;
+            color: rgba(36, 25, 21, 0.68);
+            max-width: 640px;
+            margin: 0 auto 32px;
+            line-height: 1.75;
+        }
+        .hero-price {
+            font-size: clamp(40px, 6vw, 72px);
+            font-weight: 700;
+            color: var(--cinnabar);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        .hero-price-note {
+            font-size: 0.92rem;
+            color: rgba(36, 25, 21, 0.55);
+            margin-bottom: 28px;
+        }
+        .hero-divider {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 0 auto 32px;
+        }
+
+        /* ─── VALUE PROP ─── */
+        .value-section { padding: 0 0 80px; }
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .value-card {
+            background: rgba(255, 253, 249, 0.94);
+            border: 1px solid rgba(36, 25, 21, 0.08);
+            border-radius: 24px;
+            padding: 32px 24px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+        .value-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 16px;
+            background: rgba(183, 138, 66, 0.12);
+        }
+        .value-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        .value-card p {
+            color: rgba(36, 25, 21, 0.65);
+            font-size: 0.92rem;
+            line-height: 1.65;
+        }
+
+        /* ─── SECTION HEADER ─── */
+        .section-head {
+            padding: 0 0 40px;
+            text-align: center;
+        }
+        .section-head h2 {
+            font-size: clamp(28px, 4vw, 44px);
+            line-height: 1.15;
+            margin-bottom: 12px;
+        }
+        .section-head p {
+            color: rgba(36, 25, 21, 0.62);
+            font-size: 1.05rem;
+            max-width: 580px;
+            margin: 0 auto;
+        }
+
+        /* ─── CATEGORY SECTIONS ─── */
+        .cat-section { padding: 0 0 64px; }
+        .cat-section:last-of-type { padding-bottom: 80px; }
+        .cat-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .cat-header h3 {
+            font-size: 1.35rem;
+        }
+        .cat-count {
+            font-size: 0.78rem;
+            color: rgba(36, 25, 21, 0.45);
+            background: rgba(36, 25, 21, 0.06);
+            padding: 3px 10px;
+            border-radius: 999px;
+        }
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .item-card {
+            background: rgba(255, 253, 249, 0.94);
+            border: 1px solid rgba(36, 25, 21, 0.08);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .item-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 24px 56px rgba(70, 41, 24, 0.16);
+        }
+        .item-image {
+            aspect-ratio: 1/1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            position: relative;
+            overflow: hidden;
+        }
+        .item-image .placeholder-icon {
+            font-size: 56px;
+            opacity: 0.7;
+        }
+        .item-body {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .item-category {
+            font-size: 0.65rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 6px;
+        }
+        .item-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            line-height: 1.35;
+        }
+        .item-desc {
+            color: rgba(36, 25, 21, 0.65);
+            font-size: 0.88rem;
+            line-height: 1.65;
+            flex: 1;
+        }
+
+        /* ─── ORIGIN STORY ─── */
+        .origin {
+            padding: 0 0 80px;
+        }
+        .origin-card {
+            background: linear-gradient(160deg, #1c1208 0%, #2a1a0e 50%, #1a1008 100%);
+            border-radius: 28px;
+            padding: 56px;
+            color: #fff8ef;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .origin-card::before {
+            content: "天師府";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 200px;
+            color: rgba(183, 138, 66, 0.06);
+            font-weight: 700;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        .origin-eyebrow {
+            font-size: 0.68rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 16px;
+            position: relative;
+        }
+        .origin-card h2 {
+            font-size: clamp(28px, 4vw, 46px);
+            line-height: 1.2;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .origin-card p {
+            color: rgba(255, 248, 239, 0.7);
+            font-size: 1.05rem;
+            max-width: 600px;
+            margin: 0 auto 32px;
+            line-height: 1.85;
+            position: relative;
+        }
+        .origin-stats {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+        }
+        .origin-stat {
+            text-align: center;
+        }
+        .origin-stat strong {
+            display: block;
+            font-size: 2.2rem;
+            color: var(--gold);
+            font-weight: 700;
+        }
+        .origin-stat span {
+            font-size: 0.78rem;
+            color: rgba(255, 248, 239, 0.5);
+            letter-spacing: 0.06em;
+        }
+
+        /* ─── HOW IT WORKS ─── */
+        .steps-section { padding: 0 0 80px; }
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+        .step-card {
+            background: rgba(255, 253, 249, 0.94);
+            border: 1px solid rgba(36, 25, 21, 0.08);
+            border-radius: 20px;
+            padding: 28px 22px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+        .step-no {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 14px;
+            color: #fff8ef;
+            background: linear-gradient(135deg, var(--gold), var(--cinnabar));
+            font-weight: 700;
+            font-size: 15px;
+        }
+        .step-card h4 {
+            font-size: 1.05rem;
+            margin-bottom: 8px;
+        }
+        .step-card p {
+            color: rgba(36, 25, 21, 0.62);
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        /* ─── CTA ─── */
+        .cta-section {
+            padding: 0 0 96px;
+        }
+        .cta-card {
+            background: linear-gradient(160deg, #1c1208 0%, #2a1a0e 50%, #1a1008 100%);
+            border-radius: 28px;
+            padding: 56px;
+            text-align: center;
+            color: #fff8ef;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-card h2 {
+            font-size: clamp(26px, 3.5vw, 42px);
+            margin-bottom: 14px;
+            position: relative;
+        }
+        .cta-card p {
+            color: rgba(255, 248, 239, 0.7);
+            font-size: 1.05rem;
+            max-width: 540px;
+            margin: 0 auto 28px;
+            line-height: 1.75;
+            position: relative;
+        }
+        .cta-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+            position: relative;
+        }
+        .btn {
+            min-height: 50px;
+            display: inline-flex;
+            align-items: center;
+            padding: 0 28px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 248, 239, 0.2);
+            background: rgba(255, 253, 249, 0.1);
+            color: #fff8ef;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn:hover {
+            background: rgba(255, 253, 249, 0.2);
+            transform: translateY(-2px);
+        }
+        .cta-card .btn-primary {
+            background: linear-gradient(135deg, #b24636 0%, #8b251a 100%) !important;
+            border: none !important;
+            box-shadow: 0 12px 28px rgba(166, 58, 44, 0.3);
+        }
+        .cta-card .btn-primary:hover {
+            box-shadow: 0 18px 38px rgba(166, 58, 44, 0.4) !important;
+        }
+        .cta-note {
+            font-size: 0.8rem;
+            color: rgba(255, 248, 239, 0.45);
+            position: relative;
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            border-top: 1px solid rgba(36, 25, 21, 0.08);
+            padding: 32px 0 40px;
+        }
+        .footer-links {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 14px;
+        }
+        footer a {
+            color: rgba(36, 25, 21, 0.6);
+            font-size: 0.85rem;
+            margin: 0 8px;
+            transition: color 0.2s;
+        }
+        footer a:hover { color: var(--cinnabar); }
+        .footer-copy {
+            text-align: center;
+            font-size: 0.78rem;
+            color: rgba(36, 25, 21, 0.4);
+        }
+
+        /* ─── CATALOG HERO ─── */
+        .catalog-hero {
+            padding: 48px 0 20px;
+        }
+        .catalog-hero-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+        .catalog-hero-text h1 {
+            font-size: clamp(28px, 4.5vw, 48px);
+            line-height: 1.12;
+            margin-bottom: 10px;
+        }
+        .catalog-hero-text p {
+            color: rgba(36, 25, 21, 0.65);
+            font-size: 1.05rem;
+            max-width: 580px;
+            line-height: 1.7;
+        }
+        .catalog-hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            border-radius: 999px;
+            background: rgba(166, 58, 44, 0.1);
+            color: var(--cinnabar);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+        .catalog-hero-price {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+        .price-badge {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--cinnabar);
+            line-height: 1;
+        }
+        .price-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(36, 25, 21, 0.5);
+        }
+
+        /* ─── CATEGORY FILTER TABS ─── */
+        .catalog-filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            padding-bottom: 28px;
+            border-bottom: 1px solid var(--line);
+            margin-bottom: 36px;
+        }
+        .filter-pill {
+            min-height: 38px;
+            padding: 0 20px;
+            border-radius: 999px;
+            border: 1px solid var(--line);
+            background: rgba(255, 253, 249, 0.7);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: rgba(36, 25, 21, 0.7);
+            font-family: inherit;
+        }
+        .filter-pill:hover {
+            border-color: var(--gold);
+            color: var(--ink);
+        }
+        .filter-pill.active {
+            background: var(--ink);
+            color: #fff8ef;
+            border-color: var(--ink);
+        }
+
+        /* ─── CATALOG GRID ─── */
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        /* ─── PRODUCT CARD ─── */
+        .product-card {
+            background: rgba(255, 253, 249, 0.94);
+            border: 1px solid rgba(36, 25, 21, 0.08);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 24px 56px rgba(70, 41, 24, 0.18);
+        }
+
+        /* ─── CARD VISUAL CANVAS ─── */
+        .card-visual {
+            aspect-ratio: 1 / 1;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card-visual[aria-hidden="true"] {
+            user-select: none;
+        }
+        .card-visual img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* ─── CARD BODY ─── */
+        .card-body {
+            padding: 20px 22px 24px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .card-category {
+            font-size: 0.65rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 600;
+        }
+        .card-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            line-height: 1.3;
+            color: var(--ink);
+        }
+        .card-materials {
+            font-size: 0.82rem;
+            color: rgba(36, 25, 21, 0.55);
+            font-style: italic;
+        }
+        .card-symbolism {
+            font-size: 0.88rem;
+            color: rgba(36, 25, 21, 0.7);
+            line-height: 1.6;
+        }
+        .card-tags {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-top: auto;
+            padding-top: 4px;
+        }
+        .tag {
+            font-size: 0.7rem;
+            padding: 3px 10px;
+            border-radius: 999px;
+            background: rgba(49, 82, 71, 0.08);
+            color: var(--pine);
+            font-weight: 600;
+            letter-spacing: 0.03em;
+        }
+        .tag.energy {
+            background: rgba(166, 58, 44, 0.08);
+            color: var(--cinnabar);
+        }
+        .card-ritual {
+            margin-top: 4px;
+            padding-top: 10px;
+            border-top: 1px solid var(--line);
+            font-size: 0.78rem;
+            color: rgba(36, 25, 21, 0.5);
+            line-height: 1.55;
+        }
+        .card-bundle-badge {
+            display: inline-block;
+            font-size: 0.65rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--cinnabar);
+            border: 1px solid rgba(166, 58, 44, 0.2);
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(166, 58, 44, 0.05);
+        }
+
+        .card-select-btn {
+            display: block;
+            width: 100%;
+            margin-top: 12px;
+            min-height: 44px;
+            border-radius: 14px;
+            border: 1.5px solid var(--cinnabar);
+            background: rgba(166, 58, 44, 0.06);
+            color: var(--cinnabar);
+            font: inherit;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .card-select-btn:hover {
+            background: var(--cinnabar);
+            color: #fff8ef;
+        }
+
+        /* ─── CSS BEAD (bracelet) ─── */
+        .bead {
+            position: absolute;
+            border-radius: 50%;
+            box-shadow:
+                0 2px 4px rgba(0,0,0,0.25),
+                inset 0 -2px 3px rgba(0,0,0,0.2),
+                inset 0 2px 3px rgba(255,255,255,0.2);
+        }
+        .bead.thunder-wood  { background: radial-gradient(circle at 40% 35%, #6b4c2a, #3d2a0e 70%, #1e1004); }
+        .bead.incense-ash   { background: radial-gradient(circle at 40% 35%, #4a3a28, #2a1f14 60%, #1a1208); }
+        .bead.cinnabar      { background: radial-gradient(circle at 40% 35%, #e04a3a, #8b1a1a 60%, #4a0808); }
+        .bead.amethyst      { background: radial-gradient(circle at 40% 35%, #9b4dca, #4a1530 60%, #2a0a18); }
+        .bead.crystal-wood  { background: radial-gradient(circle at 40% 35%, #5a8a4a, #2a4a1a 70%, #1a2a0a); }
+        .bead.crystal-fire  { background: radial-gradient(circle at 40% 35%, #dd5a3a, #8a2a1a 70%, #4a0e06); }
+        .bead.crystal-earth { background: radial-gradient(circle at 40% 35%, #c4a44a, #8a6a2a 70%, #4a3a10); }
+        .bead.crystal-metal { background: radial-gradient(circle at 40% 35%, #e0e0e0, #8a8a8a 70%, #4a4a4a); }
+        .bead.crystal-water { background: radial-gradient(circle at 40% 35%, #4a6a9a, #1a2a4a 70%, #0a1220); }
+
+        /* Cord ellipse behind beads */
+        .bracelet-cord {
+            position: absolute;
+            border-bottom: 1.5px solid rgba(180,140,100,0.35);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        /* ─── CSS PENDANT ─── */
+        .pendant-chain {
+            position: absolute;
+            width: 2px;
+            background: linear-gradient(180deg, #8a7a60, #3a2a18, #8a7a60);
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .pendant-body {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .pendant-body.coin-gold {
+            border-radius: 50%;
+            background: radial-gradient(circle at 45% 40%, #e8c860, #b78a42 50%, #6b4a18 90%);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.3), inset 0 0 0 3px rgba(0,0,0,0.12);
+        }
+        .coin-hole {
+            position: absolute;
+            width: 16%;
+            height: 16%;
+            background: transparent;
+            border: 2px solid rgba(0,0,0,0.18);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .pendant-body.wood-tablet {
+            border-radius: 6px 6px 3px 3px;
+            background: linear-gradient(175deg, #3a5a40, #1a2e28);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.08);
+        }
+        .pendant-body.golden-medallion {
+            border-radius: 50%;
+            background: radial-gradient(circle at 40% 35%, #f0d870, #b78a42 55%, #6b4a18 95%);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.3), inset 0 0 0 3px rgba(0,0,0,0.1);
+        }
+
+        /* ─── CSS RING ─── */
+        .ring-band {
+            position: absolute;
+            border-radius: 50%;
+            background: transparent;
+            box-shadow:
+                0 6px 20px rgba(0,0,0,0.25),
+                inset 0 2px 4px rgba(255,255,255,0.25),
+                inset 0 -3px 6px rgba(0,0,0,0.2);
+        }
+        .ring-band.cinnabar-ring {
+            border: 14px solid;
+            border-color: #d44a3a #a63a2c #8b1a1a #b84a3c;
+        }
+
+        /* ─── CSS COIN STACK (charm) ─── */
+        .charm-canvas { position: relative; width: 100%; height: 100%; }
+        .coin-stack {
+            position: absolute;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.22), inset 0 0 0 2px rgba(0,0,0,0.1);
+            background: radial-gradient(circle at 45% 40%, #e8d898, #b78a42 55%, #7a5a20 95%);
+        }
+
+        /* ─── INLINE BUNDLE CTA ─── */
+        .bundle-cta {
+            padding: 40px 0 64px;
+        }
+        .bundle-cta-card {
+            background: linear-gradient(135deg, rgba(166,58,44,0.06), rgba(183,138,66,0.08));
+            border: 1px solid rgba(166, 58, 44, 0.15);
+            border-radius: 20px;
+            padding: 32px 36px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .bundle-cta-card p {
+            font-size: 1.05rem;
+            color: rgba(36, 25, 21, 0.75);
+            max-width: 520px;
+            line-height: 1.65;
+        }
+        .bundle-cta-card .btn-primary {
+            flex-shrink: 0;
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 960px) {
+            .catalog-grid { grid-template-columns: repeat(2, 1fr); }
+            .value-grid, .items-grid { grid-template-columns: repeat(2, 1fr); }
+            .steps-grid { grid-template-columns: repeat(2, 1fr); }
+            .origin-card, .cta-card { padding: 36px 24px; }
+        }
+        @media (max-width: 600px) {
+            .catalog-grid { grid-template-columns: 1fr; }
+            .value-grid, .items-grid, .steps-grid { grid-template-columns: 1fr; }
+            .topnav a:not(.btn-primary) { display: none; }
+            .catalog-hero-inner { flex-direction: column; }
+            .catalog-hero-price { flex-direction: row; gap: 8px; align-items: baseline; }
+            .bundle-cta-card { flex-direction: column; text-align: center; }
+            .catalog-hero { padding-top: 32px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+        <div class="container topbar-inner">
+            <a href="index.html" class="brand">
+                <span class="brand-mark" data-i18n="dt_brand_mark">Oriental Destiny</span>
+                <span class="brand-name" data-i18n="dt_brand_name">Daoist Treasures</span>
+            </a>
+            <nav class="topnav">
+                <a href="index.html" data-i18n="dt_nav_home">Home</a>
+                <a href="instant_reading.html" data-i18n="dt_nav_free">Free Reading</a>
+                <a href="checkout.html" class="btn-primary" data-i18n="dt_nav_order">Order — $199</a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- CATALOG HERO -->
+    <section class="catalog-hero">
+        <div class="container">
+            <div class="catalog-hero-inner">
+                <div class="catalog-hero-text">
+                    <div class="catalog-hero-badge" data-i18n="dt_catalog_badge">From Longhushan, Jiangxi — Taoist Homeland</div>
+                    <h1 data-i18n="dt_catalog_title">Handcrafted Daoist Jewelry from Longhushan</h1>
+                    <p data-i18n="dt_catalog_desc">Browse the collection. Each piece is handcrafted at the temple workshops. Your birth chart reading determines which treasure matches your energy — every $199 order includes both.</p>
+                </div>
+                <div class="catalog-hero-price">
+                    <span class="price-badge">$199</span>
+                    <span class="price-label" data-i18n="dt_price_label">Reading + Treasure</span>
+                </div>
+            </div>
+            <div class="catalog-filters" id="catalog-filters">
+                <!-- Rendered by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- SAMPLE NOTICE -->
+    <section style="padding: 0 0 32px;">
+        <div class="container">
+            <div style="background: rgba(183,138,66,0.08); border: 1px solid rgba(183,138,66,0.18); border-radius: 12px; padding: 18px 24px; display: flex; align-items: flex-start; gap: 12px; font-size: 0.92rem; color: rgba(36,25,21,0.7); line-height: 1.6;">
+                <span style="font-size:1.2rem;flex-shrink:0;">📦</span>
+                <span data-i18n-html="dt_notice_text">The products displayed are a partial selection from our catalog. <strong style="color:var(--ink);">The actual treasure shipped to you is selected based on your birth chart reading</strong> — matched to your elemental needs and life focus. Every piece is handcrafted at Longhushan workshops to the same quality standard shown here.</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCT CATALOG (rendered from products.json) -->
+    <section class="catalog-section">
+        <div class="container">
+            <div id="product-catalog" class="catalog-grid"></div>
+        </div>
+    </section>
+
+    <!-- INLINE BUNDLE CTA -->
+    <section class="bundle-cta">
+        <div class="container">
+            <div class="bundle-cta-card">
+                <p data-i18n-html="dt_bundle_text">You don't pick the exact piece. <strong>Your birth chart does.</strong> Every $199 order includes a full Four Pillars reading and one treasure — matched to what your chart needs, confirmed with you before shipping.</p>
+                <a href="checkout.html" class="btn btn-primary" style="font-size:16px; padding:0 32px;" data-i18n="dt_bundle_btn">Order My Reading + Treasure</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ORIGIN STORY -->
+    <section class="origin">
+        <div class="container">
+            <div class="origin-card">
+                <p class="origin-eyebrow" data-i18n="dt_origin_eyebrow">The Source</p>
+                <h2 data-i18n="dt_origin_title">Where These Objects Come From</h2>
+                <p data-i18n="dt_origin_desc">
+                    Longhushan — Dragon and Tiger Mountain — in Jiangxi Province.
+                    This is where the Taoist celestial master tradition has lived for nearly
+                    two millennia. The temple workshops here produce objects that are not souvenirs.
+                    They are tools of a living tradition.
+                </p>
+                <div class="origin-stats">
+                    <div class="origin-stat">
+                        <strong>1,800+</strong>
+                        <span data-i18n="dt_origin_stat1">Years of unbroken Taoist lineage</span>
+                    </div>
+                    <div class="origin-stat">
+                        <strong>63rd</strong>
+                        <span data-i18n="dt_origin_stat2">Generation of Celestial Masters</span>
+                    </div>
+                    <div class="origin-stat">
+                        <strong>Jiangxi</strong>
+                        <span data-i18n="dt_origin_stat3">Province, Taoist homeland</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="steps-section">
+        <div class="container">
+            <div class="section-head">
+                <h2 data-i18n="dt_steps_title">How It Works</h2>
+                <p data-i18n="dt_steps_desc">Four simple steps from your birth details to your matched treasure.</p>
+            </div>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-no">1</div>
+                    <h4 data-i18n="dt_step_1_title">Submit Details &amp; Pay</h4>
+                    <p data-i18n="dt_step_1_desc">Birth date, time, and location. Plus the life area you want support with. $199.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-no">2</div>
+                    <h4 data-i18n="dt_step_2_title">View Your Basic Report</h4>
+                    <p data-i18n="dt_step_2_desc">Your computed chart is available immediately after payment — Four Pillars, elements, and structural analysis.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-no">3</div>
+                    <h4 data-i18n="dt_step_3_title">Receive Complete Reading</h4>
+                    <p data-i18n="dt_step_3_desc">A master reviews your chart and sends the full annotated report by email within 6 hours.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-no">4</div>
+                    <h4 data-i18n="dt_step_4_title">Match, Confirm &amp; Ship</h4>
+                    <p data-i18n="dt_step_4_desc">We select your treasure from Longhushan. You approve, then we ship directly from China with tracking.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-card">
+                <h2 data-i18n="dt_cta_title">One Reading. One Treasure. $199.</h2>
+                <p data-i18n="dt_cta_desc">
+                    No hidden fees. No upsells. One price covers the full chart analysis
+                    and the handcrafted Daoist treasure matched to it.
+                </p>
+                <div class="cta-buttons">
+                    <a href="checkout.html" class="btn btn-primary" style="font-size:16px; padding:0 36px;" data-i18n="dt_cta_btn_order">
+                        Order My Reading + Treasure — $199
+                    </a>
+                    <a href="instant_reading.html" class="btn" data-i18n="dt_cta_btn_preview">
+                        Try the Free Preview First
+                    </a>
+                </div>
+                <p class="cta-note" data-i18n="dt_cta_note">
+                    Shipped directly from Longhushan, China. Most orders arrive within 14–21 days.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html" data-i18n="dt_footer_home">Home</a>
+                <a href="instant_reading.html" data-i18n="dt_footer_free">Free Reading</a>
+                <a href="products.html" data-i18n="dt_footer_plans">Plans</a>
+                <a href="daoist-treasures.html" data-i18n="dt_footer_treasures">Daoist Treasures</a>
+                <a href="policies.html" data-i18n="dt_footer_policies">Policies</a>
+            </div>
+            <p class="footer-copy" data-i18n="dt_footer_copy">© 2026 Oriental Destiny. All treasures handcrafted at Longhushan Temple workshops.</p>
+            <span class="od-version" style="display:block;margin-top:8px;opacity:0.55;font-size:11px;letter-spacing:0.04em;"></span>
+        </div>
+    </footer>
+    <script src="reading_state.js"></script>
+    <script src="i18n.js"></script>
+    <script src="version.js"></script>
+    <script>
+    var _t = function(k, f) { return (window.I18n && window.I18n.t(k, f)) || f; };
+
+    async function renderProducts() {
+        try {
+            const res = await fetch('products.json');
+            const data = await res.json();
+            const filtersEl = document.getElementById('catalog-filters');
+            const catalogEl = document.getElementById('product-catalog');
+            if (!catalogEl || !data.categories) return;
+
+            const allProducts = [];
+            const categoryLabels = {};
+
+            data.categories.forEach(cat => {
+                categoryLabels[cat.id] = cat.name;
+                cat.products.forEach(p => {
+                    p._catId = cat.id;
+                    allProducts.push(p);
+                });
+            });
+
+            // Build filter pills
+            let filterHtml = '<button class="filter-pill active" data-category="all" aria-pressed="true">' + _t('dt_filter_all', 'All Treasures') + '</button>';
+            data.categories.forEach(cat => {
+                filterHtml += `<button class="filter-pill" data-category="${cat.id}" aria-pressed="false">${cat.name}</button>`;
+            });
+            filtersEl.innerHTML = filterHtml;
+
+            // Build all product cards
+            catalogEl.innerHTML = allProducts.map(p => buildProductCard(p)).join('');
+
+            // Filter click handlers
+            filtersEl.querySelectorAll('.filter-pill').forEach(pill => {
+                pill.addEventListener('click', () => {
+                    filtersEl.querySelectorAll('.filter-pill').forEach(p => {
+                        p.classList.remove('active');
+                        p.setAttribute('aria-pressed', 'false');
+                    });
+                    pill.classList.add('active');
+                    pill.setAttribute('aria-pressed', 'true');
+
+                    const filter = pill.dataset.category;
+                    catalogEl.querySelectorAll('.product-card').forEach(card => {
+                        card.style.display = (filter === 'all' || card.dataset.category === filter) ? '' : 'none';
+                    });
+
+                    gtag('event', 'catalog_filter', { filter_category: filter });
+                });
+            });
+
+            // GA4 card click tracking
+            catalogEl.querySelectorAll('.product-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    gtag('event', 'product_card_click', {
+                        product_name: card.querySelector('.card-name')?.textContent || '',
+                        product_category: card.querySelector('.card-category')?.textContent || ''
+                    });
+                });
+            });
+
+        } catch (e) {
+            console.error('Failed to load products:', e);
+        }
+    }
+
+    function buildProductCard(p) {
+        return `
+            <article class="product-card" data-category="${p._catId}">
+                ${getVisualHtml(p)}
+                <div class="card-body">
+                    <span class="card-category">${p.categoryLabel}</span>
+                    <h3 class="card-name">${p.name}</h3>
+                    <p class="card-symbolism">${p.symbolism || p.description}</p>
+                    <p class="card-materials">${p.materials || ''}</p>
+                    <div class="card-tags">
+                        ${(p.bestFor || []).map(t => `<span class="tag">${t}</span>`).join('')}
+                        ${p.energyType ? `<span class="tag energy">${p.energyType}</span>` : ''}
+                    </div>
+                    ${p.ritualNote ? `<p class="card-ritual">${p.ritualNote}</p>` : ''}
+                    <span class="card-bundle-badge">' + _t('dt_bundle_badge', 'Included in $199 bundle') + '</span>
+                    <button class="card-select-btn" type="button" onclick="selectProductStyle('${p.id}', '${p.name.replace(/'/g, "\\'")}', event)" data-i18n="dt_select_style">I like this style →</button>
+                </div>
+            </article>
+        `;
+    }
+
+    function getVisualHtml(p) {
+        if (p.image) {
+            return `<div class="card-visual" style="background:${p.gradient};">
+                <img src="${p.image}" alt="${p.name}" loading="lazy"
+                    onerror="this.style.display='none';this.parentElement.insertAdjacentHTML('beforeend','<span style=\\'font-size:48px;opacity:0.5;\\'>${p.icon || '✦'}</span>');">
+            </div>`;
+        }
+        switch (p.visualType) {
+            case 'bracelet': return renderBraceletVisual(p);
+            case 'pendant':  return renderPendantVisual(p);
+            case 'ring':     return renderRingVisual(p);
+            case 'charm':    return renderCharmVisual(p);
+            default:         return `<div class="card-visual" style="background:${p.gradient};"><span style="font-size:48px;opacity:0.5;">${p.icon || '✦'}</span></div>`;
+        }
+    }
+
+    function renderBraceletVisual(p) {
+        const beads = (p.beadColors && p.beadColors.length) ? p.beadColors : ['#6b4c2a'];
+        const count = p.beadCount || 8;
+        const beadSize = 15; // percent of canvas
+        const arcRx = 36; // horizontal radius percent
+        const arcRy = 18; // vertical radius percent
+        const cx = 50;
+        const cy = 52;
+
+        let beadsHtml = '';
+        for (let i = 0; i < count; i++) {
+            const angle = (i / (count - 1)) * Math.PI;
+            const x = cx - arcRx * Math.cos(angle);
+            const y = cy - arcRy * Math.sin(angle);
+            const color = beads[i % beads.length];
+            const beadClass = getBeadClass(p.id, i);
+            beadsHtml += `<span class="bead ${beadClass}" style="width:${beadSize}%;height:${beadSize}%;left:${(x - beadSize/2).toFixed(1)}%;top:${(y - beadSize/2).toFixed(1)}%;"></span>`;
+        }
+
+        const cordW = arcRx * 2;
+        const cordH = arcRy * 2;
+        const cordL = cx - arcRx;
+        const cordT = cy - arcRy;
+
+        return `
+            <div class="card-visual" aria-hidden="true" style="background:${p.gradient};">
+                <div class="bracelet-cord" style="width:${cordW}%;height:${cordH}%;left:${cordL.toFixed(0)}%;top:${cordT.toFixed(0)}%;"></div>
+                ${beadsHtml}
+            </div>`;
+    }
+
+    function getBeadClass(productId, index) {
+        if (productId === 'thunder-wood-bracelet') return 'thunder-wood';
+        if (productId === 'incense-ash-bracelet')  return 'incense-ash';
+        if (productId === 'cinnabar-bracelet')      return 'cinnabar';
+        if (productId === 'nine-fire-bracelet')     return 'amethyst';
+        if (productId === 'five-elements-bracelet') {
+            const classes = ['crystal-wood', 'crystal-fire', 'crystal-earth', 'crystal-metal', 'crystal-water'];
+            return classes[index % 5];
+        }
+        return 'thunder-wood';
+    }
+
+    function renderPendantVisual(p) {
+        const chainH = 28;
+        const pendantSz = 36;
+        const topPct = 50 - pendantSz / 2;
+
+        let bodyHtml = '';
+        switch (p.id) {
+            case 'mountain-spirit-coin':
+                bodyHtml = `
+                    <div class="pendant-body coin-gold" style="width:${pendantSz}%;aspect-ratio:1;top:${topPct + 12}%;left:50%;">
+                        <div class="coin-hole"></div>
+                    </div>`;
+                break;
+            case 'wenchang-pendant':
+                bodyHtml = `
+                    <div class="pendant-body wood-tablet" style="width:${pendantSz * 0.65}%;height:${pendantSz * 1.1}%;top:${topPct + 8}%;left:50%;"></div>`;
+                break;
+            case 'golden-light-pendant':
+                bodyHtml = `
+                    <div class="pendant-body golden-medallion" style="width:${pendantSz}%;aspect-ratio:1;top:${topPct + 12}%;left:50%;"></div>`;
+                break;
+        }
+
+        return `
+            <div class="card-visual" aria-hidden="true" style="background:${p.gradient};">
+                <div class="pendant-chain" style="height:${chainH}%;top:${8}%;"></div>
+                ${bodyHtml}
+            </div>`;
+    }
+
+    function renderRingVisual(p) {
+        const ringSz = 48;
+        const topPct = 50 - ringSz / 2;
+        const leftPct = 50 - ringSz / 2;
+
+        return `
+            <div class="card-visual" aria-hidden="true" style="background:${p.gradient};">
+                <div class="ring-band cinnabar-ring" style="width:${ringSz}%;height:${ringSz}%;top:${topPct}%;left:${leftPct}%;"></div>
+            </div>`;
+    }
+
+    function renderCharmVisual(p) {
+        const coins = [
+            { x: 42, y: 46, r: 12 },
+            { x: 28, y: 38, r: 11 },
+            { x: 56, y: 42, r: 10 },
+            { x: 36, y: 54, r: 11 },
+            { x: 50, y: 52, r: 9 }
+        ];
+
+        let coinsHtml = coins.map((c, i) =>
+            `<div class="coin-stack" style="width:${c.r*2}%;height:${c.r*2}%;left:${c.x - c.r}%;top:${c.y - c.r}%;z-index:${i};transform:rotate(${(i-2)*8}deg);"></div>`
+        ).join('');
+
+        return `
+            <div class="card-visual" aria-hidden="true" style="background:${p.gradient};">
+                <div class="charm-canvas">
+                    ${coinsHtml}
+                    <div style="position:absolute;top:24%;left:38%;width:3px;height:42%;background:linear-gradient(180deg,#c44a3a,#8b1a1a);border-radius:2px;transform:rotate(-8deg);z-index:10;"></div>
+                    <div style="position:absolute;top:34%;left:48%;width:3px;height:38%;background:linear-gradient(180deg,#c44a3a,#8b1a1a);border-radius:2px;transform:rotate(5deg);z-index:10;"></div>
+                </div>
+            </div>`;
+    }
+
+    function selectProductStyle(productId, productName, event) {
+        event.stopPropagation();
+        if (window.ReadingState) {
+            window.ReadingState.merge({
+                preferred_product_id: productId,
+                preferred_product_name: productName,
+                notes: 'Preferred style: ' + productName
+            });
+        }
+        gtag('event', 'product_style_select', {
+            product_id: productId,
+            product_name: productName
+        });
+        window.location.href = 'checkout.html?preferred_product=' + encodeURIComponent(productId);
+    }
+
+    renderProducts();
+    </script>
+
+</body>
+</html>
