@@ -19,6 +19,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://chinahospitalsguide.com/blog/2/</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chinahospitalsguide.com/blog/3/</loc>
+    <lastmod>2026-05-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://chinahospitalsguide.com/blog/acupuncture-treatment-china-2026.html</loc>
     <lastmod>2026-05-31</lastmod>
     <changefreq>weekly</changefreq>
@@ -619,10 +631,22 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://chinahospitalsguide.com/news/2026-06-06-pakistani-patient-cart-shanghai-jiahui-lymphoma.html</loc>
+    <lastmod>2026-06-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://chinahospitalsguide.com/news/</loc>
     <lastmod>2026-05-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://chinahospitalsguide.com/news/2026-06-05-china-ai-dental-tourism-russian-patients-heihe.html</loc>
+    <lastmod>2026-06-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://chinahospitalsguide.com/news/2026-06-03-hainan-boao-lecheng-medical-tourism-pilot-zone.html</loc>

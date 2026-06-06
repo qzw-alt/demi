@@ -1,7 +1,7 @@
 # oriental-destiny.com — Deployment Notes
 
 Session-specific operational knowledge for the daily SEO cron targeting
-oriental-destiny.com. Updated 2026-06-02.
+oriental-destiny.com. Updated 2026-06-05.
 
 ## Branch facts (verified)
 
@@ -41,6 +41,41 @@ policies.html         ← oldest, bottom
 When resolving sitemap merge conflicts, **keep HEAD's ordering** (local
 chronological reordering) and discard the article-XXXX branch's
 "appended at bottom near policies.html" placement.
+
+### Sitemap conflict patch — typo pitfall (verified 2026-06-05)
+
+When you resolve the sitemap conflict by hand-editing the conflict
+markers, the `old_string` and `new_string` you pass to `patch` both
+contain a full `<loc>` line. The conflict always looks like:
+
+```
+<<<<<<< HEAD
+    <loc>https://oriental-destiny.com/fate-2026-06-04.html</loc>
+=======
+    <loc>https://oriental-destiny.com/fate-2026-06-05.html</loc>
+>>>>>>> article-0605
+```
+
+To keep both at the top, your replacement string contains BOTH `<loc>`
+lines. The day segment (`-06-04` vs `-06-05`) is one character apart
+and the only meaningful difference — a single-character typo
+(`2026-04` instead of `2026-06-04`) silently produces a broken URL in
+the live sitemap that a future Googlebot crawl will hit.
+
+**Verified 2026-06-05**: a single edit typo (`-2026-04` instead of
+`-2026-06-04`) had to be caught and re-patched in a follow-up call.
+Cost: 2 extra tool calls. Prevention:
+
+1. After writing the conflict resolution, `git diff sitemap.xml` and
+   eyeball every `<loc>` line for the correct `YYYY-MM-DD` format.
+2. Verify with the humanize-score harness (it parses sitemap.xml as
+   XML and reports the first 3 entries):
+   ```bash
+   python3 scripts/humanize_score.py fate-YYYY-MM-DD.html \
+     --site oriental-destiny --sitemap sitemap.xml
+   ```
+   Confirm the first 3 entries are the three most recent dates in
+   order.
 
 ## Article template (copy-paste header)
 
@@ -114,6 +149,9 @@ default "max 4" is too strict. Focus the audit on banned vocab and
 - `fate-2026-05-31.html` — earlier article
 - `fate-2026-06-01.html` — 8 Feng Shui Bedroom Rules (1,285 words, 18 em dashes)
 - `fate-2026-06-02.html` — Summer Solstice Fire Element (1,240 words, 10 em dashes)
+- `fate-2026-06-03.html` — Feng Shui for the Bathroom (~1,200 words)
+- `fate-2026-06-04.html` — Summer and the Fire Element in BaZi (~1,275 words, score 100/100)
+- `fate-2026-06-05.html` — Kitchen Feng Shui (~1,275 words, 9 em dashes, score 100/100)
 
 ## Verification command (after push)
 

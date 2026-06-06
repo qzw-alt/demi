@@ -23,17 +23,17 @@
       "schedule_display": "0 8 * * *",
       "repeat": {
         "times": null,
-        "completed": 8
+        "completed": 10
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T14:45:42.377747+08:00",
-      "next_run_at": "2026-06-05T08:00:00+08:00",
-      "last_run_at": "2026-06-04T08:06:59.253798+08:00",
-      "last_status": "error",
-      "last_error": "RuntimeError: # Daily SEO Article Report \u2014 2026-06-04\n\n## \u26a0\ufe0f Deployment status: committed locally, push failed on GitHub auth\n\n## Article\n\n| Field | Value |\n|---|---|\n| **Title** | What Summer Does to the Fire Element in Your BaZi Chart |\n| **Word count** | 1,482 words |\n| **Humanizer score** | **100 / 100** (threshold 60) \u2014 clean, no banned vocab, 12 em dashes (within site's 10\u201318 baseline), 13 first-person markers, sentence stdev 9.0 |\n| **Sitemap entry** | Added at top of `sitemap.xml` (44 entries, well-formed) |\n| **Local commit** | `f74942e article: 2026-06-04` on local `main`, 1 commit ahead of `origin/main` |\n| **Local file** | `/home/ubuntu/.hermes/workspace/oriental-destiny/fate-2026-06-04.html` |\n| **Live URL** | `https://oriental-destiny.com/fate-2026-06-04.html` \u2014 **NOT YET LIVE** (push failed) |\n\n## What I did\n\n1. **Researched** \u2014 read `memories/layer3/research/article_topics.md` (June calendar slot: \"Summer Feng Shui / Fire Element\") and `terminology_mapping.md` for native-English rendering of BaZi terms.\n2. **Picked a fresh angle** \u2014 June 2 already covered \"Summer Solstice / Fire at home\", so I wrote the **BaZi-chart + seasonal-fire crossover** (how Bing/Ding/Si/Wu in the Four Pillars react to June\u2013August). Internally links to `instant_reading.html`.\n3. **Wrote the article** in first-person, conversational practitioner voice matching the site's existing style (e.g. `fate-2026-06-03.html`'s tone).\n4. **Humanized** \u2014 initial score 92/100, one banned word (`actually` in a heading) patched, re-scored at 100/100.\n5. **Updated sitemap.xml** \u2014 new `<url>` entry inserted at top per site convention.\n6. **Committed locally** as `f74942e article: 2026-06-04` with both `fate-2026-06-06-04.html` and `sitemap.xml`.\n7. **Rebased onto `origin/main`** cleanly (origin had gained 1 commit: `6748620 Add 22 programmatic SEO pages: 12 zodiac signs + 10 day masters`).\n8. **Push attempted** to `origin main` (per `references/oriental-destiny-deployment.md`, the deployed branch is `main`, not `master` despite what the cron prompt says).\n\n## What went wrong: push failed on GitHub auth\n\n```\nremote: Invalid username or token. Password authentication is not supported for Git operations.\nfatal: Authentication failed for 'https://github.com/qzw-alt/oriental-destiny.git/'\n```\n\nI tried 4 push strategies (URL-embedded token from netrc, GIT_ASKPASS helper script, Basic auth header, empty-username URL) \u2014 all hit the same GitHub-side block. The fine-grained PAT stored in `~/.netrc` (login `x-access-token`, password starts `github_pat_11B67EO2Y0...`) is being rejected by GitHub. Likely causes (in order of probability):\n- PAT expired or revoked\n- Fine-grained PAT lacks `Contents: Read and write` scope on this specific repo\n- PAT belongs to a different account than `qzw-alt`\n\n`git fetch` works because the repo is public (anonymous read succeeds); only `push` needs the working token.\n\nThe local commit `f74942e` is preserved on `main` and is the only thing between the article and going live.\n\n## Recovery for human operator\n\n```bash\ncd /home/ubuntu/.hermes/workspace/oriental-destiny\ngit log -1 --oneline    # should show: f74942e article: 2026-06-04\ngit status              # should be: clean\ngit push origin main    # will succeed once the PAT is fixed upstream\n```\n\nAfter push, the article will be live at `https://oriental-destiny.com/fate-2026-06-04.html` within 2\u20133 minutes (GitHub Pages build).\n\nI also patched `skills/programmatic-seo/SKILL.md` with the 2026-06-04 finding (PAT auth rejection even with netrc-extracted token) so future runs don't burn budget on auth gymnastics.",
+      "next_run_at": "2026-06-07T08:00:00+08:00",
+      "last_run_at": "2026-06-06T08:06:19.444069+08:00",
+      "last_status": "ok",
+      "last_error": null,
       "last_delivery_error": null,
       "deliver": "feishu",
       "origin": {
@@ -65,15 +65,15 @@
       "schedule_display": "0 9 * * *",
       "repeat": {
         "times": null,
-        "completed": 4
+        "completed": 6
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T17:20:53.016111+08:00",
-      "next_run_at": "2026-06-05T09:00:00+08:00",
-      "last_run_at": "2026-06-04T09:11:22.095787+08:00",
+      "next_run_at": "2026-06-07T09:00:00+08:00",
+      "last_run_at": "2026-06-06T09:03:04.961753+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -107,15 +107,15 @@
       "schedule_display": "0 22 * * *",
       "repeat": {
         "times": null,
-        "completed": 4
+        "completed": 8
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T17:22:43.447182+08:00",
-      "next_run_at": "2026-06-05T22:00:00+08:00",
-      "last_run_at": "2026-06-03T22:18:19.267874+08:00",
+      "next_run_at": "2026-06-07T22:00:00+08:00",
+      "last_run_at": "2026-06-05T22:04:34.742657+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -153,15 +153,15 @@
       "schedule_display": "0 9 * * *",
       "repeat": {
         "times": null,
-        "completed": 9
+        "completed": 11
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-02T08:16:41.523255+08:00",
-      "next_run_at": "2026-06-05T09:00:00+08:00",
-      "last_run_at": "2026-06-04T09:03:49.161408+08:00",
+      "next_run_at": "2026-06-07T09:00:00+08:00",
+      "last_run_at": "2026-06-06T09:13:48.006110+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -176,5 +176,5 @@
       "workdir": null
     }
   ],
-  "updated_at": "2026-06-04T22:00:24.840290+08:00"
+  "updated_at": "2026-06-06T22:00:50.777590+08:00"
 }

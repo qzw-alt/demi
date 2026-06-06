@@ -107,17 +107,18 @@ function classifyPage(filePath) {
 
 // ── Process ──
 
-function processDir(dir) {
+function processDir(dir, baseDir) {
+  if (!baseDir) baseDir = dir;
   const entries = fs.readdirSync(dir, { withFileTypes: true });
   for (const e of entries) {
     const full = path.join(dir, e.name);
     if (e.isDirectory()) {
-      if (!e.name.startsWith('_') && !e.name.startsWith('.')) processDir(full);
+      if (!e.name.startsWith('_') && !e.name.startsWith('.')) processDir(full, baseDir);
     } else if (e.name.endsWith('.html')) {
       let html = fs.readFileSync(full, 'utf8');
       let changed = false;
       const pageType = classifyPage(full);
-      const relPath = path.relative('_site', full).replace(/\\/g, '/');
+      const relPath = path.relative(baseDir, full).replace(/\\/g, '/').replace(/^\.\.\//, '');
       const pageUrl = `${BASE}/${relPath}`.replace('/index.html', '/');
 
       // Extract existing title/description for WebPage schema
@@ -130,7 +131,11 @@ function processDir(dir) {
       const hasOrganization = /"@type"\s*:\s*"Organization"/i.test(html);
       const hasMedicalBusiness = /"@type"\s*:\s*"MedicalBusiness"/i.test(html);
       const hasWebSite = /"@type"\s*:\s*"WebSite"/i.test(html);
-      const hasWebPage = /"@type"\s*:\s*"WebPage"/i.test(html);
+      const hasMedicalWebPage = /"@type"\s*:\s*"MedicalWebPage"/i.test(html);
+      const hasWebPage = hasMedicalWebPage || /"@type"\s*:\s*"WebPage"/i.test(html);
+      const hasArticle = /"@type"\s*:\s*"Article"/i.test(html);
+      const hasNewsArticle = /"@type"\s*:\s*"NewsArticle"/i.test(html);
+      const hasFAQPage = /"@type"\s*:\s*"FAQPage"/i.test(html);
       const hasOffer = /"@type"\s*:\s*"Offer"/i.test(html);
 
       // Build list of schema blocks to inject
@@ -173,7 +178,7 @@ function processDir(dir) {
         case 'story':
           // These typically already have Article/NewsArticle/MedicalWebPage schema
           // Only add WebPage as parent if completely missing
-          if (!hasWebPage && !hasOrganization && pageDesc) {
+          if (!hasWebPage && !hasOrganization && !hasArticle && !hasNewsArticle && pageDesc) {
             schemas.push(webPageSchema(pageUrl, pageTitle, pageDesc));
           }
           break;
@@ -185,7 +190,7 @@ function processDir(dir) {
           break;
 
         case 'page':
-          if (!hasWebPage && !hasOrganization && pageDesc) {
+          if (!hasWebPage && !hasOrganization && !hasArticle && !hasNewsArticle && pageDesc) {
             schemas.push(webPageSchema(pageUrl, pageTitle, pageDesc));
           }
           break;
@@ -217,5 +222,13 @@ function processDir(dir) {
   }
 }
 
-processDir('_site');
+if (fs.existsSync('_site')) {
+  processDir('_site');
+} else {
+  // Run directly on source HTML during development
+  ['', 'blog', 'news', 'treatments', 'stories', 'course'].forEach(sub => {
+    const dir = path.join(__dirname, '..', sub);
+    if (fs.existsSync(dir)) processDir(dir);
+  });
+}
 console.log('Schema injection done.');

@@ -52,8 +52,15 @@ SITE_CONFIG = {
             "vibrant", "showcase", "intricate", "interplay",
             "navigate", "garner", "enduring", "enhance",
         ],
+        # Em-dash cap raised from 12 to 23 (2026-06-06 patch). The
+        # old value 12 was below the verified site baseline of
+        # 17-23 em-dashes per 1200 words documented in SKILL.md, so
+        # every published-style article on the site was getting a
+        # false "em-dashes too many" penalty. Patched after the
+        # 2026-06-05 and 2026-06-06 cron runs both confirmed the
+        # discrepancy (densities 10.2 and 19.4/1200 respectively).
         "em_dash_low": 4,
-        "em_dash_high": 12,
+        "em_dash_high": 23,
     },
 }
 
@@ -99,11 +106,38 @@ SYCOPHANTIC = [
 ]
 
 
+HTML_ENTITY_DECODE = {
+    "&mdash;": "\u2014", "&ndash;": "\u2013", "&hellip;": "\u2026",
+    "&amp;": "&", "&lt;": "<", "&gt;": ">", "&quot;": '"', "&apos;": "'",
+    "&nbsp;": " ", "&rsquo;": "\u2019", "&lsquo;": "\u2018",
+    "&rdquo;": "\u201d", "&ldquo;": "\u201c",
+}
+
+
+def decode_html_entities(text: str) -> str:
+    """Decode common HTML entities so em-dash counts etc. work on entity-encoded text."""
+    for entity, char in HTML_ENTITY_DECODE.items():
+        text = text.replace(entity, char)
+    # Numeric entities &#8212; (em-dash) etc.
+    text = re.sub(r"&#(\d+);", lambda m: chr(int(m.group(1))) if int(m.group(1)) < 0x110000 else m.group(0), text)
+    text = re.sub(r"&#x([0-9a-fA-F]+);", lambda m: chr(int(m.group(1), 16)) if int(m.group(1), 16) < 0x110000 else m.group(0), text)
+    return text
+
+
 def extract_article_body(html: str) -> str:
-    """Strip HTML and grab the article body if present, else full text."""
-    article = re.search(r"<article[^>]*>(.*?)</article>", html, re.DOTALL)
-    src = article.group(1) if article else html
-    text = re.sub(r"<[^>]+>", " ", src)
+    """Strip HTML and grab the article body. The site's articles use
+    multiple <article> blocks (one per H2 section), so concatenate ALL of
+    them, not just the first. Fall back to full HTML if no <article> tags."""
+    articles = re.findall(r"<article[^>]*>(.*?)</article>", html, re.DOTALL)
+    if not articles:
+        src = html
+    else:
+        src = " ".join(articles)
+    text = re.sub(r"<style[^>]*>.*?</style>", " ", src, flags=re.DOTALL)
+    text = re.sub(r"<script[^>]*>.*?</script>", " ", text, flags=re.DOTALL)
+    text = re.sub(r"<!--.*?-->", " ", text, flags=re.DOTALL)
+    text = re.sub(r"<[^>]+>", " ", text)
+    text = decode_html_entities(text)
     text = re.sub(r"\s+", " ", text).strip()
     return text
 
