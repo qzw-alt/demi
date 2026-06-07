@@ -1,0 +1,20 @@
+# 301 redirects for legacy phantom URLs
+/course/services.html     /services.html       301
+/course/resources.html   /resources.html      301
+/course/news/            /news/               301
+/course/blog/            /blog/               301
+/course/how-it-works.html /how-it-works.html  301
+/blog/why-medical-tourism-coordinator-china.html /contact-new.html 301
+/services/oncology.html /treatments/cancer.html 301
+/blog/spinal-surgery-cost-china.html /blog/spine-surgery-cost-china.html 301
+/blog/china-medical-visa-guide.html /blog/china-medical-visa-guide-2026.html 301
+/stories/james-thompson.html /stories/james-wilson.html 301
+/blog/ivf-fertility-treatment-china-2026.html /blog/ivf-cost-china-2026.html 301
+/blog/ivf-fertility-treatment-china.html /blog/ivf-cost-china-2026.html 301
+/blog/dental-tourism-china-guide.html /blog/dental-tourism-china-2026.html 301
+/blog/plastic-surgery-china.html /blog/plastic-surgery-china-guide-2026.html 301
+/blog/lasik-eye-surgery-china-2026.html /blog/lasik-smile-surgery-china.html 301
+/blog/how-to-choose-best-plastic-surgeon.html /blog/plastic-surgery-china-guide-2026.html 301
+/blog/recovery-tips-after-surgery-in-china.html /contact-new.html 301
+/treatments/endoscopy.html /how-it-works.html 301
+/blog.html /blog/ 301
