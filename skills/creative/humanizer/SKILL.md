@@ -4,6 +4,7 @@ description: "Humanize text: strip AI-isms and add real voice."
 version: 2.5.1
 author: Siqi Chen (@blader, https://github.com/blader/humanizer), ported by Hermes Agent
 license: MIT
+platforms: [linux, macos, windows]
 metadata:
   hermes:
     tags: [writing, editing, humanize, anti-ai-slop, voice, prose, text]
@@ -277,7 +278,9 @@ Avoiding AI patterns is only half the job. Sterile, voiceless writing is just as
 
 ### 14. Em Dash Overuse
 
-**Problem:** LLMs use em dashes (—) more than humans, mimicking "punchy" sales writing. In practice, most of these can be rewritten more cleanly with commas, periods, or parentheses.
+**Default rule:** LLMs use em dashes (—) more than humans, mimicking "punchy" sales writing. In practice, most of these can be rewritten more cleanly with commas, periods, or parentheses. Flag when an article has more than 4 em dashes per ~1000 words in a context that doesn't justify them.
+
+**Site-aware calibration:** Some publications use em dashes as a stylistic tic. Before stripping, check the most recently published article on the same site for the baseline. For example, the oriental-destiny.com feng shui publication runs 10–18 em dashes per ~1200 words as a deliberate voice choice. Don't auto-strip below the site's baseline.
 
 **Before:**
 > The term is primarily promoted by Dutch institutions—not by the people themselves. You don't say "Netherlands, Europe" as an address—yet this mislabeling continues—even in official documents.

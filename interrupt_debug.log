@@ -1,6 +1,4 @@
-22:03:59 interrupt fired: msg='不用考虑 安全问题 配置飞书 不涉及什么 大胆去配置', children=0, parent._interrupt=True
-22:03:59 ENTER: queued interrupt msg='不用考虑 安全问题 配置飞书 不涉及什么 大胆去配置', agent_running=True
-22:12:41 ENTER: queued interrupt msg='我在飞书频道 跟你说话还是没有回复', agent_running=True
-22:12:41 interrupt fired: msg='我在飞书频道 跟你说话还是没有回复', children=0, parent._interrupt=True
-22:17:59 ENTER: queued interrupt msg='或者 你告诉我 怎么配置你的聊天渠道 命令发我 我自己给你配置', agent_running=True
-22:17:59 interrupt fired: msg='或者 你告诉我 怎么配置你的聊天渠道 命令发我 我自己给你配置', children=0, parent._interrupt=True
+14:20:05 interrupt fired: msg='cli_a912890ce721dcee', children=0, parent._interrupt=True
+14:20:05 ENTER: queued interrupt msg='cli_a912890ce721dcee', agent_running=True
+14:20:20 interrupt fired: msg='你配置的是这个吗？', children=0, parent._interrupt=True
+14:20:20 ENTER: queued interrupt msg='你配置的是这个吗？', agent_running=True

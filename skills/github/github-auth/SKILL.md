@@ -4,6 +4,7 @@ description: "GitHub auth setup: HTTPS tokens, SSH keys, gh CLI login."
 version: 1.1.0
 author: Hermes Agent
 license: MIT
+platforms: [linux, macos, windows]
 metadata:
   hermes:
     tags: [GitHub, Authentication, Git, gh-cli, SSH, Setup]
@@ -59,20 +60,25 @@ Tell the user to go to: **https://github.com/settings/tokens**
 - Set expiration (90 days is a good default)
 - Copy the token — it won't be shown again
 
-**Step 2: Configure git to store the token**
+**Token format checks:**
+- Fine-Grained PAT: `github_pat_` prefix + 101 chars after (total ~111 chars) — **validate before use**
+- Classic PAT: `ghp_` prefix + 40 chars
+- `x-access-token:` URL embedding works for `git clone` but **fails for `git push`** with: `remote: Invalid username or token. Password authentication is not supported for Git operations.`
 
-```bash
-# Set up the credential helper to cache credentials
-# "store" saves to ~/.git-credentials in plaintext (simple, persistent)
-git config --global credential.helper store
-
-# Now do a test operation that triggers auth — git will prompt for credentials
-# Username: <their-github-username>
-# Password: <paste the personal access token, NOT their GitHub password>
-git ls-remote https://github.com/<their-username>/<any-repo>.git
+**Always validate a PAT before backup/restore operations:**
+```python
+import urllib.request, json
+PAT = "<token>"
+req = urllib.request.Request(
+    "https://api.github.com/user",
+    headers={"Authorization": f"Bearer {PAT}", "Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28"}
+)
+with urllib.request.urlopen(req) as resp:
+    print(f"Authenticated as: {json.loads(resp.read())['login']}")
+# If 401: token invalid or lacks repo scope. If 200: token is valid.
 ```
 
-After entering credentials once, they're saved and reused for all future operations.
+If `git push` fails with embedded PAT (even though clone works), fall back to pushing via the GitHub REST API directly (see `github-repo-management` skill → `references/backup-to-github.md`)."
 
 **Alternative: cache helper (credentials expire from memory)**
 
@@ -145,6 +151,14 @@ ssh -T git@github.com
 # Rewrite HTTPS GitHub URLs to SSH automatically
 git config --global url."git@github.com:".insteadOf "https://github.com/"
 ```
+
+> ⚠️ **PITFALL:** This rewrite rule is **global** and takes precedence over
+> any per-repo HTTPS URLs you set with `git remote set-url`. If a later task
+> needs to push via HTTPS (e.g., using a GitHub PAT), the rewrite silently
+> converts the URL to SSH and causes `Permission denied (publickey)`. Always
+> check `GIT_TRACE=1` or `git config --global --list | grep insteadOf` when
+> pushes fail unexpectedly. See `references/global-gitconfig-rewrite-pitfall.md`
+> for a full diagnosis and fix.
 
 **Step 5: Configure git identity**
 
@@ -244,3 +258,107 @@ fi
 | Credentials not persisting | Check `git config --global credential.helper` — must be `store` or `cache` |
 | Multiple GitHub accounts | Use SSH with different keys per host alias in `~/.ssh/config`, or per-repo credential URLs |
 | `gh: command not found` + no sudo | Use git-only Method 1 above — no installation needed |
+
+### Container/Sandbox Credential Helper Failure
+
+In restricted container or sandbox environments, git's credential helper subsystem may be blocked at the syscall level — credential commands (`git credential-store get`, `git credential fill`, etc.) fail with "could not read Username" or "No such device or address" even when credentials are correctly configured in `~/.netrc` or `~/.git-credentials`. This is **not** a configuration error — it is an environment restriction.
+
+**Symptoms:**
+- `~/.netrc` or `~/.git-credentials` is correctly populated with `machine github.com\nlogin ...\npassword ...`
+- `git config credential.helper "store --file ~/.netrc"` is correctly set
+- `curl -u "user:token" https://api.github.com/user` works (API auth succeeds)
+- `git push` fails with: `could not read Username for 'https://github.com': terminal prompts disabled`
+- `git credential-store get` or `git credential fill` fails when called by git
+
+**Diagnosis:**
+```bash
+# This will succeed
+curl -s -u "username:PAT" https://api.github.com/user
+
+# This will fail in a restricted environment
+echo "protocol=https\nhost=github.com" | git credential fill
+```
+
+**Critical pitfall — `~/.netrc` takes priority over `credential.helper`:**
+
+Git checks `~/.netrc` (or `~/.git-credentials`) **before** calling `credential.helper`. If `~/.netrc` contains a stale or invalid PAT, `git push` will fail with `Authentication failed` even when `credential.helper` is correctly configured and a valid token is available. The error is identical to a genuinely wrong token — `remote: Invalid username or token. Password authentication is not supported` — so this is easy to misdiagnose.
+
+**Fix — update the netrc token directly:**
+```bash
+# Check what netrc currently has
+cat ~/.netrc
+
+# Option 1: Update netrc with the new token
+cat > ~/.netrc << 'EOF'
+machine github.com
+login x-access-token
+password github_pat_NEW_TOKEN_HERE
+EOF
+chmod 600 ~/.netrc
+
+# Option 2: Remove netrc entirely and rely on credential.helper only
+rm ~/.netrc
+```
+
+**Verified working pattern — gh auth git-credential as helper (bypasses netrc):**
+```bash
+# Download and extract gh (no sudo required)
+curl -fsSL "https://github.com/cli/cli/releases/download/v2.93.0/gh_2.93.0_linux_amd64.tar.gz" -o /tmp/gh.tar.gz
+tar -xzf /tmp/gh.tar.gz -C /tmp
+
+# Authenticate gh with the PAT
+export GH_TOKEN="github_pat_NEW_TOKEN"
+/tmp/gh_2.93.0_linux_amd64/bin/gh auth status  # verify works
+
+# Use gh as git credential helper — bypasses netrc entirely
+git config --global credential.helper "/tmp/gh_2.93.0_linux_amd64/bin/gh auth git-credential"
+git push origin master  # now works
+```
+
+**Why this works:** `gh auth git-credential` reads from the `GH_TOKEN` environment variable directly, completely bypassing the file-based credential chain (netrc → git-credentials → helper store) that is broken in restricted containers. This is the most reliable pattern for cron jobs running in sandboxed environments.
+
+**Prevention for recurring cron jobs:**
+Always use `gh auth git-credential` as the helper for backup/publish cron jobs running in restricted containers — netrc's priority will silently block the helper if netrc contains any token (valid or stale).
+
+### Combined Failure Mode: Stale netrc + Global rewrite rule
+
+**This is the most insidious failure pattern.** Both mechanisms work in isolation, but together they produce a silent deadlock:
+
+1. `~/.gitconfig` has `url.git@github.com:.insteadOf=https://github.com/` (global rewrite)
+2. `~/.netrc` contains a stale or invalid PAT
+3. `credential.helper` is configured to use `gh auth git-credential` (which would work)
+
+**What happens:** Git sees the HTTPS remote URL → rewrite rule converts it to SSH → SSH auth fails because no key is deployed → fallback to netrc → netrc has stale token → push fails with `Authentication failed`. Error message gives no clue that the rewrite rule was the real cause.
+
+**Diagnosis (the right order):**
+```bash
+# 1. Check if global rewrite rule exists (this is the hidden culprit)
+git config --global --list | grep insteadOf
+
+# 2. Check netrc contents
+cat ~/.netrc
+
+# 3. Check what git ACTUALLY runs (shows the rewritten URL)
+GIT_TRACE=1 git push origin main 2>&1 | grep -E "(ssh|git@|rewrite)"
+```
+
+**Fix — both steps required:**
+```bash
+# Step 1: Clear stale netrc entirely (remove it, don't update it)
+cp /dev/null ~/.netrc && chmod 600 ~/.netrc
+
+# Step 2: Ensure global rewrite rule points to a key that IS registered on GitHub
+# If SSH key was just added, verify it works first:
+ssh -T git@github.com
+
+# Step 3: Verify rewrite rule is NOT converting HTTPS to SSH for this specific repo
+# (if the intent is to use HTTPS with PAT, remove the rewrite rule instead)
+git config --global --unset url.git@github.com:.insteadOf
+```
+
+**Prevention for cron jobs in restricted containers:**
+- **Prefer SSH** (add key to GitHub → works reliably, no file-based credential chain)
+- **Never leave stale netrc** — if switching from PAT to SSH, delete netrc completely, don't just leave an old token in it
+- **Document which auth method the machine uses** — put a marker comment in netrc if it must coexist with SSH
+
+**Prevention:** For recurring backup jobs in restricted environments, use GitHub Actions (workflow_dispatch) or a CI runner instead of pushing directly from the sandboxed host.

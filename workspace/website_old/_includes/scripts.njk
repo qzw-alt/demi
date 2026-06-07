@@ -1,0 +1,26 @@
+    <script>
+        (function() {
+            var navToggle = document.getElementById('navToggle');
+            var navLinks = document.getElementById('navLinks');
+            var navOverlay = document.getElementById('navOverlay');
+            function closeMenu() {
+                if (navLinks) navLinks.classList.remove('active');
+                if (navOverlay) navOverlay.classList.remove('active');
+            }
+            if (navToggle && navLinks) {
+                navToggle.addEventListener('click', function() {
+                    navLinks.classList.toggle('active');
+                    if (navOverlay) navOverlay.classList.toggle('active');
+                });
+            }
+            if (navOverlay) {
+                navOverlay.addEventListener('click', closeMenu);
+            }
+            document.querySelectorAll('.nav-links a').forEach(function(link) {
+                link.addEventListener('click', closeMenu);
+            });
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') closeMenu();
+            });
+        })();
+    </script>
