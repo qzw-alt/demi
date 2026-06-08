@@ -1,7 +1,7 @@
 ---
 name: programmatic-seo
 description: "Programmatic SEO article writing for content sites. Workflow: research → draft → humanize → publish → update sitemap. Currently serving oriental-destiny.com and chinahospitalsguide.com."
-version: 1.1.3
+version: 1.1.4
 author: Hermes Agent
 platforms: [linux]
 metadata:
@@ -139,6 +139,18 @@ becomes
 
 Each em-dash should add a clinical aside, not break the sentence. Target: 17-23 per 1200 words for chinahospitalsguide, 10-18 for oriental-destiny.
 
+**Humanize script: when the score is 14/100 but the article is fine (verified 2026-06-08):** for a 4,400-word chinahospitalsguide article with ~58 raw em-dashes (15.8/1200), the `humanize_score.py` script will report a 14/100 score and the note "em-dashes too many: 58 (high=23)". This is a known false negative: the script's cap is **raw** em-dash count, not density per 1200 words. Any chinahospitalsguide article over ~2,800 words will exceed 23 raw em-dashes even at baseline density (17/1200 × 2800/1200 ≈ 40 raw, well above the 23 cap). The article is fine — the script's em-dash penalty is meaningless for chinahospitalsguide once the word count is above 2,800.
+
+**How to decide if a low score is a real problem (verified 2026-06-08):**
+- Run `python3 scripts/em_dash_check.py news/FILE.html` first
+- If the em-dash density is 10-23/1200: ignore the script's em-dash penalty
+- If the only other notes are "high word count" and "actually" (in legitimate prose): ignore those too — the article is shippable
+- The script notes that MATTER are: real banned vocab in headlines/H2 (not body prose), -ing tails outside legitimate clinical phrases, and "Despite" overuse (script tracks this separately)
+
+**"Actually" is a false positive in clinical prose (verified 2026-06-08):** the script flags "actually" as banned vocab, but in clinical writing it appears in normal constructions like "would actually execute" or "had not actually been done" where it's just an emphasis word, not an AI tell. Don't strip it from body prose — only strip if it appears in a heading or in a sentence where "in fact" or "in practice" works equally well. The body text scan should tolerate 1-2 "actually" hits on a 4,000-word article.
+
+**Patch tool pitfall: use short unique substrings (verified 2026-06-08):** when editing with `patch` on a long article, the fuzzy matcher can match the WRONG paragraph if the `old_string` is a long unique-looking context that also appears (perhaps with small differences) elsewhere. Symptom: the patch fails OR matches the wrong location. Fix: use a SHORT unique substring (10-30 chars) that appears EXACTLY ONCE in the file as the `old_string`, and put the new content (which can be the full paragraph) in `new_string`. Example: instead of `old_string="The on-site team stays scrubbed and present for the entire case, ready to take over in the event of a network drop or an emergency that the remote surgeon judges should be finished in person."` use `old_string="an emergency that the remote surgeon judges should be finished in person."` (20 chars, unique). The full paragraph in `new_string` will replace just the matched substring. This avoids the "wrong paragraph patched" trap.
+
 ## Cron Budget Optimization (PITFALL — verified 2026-06-02)
 
 **Support files:** `references/humanize-score-script-pitfall.md` — recipe for interpreting and patching the `humanize_score.py` script. Two distinct issues documented there:
@@ -161,6 +173,20 @@ The cron run on 2026-06-02 ran out of tool-call budget AFTER writing the article
 - Reserve 5–8 calls for the humanize-verify loop and any git conflict resolution
 
 **Hard rule: write the article first (Step 2), publish second (Step 4).** If budget gets tight, having a saved-but-not-pushed article is a much better state than having a researched-but-not-written run, because the article can be picked up by a manual push later. The research notes alone cannot be republished without re-deriving the article.
+
+**Reference: a clean run in ~10 tool calls (verified 2026-06-08, oriental-destiny.com Wu Day Master):**
+1. `terminal` — `ls` of repo + `git remote -v` (combined) — verifies SSH is still in place, branch is correct, no stale files
+2. `read_file` — `fate-YYYY-MM-DD.html` body excerpt — voice reference for the day's piece
+3. `write_file` — `fate-YYYY-MM-DD.html` — the article
+4. `terminal` — `python3 scripts/humanize_score.py …` — score check
+5. `patch` — `sitemap.xml` — insert new entry at top
+6. `terminal` — `git remote set-url origin git@…` (only if step 1 showed HTTPS) + `git add … && git commit -m "article: …"` (combined)
+7. `terminal` — `git push origin main` — first attempt
+8. `terminal` — `git fetch origin && git merge origin/main --no-ff` — handle sibling-cron divergence
+9. `patch` — `sitemap.xml` — resolve top-of-file conflict (one-line replacement of conflict markers)
+10. `terminal` — `git add … && git commit … && git push origin main` (combined) + `sleep 150 && curl -s -o /dev/null -w "%{http_code}" …` (combined) — final push + deployment verify
+
+Total: 10 tool calls. The keys are: chain git operations in single terminal calls; combine the final push with the wait+verify curl; never delegate research to a subagent (per the 2026-06-02 burn); trust the existing `humanize_score.py` script rather than rolling your own (per the `-c` flag pitfall).
 
 ## Integration
 

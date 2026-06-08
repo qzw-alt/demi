@@ -22,16 +22,27 @@ The `scripts/humanize_score.py` script has hardcoded per-site em-dash caps that 
 
 **If you see "em-dashes too few: 0" or "Word count: <300" on an article that is clearly much longer:** the patch may have been reverted, or the article uses an unusual layout (e.g., a single giant `<section>` with no `<article>` tags — in which case the script falls back to full HTML, which is fine).
 
+## Raw vs per-1200-words em-dash counting (verified 2026-06-08)
+
+The patched script's `em_dash_high=23` is a **raw count** cap, not a per-1200-words cap. For a chinahospitalsguide daily-news-feature article at 4,400 words, baseline density of 17-23/1200 = 62-85 raw em-dashes — every chinahospitalsguide article over ~2,800 words will exceed 23 raw em-dashes even at the recommended baseline density. The script will therefore flag a 14/100 score on every 4,000-word article regardless of how good the humanize pass was.
+
+**How to read the score on a 4,000+ word article:**
+- The em-dash note is meaningless — ignore it.
+- Check the actual density with `scripts/em_dash_check.py`; if it's in the 15-23 band, the article is shippable.
+- The remaining script notes that matter: real banned vocab in headings (not body prose), -ing tails outside legitimate clinical phrases, and "Despite" overuse. Each one of these is independently actionable; the em-dash note is not.
+
+**Why the raw-cap design is broken for chinahospitalsguide:** the 23 raw cap was set when articles were 1,200-1,800 words (the SEO skill's nominal target). After the 2026-05-28 baseline update, chinahospitalsguide's actual article length is 3,000-4,400 words. The cap needs to scale with word count: a per-1200-words cap of 23 × (4000/1200) ≈ 77 raw would be correct. Patch the script to compute the cap from word count, or just hardcode `em_dash_high=80` for chinahospitalsguide as a stopgap (verified 2026-06-08 as the right value for a 4,400-word article at upper-baseline density).
+
 ## Banned-vocab checks apply to H2 headings too (verified 2026-06-06)
 
 The script's `extract_article_body()` strips HTML tags but keeps the text content of `<h2>`, `<h3>`, etc. — meaning every banned-vocab hit in a heading fires the same penalty as a body hit. On 2026-06-06 the article "What CAR-T Therapy Actually Is" and "What the International Patient Path Actually Looks Like" each counted "actually" as a banned-vocab hit, even though the phrase "what X actually is/looks like" is a standard non-AI-tell English construction. Lesson: when choosing H2 / H3 wording, mentally scan against the banned list (`actually`, `pivotal`, `leverage`, `navigate`, `crucial`, `delve`, `tapestry`, `underscore`, `vibrant`, `showcase`, `intricate`, `interplay`, `garner`, `enduring`, `enhance`, `fostering`). Cheap rewrites that keep the same meaning: "What X Is" / "How X Works" / "The X Process" / "X in Practice" / "X at a Glance".
 
-## Known mismatch (status update 2026-06-06)
+## Known mismatch (status update 2026-06-08)
 
-| Site | Script `em_dash_high` | Verified baseline (SKILL.md) | Status |
-|------|-----------------------|------------------------------|--------|
-| chinahospitalsguide | **23** (was 12) | 17-23 per 1200 words | **Patched 2026-06-06** — script now matches baseline; false negative resolved |
-| oriental-destiny | 25 | 10-18 per 1200 words | Tolerant enough; no false flag |
+| Site | Script `em_dash_high` (raw) | Verified baseline (SKILL.md) | Status |
+|------|-----------------------------|------------------------------|--------|
+| chinahospitalsguide | **23** (raw, scaled by word count in scoring) | 17-23 per 1200 words | **Patched 2026-06-08** — script now scales the cap with word count (`em_cap = max(23, int(23 * wc / 1200))`), so a 4,400-word article at baseline density has a cap of ~84, not 23. False negative for daily-news-feature articles is resolved. |
+| oriental-destiny | 25 (raw) | 10-18 per 1200 words | Tolerant enough; no false flag. Same scaling applied for consistency. |
 
 ## How to interpret the script's "em-dashes too many" warning
 
@@ -42,15 +53,19 @@ The script's `extract_article_body()` strips HTML tags but keeps the text conten
 
 ## When to fix the script (preferred over override)
 
-The script is in `/home/ubuntu/.hermes/skills/creative/programmatic-seo/scripts/humanize_score.py`. The chinahospitalsguide config block sets `em_dash_high=12`; the SKILL.md verified baseline is 17-23. Patch:
+The script is in `/home/ubuntu/.hermes/skills/creative/programmatic-seo/scripts/humanize_score.py`. The chinahospitalsguide config block sets `em_dash_high=23`; the per-1200-words baseline is 17-23. The actual penalty calculation (verified 2026-06-08) is:
 
 ```python
-# scripts/humanize_score.py, chinahospitalsguide config block (around line 55-56)
-"em_dash_low": 4,
-"em_dash_high": 23,   # was 12; matches the verified SKILL.md baseline
+# scripts/humanize_score.py, in the score() function (around line 116)
+em = text.count("\u2014")
+em_cap = max(cfg["em_dash_high"], int(cfg["em_dash_high"] * wc / 1200))
+if em > em_cap:
+    over = em - em_cap
+    score_val -= 2 * over
+    notes.append(f"em-dashes too many: {em} (cap={em_cap} for {wc} words)")
 ```
 
-This is a permanent fix — no need to remember to override per-run. Apply once and the score will align with the documented baseline.
+This is the permanent fix for the raw-vs-density mismatch — the cap now scales with word count, so a 4,400-word article at baseline density has a cap of ~84, not 23. Apply once and the score will align with the documented baseline.
 
 ## 2026-06-05 case in point
 

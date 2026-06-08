@@ -1,7 +1,7 @@
 ---
 name: content-research-writer-cn
 description: "Research Chinese medical/health news热点 for daily article publishing on chinahospitalsguide.com. Find timely, relevant stories from Chinese medical sources."
-version: 1.1.0
+version: 1.1.1
 author: Hermes Agent
 platforms: [linux]
 metadata:
@@ -129,9 +129,22 @@ If research completed but the article was never written (cron budget exhausted, 
 
 **Pattern verified 2026-06-06:** the 2026-06-04 Pakistani CAR-T pending note was picked up and successfully shipped as today's article (`news/2026-06-06-pakistani-patient-cart-shanghai-jiahui-lymphoma.html`, 3,481 words, 9 sections, all internal/external links used). A new pending note for the next run was written to `references/pending-2026-06-06-pakistani-cart-jiahui.md` documenting the same pattern. The handoff works end-to-end — do not skip checking for pending files at the start of research.
 
+**Pattern verified 2026-06-08 (recovery handoff loop is mature):** 5+ days of recovery cycles have all worked end-to-end:
+- 06-04 → 06-06 (1-day gap)
+- 06-05 → 06-07 (2-day gap)
+- 06-07 → 06-08 (1-day gap)
+
+The recovery recipe is now stable. Future cron runs should:
+1. **Always check `ls references/pending-*.md` at the start of the run** — if any exist, this is a recovery, not a fresh research.
+2. **For a recovery run:** read the pending file, run `em_dash_check.py` to see the current state, add any remaining em-dashes to reach the 17-23/1200 baseline (not 15 — the upper end of the false-negative band), commit + push + verify. Do NOT do fresh research on the same day.
+3. **Always write a new `pending-YYYY-MM-DD-recovery.md` at the end of the run** documenting: the commit hash, the live URL, the em-dash density at publish, the cron state at end of run, and any new pitfalls learned.
+
+The pending-file convention is now the canonical way to bridge budget exhaustion across cron runs. Don't try to fit research + write + publish + verify in one budget; write the article and the pending note, and let the next run ship it.
+
 **Support files:**
 - `references/pending-2026-06-04-pakistani-cart-jiahui.md` — canonical pending-article example
 - `references/pending-2026-06-05-heihe-dental-tourism.md` — most recent pending-article note (article committed locally as `2a11928`, push failed on GitHub auth, recovery command + script-patch recommendation included)
 - `references/pending-2026-06-06-pakistani-cart-jiahui.md` — 4th run with same `Password authentication is not supported for Git Operations` failure; commit `8a6209d` on local master, recovery command + humanize-score script patch note included
 - `references/pending-2026-06-07-tongji-telesurgery.md` — 5th run; article drafted (Tongji 5G tele-surgery Wuhan→Hyderabad, 9 sections, ~4059 words) but cron budget exhausted mid-humanize-pass before em-dash density reached the 17-23/1200 baseline. **Article is on disk, uncommitted, unpublished.** Recovery command + remaining em-dash insertion points included. The 06-06 push was recovered in the same run (SSH switch applied to chinahospitalsguide, push succeeded, article live).
+- `references/pending-2026-06-08-recovery.md` — 6th run; 06-07 article recovered (5 more em-dashes added, em-dash density 13.9 → 15.8/1200, committed as 7999c12, pushed via durable SSH remote, verified HTTP 200). Documents the patch-tool short-unique-substring pattern and the humanize-script false-negative-by-raw-count pattern that emerged during recovery.
 - `references/globaltimes-in-depth-articles.md` — verified working source pattern for globaltimes.cn `/page/YYYYMM/NNNNNN.shtml` in-depth / health articles (the homepage is still blocked, but per-article URLs work and yield ~22KB with full body + byline + timestamp)

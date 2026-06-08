@@ -23,15 +23,15 @@
       "schedule_display": "0 8 * * *",
       "repeat": {
         "times": null,
-        "completed": 11
+        "completed": 12
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T14:45:42.377747+08:00",
-      "next_run_at": "2026-06-08T08:00:00+08:00",
-      "last_run_at": "2026-06-07T08:07:21.103989+08:00",
+      "next_run_at": "2026-06-09T08:00:00+08:00",
+      "last_run_at": "2026-06-08T08:08:41.015288+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -65,15 +65,15 @@
       "schedule_display": "0 9 * * *",
       "repeat": {
         "times": null,
-        "completed": 7
+        "completed": 8
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T17:20:53.016111+08:00",
-      "next_run_at": "2026-06-08T09:00:00+08:00",
-      "last_run_at": "2026-06-07T09:01:10.670628+08:00",
+      "next_run_at": "2026-06-09T09:00:00+08:00",
+      "last_run_at": "2026-06-08T09:04:30.849712+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -107,15 +107,15 @@
       "schedule_display": "0 22 * * *",
       "repeat": {
         "times": null,
-        "completed": 9
+        "completed": 10
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T17:22:43.447182+08:00",
-      "next_run_at": "2026-06-08T22:00:00+08:00",
-      "last_run_at": "2026-06-06T22:05:33.423826+08:00",
+      "next_run_at": "2026-06-09T22:00:00+08:00",
+      "last_run_at": "2026-06-07T22:12:33.837912+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -153,17 +153,17 @@
       "schedule_display": "0 9 * * *",
       "repeat": {
         "times": null,
-        "completed": 12
+        "completed": 13
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-02T08:16:41.523255+08:00",
-      "next_run_at": "2026-06-08T09:00:00+08:00",
-      "last_run_at": "2026-06-07T09:18:37.393839+08:00",
-      "last_status": "error",
-      "last_error": "RuntimeError: ## Final Report \u2014 chinahospitalsguide.com Cron 2026-06-07\n\n### Recovery action completed (06-06 article)\n- Discovered `8a6209d` (2026-06-06 Pakistani CAR-T article) was committed locally on 2026-06-06 but **never pushed** \u2014 fourth consecutive cron run to fail on the same `fatal: could not read Username` GitHub auth issue.\n- Applied the same fix that worked for oriental-destiny.com on 2026-06-07: **switched the remote from `https://github.com/qzw-alt/chinahospitalsguide.git` to `git@github.com:qzw-alt/chinahospitalsguide.git`** (SSH using `~/.ssh/id_ed25519`).\n- Remote had diverged (2 GA4 tracking commits from another agent). Merged `origin/master` with local master, kept the 06-06 commit on top.\n- **Push succeeded** (`94786a1..a00651a master -> master`).\n- **Verified live**: `curl https://chinahospitalsguide.com/news/2026-06-06-pakistani-patient-cart-shanghai-jiahui-lymphoma.html` \u2192 **HTTP 200** (after 3 min).\n\n### Today's research (06-07)\n- **Hot topic selected**: Dr. Syed Mohammed Ghouse (Indian-origin urologist, Tongji Hospital Wuhan) performed a 90-minute robot-assisted ureteral reimplantation on a patient 3,000 km away in Hyderabad, India, on a Chinese-developed surgical robot over a Chinese 5G network (~200 ms latency). One of 26 live surgeries at the 10th IHPBA Congress, 5 of them cross-border (Brazil, Georgia, Greece, Uzbekistan, India).\n- **Sources verified**:\n  - China Daily 2026-05-20 (primary Chinese-side, `<meta name=\"publishdate\" content=\"2026-06-20\">` ... 2026-05-20)\n  - Times of India 2026-05-24 (full narrative, 90 min, 3,000 km)\n  - NDTV, The Hindu, News18, NewsBytes, Deccan Chronicle (corroborating)\n- **Angle**: \"China-developed surgical robotics + 5G exported for cross-border clinical service\" \u2014 a hedge/complement to the inbound medical tourism narrative the site has been covering.\n\n### Article drafted (NOT YET PUBLISHED)\n- **File**: `/home/ubuntu/.hermes/workspace/website/news/2026-06-07-5g-remote-surgery-tongji-wuhan-india-china-medical-tech.html`\n- **Length**: ~4,059 words (9 sections: The Case / How It Worked / Chinese Robots Compared / The 5G Network / Tongji's Role / Tele-Surgery Milestones Table / Implications for Medical Tourism / What to Watch / Conclusion)\n- **Banner color**: deep blue `#1a3a5c \u2192 #2c5f8d \u2192 #4a90c2` (different from 06-06 teal, 06-05 blue, 06-03 navy)\n- **External sources**: 10 links including China Daily, Times of India, NDTV, The Hindu, Cornerstone/Sentire press release, Kunwu Brazil release\n- **Internal links**: 06-05 ivonescimab, 06-03 Hainan Boao, 06-06 Pakistani CAR-T, /services.html, /contact-new.html\n- **Humanizer pass in progress**:\n  - 1 \"Actually\" \u2192 \"in Practice\" (fixed)\n  - Em-dash density was 11.3/1200; added ~6 clinical-aside em-dashes to push toward the 17-23/1200 site baseline (added parentheticals for: hardware comparison, the 10th IHPBA context, India-as-test-bed, scale argument, control logic, regulatory gap, etc.)\n\n### NOT completed (budget exhausted mid-humanize-pass)\n- Final em-dash density recheck via `em_dash_check.py`\n- Sitemap entry insertion at top of `sitemap.xml`\n- News card insertion at top of `news/index.html`\n- `git checkout -b article-2026-06-07 origin/master` + commit + push\n- Post-push HTTP 200 verification\n\n### Per the skill's hard rule (\"having a saved-but-not-pushed article is much better than having a researched-but-not-written run\"), the article is on disk and recoverable.\n**Recovery command** (operator can run after review):\n```bash\ncd /home/ubuntu/.hermes/workspace/website\n# Re-run humanize check + em-dash density verification\npython3 /home/ubuntu/.hermes/skills/creative/programmatic-seo/scripts/em_dash_check.py news/2026-06-07-5g-remote-surgery-tongji-wuhan-india-china-medical-tech.html\n# Insert sitemap entry above 06-06\n# Insert news card at top of news/index.html\ngit add news/2026-06-07-5g-remote-surgery-tongji-wuhan-india-china-medical-tech.html sitemap.xml news/index.html\ngit commit -m \"article: 2026-06-07 5G remote surgery Tongji Wuhan to India\"\ngit push origin master\n```\n\n### Side effects of this run\n- **chinahospitalsguide remote is now on SSH** (was HTTPS) \u2014 the GitHub auth failure pattern that caused 4 consecutive missed pushes (06-03, 06-04, 06-05, 06-06) is resolved.\n- **06-06 article is live** (3,481 words, em-dash density 19.4/1200, 0 banned vocab).\n- **06-07 article is on disk**, awaiting publish \u2014 should be picked up by the next cron run or by the recovery command above.",
+      "next_run_at": "2026-06-09T09:00:00+08:00",
+      "last_run_at": "2026-06-08T09:09:17.268119+08:00",
+      "last_status": "ok",
+      "last_error": null,
       "last_delivery_error": null,
       "deliver": "feishu",
       "origin": {
@@ -176,5 +176,5 @@
       "workdir": null
     }
   ],
-  "updated_at": "2026-06-07T22:00:40.259759+08:00"
+  "updated_at": "2026-06-08T22:00:20.135037+08:00"
 }
