@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TBGDZRZZEJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-TBGDZRZZEJ');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free BaZi Five Elements preview. $29 instant full report with Day Master, element balance, and treasure direction. $199 matched Daoist treasure service — handcrafted piece confirmed to your chart before shipping worldwide.">
+    <link rel="canonical" href="https://oriental-destiny.com/">
+    <meta property="og:title" content="Free BaZi Preview + $29 Report + $199 Matched Treasure | Oriental Destiny">
+    <meta property="og:description" content="Start with a free Five Elements preview. Upgrade to a $29 instant full report or a $199 handcrafted Daoist treasure matched to your birth chart. Worldwide shipping.">
+    <meta property="og:type" content="website">
+    <title>Personalized Feng Shui Reading + BaZi Chart Analysis | Oriental Destiny</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <style>
+        :root {
+            --ink: #241915;
+            --paper: #f8f1e7;
+            --cinnabar: #a63a2c;
+            --gold: #b78a42;
+            --pine: #315247;
+            --line: rgba(36, 25, 21, 0.1);
+            --shadow: 0 18px 48px rgba(70, 41, 24, 0.12);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: Georgia, "Times New Roman", serif;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at top, rgba(183, 138, 66, 0.16), transparent 34%),
+                linear-gradient(180deg, #f5e7d6 0%, var(--paper) 42%, #fbf7f1 100%);
+            line-height: 1.72;
+        }
+
+        a { color: inherit; text-decoration: none; }
+
+        .container {
+            width: min(1120px, calc(100% - 40px));
+            margin: 0 auto;
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            backdrop-filter: blur(14px);
+            background: rgba(248, 241, 231, 0.88);
+            border-bottom: 1px solid rgba(36, 25, 21, 0.08);
+        }
+
+        .topbar-inner {
+            min-height: 74px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+        }
+
+        .brand {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .brand-mark {
+            font-size: 13px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--cinnabar);
+        }
+
+        .brand-name {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .nav {
+            display: flex;
+            gap: 18px;
+            font-size: 14px;
+            color: rgba(36, 25, 21, 0.78);
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .hero {
+            padding: 74px 0 56px;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.12fr) minmax(320px, 0.88fr);
+            gap: 30px;
+            align-items: stretch;
+        }
+
+        .hero-copy,
+        .hero-panel,
+        .story-card,
+        .plan-card,
+        .carrier-card,
+        .step,
+        .faq-item,
+        .closing-card {
+            background: rgba(255, 253, 248, 0.9);
+            border: 1px solid rgba(36, 25, 21, 0.08);
+            box-shadow: var(--shadow);
+        }
+
+        .hero-copy {
+            padding: 44px;
+            border-radius: 28px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 12px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 18px;
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 34px;
+            height: 1px;
+            background: currentColor;
+        }
+
+        h1 {
+            font-size: clamp(36px, 6vw, 64px);
+            line-height: 1.05;
+            margin-bottom: 18px;
+        }
+
+        .hero-copy p,
+        .section-head p,
+        .story-card p,
+        .plan-card p,
+        .carrier-card p,
+        .step p,
+        .faq-item p {
+            color: rgba(36, 25, 21, 0.76);
+        }
+
+        .hero-copy p {
+            font-size: 17px;
+            max-width: 650px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-top: 28px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 50px;
+            padding: 0 24px;
+            border-radius: 999px;
+            font-size: 15px;
+            font-weight: 700;
+            transition: transform 0.2s ease;
+        }
+
+        .btn:hover { transform: translateY(-2px); }
+
+        .btn-primary {
+            color: #fff8ef;
+            background: linear-gradient(135deg, #b24636 0%, #8b251a 100%);
+            box-shadow: 0 14px 28px rgba(166, 58, 44, 0.24);
+        }
+
+        .btn-secondary {
+            color: var(--ink);
+            background: rgba(255, 253, 248, 0.9);
+            border: 1px solid rgba(36, 25, 21, 0.12);
+        }
+
+        .hero-meta {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+            margin-top: 32px;
+        }
+
+        .meta-item {
+            padding: 16px 18px;
+            background: rgba(239, 225, 207, 0.45);
+            border-radius: 18px;
+        }
+
+        .meta-item strong {
+            display: block;
+            font-size: 22px;
+            color: var(--cinnabar);
+        }
+
+        .meta-item span {
+            font-size: 13px;
+            color: rgba(36, 25, 21, 0.72);
+        }
+
+        .hero-panel {
+            border-radius: 28px;
+            padding: 28px;
+            background: linear-gradient(180deg, rgba(49, 82, 71, 0.98), rgba(33, 58, 49, 0.98));
+            color: #fdf8ef;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .panel-badge {
+            display: inline-block;
+            align-self: flex-start;
+            padding: 7px 14px;
+            border: 1px solid rgba(255, 248, 235, 0.22);
+            border-radius: 999px;
+            font-size: 12px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .hero-panel h2 {
+            font-size: 30px;
+            line-height: 1.18;
+            margin-bottom: 14px;
+        }
+
+        .hero-panel p,
+        .hero-panel li {
+            color: rgba(253, 248, 239, 0.82);
+        }
+
+        .panel-list {
+            list-style: none;
+            display: grid;
+            gap: 14px;
+            margin: 24px 0;
+        }
+
+        .panel-list li {
+            padding: 12px 14px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        section { padding: 30px 0 70px; }
+
+        .section-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 20px;
+            margin-bottom: 26px;
+            flex-wrap: wrap;
+        }
+
+        .section-head h2 {
+            font-size: clamp(30px, 4vw, 44px);
+            line-height: 1.16;
+            margin-bottom: 8px;
+        }
+
+        .section-head p {
+            max-width: 680px;
+        }
+
+        .story-card {
+            border-radius: 28px;
+            padding: 34px;
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+            gap: 26px;
+        }
+
+        .story-card ul,
+        .carrier-card ul,
+        .plan-card ul {
+            list-style: none;
+            display: grid;
+            gap: 9px;
+            margin-top: 18px;
+            color: rgba(36, 25, 21, 0.74);
+        }
+
+        .story-card li,
+        .carrier-card li,
+        .plan-card li {
+            padding-left: 14px;
+            position: relative;
+        }
+
+        .story-card li::before,
+        .carrier-card li::before,
+        .plan-card li::before {
+            content: "";
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--cinnabar);
+            position: absolute;
+            left: 0;
+            top: 12px;
+        }
+
+        .carrier-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .carrier-card,
+        .plan-card,
+        .step,
+        .faq-item {
+            border-radius: 24px;
+            padding: 26px;
+        }
+
+        .carrier-card h3,
+        .plan-card h3,
+        .step h3,
+        .faq-item h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .plan-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .plan-tag {
+            display: inline-flex;
+            width: fit-content;
+            min-height: 28px;
+            align-items: center;
+            padding: 0 11px;
+            border-radius: 999px;
+            background: rgba(183, 138, 66, 0.13);
+            color: var(--gold);
+            font-size: 12px;
+            margin-bottom: 14px;
+        }
+
+        .steps-grid,
+        .faq-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .steps-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+        .faq-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+        .step-no {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            color: #fff8ef;
+            background: linear-gradient(135deg, var(--gold), var(--cinnabar));
+            font-weight: 700;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .testimonial-card {
+            background: rgba(255, 253, 248, 0.9);
+            border: 1px solid rgba(36, 25, 21, 0.08);
+            box-shadow: var(--shadow);
+            border-radius: 24px;
+            padding: 26px;
+        }
+
+        .testimonial-card .stars {
+            color: var(--gold);
+            font-size: 16px;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+
+        .testimonial-card .body {
+            font-style: italic;
+            color: rgba(36, 25, 21, 0.78);
+            margin-bottom: 14px;
+            line-height: 1.6;
+        }
+
+        .testimonial-card .author {
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .testimonial-card .detail {
+            font-size: 12px;
+            color: rgba(36, 25, 21, 0.5);
+        }
+
+        @media (max-width: 980px) {
+            .testimonial-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .closing-card {
+            border-radius: 30px;
+            padding: 40px;
+            text-align: center;
+            background:
+                linear-gradient(180deg, rgba(36, 25, 21, 0.92), rgba(71, 42, 28, 0.92)),
+                #261a16;
+            color: #fff8ef;
+        }
+
+        .closing-card h2 {
+            font-size: clamp(30px, 4.4vw, 46px);
+            margin-bottom: 14px;
+        }
+
+        .closing-card p {
+            max-width: 720px;
+            margin: 0 auto 24px;
+            color: rgba(255, 248, 239, 0.82);
+        }
+
+        footer { padding: 0 0 42px; }
+
+        .footer-card {
+            border-top: 1px solid rgba(36, 25, 21, 0.08);
+            padding-top: 28px;
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            color: rgba(36, 25, 21, 0.6);
+            font-size: 13px;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 980px) {
+            .hero-grid,
+            .story-card,
+            .carrier-grid,
+            .plan-grid,
+            .steps-grid,
+            .faq-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 720px) {
+            .topbar-inner,
+            .section-head,
+            .footer-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nav { gap: 12px; }
+            .hero { padding-top: 36px; }
+            .hero-copy,
+            .hero-panel,
+            .story-card,
+            .closing-card { padding: 26px; }
+            .hero-meta { grid-template-columns: 1fr; }
+            .btn { width: 100%; }
+        }
+    </style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://oriental-destiny.com/#organization",
+          "name": "Oriental Destiny",
+          "url": "https://oriental-destiny.com",
+          "sameAs": [],
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "email": "434338480@qq.com",
+            "contactType": "customer service"
+          }
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://oriental-destiny.com/#website",
+          "url": "https://oriental-destiny.com",
+          "name": "Oriental Destiny | Personalized Feng Shui Reading",
+          "publisher": {"@id": "https://oriental-destiny.com/#organization"}
+        },
+        {
+          "@type": "Product",
+          "name": "Personalized Feng Shui Reading + Handcrafted Daoist Treasure",
+          "description": "A personalized birth chart reading and one handcrafted Daoist treasure from Longhushan, matched to your Five Elements and life focus. Includes worldwide shipping from China.",
+          "offers": {
+            "@type": "Offer",
+            "price": "199.00",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": "https://oriental-destiny.com/checkout.html",
+            "shippingDetails": {
+              "@type": "OfferShippingDetails",
+              "shippingDestination": {
+                "@type": "DefinedRegion",
+                "name": "Worldwide"
+              },
+              "deliveryTime": {
+                "@type": "ShippingDeliveryTime",
+                "handlingTime": {"@type": "QuantitativeValue", "minValue": 7, "maxValue": 10, "unitCode": "DAY"},
+                "transitTime": {"@type": "QuantitativeValue", "minValue": 10, "maxValue": 14, "unitCode": "DAY"}
+              }
+            },
+            "hasMerchantReturnPolicy": {
+              "@type": "MerchantReturnPolicy",
+              "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+              "merchantReturnDays": 30,
+              "returnMethod": "https://schema.org/ReturnByMail",
+              "refundType": "https://schema.org/FullRefund"
+            }
+          }
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+    <header class="topbar">
+        <div class="container topbar-inner">
+            <a class="brand" href="index.html">
+                <span class="brand-mark" data-i18n="index_brand_mark">Oriental Destiny</span>
+                <span class="brand-name" data-i18n="index_brand_name">Feng Shui Jewelry Matching</span>
+            </a>
+            <nav class="nav">
+                <a href="dream-interpretation.html">Dream Interpreter</a>
+                <a href="instant_reading.html" data-i18n="nav_free_reading">Free Reading</a>
+                <a href="products.html" data-i18n="nav_plans">Plans</a>
+                <a href="checkout.html" data-i18n="nav_order">Order</a>
+                <a href="login.html" id="navSignIn" style="font-size:13px;color:rgba(36,25,21,0.7);">Sign In</a>
+                <a href="dashboard.html" id="navDashboard" style="display:none;font-size:13px;color:var(--cinnabar);font-weight:600;">Dashboard</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container hero-grid">
+                <div class="hero-copy">
+                    <div class="eyebrow" data-i18n="index_hero_eyebrow">Personalized Feng Shui reading + confirmed direction</div>
+                    <h1 data-i18n="index_hero_title">Your birth chart says your luck needs a channel. We read it and confirm the direction for you.</h1>
+                    <p data-i18n="index_hero_desc">Most services give generic advice. Ours reads your specific chart — then confirms the exact direction before anything ships. One order, one focused reading, matched to your Five Elements and life area.</p>
+                    <div class="hero-actions">
+                        <a class="btn btn-primary" href="instant_reading.html" data-i18n="index_cta_free">Start Free Preview</a>
+                        <a class="btn btn-secondary" href="products.html" data-i18n="index_cta_plans">View Matched Treasures</a>
+                        <a class="btn btn-secondary" href="report_demo.html" data-i18n="index_cta_sample">See Sample Report</a>
+                    </div>
+                    <div class="hero-meta">
+                        <div class="meta-item">
+                            <strong data-i18n="index_meta_price">$199</strong>
+                            <span data-i18n="index_meta_price_desc">One order: chart analysis + confirmed jewelry direction, shipped worldwide</span>
+                        </div>
+                        <div class="meta-item">
+                            <strong data-i18n="index_meta_plans">6 Plans</strong>
+                            <span data-i18n="index_meta_plans_desc">Career, wealth, love, protection, zodiac, and elemental balance — you pick the focus</span>
+                        </div>
+                        <div class="meta-item">
+                            <strong data-i18n="index_meta_days">Same Day</strong>
+                            <span data-i18n="index_meta_days_desc">Basic report immediately after payment. Complete annotated report by email within 6 hours. Piece ships after your approval.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="hero-panel">
+                    <div>
+                        <span class="panel-badge" data-i18n="index_panel_badge">How this is different from a generic reading app</span>
+                        <h2 data-i18n="index_panel_title">You don't pick a product. You pick a life area — and we read your chart to find the direction that fits.</h2>
+                        <p data-i18n="index_panel_desc">The direction comes from your birth chart — not from a generic zodiac description. What makes the $199 worth it is a personalized reading plus one handcrafted Daoist treasure from Longhushan, matched to your specific Five Elements and life focus.</p>
+                        <ul class="panel-list">
+                            <li data-i18n="index_panel_li_1">Choose a life focus: career, wealth, love, protection, or elements</li>
+                            <li data-i18n="index_panel_li_2">Submit your birth date, time, and location</li>
+                            <li data-i18n="index_panel_li_3">Receive a personalized reading with a confirmed direction</li>
+                            <li data-i18n="index_panel_li_4">Direction shipped as a symbolic item, confirmed with you before it ships</li>
+                        </ul>
+                    </div>
+                    <div class="hero-actions">
+                        <a class="btn btn-primary" href="instant_reading.html" data-i18n="index_panel_cta_1">Start Free Preview</a>
+                        <a class="btn btn-secondary" href="products.html" data-i18n="index_panel_cta_2">View Matched Treasures</a>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <section>
+            <div class="container story-card">
+                        <div>
+                            <div class="section-head">
+                                <div>
+                                    <h2 data-i18n="index_story1_title">See a free preview first</h2>
+                                    <p data-i18n="index_story1_desc">No commitment needed. Enter your birth details and get a mini Five Elements reading instantly — shows you how the matching works before you order the full service.</p>
+                                </div>
+                            </div>
+                            <ul>
+                                <li data-i18n="index_story1_li_1">Instant symbolic result on the spot — no form to fill out beyond birth details</li>
+                                <li data-i18n="index_story1_li_2">Shows your Day Master, dominant elements, and your current energetic state</li>
+                                <li data-i18n="index_story1_li_3">Used by cold traffic who want to feel something before spending $199</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 style="font-size: 26px; margin-bottom: 12px;" data-i18n="index_story1_cta_title">Worth doing before ordering</h3>
+                            <p style="color: rgba(36, 25, 21, 0.76); margin-bottom: 18px;" data-i18n="index_story1_cta_desc">The preview gives you a real taste of the reading experience — a mini version of what the full $199 service delivers. It is free, takes about a minute, and helps you decide if the full reading is the right fit before you order.</p>
+                            <a class="btn btn-primary" href="instant_reading.html" data-i18n="index_story1_cta_btn">Try the Free Preview</a>
+                            <p style="margin-top: 14px; font-size: 13px; color: rgba(36, 25, 21, 0.6);"><span data-i18n="index_story1_hint">Want to see exactly what the preview reveals first?</span> <a href="instant-reading-preview.html" style="color: var(--cinnabar); text-decoration: underline;" data-i18n="index_story1_hint_link">See a sample mini reading →</a></p>
+                        </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container story-card">
+                        <div>
+                            <div class="section-head">
+                                <div>
+                                    <h2 data-i18n="index_story2_title">What you actually receive</h2>
+                                    <p data-i18n="index_story2_desc">Every order is one focused service: a birth chart reading that confirms the exact direction for your situation, then shipping a symbolic item to you.</p>
+                                </div>
+                            </div>
+                            <ul>
+                                <li data-i18n="index_story2_li_1">A personalized Five Elements and zodiac reading for your chosen life focus</li>
+                                <li data-i18n="index_story2_li_2">The confirmed direction: material, color, and symbolic meaning</li>
+                                <li data-i18n="index_story2_li_3">Final direction confirmed with you before the symbolic item ships</li>
+                                <li data-i18n="index_story2_li_4">Tracking number and follow-up included</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 style="font-size: 26px; margin-bottom: 12px;" data-i18n="index_story2_why_title">Why it costs $199</h3>
+                            <p style="color: rgba(36, 25, 21, 0.76); margin-bottom: 18px;" data-i18n="index_story2_why_desc">The $199 covers the personalized Feng Shui reading, the chart matching work, and one handcrafted Daoist treasure from the Longhushan collection. The piece is selected after we read your chart — confirmed with you before shipping from China.</p>
+                        </div>
+            </div>
+        </section>
+
+        <section id="carriers">
+            <div class="container">
+                <div class="section-head">
+                    <div>
+                        <h2 data-i18n="index_carriers_title">How the reading works — and why a symbolic item</h2>
+                        <p data-i18n="index_carriers_desc">The reading comes first. After reviewing your birth chart, we confirm the exact material, color, and symbolic direction for your situation. That direction is then shipped as a physical item — chosen to carry the reading's intent.</p>
+                    </div>
+                </div>
+
+                <div class="carrier-grid">
+                    <article class="carrier-card">
+                        <h3 data-i18n="index_bracelet_title">Worn daily — bracelet</h3>
+                        <p data-i18n="index_bracelet_desc">The bracelet carries the confirmed direction continuously. Best for career, wealth, love, and elemental balance.</p>
+                        <ul>
+                            <li data-i18n="index_bracelet_li_1">Material matched after your birth chart reading</li>
+                            <li data-i18n="index_bracelet_li_2">Crystal, jade, wood, cinnabar, or metal</li>
+                        </ul>
+                    </article>
+
+                    <article class="carrier-card">
+                        <h3 data-i18n="index_pendant_title">Close to the heart — pendant</h3>
+                        <p data-i18n="index_pendant_desc">The pendant holds the confirmed direction close to your center. Best for protection, zodiac guardian, and emotional grounding.</p>
+                        <ul>
+                            <li data-i18n="index_pendant_li_1">Symbol and cord style confirmed after your reading</li>
+                            <li data-i18n="index_pendant_li_2">Jade, obsidian, silver, or guardian symbols</li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="plans">
+            <div class="container">
+                <div class="section-head">
+                    <div>
+                        <h2 data-i18n="index_plans_title">Choose your focus</h2>
+                        <p data-i18n="index_plans_desc">Pick the life area you want support with — career, wealth, love, protection, zodiac, or elemental balance. All six plans use the same $199 price and the same process: reading, matching, confirmation, shipping.</p>
+                    </div>
+                    <a class="btn btn-primary" href="checkout.html" data-i18n="index_plans_cta">Choose My Plan</a>
+                </div>
+
+                <div class="plan-grid">
+                    <article class="plan-card">
+                        <span class="plan-tag" data-i18n="index_tag_elements">Five Elements</span>
+                        <h3 data-i18n="index_plan_elements">Elemental Balance</h3>
+                        <p data-i18n="index_plan_elements_desc">For Wood, Fire, Earth, Metal, or Water support based on your chart.</p>
+                    </article>
+                    <article class="plan-card">
+                        <span class="plan-tag" data-i18n="index_tag_zodiac">Zodiac</span>
+                        <h3 data-i18n="index_plan_zodiac">Zodiac Guardian</h3>
+                        <p data-i18n="index_plan_zodiac_desc">For Chinese zodiac, guardian Buddha, and symbolic protection matching.</p>
+                    </article>
+                    <article class="plan-card">
+                        <span class="plan-tag" data-i18n="index_tag_career">Career</span>
+                        <h3 data-i18n="index_plan_career">Career & Allies</h3>
+                        <p data-i18n="index_plan_career_desc">For promotion, business growth, exams, authority, and helpful people.</p>
+                    </article>
+                    <article class="plan-card">
+                        <span class="plan-tag" data-i18n="index_tag_wealth">Wealth</span>
+                        <h3 data-i18n="index_plan_wealth">Wealth & Retention</h3>
+                        <p data-i18n="index_plan_wealth_desc">For income stability, business flow, windfalls, and reducing leakage.</p>
+                    </article>
+                    <article class="plan-card">
+                        <span class="plan-tag" data-i18n="index_tag_love">Love</span>
+                        <h3 data-i18n="index_plan_love">Love & Harmony</h3>
+                        <p data-i18n="index_plan_love_desc">For romance, social charm, emotional repair, and relationship harmony.</p>
+                    </article>
+                    <article class="plan-card">
+                        <span class="plan-tag" data-i18n="index_tag_protection">Protection</span>
+                        <h3 data-i18n="index_plan_protection">Safety & Protection</h3>
+                        <p data-i18n="index_plan_protection_desc">For peace, grounding, negative influence, and family stability.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="how-it-works">
+            <div class="container">
+                <div class="section-head">
+                    <div>
+                        <h2 data-i18n="index_steps_title">How it works</h2>
+                    </div>
+                </div>
+
+                <div class="steps-grid">
+                    <article class="step">
+                        <div class="step-no">1</div>
+                        <h3 data-i18n="index_step_1_title">Choose your life focus</h3>
+                        <p data-i18n="index_step_1_desc">Pick the area you want support with — career, wealth, love, protection, or elemental balance.</p>
+                    </article>
+                    <article class="step">
+                        <div class="step-no">2</div>
+                        <h3 data-i18n="index_step_2_title">Choose a form — bracelet or pendant</h3>
+                        <p data-i18n="index_step_2_desc">The physical form is your choice. The material, color, and exact style come from your chart.</p>
+                    </article>
+                    <article class="step">
+                        <div class="step-no">3</div>
+                        <h3 data-i18n="index_step_3_title">Submit your birth details &amp; pay</h3>
+                        <p data-i18n="index_step_3_desc">Birth date, time, and location. Your basic data report is available the moment payment completes.</p>
+                    </article>
+                    <article class="step">
+                        <div class="step-no">4</div>
+                        <h3 data-i18n="index_step_4_title">Get your reports, then we ship</h3>
+                        <p data-i18n="index_step_4_desc">Complete master-annotated report by email within 6 hours. We then match your jewelry, confirm with you, and ship worldwide.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <div class="section-head">
+                    <div>
+                        <h2>Common questions</h2>
+                    </div>
+                </div>
+
+                <div class="faq-grid">
+                    <article class="faq-item">
+                        <h3 data-i18n="index_faq_q1">What if I don't know my birth time?</h3>
+                        <p data-i18n="index_faq_a1">Leave it blank. We use a day-based reading instead — still accurate enough to recommend the right direction. We'll note the limitation in your recommendation.</p>
+                    </article>
+                    <article class="faq-item">
+                        <h3 data-i18n="index_faq_q2">How do I know the reading is accurate?</h3>
+                        <p data-i18n="index_faq_a2">BaZi and Feng Shui have been used for over 1,000 years to map energy patterns. The instant preview shows you your Day Master and elemental balance — you can judge for yourself whether it resonates before ordering the full service.</p>
+                    </article>
+                    <article class="faq-item">
+                        <h3 data-i18n="index_faq_q3">What does the $199 pay for?</h3>
+                        <p data-i18n="index_faq_a3">The birth chart reading and the personalized matching to your situation. You pick the life focus and whether you prefer a bracelet or pendant. We decide the material and style after reading your chart. That matching work is the service.</p>
+                    </article>
+                    <article class="faq-item">
+                        <h3 data-i18n="index_faq_q4">Can I choose the exact stone or design?</h3>
+                        <p data-i18n="index_faq_a4">You choose the life focus and whether you prefer a bracelet or pendant. The material, color, and symbol are recommended after we review your birth chart — and we confirm the final direction with you before anything ships.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container story-card" style="background: linear-gradient(135deg, rgba(49,82,71,0.06) 0%, rgba(183,138,66,0.08) 100%);">
+                <div>
+                    <div class="eyebrow" style="color: var(--pine);">New — Free Tool</div>
+                    <h2 style="font-size: clamp(28px, 4vw, 40px); line-height: 1.16; margin-bottom: 14px;">AI Dream Interpreter</h2>
+                    <p style="font-size: 17px; color: rgba(36,25,21,0.76); margin-bottom: 18px;">Describe your dream and get an instant interpretation rooted in Five Elements philosophy. Our AI reads the symbols in your dream through the lens of Eastern wisdom — uncovering hidden messages about your emotional state, life direction, and elemental balance.</p>
+                    <ul>
+                        <li>Instant AI dream interpretation — full Five Elements analysis with free account</li>
+                        <li>Five Elements analysis: understand which element your dream is calling attention to</li>
+                        <li>Save your dream history and track patterns over time (free account)</li>
+                        <li>Share your dream reading as a beautiful card</li>
+                    </ul>
+                </div>
+                <div style="display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+                    <p style="font-size: 15px; color: rgba(36,25,21,0.7); margin-bottom: 16px;">Curious what your dream means?</p>
+                    <a class="btn btn-primary" href="dream-interpretation.html">Try Dream Interpreter →</a>
+                    <p style="margin-top: 14px; font-size: 13px; color: rgba(36, 25, 21, 0.5);">Free preview · Full access with account</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <div class="section-head">
+                    <div>
+                        <h2 data-i18n="index_testimonials_title">What our clients say</h2>
+                        <p data-i18n="index_testimonials_desc">Each reading is personal. Here are a few notes from people who ordered their chart-matched direction.</p>
+                    </div>
+                </div>
+                <div class="testimonial-grid">
+                    <div class="testimonial-card">
+                        <div class="stars">★★★★★</div>
+                        <p class="body">"I was skeptical at first, but the reading described my career situation with surprising accuracy. The bracelet they recommended after reading my chart has become a daily reminder to stay focused. It arrived in about two weeks, beautifully packaged."</p>
+                        <div class="author">Sarah M.</div>
+                        <div class="detail">Career & Allies · United States</div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="stars">★★★★★</div>
+                        <p class="body">"What I appreciated most was that they confirmed the direction with me before shipping. It wasn't just 'here's your order' — they explained why they chose citrine and obsidian based on my chart. That personal touch made the difference."</p>
+                        <div class="author">David L.</div>
+                        <div class="detail">Wealth & Retention · Canada</div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="stars">★★★★★</div>
+                        <p class="body">"I ordered for protection and grounding. The reading itself was worth the price — it named specific months and elements I should pay attention to. The pendant they matched to my chart is something I wear every day now."</p>
+                        <div class="author">Mei C.</div>
+                        <div class="detail">Safety & Protection · Singapore</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- $29 vs $199 comparison -->
+        <section>
+            <div class="container">
+                <div class="section-head">
+                    <div>
+                        <h2>Start with a report. Upgrade to a treasure.</h2>
+                        <p>Two ways to go deeper. The instant report gives you the full chart reading. The matched service adds a handcrafted Daoist treasure confirmed to your chart.</p>
+                    </div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:800px;margin:0 auto 40px;">
+                    <article class="plan-card" style="border-top:3px solid var(--gold);text-align:center;">
+                        <span class="plan-tag" style="background:rgba(183,138,66,0.1);color:var(--gold);">Digital Report</span>
+                        <h3>$29 Instant Report</h3>
+                        <p style="font-size:14px;color:rgba(36,25,21,0.7);">Complete chart reading — Four Pillars, Day Master, element balance, life focus, support direction, and treasure type recommendation.</p>
+                        <ul style="list-style:none;font-size:13px;color:rgba(36,25,21,0.6);text-align:left;padding:0;margin:16px 0;">
+                            <li style="padding:4px 0;">Instant digital delivery</li>
+                            <li style="padding:4px 0;">Auto-generated from your chart</li>
+                            <li style="padding:4px 0;">Gives direction & element guidance</li>
+                            <li style="padding:4px 0;">Recommends treasure type</li>
+                            <li style="padding:4px 0;color:rgba(36,25,21,0.35);">No physical item shipped</li>
+                        </ul>
+                        <a href="instant_reading.html" class="btn btn-secondary" style="display:inline-block;padding:10px 24px;font-size:13px;">Start Free Preview →</a>
+                    </article>
+                    <article class="plan-card" style="border-top:3px solid var(--cinnabar);text-align:center;">
+                        <span class="plan-tag" style="background:rgba(166,58,44,0.08);color:var(--cinnabar);">Report + Treasure</span>
+                        <h3>$199 Matched Service</h3>
+                        <p style="font-size:14px;color:rgba(36,25,21,0.7);">Digital reading + physical treasure matched to your chart. Human confirmation, product selection, and worldwide shipping with tracking.</p>
+                        <ul style="list-style:none;font-size:13px;color:rgba(36,25,21,0.6);text-align:left;padding:0;margin:16px 0;">
+                            <li style="padding:4px 0;">Human matching confirmation</li>
+                            <li style="padding:4px 0;">Specific product recommendation</li>
+                            <li style="padding:4px 0;">Confirmation before shipping</li>
+                            <li style="padding:4px 0;">Worldwide delivery with tracking</li>
+                            <li style="padding:4px 0;">$29 report credit available</li>
+                        </ul>
+                        <a href="checkout.html" class="btn btn-primary" style="display:inline-block;padding:10px 24px;font-size:13px;">Order Matched Treasure →</a>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <div class="closing-card">
+                    <h2>Start with a free preview. Go as deep as you want.</h2>
+                    <p>The free preview shows your Day Master and elemental structure in under a minute. The $29 instant report opens the full chart. The $199 service adds a matched handcrafted Daoist treasure — confirmed and shipped to you.</p>
+                    <div class="hero-actions" style="justify-content:center;">
+                        <a class="btn btn-primary" href="instant_reading.html">Start Free Preview</a>
+                        <a class="btn btn-secondary" href="instant_report.html">$29 Instant Report</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container" style="border-top: 1px solid rgba(36, 25, 21, 0.08); padding: 30px 0 8px; font-size: 13px; color: rgba(36, 25, 21, 0.7); text-align: center;">
+            <div style="font-weight: 600; color: var(--ink); margin-bottom: 10px; letter-spacing: 0.04em; font-size: 12px; text-transform: uppercase;" data-i18n="footer_bazi_knowledge">BaZi Knowledge</div>
+            <a href="birth-element-personality-career-guide.html" style="color: var(--cinnabar); margin: 0 8px;" data-i18n="footer_birth_element">Birth Element Guide</a> ·
+            <a href="what-is-day-master.html" style="color: var(--cinnabar); margin: 0 8px;" data-i18n="footer_what_is_day_master">What is Day Master</a> ·
+            <a href="five-elements-explained.html" style="color: var(--cinnabar); margin: 0 8px;" data-i18n="footer_five_elements">Five Elements</a> ·
+            <a href="bazi-reading-vs-zodiac.html" style="color: var(--cinnabar); margin: 0 8px;" data-i18n="footer_bazi_vs_zodiac">BaZi vs Zodiac</a>
+        </div>
+        <div class="container" style="border-top: 1px solid rgba(36, 25, 21, 0.06); padding: 18px 0 0; font-size: 13px; color: rgba(36, 25, 21, 0.7); text-align: center;">
+            <div style="font-weight: 600; color: var(--ink); margin-bottom: 10px; letter-spacing: 0.04em; font-size: 12px; text-transform: uppercase;" data-i18n="footer_tools">Tools & Reading</div>
+            <a href="bazi-guide.html" style="color: var(--cinnabar); margin: 0 8px; font-weight: 600;">BaZi Guide</a> ·
+            <a href="element-calculator.html" style="color: var(--cinnabar); margin: 0 8px;" data-i18n="footer_element_calc">Birth Element Calculator</a> ·
+            <a href="kua_calculator.html" style="color: var(--cinnabar); margin: 0 8px;" data-i18n="footer_kua_calculator">Kua Calculator</a> ·
+            <a href="full_bazi_reading.html" style="color: var(--cinnabar); margin: 0 8px;" data-i18n="footer_full_bazi_layer">Full BaZi Layer</a> ·
+            <a href="feng-shui-bracelet-meaning.html" style="color: var(--cinnabar); margin: 0 8px;" data-i18n="footer_bracelet_meaning">Bracelet Meaning</a> ·
+            <a href="daoist-treasures.html" style="color: var(--cinnabar); margin: 0 8px;">Daoist Treasures</a> ·
+            <a href="report_demo.html" style="color: var(--cinnabar); margin: 0 8px;" data-i18n="nav_sample_report">Sample Report</a>
+        </div>
+        <div class="container" style="padding: 14px 0 6px; font-size: 12px; color: rgba(36, 25, 21, 0.55); text-align: center;">
+            <a href="policies.html#shipping" style="color: rgba(36, 25, 21, 0.7); margin: 0 6px;" data-i18n="footer_shipping">Shipping</a> ·
+            <a href="policies.html#refund" style="color: rgba(36, 25, 21, 0.7); margin: 0 6px;" data-i18n="footer_refund">Refund</a> ·
+            <a href="policies.html#privacy" style="color: rgba(36, 25, 21, 0.7); margin: 0 6px;" data-i18n="footer_privacy">Privacy</a> ·
+            <a href="mailto:434338480@qq.com" style="color: rgba(36, 25, 21, 0.7); margin: 0 6px;" data-i18n="footer_contact">Contact</a>
+        </div>
+        <div class="container footer-card">
+            <div data-i18n="footer_copyright">© 2026 Oriental Destiny. Personalized Feng Shui readings with birth chart matching and confirmed symbolic directions.</div>
+            <div data-i18n="footer_disclaimer">For self-reflection and symbolic guidance only. Not medical, legal, financial, or professional advice. Results reflect traditional cultural frameworks, not guaranteed outcomes.</div>
+        </div>
+            <span class="od-version" style="display:block;margin-top:8px;opacity:0.55;font-size:11px;letter-spacing:0.04em;"></span>
+    </footer>
+    <script src="config.real.js"></script>
+    <script src="config.js"></script>
+    <script src="auth.js"></script>
+    <script src="i18n.js"></script>
+    <script src="bazi_translator.js"></script>
+    <script src="version.js"></script>
+    <script>
+    // Auth-aware navigation
+    Auth.init().then(function() {
+        if (Auth.currentUser) {
+            document.getElementById('navSignIn').style.display = 'none';
+            document.getElementById('navDashboard').style.display = '';
+        }
+    });
+    Auth.onAuthChange(function(user) {
+        if (user) {
+            document.getElementById('navSignIn').style.display = 'none';
+            document.getElementById('navDashboard').style.display = '';
+        } else {
+            document.getElementById('navSignIn').style.display = '';
+            document.getElementById('navDashboard').style.display = 'none';
+        }
+    });
+    </script>
+</body>
+</html>

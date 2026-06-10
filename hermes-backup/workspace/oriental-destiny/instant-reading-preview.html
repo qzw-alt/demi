@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TBGDZRZZEJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-TBGDZRZZEJ');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="See a sample BaZi mini reading — Day Master, Four Pillars, elemental balance, and recommended support direction. No signup required.">
+    <link rel="canonical" href="https://oriental-destiny.com/instant-reading-preview.html">
+    <meta property="og:title" content="Sample Mini BaZi Reading | Oriental Destiny">
+    <meta property="og:description" content="See what a free BaZi preview shows — pillars, Day Master, elemental balance, and life-direction guidance.">
+    <meta property="og:type" content="website">
+    <title>Sample BaZi Mini Reading | Oriental Destiny</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <style>
+        :root {
+            --ink: #241915;
+            --paper: #f8f1e7;
+            --cinnabar: #a63a2c;
+            --gold: #b78a42;
+            --line: rgba(36, 25, 21, 0.1);
+            --shadow: 0 18px 48px rgba(70, 41, 24, 0.12);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: Georgia, "Times New Roman", serif;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at top, rgba(183, 138, 66, 0.14), transparent 34%),
+                linear-gradient(180deg, #f5e7d6 0%, var(--paper) 42%, #fbf7f1 100%);
+            line-height: 1.7;
+        }
+
+        a { color: inherit; text-decoration: none; }
+
+        .container {
+            width: min(1120px, calc(100% - 40px));
+            margin: 0 auto;
+        }
+
+        .topbar {
+            padding: 28px 0 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        .brand-mark {
+            display: block;
+            font-size: 11px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: rgba(36, 25, 21, 0.5);
+            margin-bottom: 3px;
+        }
+
+        .brand-name {
+            display: block;
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--ink);
+            letter-spacing: 0.01em;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            font-size: 13px;
+            color: rgba(36, 25, 21, 0.65);
+            padding: 6px 14px;
+            border-radius: 6px;
+            transition: background 0.15s, color 0.15s;
+            letter-spacing: 0.02em;
+        }
+
+        nav a:hover {
+            background: rgba(36, 25, 21, 0.07);
+            color: var(--ink);
+        }
+
+        .lang-switcher {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 13px;
+            font-family: Georgia, serif;
+        }
+
+        .lang-switcher button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px 6px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-family: Georgia, serif;
+            color: rgba(36, 25, 21, 0.55);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 64px 0 52px;
+        }
+
+        .hero .eyebrow {
+            font-size: 11px;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            color: var(--cinnabar);
+            margin-bottom: 16px;
+        }
+
+        .hero h1 {
+            font-size: clamp(24px, 4vw, 38px);
+            font-weight: 700;
+            line-height: 1.25;
+            color: var(--ink);
+            margin-bottom: 18px;
+            letter-spacing: -0.01em;
+        }
+
+        .hero p {
+            font-size: 16px;
+            color: rgba(36, 25, 21, 0.7);
+            max-width: 560px;
+            margin: 0 auto 32px;
+        }
+
+        .badge-row {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-bottom: 36px;
+        }
+
+        .badge {
+            font-size: 12px;
+            letter-spacing: 0.05em;
+            color: rgba(36, 25, 21, 0.6);
+            background: rgba(36, 25, 21, 0.06);
+            padding: 5px 14px;
+            border-radius: 20px;
+        }
+
+        /* ── Sample reading card ── */
+        .sample-reading {
+            max-width: 740px;
+            margin: 0 auto 60px;
+            background: #fffbf6;
+            border: 1px solid rgba(36, 25, 21, 0.1);
+            border-radius: 16px;
+            padding: 36px 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .sample-label {
+            font-size: 10px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: rgba(36, 25, 21, 0.45);
+            margin-bottom: 6px;
+        }
+
+        .sample-subtitle {
+            font-size: 13px;
+            color: rgba(36, 25, 21, 0.5);
+            margin-bottom: 28px;
+        }
+
+        .result-card {
+            background: #fff;
+            border: 1px solid rgba(36, 25, 21, 0.09);
+            border-radius: 12px;
+            padding: 22px 26px;
+            margin-bottom: 14px;
+        }
+
+        .result-chip {
+            font-size: 10px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--cinnabar);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .result-card h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--ink);
+            margin-bottom: 8px;
+        }
+
+        .result-card p {
+            font-size: 14px;
+            color: rgba(36, 25, 21, 0.72);
+            line-height: 1.75;
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 14px;
+        }
+
+        @media (max-width: 540px) {
+            .result-grid { grid-template-columns: 1fr; }
+            .sample-reading { padding: 24px 20px; }
+        }
+
+        .pillars-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13.5px;
+            margin-top: 4px;
+        }
+
+        .pillars-table th {
+            text-align: left;
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(36, 25, 21, 0.4);
+            padding: 4px 10px 6px;
+            border-bottom: 1px solid rgba(36, 25, 21, 0.08);
+        }
+
+        .pillars-table td {
+            padding: 9px 10px;
+            border-bottom: 1px solid rgba(36, 25, 21, 0.06);
+            color: rgba(36, 25, 21, 0.78);
+            vertical-align: top;
+            line-height: 1.55;
+        }
+
+        .pillars-table tr:last-child td { border-bottom: none; }
+
+        .pillars-table .p-label {
+            font-weight: 600;
+            color: var(--ink);
+            white-space: nowrap;
+        }
+
+        .pillars-table .p-stem {
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        .pillars-table .p-branch {
+            color: rgba(36, 25, 21, 0.6);
+            font-size: 13px;
+        }
+
+        .pillars-table .p-elements {
+            font-size: 11px;
+            color: rgba(36, 25, 21, 0.45);
+        }
+
+        .pillars-table .p-hidden {
+            font-size: 12px;
+            color: rgba(36, 25, 21, 0.35);
+            font-style: italic;
+        }
+
+        .element-bar-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .element-bar-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: rgba(36, 25, 21, 0.5);
+            width: 70px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            flex-shrink: 0;
+        }
+
+        .element-bar-track {
+            flex: 1;
+            height: 6px;
+            background: rgba(36, 25, 21, 0.08);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .element-bar-fill {
+            height: 100%;
+            border-radius: 3px;
+            background: var(--cinnabar);
+        }
+
+        .element-bar-val {
+            font-size: 11px;
+            color: rgba(36, 25, 21, 0.45);
+            width: 34px;
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .teaser-card {
+            background: linear-gradient(135deg, rgba(183, 138, 66, 0.08), rgba(166, 58, 44, 0.06));
+            border: 1px solid rgba(183, 138, 66, 0.25);
+            border-radius: 12px;
+            padding: 22px 26px;
+            margin-bottom: 14px;
+        }
+
+        .teaser-card .result-chip {
+            color: #9a7032;
+        }
+
+        /* ── CTA section ── */
+        .cta-section {
+            text-align: center;
+            padding: 20px 0 72px;
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        .cta-section h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--ink);
+            margin-bottom: 12px;
+        }
+
+        .cta-section p {
+            font-size: 15px;
+            color: rgba(36, 25, 21, 0.65);
+            margin-bottom: 28px;
+        }
+
+        .btn {
+            display: inline-block;
+            font-family: Georgia, serif;
+            font-size: 14px;
+            font-weight: 700;
+            padding: 13px 30px;
+            border-radius: 9px;
+            cursor: pointer;
+            transition: transform 0.13s, box-shadow 0.13s, background 0.15s;
+            letter-spacing: 0.025em;
+            border: none;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: var(--cinnabar);
+            color: #fff8ef;
+            box-shadow: 0 4px 16px rgba(166, 58, 44, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: #8f2e22;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(166, 58, 44, 0.35);
+        }
+
+        .btn-secondary {
+            background: rgba(36, 25, 21, 0.07);
+            color: var(--ink);
+            margin-left: 12px;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(36, 25, 21, 0.13);
+            transform: translateY(-1px);
+        }
+
+        /* ── Footer ── */
+        footer {
+            border-top: 1px solid rgba(36, 25, 21, 0.08);
+            padding: 32px 0 28px;
+        }
+
+        footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 12.5px;
+            color: rgba(36, 25, 21, 0.55);
+        }
+
+        footer a {
+            color: rgba(36, 25, 21, 0.65);
+            margin: 0 6px;
+        }
+
+        footer a:hover { color: var(--cinnabar); }
+
+        .footer-links a {
+            margin: 0 4px;
+            font-size: 12px;
+        }
+
+        .footer-note {
+            font-size: 11.5px;
+            color: rgba(36, 25, 21, 0.42);
+            text-align: center;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(36, 25, 21, 0.07);
+        }
+
+        .footer-note a { color: rgba(36, 25, 21, 0.55); margin: 0 4px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <div class="topbar">
+            <div>
+                <span class="brand-mark" data-i18n="irp_brand">Oriental Destiny</span>
+                <span class="brand-name" data-i18n="irp_brand_sub">Feng Shui Jewelry Matching</span>
+            </div>
+            <nav>
+                <a href="index.html" data-i18n="irp_nav_home">Home</a>
+                <a href="instant_reading.html" data-i18n="irp_nav_reading">Free Reading</a>
+                <a href="products.html" data-i18n="irp_nav_plans">Plans</a>
+                <a href="report_demo.html" data-i18n="irp_nav_sample">Sample Report</a>
+                <a href="checkout.html" data-i18n="irp_nav_order">Order</a>
+            </nav>
+            <div class="lang-switcher"></div>
+        </div>
+    </div>
+</header>
+
+<main>
+    <section class="hero container">
+        <div class="eyebrow" data-i18n="irp_eyebrow">Sample Mini BaZi Reading</div>
+        <h1 data-i18n="irp_title">What a free preview reveals — before you spend $199</h1>
+        <p data-i18n="irp_desc">This is what your reading would look like if you entered a birth date, time, and life focus right now. The full $199 service goes significantly deeper.</p>
+        <div class="badge-row">
+            <span class="badge" data-i18n="irp_badge_dm">Day Master</span>
+            <span class="badge" data-i18n="irp_badge_pillars">Four Pillars</span>
+            <span class="badge" data-i18n="irp_badge_elements">Elemental Balance</span>
+            <span class="badge" data-i18n="irp_badge_direction">Recommended Direction</span>
+            <span class="badge" data-i18n="irp_badge_time">≈ 60 seconds</span>
+        </div>
+    </section>
+
+    <!-- ── Sample result card ── -->
+    <div class="sample-reading">
+        <div class="sample-label" data-i18n="irp_sample_label">Sample reading · Birth data: March 15, 1988 · 09:30 AM · Shanghai, China</div>
+        <div class="sample-subtitle" data-i18n="irp_sample_sub">Focus: Career &amp; Allies · Fictional example for illustration purposes</div>
+
+        <!-- Root profile -->
+        <div class="result-card">
+            <div class="result-chip" data-i18n="irp_root_chip">Root of the Chart</div>
+            <h3 data-i18n="irp_root_title">The Metal Day Master with strong Earth structure</h3>
+            <p data-i18n="irp_root_desc">Your Day Master is <strong>Geng Metal</strong> — your core identity is formed around Metal energy: decisive, structured, and oriented toward tangible outcomes. The four pillars show a particularly strong Earth presence: your Month Pillar (Wu Earth) and Year Pillar (Wu Earth) both contribute heavy Earth, which both supports and pressures your Metal. This is a person who carries significant internal weight — the decision to act is rarely impulsive, but when it comes, it is firm and well-grounded.</p>
+        </div>
+
+        <!-- Four Pillars -->
+        <div class="result-card">
+            <div class="result-chip" data-i18n="irp_pillars_chip">Four Pillars</div>
+            <table class="pillars-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th data-i18n="irp_th_stem">Heavenly Stem</th>
+                        <th data-i18n="irp_th_branch">Earthly Branch</th>
+                        <th data-i18n="irp_th_hidden">Hidden Stems</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="p-label" data-i18n="irp_year">Year</td>
+                        <td><span class="p-stem">戊</span> Wu Earth</td>
+                        <td><span class="p-branch">辰</span> Chen Dragon</td>
+                        <td><span class="p-hidden">戊 (main) · 乙 (middle) · 癸 (residual)</span></td>
+                    </tr>
+                    <tr>
+                        <td class="p-label" data-i18n="irp_month">Month</td>
+                        <td><span class="p-stem">戊</span> Wu Earth</td>
+                        <td><span class="p-branch">辰</span> Chen Dragon</td>
+                        <td><span class="p-hidden">戊 (main) · 乙 (middle) · 癸 (residual)</span></td>
+                    </tr>
+                    <tr>
+                        <td class="p-label" data-i18n="irp_day">Day</td>
+                        <td><span class="p-stem">庚</span> Geng Metal</td>
+                        <td><span class="p-branch">子</span> Zi Rat</td>
+                        <td><span class="p-hidden">庚 (main) · 癸 (middle) · 壬 (residual)</span></td>
+                    </tr>
+                    <tr>
+                        <td class="p-label" data-i18n="irp_hour">Hour</td>
+                        <td><span class="p-stem">辛</span> Xin Metal</td>
+                        <td><span class="p-branch">巳</span> Si Snake</td>
+                        <td><span class="p-hidden">丙 (main) · 庚 (middle) · 戊 (residual)</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Day Master + Elements -->
+        <div class="result-grid">
+            <div class="result-card">
+                <div class="result-chip" data-i18n="irp_dm_chip">Day Master</div>
+                <p data-i18n="irp_dm_desc"><strong>Geng Metal</strong> — the pivotal energy of this chart. Your Day Master is the lens through which all other pillars are read. Geng Metal people tend toward directness, resilience, and an appreciation for precision and quality. Your inner compass is strong, but it works best when the environment offers clarity and structure.</p>
+            </div>
+
+            <div class="result-card">
+                <div class="result-chip" data-i18n="irp_elem_chip">Elemental Balance</div>
+                <p data-i18n="irp_elem_desc">Metal is your core identity. In this chart, Earth is the dominant external force — both surrounding and somewhat compressing the Metal structure. Water is present but restrained. Wood and Fire are minimal. The reading direction points toward <strong>Water</strong> as a supportive element — not to overwhelm the Metal, but to give it fluidity and range.</p>
+                <div style="margin-top:12px;">
+                    <div class="element-bar-row">
+                        <span class="element-bar-label" data-i18n="irp_bar_wood">Wood</span>
+                        <div class="element-bar-track"><div class="element-bar-fill" style="width:18%;"></div></div>
+                        <span class="element-bar-val">低</span>
+                    </div>
+                    <div class="element-bar-row">
+                        <span class="element-bar-label" data-i18n="irp_bar_fire">Fire</span>
+                        <div class="element-bar-track"><div class="element-bar-fill" style="width:24%;"></div></div>
+                        <span class="element-bar-val">低</span>
+                    </div>
+                    <div class="element-bar-row">
+                        <span class="element-bar-label" data-i18n="irp_bar_earth">Earth</span>
+                        <div class="element-bar-track"><div class="element-bar-fill" style="width:78%;"></div></div>
+                        <span class="element-bar-val">高</span>
+                    </div>
+                    <div class="element-bar-row">
+                        <span class="element-bar-label" data-i18n="irp_bar_metal">Metal</span>
+                        <div class="element-bar-track"><div class="element-bar-fill" style="width:62%;"></div></div>
+                        <span class="element-bar-val">高</span>
+                    </div>
+                    <div class="element-bar-row">
+                        <span class="element-bar-label" data-i18n="irp_bar_water">Water</span>
+                        <div class="element-bar-track"><div class="element-bar-fill" style="width:41%;"></div></div>
+                        <span class="element-bar-val">适中</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Matter before you -->
+        <div class="result-card">
+            <div class="result-chip" data-i18n="irp_matter_chip">Matter Before You</div>
+            <p data-i18n="irp_matter_desc">Career is the focus area you selected. In this chart, the Metal Day Master already carries a strong professional identity — the structure is there. What tends to slow things down is the overwhelming Earth: Earth channels gravity, persistence, and consolidation, which can make it hard to shift direction even when a change is needed. The recommendation here points to Water not as a dramatic pivot, but as a <em>reorientation of tone</em> — less pushing, more sensing where the current is already moving.</p>
+        </div>
+
+        <!-- Suitable support -->
+        <div class="result-card">
+            <div class="result-chip" data-i18n="irp_support_chip">Suitable Support Direction</div>
+            <p data-i18n="irp_support_desc">Based on this chart's structure, the recommended symbolic direction is <strong>Water</strong> — specifically in the form of materials and colors that carry Water's energy: black onyx, blue-green jade, or a dark river stone element. In jewelry form, this points toward a black onyx bead bracelet or a pendant featuring a water-element motif. The support works by giving the Metal a channel — a way to move without losing its structural integrity.</p>
+        </div>
+
+        <!-- Teaser -->
+        <div class="teaser-card">
+            <div class="result-chip" data-i18n="irp_teaser_chip">What a fuller $199 reading would add</div>
+            <p data-i18n="irp_teaser_desc">The sample above covers the automated foundation. The full reading includes: human-reviewed solar-term timing for the Month Pillar, detailed Ten God analysis of each pillar relationship, 10-year luck cycle mapping, a symbolic item recommendation confirmed before shipping, and direct email follow-up from our reading team. The full service is $199 and ships a matched Daoist piece from Longhushan after your direction is confirmed.</p>
+        </div>
+    </div>
+
+    <!-- ── CTAs ── -->
+    <section class="cta-section">
+        <h2 data-i18n="irp_cta_title">Try it with your own birth data</h2>
+        <p data-i18n="irp_cta_desc">The free reading runs in about 60 seconds. Enter your birth date, time, and life focus — get your Day Master, Four Pillars, and recommended direction instantly.</p>
+        <div>
+            <a class="btn btn-primary" href="instant_reading.html" data-i18n="irp_cta_btn">Get My Free Mini Reading →</a>
+            <a class="btn btn-secondary" href="checkout.html" data-i18n="irp_cta_skip">Skip Ahead — $199 Order</a>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        <span><span data-i18n="irp_footer_copy">© 2026 Oriental Destiny</span> · <a href="mailto:434338480@qq.com">434338480@qq.com</a></span>
+        <div class="footer-links">
+            <a href="policies.html#shipping" data-i18n="footer_shipping">Shipping</a> ·
+            <a href="policies.html#refund" data-i18n="footer_refund">Refund</a> ·
+            <a href="policies.html#privacy" data-i18n="footer_privacy">Privacy</a> ·
+            <a href="what-is-day-master.html" data-i18n="footer_what_is_day_master">What is Day Master</a> ·
+            <a href="feng-shui-bracelet-meaning.html" data-i18n="footer_bracelet_meaning">Bracelet Meaning</a>
+        </div>
+    </div>
+    <div class="container footer-note" data-i18n="irp_footer_note">
+        For self-reflection and symbolic guidance only. Not medical, legal, financial, or professional advice.
+    </div>
+</footer>
+
+<script src="i18n.js"></script>
+<script src="version.js"></script>
+</body>
+</html>

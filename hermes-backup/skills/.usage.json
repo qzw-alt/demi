@@ -1,0 +1,41 @@
+{
+  "content-research-writer-cn": {
+    "archived_at": null,
+    "created_at": "2026-05-31T07:13:43.821219+00:00",
+    "created_by": "agent",
+    "last_patched_at": "2026-06-07T01:20:53.191987+00:00",
+    "last_used_at": "2026-06-07T06:39:26.111029+00:00",
+    "last_viewed_at": "2026-06-07T06:39:26.096586+00:00",
+    "patch_count": 16,
+    "pinned": false,
+    "state": "active",
+    "use_count": 28,
+    "view_count": 14
+  },
+  "creative/programmatic-seo": {
+    "archived_at": null,
+    "created_at": "2026-06-06T01:14:12.346763+00:00",
+    "created_by": null,
+    "last_patched_at": null,
+    "last_used_at": "2026-06-06T01:14:26.779316+00:00",
+    "last_viewed_at": "2026-06-06T01:14:26.768728+00:00",
+    "patch_count": 0,
+    "pinned": false,
+    "state": "active",
+    "use_count": 2,
+    "view_count": 2
+  },
+  "programmatic-seo": {
+    "archived_at": null,
+    "created_at": "2026-05-31T07:13:52.921096+00:00",
+    "created_by": "agent",
+    "last_patched_at": "2026-06-07T01:21:07.947191+00:00",
+    "last_used_at": "2026-06-07T06:39:26.125867+00:00",
+    "last_viewed_at": "2026-06-07T06:39:26.121847+00:00",
+    "patch_count": 58,
+    "pinned": false,
+    "state": "active",
+    "use_count": 78,
+    "view_count": 64
+  }
+}

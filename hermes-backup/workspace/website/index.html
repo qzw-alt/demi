@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1e3c72">
+    <title>Hospitals in China for International Patients | China Hospitals Guide</title>
+    <meta name="description" content="Compare hospitals in China for international patients. Explore hospitals by city and specialty, understand likely costs, and get support with records and appointments before you travel.">
+    <link rel="canonical" href="https://chinahospitalsguide.com/">
+    <meta property="og:title" content="Hospitals in China for International Patients | China Hospitals Guide">
+    <meta property="og:description" content="Compare hospitals in China by city and specialty, understand likely costs, and get support before you travel.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://chinahospitalsguide.com/">
+    <meta property="og:image" content="https://chinahospitalsguide.com/og-image.webp">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Hospitals in China for International Patients | China Hospitals Guide">
+    <meta name="twitter:description" content="Compare hospitals in China by city and specialty, understand likely costs, and get support before you travel.">
+    <meta name="twitter:image" content="https://chinahospitalsguide.com/og-image.webp">
+    <link rel="stylesheet" href="styles.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RVYZENK472"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-RVYZENK472');
+    </script>
+    <style>
+        .hero-panel,
+        .section-shell,
+        .band-shell {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .hero-home {
+            padding: 150px 0 90px;
+            background:
+                linear-gradient(135deg, rgba(12, 24, 48, 0.88), rgba(30, 60, 114, 0.88)),
+                url('images/china-hospital.jpg') center/cover no-repeat;
+            color: white;
+        }
+        .hero-copy {
+            max-width: 700px;
+        }
+        .hero-kicker {
+            display: inline-block;
+            margin-bottom: 18px;
+            padding: 8px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.28);
+            background: rgba(255,255,255,0.08);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+        .hero-home h1 {
+            font-size: clamp(2.4rem, 5vw, 4.4rem);
+            line-height: 1.05;
+            margin-bottom: 18px;
+            color: white;
+        }
+        .hero-home p {
+            font-size: 1.08rem;
+            color: rgba(255,255,255,0.88);
+            max-width: 620px;
+        }
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-top: 30px;
+        }
+        .hero-actions .cta-button.alt {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.3);
+            box-shadow: none;
+        }
+        .hero-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 16px;
+            margin-top: 36px;
+            max-width: 520px;
+        }
+        .hero-metric {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 18px;
+            padding: 18px;
+        }
+        .hero-metric strong {
+            display: block;
+            font-size: 1.4rem;
+            margin-bottom: 6px;
+            color: white;
+        }
+        .section-shell {
+            padding: 72px 20px;
+        }
+        .band {
+            background: linear-gradient(180deg, #f5f8fc 0%, #edf3fa 100%);
+            color: var(--text);
+        }
+        .section-lead {
+            max-width: 760px;
+            margin: 0 auto 40px;
+            text-align: center;
+            color: var(--text-light);
+        }
+        .journey-grid,
+        .choice-grid,
+        .package-grid,
+        .proof-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+        }
+        .journey-card,
+        .choice-card,
+        .package-card,
+        .proof-card {
+            background: white;
+            border: 1px solid rgba(30, 60, 114, 0.08);
+            border-radius: 20px;
+            padding: 28px;
+            box-shadow: 0 12px 36px rgba(16, 24, 40, 0.08);
+        }
+        .journey-card h3,
+        .choice-card h3,
+        .package-card h3,
+        .proof-card h3 {
+            color: #1e3c6e;
+            margin-bottom: 10px;
+        }
+        .step-badge {
+            display: inline-flex;
+            width: 38px;
+            height: 38px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .choice-card ul,
+        .package-card ul {
+            list-style: none;
+            margin: 16px 0 0;
+            padding: 0;
+        }
+        .choice-card li,
+        .package-card li {
+            padding: 8px 0;
+            border-bottom: 1px solid #edf1f7;
+            color: #4b5565;
+        }
+        .choice-card li:last-child,
+        .package-card li:last-child {
+            border-bottom: 0;
+        }
+        .price-line {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 14px 0;
+        }
+        .package-actions,
+        .final-actions {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-top: 28px;
+        }
+        .hospital-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        .hospital-preview .hospital-card {
+            box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+        }
+        .final-banner {
+            max-width: 1020px;
+            margin: 0 auto;
+            padding: 34px;
+            border-radius: 24px;
+            background: linear-gradient(135deg, #17345f 0%, #2a5298 100%);
+            color: white;
+            display: grid;
+            grid-template-columns: 2fr 1.2fr;
+            gap: 20px;
+            align-items: center;
+        }
+        .final-banner p {
+            color: rgba(255,255,255,0.85);
+            margin: 10px 0 0;
+        }
+        .final-banner .cta-button {
+            justify-self: end;
+        }
+        .final-banner .cta-button.alt {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.35);
+            color: white;
+            box-shadow: none;
+        }
+        @media (max-width: 768px) {
+            .hero-home {
+                padding-top: 110px;
+                padding-bottom: 72px;
+            }
+            .hero-home h1 {
+                font-size: 2.1rem;
+                line-height: 1.15;
+            }
+            .hero-home p {
+                font-size: 1rem;
+            }
+            .hero-metrics {
+                grid-template-columns: 1fr;
+            }
+            .hero-metric {
+                padding: 16px;
+            }
+            .section-shell {
+                padding: 48px 20px;
+            }
+            .section-title {
+                font-size: 1.8rem;
+            }
+            .journey-card,
+            .choice-card,
+            .package-card,
+            .proof-card {
+                padding: 22px;
+            }
+            .hero-actions,
+            .package-actions,
+            .final-actions {
+                flex-direction: column;
+            }
+            .hero-actions .cta-button,
+            .package-actions .cta-button,
+            .final-actions .cta-button {
+                width: 100%;
+                text-align: center;
+            }
+            .final-banner {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding: 28px 24px;
+            }
+            .final-banner .cta-button {
+                justify-self: center;
+            }
+        }
+        @media (max-width: 480px) {
+            .hero-home h1 {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
+
+    <meta property="og:site_name" content="China Hospitals Guide">
+    <script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@type": "MedicalBusiness",
+"name": "China Hospitals Guide",
+"url": "https://chinahospitalsguide.com",
+"logo": "https://chinahospitalsguide.com/og-image.webp",
+"image": "https://chinahospitalsguide.com/og-image.webp",
+"description": "Independent medical travel coordination for international patients seeking hospital treatment in China. Hospital matching, cost comparison, and pre-arrival planning.",
+"telephone": "+86-135-2200-5627",
+"email": "contact@chinahospitalsguide.com",
+"areaServed": { "@type": "Country", "name": "China" }
+}
+</script>
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@type": "WebSite",
+"name": "China Hospitals Guide",
+"url": "https://chinahospitalsguide.com",
+"potentialAction": {
+"@type": "SearchAction",
+"target": {
+"@type": "EntryPoint",
+"urlTemplate": "https://chinahospitalsguide.com/hospitals.html?search={search_term_string}"
+},
+"query-input": "required name=search_term_string"
+}
+}
+</script>
+    </head>
+<body>
+    <div class="nav-overlay" id="navOverlay"></div>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">China Hospitals Guide</a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="how-it-works.html">Process</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="hospitals.html">Hospitals</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="contact-new.html" class="nav-cta-mobile">Start Here</a></li>
+        </ul>
+        <a href="contact-new.html" class="nav-cta">Start Here</a>
+        <div class="nav-toggle" id="navToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</nav>
+
+    <section class="hero-home">
+        <div class="hero-panel">
+            <div class="hero-copy">
+                <span class="hero-kicker">Hospitals in China for international patients</span>
+                <h1>Planning treatment in China? Compare hospitals, understand your options, and prepare for the next step.</h1>
+                <p>We help international patients explore hospitals in China by city and specialty, understand likely costs, and prepare records and appointments before they travel.</p>
+                <div class="hero-actions">
+                    <a href="contact-new.html" class="cta-button">Start Free Case Review</a>
+                    <a href="pricing.html" class="cta-button alt">View Pricing</a>
+                </div>
+                <div class="hero-metrics">
+                    <div class="hero-metric"><strong>40+</strong><span>Hospitals across major Chinese cities</span></div>
+                    <div class="hero-metric"><strong>24h</strong><span>Typical response time on business days</span></div>
+                </div>
+                <div class="trust-badges">
+                    <div class="badge"><span class="badge-icon">&#x1F3E5;</span> Independent &amp; Unbiased</div>
+                    <div class="badge"><span class="badge-icon">&#x1F4CB;</span> No Hospital Commissions</div>
+                    <div class="badge"><span class="badge-icon">&#x1F310;</span> International Patient Focus</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="band">
+        <div class="section-shell">
+            <h2 class="section-title">How We Help</h2>
+            <p class="section-lead">We help you understand your options before you commit to treatment travel.</p>
+            <div class="journey-grid">
+                <div class="journey-card">
+                    <div class="step-badge">1</div>
+                    <h3>Share your case</h3>
+                    <p>Tell us about your condition, timing, and any hospitals or doctors you already have in mind.</p>
+                </div>
+                <div class="journey-card">
+                    <div class="step-badge">2</div>
+                    <h3>Receive clear guidance</h3>
+                    <p>We help you compare suitable hospitals, likely costs, and the practical differences that matter most.</p>
+                </div>
+                <div class="journey-card">
+                    <div class="step-badge">3</div>
+                    <h3>Move forward</h3>
+                    <p>When you are ready, we help you prepare records, appointments, and the next steps before travel.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="band">
+        <div class="section-shell">
+            <h2 class="section-title">Support Options</h2>
+            <p class="section-lead">Start with a lighter review or choose hands-on support if you want help preparing before travel.</p>
+            <div class="package-grid">
+                <div class="package-card">
+                    <h3>Hospital Match &amp; Plan</h3>
+                    <div class="price-line">$49</div>
+                    <p>For patients still researching — get a clear shortlist of hospitals, cost expectations, and a practical plan before you commit.</p>
+                    <ul>
+                        <li>3-5 hospital options matched to your case</li>
+                        <li>Cost range and city comparison</li>
+                        <li>Best if you want to manage follow-through yourself</li>
+                    </ul>
+                </div>
+                <div class="package-card">
+                    <h3>Pre-Arrival Coordination</h3>
+                    <div class="price-line">$399</div>
+                    <p>For patients ready to move — we handle hospital contact, appointments, pre-arrival planning, and airport pickup.</p>
+                    <ul>
+                        <li>Hospital phone contact and appointment coordination</li>
+                        <li>Medical record preparation guidance</li>
+                        <li>Airport pickup arrangement on arrival</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="package-actions">
+                <a href="services.html" class="cta-button">See What Is Included</a>
+                <a href="pricing.html" class="cta-button">View Pricing</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-shell">
+            <h2 class="section-title">Why Patients Choose Us</h2>
+            <p class="section-lead">Patients come to us for clearer guidance, honest expectations, and practical help before they travel.</p>
+        <div class="proof-grid">
+            <div class="proof-card">
+                <h3>Independent guidance</h3>
+                <p>We help you understand your options, while treatment decisions remain with the hospital and doctors.</p>
+            </div>
+            <div class="proof-card">
+                <h3>Practical hospital information</h3>
+                <p>We focus on the details patients actually need: hospital fit, likely costs, records, timing, and what to prepare.</p>
+            </div>
+            <div class="proof-card">
+                <h3>Clear next steps</h3>
+                <p>You know what to send, how we respond, and what happens after you start a paid service.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="band">
+        <div class="section-shell">
+            <h2 class="section-title">Helpful Guides Before You Book</h2>
+            <p class="section-lead">Practical resources for foreigners, expats, students, and international patients trying to understand healthcare in China.</p>
+            <div class="proof-grid">
+                <div class="proof-card">
+                    <h3>Foreigners' Guide to Healthcare in China</h3>
+                    <p>Learn how public hospitals, private hospitals, emergency care, registration, payment, and insurance usually work.</p>
+                    <p><a href="blog/foreigners-guide-healthcare-china.html" style="color:#1e3c72;font-weight:700;text-decoration:none;">Read the guide</a></p>
+                </div>
+                <div class="proof-card">
+                    <h3>Medical Chinese Phrase Sheet</h3>
+                    <p>Keep useful Chinese phrases ready for registration, symptoms, allergies, pharmacy, records, insurance, and emergencies.</p>
+                    <p><a href="medical-chinese-phrases.html" style="color:#1e3c72;font-weight:700;text-decoration:none;">Open the phrase sheet</a></p>
+                </div>
+                <div class="proof-card">
+                    <h3>Hospital Preparation Checklist</h3>
+                    <p>Review what to prepare before a consultation, from medical records and imaging to costs, travel, and follow-up questions.</p>
+                    <p><a href="checklist.html" style="color:#1e3c72;font-weight:700;text-decoration:none;">View the checklist</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+
+    <!-- Latest News Section -->
+    <section style="padding:60px 0;background:white;">
+        <div style="max-width:1200px;margin:0 auto;padding:0 24px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:32px;">
+                <div>
+                    <h2 style="font-size:2em;color:#1e3c72;margin:0 0 8px;">Latest Medical Tourism News</h2>
+                    <p style="color:#666;margin:0;">Stay updated on global medical tourism developments and China healthcare breakthroughs.</p>
+                </div>
+                <a href="news/" style="background:#dc143c;color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:600;white-space:nowrap;">All news →</a>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;">
+                <div style="background:white;border-radius:12px;padding:24px;box-shadow:0 2px 12px rgba(0,0,0,0.08);border:1px solid #eee;">
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+                    <span style="background:#dc143c;color:white;padding:4px 12px;border-radius:20px;font-size:0.75em;font-weight:600;">NEWS</span>
+                    <span style="color:#999;font-size:0.85em;">May 13, 2026</span>
+                </div>
+                <h3 style="font-size:1.1em;margin:0 0 10px;line-height:1.3;"><a href="news/2026-05-13-hantavirus-mv-hondius-china-comparison.html" style="color:#1e3c72;text-decoration:none;">Deadly Hantavirus Outbreak on Cruise Ship MV Hondius: What You Need to Know About the Andes Virus Spreading Human-to-Human</a></h3>
+                <p style="color:#666;font-size:0.9em;line-height:1.5;margin:0;">A hantavirus outbreak on the cruise ship MV Hondius has killed 3 people and infected at least 8 passengers since April 2026. The A</p>
+                <a href="news/2026-05-13-hantavirus-mv-hondius-china-comparison.html" style="display:inline-block;margin-top:12px;color:#dc143c;font-weight:600;font-size:0.85em;text-decoration:none;">Read more →</a>
+            </div> <div style="background:white;border-radius:12px;padding:24px;box-shadow:0 2px 12px rgba(0,0,0,0.08);border:1px solid #eee;">
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+                    <span style="background:#dc143c;color:white;padding:4px 12px;border-radius:20px;font-size:0.75em;font-weight:600;">NEWS</span>
+                    <span style="color:#999;font-size:0.85em;">May 1, 2026</span>
+                </div>
+                <h3 style="font-size:1.1em;margin:0 0 10px;line-height:1.3;"><a href="news/2026-05-11-daraxonrasib-pancreatic-cancer-expanded-access.html" style="color:#1e3c72;text-decoration:none;">Revolution Medicines' Daraxonrasib Gets FDA Green Light for Expanded Access — A New Option for Pancreatic Cancer Patients</a></h3>
+                <p style="color:#666;font-size:0.9em;line-height:1.5;margin:0;">The FDA has issued a 'safe to proceed' letter for daraxonrasib, allowing Revolution Medicines to offer its investigational KRAS G1</p>
+                <a href="news/2026-05-11-daraxonrasib-pancreatic-cancer-expanded-access.html" style="display:inline-block;margin-top:12px;color:#dc143c;font-weight:600;font-size:0.85em;text-decoration:none;">Read more →</a>
+            </div> <div style="background:white;border-radius:12px;padding:24px;box-shadow:0 2px 12px rgba(0,0,0,0.08);border:1px solid #eee;">
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+                    <span style="background:#dc143c;color:white;padding:4px 12px;border-radius:20px;font-size:0.75em;font-weight:600;">NEWS</span>
+                    <span style="color:#999;font-size:0.85em;">May 1, 2026</span>
+                </div>
+                <h3 style="font-size:1.1em;margin:0 0 10px;line-height:1.3;"><a href="news/2026-05-11-vepdegestrant-veppanu-protec-breast-cancer-fda-approved.html" style="color:#1e3c72;text-decoration:none;">FDA Approves Vepdegestrant (VEPPANU): The World's First PROTAC Cancer Drug — What It Means for Breast Cancer Patients Worldwide</a></h3>
+                <p style="color:#666;font-size:0.9em;line-height:1.5;margin:0;">On May 1, 2026, the FDA approved vepdegestrant (VEPPANU), the first-ever PROTAC protein degrader for ER+/HER2-/ESR1-mutated metast</p>
+                <a href="news/2026-05-11-vepdegestrant-veppanu-protec-breast-cancer-fda-approved.html" style="display:inline-block;margin-top:12px;color:#dc143c;font-weight:600;font-size:0.85em;text-decoration:none;">Read more →</a>
+            </div>
+            </div>
+        </div>
+    </section>
+
+
+        <!-- Latest Articles - compact link -->
+    <section style="background:#f8f9fa;padding:32px 0;">
+        <div style="max-width:1200px;margin:0 auto;padding:0 24px;text-align:center;">
+            <a href="blog/" style="color:#1e3c72;font-size:1.1em;font-weight:600;text-decoration:none;border-bottom:2px solid #1e3c72;padding-bottom:2px;">View all articles →</a>
+        </div>
+    </section>
+
+
+    <section class="section-shell">
+        <div class="final-banner">
+            <div>
+                <h2>Ready to talk through your case?</h2>
+                <p>Start with a free case review if you are still deciding, or go to pricing if you already know you want support.</p>
+            </div>
+            <div class="final-actions">
+                <a href="contact-new.html" class="cta-button">Start Free Case Review</a>
+                <a href="pricing.html" class="cta-button alt">View Pricing</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer" style="background:#f7f9fc;border-top:1px solid #e5eaf1;margin-top:48px;padding:40px 20px 32px;text-align:center;">
+    <div style="max-width:1100px;margin:0 auto;">
+        <p style="margin:0 0 14px;line-height:1.8;">
+            <a href="index.html" style="color:#1e3c72;text-decoration:none;margin:0 10px;">Home</a>
+            <a href="services.html" style="color:#1e3c72;text-decoration:none;margin:0 10px;">Services</a>
+            <a href="how-it-works.html" style="color:#1e3c72;text-decoration:none;margin:0 10px;">Process</a>
+            <a href="pricing.html" style="color:#1e3c72;text-decoration:none;margin:0 10px;">Pricing</a>
+            <a href="hospitals.html" style="color:#1e3c72;text-decoration:none;margin:0 10px;">Hospitals</a>
+            <a href="contact.html" style="color:#1e3c72;text-decoration:none;margin:0 10px;">Contact</a>
+        </p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;max-width:760px;margin:0 auto 16px;text-align:left;">
+            <div>
+                <p style="margin:0 0 10px;color:#1f2937;font-weight:700;">Company</p>
+                <p style="margin:0;line-height:1.9;font-size:0.95rem;opacity:0.85;">
+                    <a href="about.html" style="color:#4b5565;text-decoration:none;display:inline-block;margin-right:14px;">About</a>
+                    <a href="contact-new.html" style="color:#4b5565;text-decoration:none;display:inline-block;margin-right:14px;">Start Here</a>
+                    <a href="privacy.html" style="color:#4b5565;text-decoration:none;display:inline-block;margin-right:14px;">Privacy</a>
+                    <a href="terms.html" style="color:#4b5565;text-decoration:none;display:inline-block;">Terms</a>
+                </p>
+            </div>
+            <div>
+                <p style="margin:0 0 10px;color:#1f2937;font-weight:700;">Resources</p>
+                <p style="margin:0;line-height:1.9;font-size:0.95rem;opacity:0.85;">
+                    <a href="resources.html" style="color:#4b5565;text-decoration:none;display:inline-block;margin-right:14px;">Resources</a>
+                    <a href="stories.html" style="color:#4b5565;text-decoration:none;display:inline-block;margin-right:14px;">Stories</a>
+                    <a href="cost-comparison.html" style="color:#4b5565;text-decoration:none;display:inline-block;margin-right:14px;">Cost Comparison</a>
+                    <a href="course.html" style="color:#4b5565;text-decoration:none;display:inline-block;margin-right:14px;">Course</a>
+                    <a href="blog/" style="color:#4b5565;text-decoration:none;display:inline-block;margin-right:14px;">Blog</a>
+                    <a href="news/" style="color:#4b5565;text-decoration:none;display:inline-block;">News</a>
+                </p>
+            </div>
+        </div>
+        <p style="margin:0;color:#6b7280;font-size:0.9rem;">Independent medical travel coordination for international patients.</p>
+    </div>
+</footer>
+
+    <script>
+        (function() {
+            var navToggle = document.getElementById('navToggle');
+            var navLinks = document.getElementById('navLinks');
+            var navOverlay = document.getElementById('navOverlay');
+            function closeMenu() {
+                if (navLinks) navLinks.classList.remove('active');
+                if (navOverlay) navOverlay.classList.remove('active');
+            }
+            if (navToggle && navLinks) {
+                navToggle.addEventListener('click', function() {
+                    navLinks.classList.toggle('active');
+                    if (navOverlay) navOverlay.classList.toggle('active');
+                });
+            }
+            if (navOverlay) {
+                navOverlay.addEventListener('click', closeMenu);
+            }
+            document.querySelectorAll('.nav-links a').forEach(function(link) {
+                link.addEventListener('click', closeMenu);
+            });
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') closeMenu();
+            });
+        })();
+    </script>
+    <div class="mobile-bottom-bar">
+        <a href="index.html"><span>🏠</span>Home</a>
+        <a href="services.html"><span>🩺</span>Services</a>
+        <a href="hospitals.html"><span>🏥</span>Hospitals</a>
+        <a href="contact-new.html"><span>✉️</span>Contact</a>
+    </div>
+    <div class="floating-buttons">
+        <a href="https://wa.me/8615763107083" class="floating-btn whatsapp-btn" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+            <span>💬</span>
+            <span class="chat-tooltip">Chat on WhatsApp</span>
+        </a>
+    </div>
+</body>
+</html>
+
+

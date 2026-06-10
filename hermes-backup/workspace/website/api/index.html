@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>China Hospitals API Explorer</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f1923; color: #e0e0e0; min-height: 100vh; padding: 2rem; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 { color: #fff; margin-bottom: 0.5rem; font-size: 1.8rem; }
+        .subtitle { color: #888; margin-bottom: 2rem; font-size: 0.95rem; }
+        .api-box { background: #1a2332; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .api-url { font-family: monospace; background: #0d1520; padding: 1rem; border-radius: 8px; color: #7ee787; font-size: 0.9rem; word-break: break-all; margin-bottom: 1rem; border: 1px solid #2d3748; }
+        .filters { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
+        select, button { padding: 0.6rem 1rem; border-radius: 8px; border: 1px solid #2d3748; background: #0d1520; color: #e0e0e0; font-size: 0.9rem; cursor: pointer; }
+        select { min-width: 160px; }
+        button { background: #238636; border-color: #238636; color: #fff; }
+        button:hover { background: #2ea043; }
+        .results-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; color: #888; font-size: 0.85rem; }
+        .hospital-card { background: #1a2332; border-radius: 12px; padding: 1.2rem; margin-bottom: 1rem; border-left: 4px solid #2d3748; }
+        .hospital-card.very_high { border-left-color: #238636; }
+        .hospital-card.high { border-left-color: #3b82f6; }
+        .hospital-card.medium_high { border-left-color: #f59e0b; }
+        .hospital-card.medium { border-left-color: #ef4444; }
+        .hospital-name { color: #fff; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.3rem; }
+        .hospital-meta { color: #888; font-size: 0.85rem; margin-bottom: 0.5rem; }
+        .hospital-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
+        .tag { background: #2d3748; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; }
+        .trust-badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+        .trust-badge.very_high { background: #238636; color: #fff; }
+        .trust-badge.high { background: #3b82f6; color: #fff; }
+        .trust-badge.medium_high { background: #f59e0b; color: #000; }
+        .trust-badge.medium { background: #ef4444; color: #fff; }
+        .json-output { background: #0d1520; border-radius: 8px; padding: 1rem; font-family: monospace; font-size: 0.8rem; color: #7ee787; max-height: 400px; overflow-y: auto; white-space: pre-wrap; word-break: break-all; border: 1px solid #2d3748; }
+        .tab-bar { display: flex; gap: 0; margin-bottom: 1rem; }
+        .tab { padding: 0.5rem 1rem; cursor: pointer; border-bottom: 2px solid transparent; color: #888; }
+        .tab.active { color: #fff; border-bottom-color: #238636; }
+        .note { background: #1a2332; border-radius: 8px; padding: 1rem; font-size: 0.85rem; color: #888; margin-top: 1.5rem; border-left: 3px solid #f59e0b; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏥 China Hospitals Guide API</h1>
+        <p class="subtitle">Machine-readable hospital directory with AI-ready trust scores</p>
+
+        <div class="api-box">
+            <div class="api-url" id="apiUrl">Loading...</div>
+            <div class="filters">
+                <select id="cityFilter" onchange="filterHospitals()">
+                    <option value="">All Cities</option>
+                    <option value="Beijing">Beijing</option>
+                    <option value="Shanghai">Shanghai</option>
+                    <option value="Guangzhou">Guangzhou</option>
+                    <option value="Shenzhen">Shenzhen</option>
+                    <option value="Hangzhou">Hangzhou</option>
+                    <option value="Chengdu">Chengdu</option>
+                </select>
+                <select id="specialtyFilter" onchange="filterHospitals()">
+                    <option value="">All Specialties</option>
+                    <option value="cardiology">Cardiology</option>
+                    <option value="oncology">Oncology</option>
+                    <option value="orthopedics">Orthopedics</option>
+                    <option value="neurosurgery">Neurosurgery</option>
+                    <option value="maternity">Maternity</option>
+                    <option value="fertility">Fertility/IVF</option>
+                    <option value="pediatrics">Pediatrics</option>
+                    <option value="general">General Medicine</option>
+                    <option value="tcm">TCM</option>
+                </select>
+                <select id="trustFilter" onchange="filterHospitals()">
+                    <option value="">All Trust Levels</option>
+                    <option value="0.95">⭐⭐⭐ Very High (0.95+)</option>
+                    <option value="0.88">⭐⭐ High (0.88+)</option>
+                    <option value="0.80">⭐ Medium (0.80+)</option>
+                </select>
+                <label style="display:flex;align-items:center;gap:0.5rem;color:#888;font-size:0.9rem;">
+                    <input type="checkbox" id="jciFilter" onchange="filterHospitals()"> JCI Only
+                </label>
+                <button onclick="filterHospitals()">🔄 Refresh</button>
+            </div>
+        </div>
+
+        <div class="tab-bar">
+            <div class="tab active" id="tabCard" onclick="showTab('card')">Card View</div>
+            <div class="tab" id="tabJson" onclick="showTab('json')">JSON Output</div>
+        </div>
+
+        <div id="cardView">
+            <div class="results-header">
+                <span id="resultCount">Loading...</span>
+                <span id="apiNote">Trust scores verified by China Hospitals Guide</span>
+            </div>
+            <div id="results"></div>
+        </div>
+
+        <div id="jsonView" style="display:none">
+            <div class="json-output" id="jsonOutput">Loading...</div>
+        </div>
+
+        <div class="note">
+            <strong>🤖 For AI Agents:</strong> Use the JSON endpoint to get structured hospital data with trust scores. 
+            Trust scores (0-1) indicate data verification level — higher = more verified. 
+            All hospitals have international patient experience. Contact us for appointment coordination.
+        </div>
+    </div>
+
+    <script>
+        let hospitals = [];
+        let currentView = 'card';
+
+        async function loadData() {
+            try {
+                const res = await fetch('/api/v1/hospitals.json');
+                const data = await res.json();
+                hospitals = data.hospitals;
+                filterHospitals();
+            } catch (e) {
+                document.getElementById('results').innerHTML = '<p style="color:#ef4444">Failed to load: ' + e.message + '</p>';
+            }
+        }
+
+        function getFilters() {
+            return {
+                city: document.getElementById('cityFilter').value,
+                specialty: document.getElementById('specialtyFilter').value,
+                trust: parseFloat(document.getElementById('trustFilter').value) || 0,
+                jci: document.getElementById('jciFilter').checked
+            };
+        }
+
+        function updateApiUrl() {
+            const f = getFilters();
+            let url = '/api/v1/hospitals.json?';
+            if (f.city) url += 'city=' + encodeURIComponent(f.city) + '&';
+            if (f.specialty) url += 'specialty=' + encodeURIComponent(f.specialty) + '&';
+            if (f.trust) url += 'min_trust=' + f.trust + '&';
+            if (f.jci) url += 'jci_only=true&';
+            document.getElementById('apiUrl').textContent = 'curl "' + url.slice(0,-1) + '"';
+        }
+
+        function filterHospitals() {
+            const f = getFilters();
+            updateApiUrl();
+
+            let filtered = hospitals.filter(h => {
+                if (f.city && h.city !== f.city) return false;
+                if (f.specialty && !h.tags.includes(f.specialty)) return false;
+                if (f.trust && h.trust.score < f.trust) return false;
+                if (f.jci && !h.jci) return false;
+                return true;
+            });
+
+            document.getElementById('resultCount').textContent = 
+                `Showing ${filtered.length} of ${hospitals.length} hospitals`;
+
+            if (currentView === 'card') {
+                renderCards(filtered);
+            } else {
+                document.getElementById('jsonOutput').textContent = JSON.stringify(filtered, null, 2);
+            }
+        }
+
+        function renderCards(filters) {
+            const container = document.getElementById('results');
+            if (filters.length === 0) {
+                container.innerHTML = '<p style="color:#888;text-align:center;padding:2rem">No hospitals match your filters</p>';
+                return;
+            }
+
+            container.innerHTML = filters.map(h => `
+                <div class="hospital-card ${h.trust.level}">
+                    <div class="hospital-name">
+                        ${h.name}
+                        <span class="trust-badge ${h.trust.level}">${h.trust.score} ${h.trust.level.replace('_',' ')}</span>
+                    </div>
+                    <div class="hospital-meta">📍 ${h.city}, ${h.district} | ✈️ ${h.airport_info}</div>
+                    <div class="hospital-tags">
+                        ${h.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+                        ${h.jci ? '<span class="tag" style="background:#238636">JCI</span>' : ''}
+                    </div>
+                    <div class="hospital-meta" style="color:#666;font-size:0.8rem">${h.rank}</div>
+                    <div class="hospital-meta" style="color:#555;font-size:0.75rem;margin-top:0.3rem">
+                        Verified: ${h.trust.verified_fields.length} fields | Source: ${h.trust.data_source}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function showTab(tab) {
+            currentView = tab;
+            document.getElementById('tabCard').classList.toggle('active', tab === 'card');
+            document.getElementById('tabJson').classList.toggle('active', tab === 'json');
+            document.getElementById('cardView').style.display = tab === 'card' ? 'block' : 'none';
+            document.getElementById('jsonView').style.display = tab === 'json' ? 'block' : 'none';
+            if (tab === 'json') filterHospitals();
+        }
+
+        loadData();
+    </script>
+</body>
+</html>
