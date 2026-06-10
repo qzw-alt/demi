@@ -153,7 +153,8 @@ default "max 4" is too strict. Focus the audit on banned vocab and
 - `fate-2026-06-04.html` — Summer and the Fire Element in BaZi (~1,275 words, score 100/100)
 - `fate-2026-06-05.html` — Kitchen Feng Shui (~1,275 words, 9 em dashes, score 100/100)
 - `fate-2026-06-06.html` — Summer and the Fire Element in Your BaZi Chart (~1,300 words, score 100/100) — best voice reference for Day Master articles
-- `fate-2026-06-07.html` — Ding Day Master: The Yin Fire Candle (1,700 words, 21 em dashes = 14.8/1200, score 100/100) — current; cross-links `ding-day-master.html` and `bing-day-master.html`
+- `fate-2026-06-07.html` — Ding Day Master: The Yin Fire Candle (1,700 words, 21 em dashes = 14.8/1200, score 100/100) — cross-links `ding-day-master.html` and `bing-day-master.html`
+- `fate-2026-06-08.html` — Wu Day Master: The Yang Earth Mountain (1,973 words, 18 em dashes = 10.9/1200, score 87/100) — best voice reference for **bridging a Day Master piece with prior week's summer/fire content**; cross-links `wu-day-master.html` and `earth-element-in-bazi.html` in footer; written after a sibling-cron had already pushed 06-06 and 06-07 to origin/main (required fetch+merge+sitemap-conflict-resolve)
 
 **Voice reference recipe (verified 2026-06-07):** before writing, `read_file` the two most recent `fate-YYYY-MM-DD.html` articles in full (body section, not just head/CSS). The site voice is first-person, uses `&mdash;` HTML entities (rendered as em dashes), pulls cross-links to existing reference pages (`<day-master>.html`, `<element>-in-bazi.html`, `<topic>-bazi.html`), and ends with a 5-question FAQ + a cinnabar CTA to `instant_reading.html`. Match the structure exactly: hero → 5–6 content blocks → CTA → FAQ → footer with policy links.
 

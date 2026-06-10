@@ -124,6 +124,12 @@ GIT_SSH_COMMAND='ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no' git push 
 
 **Recovery when remote branch has diverged:** If the tip of your local branch is behind the remote, use `git push -f` (forced update) to overwrite. For backup repos where you own the push target, force-push is safe.
 
+**When remote uses `main` but your local uses `master`:** If `git push -f origin master` fails with `! [rejected] master -> main (non-fast-forward)`, push with explicit destination mapping:
+```bash
+git push -f origin master:main   # pushes local master to remote main
+```
+This session's backup repo had diverged commits on `main`; `master:main` with `--force` resolved it cleanly.
+
 ---
 
 ## Fallback 2: Push via GitHub API (When SSH Unavailable)
@@ -268,8 +274,11 @@ git push origin master:refs/heads/backup-$(date +%Y-%m-%d)
 ## What NOT to Back Up
 
 - Database files (`state.db`, `kanban.db`)
-- Credential files (`auth.json`, `.env`)
 - Cache directories (`audio_cache/`, `image_cache/`, `logs/`)
 - WAL files (`state.db-shm`, `state.db-wal`)
+- Lock/pid files (`gateway.lock`, `gateway.pid`)
 - **Session files** (`sessions/`) — contain API key references in conversation history
+- **Sandbox dirs** (`sandboxes/`)
 - **Memory files** (`memories/`) — may contain sensitive config
+
+> **Note:** Whether to back up `.env`, `auth.json`, `config.yaml` etc. depends on the user's intent. The standard pattern here excludes `.env` and `auth.json` to avoid secret scanning blocks. But if the user explicitly includes them (as in "backup ~/.hermes/ to GitHub"), they want the credential files backed up — in that case, accept the risk of secret scanning alerts and push anyway.

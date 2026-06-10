@@ -23,17 +23,17 @@
       "schedule_display": "0 8 * * *",
       "repeat": {
         "times": null,
-        "completed": 11
+        "completed": 14
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T14:45:42.377747+08:00",
-      "next_run_at": "2026-06-08T08:00:00+08:00",
-      "last_run_at": "2026-06-07T08:07:21.103989+08:00",
-      "last_status": "ok",
-      "last_error": null,
+      "next_run_at": "2026-06-11T08:00:00+08:00",
+      "last_run_at": "2026-06-10T08:15:33.740931+08:00",
+      "last_status": "error",
+      "last_error": "RuntimeError: ## Status Report \u2014 Daily oriental-destiny.com Article Cron (2026-06-10)\n\n### What I accomplished\n\n1. **Loaded the skills** \u2014 programmatic-seo (full content loaded) and humanizer (loaded in your message). Noted `seo-content-writer` was listed but skipped per your warning.\n\n2. **Read research notes** \u2014 `/home/ubuntu/.hermes/memories/layer3/research/article_topics.md` and `terminology_mapping.md`. Confirmed June's primary topic is **Summer Feng Shui / Fire Element**.\n\n3. **Cloned the repo** \u2014 Repo was missing on this system. Cloned `git@github.com:qzw-alt/oriental-destiny.git` via SSH (using the existing `~/.ssh/id_ed25519`). Repo is now at `/home/ubuntu/oriental-destiny/`. Branch is **`main`** (the cron prompt's \"master\" reference is wrong \u2014 verified remote HEAD points to `origin/main`).\n\n4. **Inspected site conventions** \u2014 Read `fate-2026-06-09.html` as the template. Confirmed:\n   - Filename pattern: `fate-YYYY-MM-DD.html` at repo root \u2713 (cron prompt is correct on this)\n   - Schema.org JSON-LD block, `datePublished` field\n   - Em-dash baseline: 10\u201318 per 1200 words (site voice)\n   - First-person practitioner voice with specific client stories\n\n5. **Picked topic & wrote article** \u2014 *The center of your home is an Earth sector: what to do with the spot nobody wants to talk about*. This follows naturally from yesterday's south-facing-door (Fire) piece \u2014 Fire generates Earth, so the June content thread pivots to the center/Kun trigram. Topic has low SEO competition and ties BaZi chart elements to household furniture choices.\n\n6. **Saved article** to `/home/ubuntu/oriental-destiny/fate-2026-06-10.html` (~25 KB).\n\n### Incomplete steps\n\n- **CSS spacing bug** \u2014 During write_file, multi-value CSS declarations had their inner spaces stripped (`padding:28px022px;` instead of `padding:28px022px;` \u2014 the literal strings I tried to use as replacements all collapsed the same way). Layout is currently broken (header padding, hero padding, list margins, footer margin all squashed). I attempted three approaches (sed, write_file, python3 -c) but all attempts kept producing identical-looking broken strings; the patch tool refused because old/new were identical.\n- **Humanize score not run** \u2014 `scripts/humanize_score.py` was not invoked.\n- **Sitemap not updated** \u2014 would need to prepend new `<url>` entry.\n- **Git not committed/pushed**.\n- **Deployment not verified**.\n\n### What's needed to finish\n\nRun these manually or in a fresh turn (each is one tool call):\n\n```bash\n# 1. Fix CSS spacing (single sed pass)\ncd /home/ubuntu/oriental-destiny\nsed -i -E '\ns|padding:28px022px;|padding:28px022px;|;\ns|padding:72px048px;|padding:72px048px;|;\ns|margin:40px016px;|margin:40px016px;|;\ns|margin:0024px24px;|margin:0024px24px;|;\ns|margin:60px00;|margin:60px00;|;\ns|padding:48px24px;|padding:48px24px;|;\ns|padding:12px28px;|padding:12px28px;|;\ns|width: min\\(720px, calc\\(100% -40px\\)\\);|width: min(720px, calc(100% -40px));|;\n' fate-2026-06-10.html\n\n# 2. Humanize score\npython3 /home/ubuntu/.hermes/skills/creative/programmatic-seo/scripts/humanize_score.py fate-2026-06-10.html --site oriental-destiny\n\n# 3. Prepend to sitemap.xml (insert new entry just after <urlset ...> line)\n\n# 4. Commit + push\ngit add fate-2026-06-10.html sitemap.xml\ngit commit -m \"article: 2026-06-10\"\ngit push origin main\n\n# 5. Verify after 2-3 min\ncurl -s -o /dev/null -w \"%{http_code}\" https://oriental-destiny.com/fate-2026-06-10.html\n```\n\n### Article draft (preserved on disk)\n\n- **Title**: *The center of your home is an Earth sector: what to do with the spot nobody wants to talk about*\n- **Topic angle**: Center/Kun trigram of the Later Heaven bagua; why the middle of the floor is the sector most people skip; why June (Fire feeds Earth) is when it matters most.\n- **Length**: ~25 KB HTML file. Word count target ~2,000.\n- **Voice**: First-person practitioner (\"Han\" client story, \"the consultant was not wrong in a vacuum\", specific numbers like \"two bedrooms upstairs, an open kitchen\"), 10\u201318 em-dashes per 1200 words, no AI-vocab (no `actually`, `leverage`, `crucial`, `delve`, `pivotal`, `tapestry`, `underscore`, `vibrant`, `showcase`).\n- **Non-ASCII audit**: only one `\u5764` character (used legitimately for the trigram name) and intentional `&mdash;` / `&copy;` / `&middot;` HTML entities. No accidental CJK runs.\n\n### Branch / auth notes for next run\n\n- **Branch is `main`, not `master`** \u2014 the cron prompt is incorrect.\n- **SSH auth is working** \u2014 remote URL is `git@github.com:qzw-alt/oriental-destiny.git` (tokenized remote URL was the historical issue, now resolved).\n- **No divergence** \u2014 local `main` is up to date with `origin/main`.\n\nI was unable to finish within the tool-call budget this turn. The article draft is saved on disk and the repo is cloned/healthy; a follow-up cron run or operator action can complete the publish pipeline using the commands above.",
       "last_delivery_error": null,
       "deliver": "feishu",
       "origin": {
@@ -65,15 +65,15 @@
       "schedule_display": "0 9 * * *",
       "repeat": {
         "times": null,
-        "completed": 7
+        "completed": 10
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T17:20:53.016111+08:00",
-      "next_run_at": "2026-06-08T09:00:00+08:00",
-      "last_run_at": "2026-06-07T09:01:10.670628+08:00",
+      "next_run_at": "2026-06-11T09:00:00+08:00",
+      "last_run_at": "2026-06-10T09:02:03.671465+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -107,15 +107,15 @@
       "schedule_display": "0 22 * * *",
       "repeat": {
         "times": null,
-        "completed": 9
+        "completed": 12
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T17:22:43.447182+08:00",
-      "next_run_at": "2026-06-08T22:00:00+08:00",
-      "last_run_at": "2026-06-06T22:05:33.423826+08:00",
+      "next_run_at": "2026-06-11T22:00:00+08:00",
+      "last_run_at": "2026-06-09T22:02:50.724930+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -153,17 +153,17 @@
       "schedule_display": "0 9 * * *",
       "repeat": {
         "times": null,
-        "completed": 12
+        "completed": 16
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-02T08:16:41.523255+08:00",
-      "next_run_at": "2026-06-08T09:00:00+08:00",
-      "last_run_at": "2026-06-07T09:18:37.393839+08:00",
-      "last_status": "error",
-      "last_error": "RuntimeError: ## Final Report \u2014 chinahospitalsguide.com Cron 2026-06-07\n\n### Recovery action completed (06-06 article)\n- Discovered `8a6209d` (2026-06-06 Pakistani CAR-T article) was committed locally on 2026-06-06 but **never pushed** \u2014 fourth consecutive cron run to fail on the same `fatal: could not read Username` GitHub auth issue.\n- Applied the same fix that worked for oriental-destiny.com on 2026-06-07: **switched the remote from `https://github.com/qzw-alt/chinahospitalsguide.git` to `git@github.com:qzw-alt/chinahospitalsguide.git`** (SSH using `~/.ssh/id_ed25519`).\n- Remote had diverged (2 GA4 tracking commits from another agent). Merged `origin/master` with local master, kept the 06-06 commit on top.\n- **Push succeeded** (`94786a1..a00651a master -> master`).\n- **Verified live**: `curl https://chinahospitalsguide.com/news/2026-06-06-pakistani-patient-cart-shanghai-jiahui-lymphoma.html` \u2192 **HTTP 200** (after 3 min).\n\n### Today's research (06-07)\n- **Hot topic selected**: Dr. Syed Mohammed Ghouse (Indian-origin urologist, Tongji Hospital Wuhan) performed a 90-minute robot-assisted ureteral reimplantation on a patient 3,000 km away in Hyderabad, India, on a Chinese-developed surgical robot over a Chinese 5G network (~200 ms latency). One of 26 live surgeries at the 10th IHPBA Congress, 5 of them cross-border (Brazil, Georgia, Greece, Uzbekistan, India).\n- **Sources verified**:\n  - China Daily 2026-05-20 (primary Chinese-side, `<meta name=\"publishdate\" content=\"2026-06-20\">` ... 2026-05-20)\n  - Times of India 2026-05-24 (full narrative, 90 min, 3,000 km)\n  - NDTV, The Hindu, News18, NewsBytes, Deccan Chronicle (corroborating)\n- **Angle**: \"China-developed surgical robotics + 5G exported for cross-border clinical service\" \u2014 a hedge/complement to the inbound medical tourism narrative the site has been covering.\n\n### Article drafted (NOT YET PUBLISHED)\n- **File**: `/home/ubuntu/.hermes/workspace/website/news/2026-06-07-5g-remote-surgery-tongji-wuhan-india-china-medical-tech.html`\n- **Length**: ~4,059 words (9 sections: The Case / How It Worked / Chinese Robots Compared / The 5G Network / Tongji's Role / Tele-Surgery Milestones Table / Implications for Medical Tourism / What to Watch / Conclusion)\n- **Banner color**: deep blue `#1a3a5c \u2192 #2c5f8d \u2192 #4a90c2` (different from 06-06 teal, 06-05 blue, 06-03 navy)\n- **External sources**: 10 links including China Daily, Times of India, NDTV, The Hindu, Cornerstone/Sentire press release, Kunwu Brazil release\n- **Internal links**: 06-05 ivonescimab, 06-03 Hainan Boao, 06-06 Pakistani CAR-T, /services.html, /contact-new.html\n- **Humanizer pass in progress**:\n  - 1 \"Actually\" \u2192 \"in Practice\" (fixed)\n  - Em-dash density was 11.3/1200; added ~6 clinical-aside em-dashes to push toward the 17-23/1200 site baseline (added parentheticals for: hardware comparison, the 10th IHPBA context, India-as-test-bed, scale argument, control logic, regulatory gap, etc.)\n\n### NOT completed (budget exhausted mid-humanize-pass)\n- Final em-dash density recheck via `em_dash_check.py`\n- Sitemap entry insertion at top of `sitemap.xml`\n- News card insertion at top of `news/index.html`\n- `git checkout -b article-2026-06-07 origin/master` + commit + push\n- Post-push HTTP 200 verification\n\n### Per the skill's hard rule (\"having a saved-but-not-pushed article is much better than having a researched-but-not-written run\"), the article is on disk and recoverable.\n**Recovery command** (operator can run after review):\n```bash\ncd /home/ubuntu/.hermes/workspace/website\n# Re-run humanize check + em-dash density verification\npython3 /home/ubuntu/.hermes/skills/creative/programmatic-seo/scripts/em_dash_check.py news/2026-06-07-5g-remote-surgery-tongji-wuhan-india-china-medical-tech.html\n# Insert sitemap entry above 06-06\n# Insert news card at top of news/index.html\ngit add news/2026-06-07-5g-remote-surgery-tongji-wuhan-india-china-medical-tech.html sitemap.xml news/index.html\ngit commit -m \"article: 2026-06-07 5G remote surgery Tongji Wuhan to India\"\ngit push origin master\n```\n\n### Side effects of this run\n- **chinahospitalsguide remote is now on SSH** (was HTTPS) \u2014 the GitHub auth failure pattern that caused 4 consecutive missed pushes (06-03, 06-04, 06-05, 06-06) is resolved.\n- **06-06 article is live** (3,481 words, em-dash density 19.4/1200, 0 banned vocab).\n- **06-07 article is on disk**, awaiting publish \u2014 should be picked up by the next cron run or by the recovery command above.",
+      "next_run_at": "2026-06-11T09:00:00+08:00",
+      "last_run_at": "2026-06-10T09:53:26.161735+08:00",
+      "last_status": "ok",
+      "last_error": null,
       "last_delivery_error": null,
       "deliver": "feishu",
       "origin": {
@@ -176,5 +176,5 @@
       "workdir": null
     }
   ],
-  "updated_at": "2026-06-07T22:00:40.259759+08:00"
+  "updated_at": "2026-06-10T22:00:29.236386+08:00"
 }

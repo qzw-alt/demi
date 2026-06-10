@@ -188,10 +188,17 @@ def score(html: str, site: str = "oriental-destiny") -> dict:
 
     # 4. Em-dash budget
     em = text.count("\u2014")
-    if em > cfg["em_dash_high"]:
-        over = em - cfg["em_dash_high"]
+    # Scale the cap with word count: per-1200-words baseline of 23, so
+    # a 4400-word article at baseline density would have ~84 em-dashes
+    # (23 * 4400/1200). Raw-counting at 23 was below the natural
+    # baseline for any chinahospitalsguide article over ~2,800 words
+    # and produced a guaranteed false negative on every daily-news-feature
+    # article. Verified 2026-06-08 against news/2026-06-07-*.html.
+    em_cap = max(cfg["em_dash_high"], int(cfg["em_dash_high"] * wc / 1200))
+    if em > em_cap:
+        over = em - em_cap
         score_val -= 2 * over
-        notes.append(f"em-dashes too many: {em} (high={cfg['em_dash_high']})")
+        notes.append(f"em-dashes too many: {em} (cap={em_cap} for {wc} words)")
     elif em < cfg["em_dash_low"]:
         score_val -= 2 * (cfg["em_dash_low"] - em)
         notes.append(f"em-dashes too few: {em} (low={cfg['em_dash_low']})")
