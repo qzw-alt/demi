@@ -1,7 +1,7 @@
 ---
 name: programmatic-seo
 description: "Programmatic SEO article writing for content sites. Workflow: research → draft → humanize → publish → update sitemap. Currently serving oriental-destiny.com and chinahospitalsguide.com."
-version: 1.1.5
+version: 1.1.6
 author: Hermes Agent
 platforms: [linux]
 metadata:
@@ -58,6 +58,8 @@ Exit 0 = passes the >60 threshold; non-zero = the notes list tells you which hum
 Save to news/ directory as `YYYY-MM-DD.html`
 
 **Filename ambiguity (PITFALL — verified 2026-06-06):** the oriental-destiny cron prompt says `fate-YYYY-MM-DD.html` at the repo root, but Step 4 above and the chinahospitalsguide site use `news/YYYY-MM-DD.html`. Trust the **site's existing article layout** over the cron prompt — `ls *.html | head` in the repo to see how prior articles are named and where they sit, then match that pattern. For oriental-destiny, the convention is descriptive names at root (`feng-shui-bracelet-meaning.html`, `bazi-calculator-guide.html`); the cron prompt's `fate-YYYY-MM-DD.html` filename is a recent (2026-06-02+) cron-specific convention, also at root, not under `news/`.
+
+**Filename date for recovery handoffs (PITFALL — verified 2026-06-11):** when a recovery handoff picks up a pending file from a prior cron run (e.g. the 2026-06-11 cron run shipping the 2026-06-10 Antengene ATG-201 article), the article filename, the article body's `Published: YYYY-MM-DD` meta, and the sitemap `<lastmod>` should ALL use the **press release date from the pending file** (e.g. `2026-06-10`), not the cron run date (e.g. `2026-06-11`). The pending file's `target_article_slug` field is the source of truth — match it exactly. Shipping an article dated for the cron run date about a press release that happened 1+ days earlier reads as either outdated or made-up. The article's freshness window is anchored to the news event, not to the cron scheduler.
 
 ### Step 5: Update Sitemap
 - Add article entry to `sitemap.xml` (insert new `<url>` entry at top of `<urlset>`)
@@ -149,7 +151,17 @@ Each em-dash should add a clinical aside, not break the sentence. Target: 17-23 
 
 **"Actually" is a false positive in clinical prose (verified 2026-06-08):** the script flags "actually" as banned vocab, but in clinical writing it appears in normal constructions like "would actually execute" or "had not actually been done" where it's just an emphasis word, not an AI tell. Don't strip it from body prose — only strip if it appears in a heading or in a sentence where "in fact" or "in practice" works equally well. The body text scan should tolerate 1-2 "actually" hits on a 4,000-word article.
 
+**Long articles (5,000+ words) and the humanize score (verified 2026-06-11):** the 2026-06-11 Antengene ATG-201 article shipped at 5,229 words with a score of 62/100 — the script's "high word count" note was the dominant score penalty (-ing tails + word count together), not em-dash density. For any chinahospitalsguide article above ~4,500 words, **a score of 60-70 is the realistic ceiling** with the current script config, even for a clean draft. Do not waste tool calls trying to push the score higher by stripping legitimate clinical prose — the score formula penalizes word count directly, so longer articles will always score lower. The 06-09 Ori-C101 article (4,216 words) scored 82; the 06-11 Antengene article (5,229 words, +24% longer) scored 62. The score gap is almost entirely the word-count penalty, not prose quality. **Pass the >60 threshold, document the word count in the pending note, and ship.**
+
+**"navigate the" is a low-priority banned phrase (verified 2026-06-11):** the script flags "navigate the" as a banned-vocab pattern (likely a fragment of "navigate the complexities of"). For chinahospitalsguide's audience (international patients evaluating complex cross-border care), "navigate" is the right verb — it captures the actual experience of moving between two healthcare systems, two languages, and two regulatory regimes. The flagged hit in the 06-11 article ("the realistic near-term access path is to navigate the cross-border clinical-trial pathway") is clinical-prose-appropriate. Stripping it would produce weaker writing ("to find your way through the cross-border clinical-trial pathway") without improving the humanize signal. Tolerate 1 "navigate the" hit on a 5,000-word article.
+
 **Patch tool pitfall: use short unique substrings (verified 2026-06-08):** when editing with `patch` on a long article, the fuzzy matcher can match the WRONG paragraph if the `old_string` is a long unique-looking context that also appears (perhaps with small differences) elsewhere. Symptom: the patch fails OR matches the wrong location. Fix: use a SHORT unique substring (10-30 chars) that appears EXACTLY ONCE in the file as the `old_string`, and put the new content (which can be the full paragraph) in `new_string`. Example: instead of `old_string="The on-site team stays scrubbed and present for the entire case, ready to take over in the event of a network drop or an emergency that the remote surgeon judges should be finished in person."` use `old_string="an emergency that the remote surgeon judges should be finished in person."` (20 chars, unique). The full paragraph in `new_string` will replace just the matched substring. This avoids the "wrong paragraph patched" trap.
+
+**Patch tool pitfall: HTML entities in `old_string` get decoded silently (verified 2026-06-12):** when patching an HTML file whose `old_string` contains an HTML entity like `&mdash;` (em-dash), `&hellip;` (ellipsis), `&nbsp;`, or `&rsquo;`, the patch tool's fuzzy matcher strips the entity back to the underlying character (`—`, `…`, ` `, `'`) before searching, so the literal `&mdash;` in your `old_string` will never match the file's encoded form. Symptom: `Could not find a match for old_string in the file` even though the substring is plainly there. Two fixes:
+1. Use the decoded character directly in `old_string` (e.g. `&mdash;` → `—`). This works as long as the underlying character is unique enough to match.
+2. Use a SHORTER unique substring that does NOT contain the entity, per the pitfall above. This is more robust when the surrounding text repeats.
+
+Example failure: trying to patch `directions as they actually sit in your home` (preceded by `&mdash;` 6 chars before) failed because the entity got decoded. Using `directions as they sit in your home` (the same 10-word string, no entity in the substring) succeeded on the second attempt. The general rule: when patching HTML, never include an HTML entity in `old_string` if you can avoid it.
 
 **Patch tool pitfall: Chinese-character accidents in English articles (verified 2026-06-09):** the `patch` tool can introduce Chinese characters into an English HTML file when the `new_string` is constructed in a hurry or copied from a search result with a stray CJK phrase. Symptom: the article body silently contains 2-4 bytes of UTF-8 Chinese (e.g. `实验室`) that breaks the visual flow and could cause encoding/parsing issues. The 2026-06-09 Ori-C101 article had `实验室` accidentally inserted mid-sentence ("the antigen was identified in the early 2000s (by the实验室 of Dr. Mitchell Ho at the NIH..."). The fix is two parts: (a) after every `patch` operation on an English article, grep for non-ASCII characters with `grep -P '[^\x00-\x7F]' news/FILE.html` and remove any CJK runs; (b) when constructing a `new_string` from a search result, paste it into a UTF-8 clean buffer first. The 2026-06-09 case was caught by searching for the literal `实验室` after the patch failed to match elsewhere. Generalize this to: **after every `write_file` or `patch` on a long English article, run `grep -P '[^\x00-\x7F]' FILE.html` to catch any non-ASCII content**. This is fast (< 1 second) and catches the class of bug that would otherwise ship to production.
 
@@ -198,6 +210,10 @@ Total: 10 tool calls. The keys are: chain git operations in single terminal call
 content-research-writer-cn → (hot topic) → programmatic-seo → (draft) → humanizer → (humanized) → publish → sitemap → git push
 ```
 
+## Failure-mode reference
+
+For operational pitfalls hit during daily cron runs (CSS-stripped-during-write_file, missing repo on fresh VM, tirith `python3 -c` block, `git clone` URL parse trap, cron-budget burnout patterns, weekly topic threading), see `references/cron-run-pitfalls.md` — verified across the2026-06-04 →2026-06-10 runs on oriental-destiny.com.
+
 Each skill feeds into the next. Always run in sequence.
 
 - 去AI化评分 >60 required for publish
@@ -237,6 +253,8 @@ print(f'Em-dashes: {em} ({em*1200/words:.1f} per 1200 words)')
 For oriental-destiny: focus the humanize pass on banned vocab (`actually`, `leverage`, `crucial`, `delve`, `pivotal`, `tapestry`, `landscape`, `underscore`, `vibrant`, `showcase`) and -ing analysis tails. Don't strip em dashes below 8.
 
 For chinahospitalsguide: focus the humanize pass on banned vocab (full list in `humanizer` skill — same as oriental-destiny plus `leverage` is the highest-frequency offender in clinical writing). Do NOT touch em dashes.
+
+**`em_dash_check.py` reports 0 em-dashes when articles use `&mdash;` HTML entities (verified 2026-06-12):** the script counts raw `—` characters in the file's text. Articles in this repo consistently encode em-dashes as `&mdash;` entities (the prior `humanize_score.py` `extract_article_body()` bug for entity decoding was fixed on 2026-06-06, so that script counts them correctly — but `em_dash_check.py` was NOT updated alongside it). When you run `em_dash_check.py` on a repo article you will see "em-dashes: 0 (0.0 per 1200 words)" even when `humanize_score.py` reports 23+ em-dashes on the same file. **The correct em-dash count is the `humanize_score.py` number.** `em_dash_check.py` is still useful for banned-vocab hits and `-ing` analysis tails — just ignore its em-dash field. Patch the script's read-and-count block to decode `&mdash;` → `—` (e.g. `c = c.replace('&mdash;', '—')` after the file read) to align it with `humanize_score.py`.
 
 ## Research Source Bypass Patterns (PITFALL — verified 2026-06-02)
 
