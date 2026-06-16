@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Hospitals by Specialty | China Hospitals Guide</title>
+    <meta name="description" content="34 world-class hospitals across 6 major cities in China. Find top-rated hospitals by specialty, compare costs, and book appointments.">
+    <meta name="version" content="v2.2.2">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; background: #f5f7fa; }
+        header { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; padding: 20px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        nav { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo a { color: white; text-decoration: none; font-size: 1.3rem; font-weight: bold; }
+        .nav-links { display: flex; list-style: none; gap: 25px; }
+        .nav-links a { color: white; text-decoration: none; opacity: 0.9; }
+        .nav-links a:hover { opacity: 1; }
+        .hero { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; padding: 60px 20px; text-align: center; }
+        .hero h1 { font-size: 2.2rem; margin-bottom: 15px; }
+        .hero p { max-width: 600px; margin: 0 auto; opacity: 0.9; font-size: 1.1rem; }
+        .hospitals-section { padding: 40px 20px; max-width: 1200px; margin: 0 auto; }
+        .section-title { font-size: 1.5rem; color: #1e3c72; margin: 40px 0 25px; padding-bottom: 10px; border-bottom: 3px solid #1e3c72; }
+        .hospital-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 25px; margin-bottom: 50px; }
+        .hospital-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); transition: transform 0.3s, box-shadow 0.3s; }
+        .hospital-card:hover { transform: translateY(-5px); box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
+        .hospital-image { width: 100%; height: 200px; object-fit: cover; }
+        .hospital-content { padding: 20px; }
+        .hospital-header { display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px; }
+        .hospital-name { font-size: 1.1rem; color: #1e3c72; font-weight: 600; margin: 0; }
+        .hospital-city { background: #f0f4f8; padding: 4px 10px; border-radius: 12px; font-size: 0.8rem; color: #666; }
+        .hospital-specialty { color: #ff6b6b; font-size: 0.9rem; font-weight: 600; margin-bottom: 12px; }
+        .hospital-info { font-size: 0.85rem; color: #666; margin-bottom: 8px; }
+        .hospital-info strong { color: #333; }
+        .hospital-actions { display: flex; gap: 10px; margin-top: 15px; }
+        .btn { flex: 1; padding: 10px; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 600; text-align: center; text-decoration: none; transition: all 0.3s; }
+        .btn-primary { background: #1e3c72; color: white; }
+        .btn-primary:hover { background: #2a5298; }
+        .btn-secondary { background: #f0f4f8; color: #1e3c72; }
+        .btn-secondary:hover { background: #e0e8f0; }
+        .stats { background: white; padding: 40px 20px; text-align: center; border-top: 1px solid #e0e0e0; }
+        .stats-grid { max-width: 800px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 30px; }
+        .stat-item h3 { font-size: 2.5rem; color: #1e3c72; margin-bottom: 5px; }
+        .stat-item p { color: #666; font-size: 0.9rem; }
+        footer { background: #1e3c72; color: white; text-align: center; padding: 40px 20px; }
+        .disclaimer { background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px 20px; margin: 30px auto; max-width: 1200px; font-size: 0.85rem; color: #856404; }
+        @media (max-width: 768px) { .nav-links { display: none; } .hero h1 { font-size: 1.6rem; } .hospital-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo"><a href="index.html">🏥 China Hospitals Guide</a></div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="hospitals.html">Hospitals</a></li>
+                <li><a href="cost-comparison.html">Costs</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Top Hospitals by Specialty</h1>
+        <p>34 world-class hospitals across 6 major cities. Find the perfect match for your medical needs.</p>
+    </section>
+
+    <section class="hospitals-section">
+        <!-- Beijing -->
+        <h2 class="section-title">🏙️ Beijing Hospitals</h2>
+        <div class="hospital-grid">
+            <div class="hospital-card">
+                <img src="https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?w=600&h=400&fit=crop" alt="Beijing Fuwai Hospital" class="hospital-image">
+                <div class="hospital-content">
+                    <div class="hospital-header">
+                        <h3 class="hospital-name">Beijing Fuwai Hospital</h3>
+                        <span class="hospital-city">Beijing</span>
+                    </div>
+                    <div class="hospital-specialty">#1 Cardiology in China</div>
+                    <div class="hospital-actions">
+                        <a href="contact.html" class="btn btn-primary">Inquire</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hospital-card">
+                <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=600&h=400&fit=crop" alt="Beijing Tiantan Hospital" class="hospital-image">
+                <div class="hospital-content">
+                    <div class="hospital-header">
+                        <h3 class="hospital-name">Beijing Tiantan Hospital</h3>
+                        <span class="hospital-city">Beijing</span>
+                    </div>
+                    <div class="hospital-specialty">#1 Neurology/Neurosurgery</div>
+                    <div class="hospital-actions">
+                        <a href="contact.html" class="btn btn-primary">Inquire</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hospital-card">
+                <img src="https://images.unsplash.com/photo-1516549655169-df83a0774514?w=600&h=400&fit=crop" alt="Beijing Tongren Hospital" class="hospital-image">
+                <div class="hospital-content">
+                    <div class="hospital-header">
+                        <h3 class="hospital-name">Beijing Tongren Hospital</h3>
+                        <span class="hospital-city">Beijing</span>
+                    </div>
+                    <div class="hospital-specialty">#1 Ophthalmology in China</div>
+                    <div class="hospital-actions">
+                        <a href="contact.html" class="btn btn-primary">Inquire</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hospital-card">
+                <img src="https://images.unsplash.com/photo-1586773860418-d37222d8fce3?w=600&h=400&fit=crop" alt="Peking Union Medical College Hospital" class="hospital-image">
+                <div class="hospital-content">
+                    <div class="hospital-header">
+                        <h3 class="hospital-name">Peking Union Medical College Hospital</h3>
+                        <span class="hospital-city">Beijing</span>
+                    </div>
+                    <div class="hospital-specialty">#1 Rheumatology & Top General</div>
+                    <div class="hospital-actions">
+                        <a href="contact.html" class="btn btn-primary">Inquire</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shanghai -->
+        <h2 class="section-title">🏙️ Shanghai Hospitals</h2>
+        <div class="hospital-grid">
+            <div class="hospital-card">
+                <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=600&h=400&fit=crop" alt="Shanghai Zhongshan Hospital" class="hospital-image">
+                <div class="hospital-content">
+                    <div class="hospital-header">
+                        <h3 class="hospital-name">Shanghai Zhongshan Hospital</h3>
+                        <span class="hospital-city">Shanghai</span>
+                    </div>
+                    <div class="hospital-specialty">#1 Cardiology in Shanghai</div>
+                    <div class="hospital-actions">
+                        <a href="contact.html" class="btn btn-primary">Inquire</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hospital-card">
+                <img src="https://images.unsplash.com/photo-1632833239869-a37e3a5806d2?w=600&h=400&fit=crop" alt="Shanghai Ji Ai IVF Institute" class="hospital-image">
+                <div class="hospital-content">
+                    <div class="hospital-header">
+                        <h3 class="hospital-name">Shanghai Ji Ai Genetics & IVF Institute</h3>
+                        <span class="hospital-city">Shanghai</span>
+                    </div>
+                    <div class="hospital-specialty">Top IVF & Fertility Center</div>
+                    <div class="hospital-actions">
+                        <a href="contact.html" class="btn btn-primary">Inquire</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hospital-card">
+                <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=600&h=400&fit=crop" alt="Huashan Hospital" class="hospital-image">
+                <div class="hospital-content">
+                    <div class="hospital-header">
+                        <h3 class="hospital-name">Huashan Hospital</h3>
+                        <span class="hospital-city">Shanghai</span>
+                    </div>
+                    <div class="hospital-specialty">#1 Neurology in China</div>
+                    <div class="hospital-actions">
+                        <a href="contact.html" class="btn btn-primary">Inquire</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hospital-card">
+                <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=600&h=400&fit=crop" alt="Shanghai Ruijin Hospital" class="hospital-image">
+                <div class="hospital-content">
+                    <div class="hospital-header">
+                        <h3 class="hospital-name">Shanghai Ruijin Hospital</h3>
+                        <span class="hospital-city">Shanghai</span>
+                    </div>
+                    <div class="hospital-specialty">Top Hematology & Endocrinology</div>
+                    <div class="hospital-actions">
+                        <a href="contact.html" class="btn btn-primary">Inquire</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="disclaimer">
+            <strong>Disclaimer:</strong> All hospital information and cost estimates are based on publicly available data and patient feedback. Actual services, availability, and fees may vary. Please contact the hospital's international department directly for the most current and accurate information.
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h3>34+</h3>
+                <p>Top Hospitals</p>
+            </div>
+            <div class="stat-item">
+                <h3>6</h3>
+                <p>Major Cities</p>
+            </div>
+            <div class="stat-item">
+                <h3>50-85%</h3>
+                <p>Cost Savings</p>
+            </div>
+            <div class="stat-item">
+                <h3>98%</h3>
+                <p>Satisfaction Rate</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 China Hospitals Guide. All rights reserved.</p>
+        <p>Your trusted partner for medical tourism in China.</p>
+    </footer>
+</body>
+</html>

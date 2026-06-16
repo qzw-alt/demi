@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found — China Hospitals Guide</title>
+    <script>
+    // 301-style redirects for legacy/phantom URLs
+    var redirects = {
+        "/course/services.html":     "/services.html",
+        "/course/resources.html":    "/resources.html",
+        "/course/news/":            "/news/",
+        "/course/blog/":            "/blog/",
+        "/course/how-it-works.html": "/how-it-works.html"
+    };
+    var path = window.location.pathname;
+    var dest = redirects[path] || "/";
+    window.location.replace(dest);
+    </script>
+    <meta http-equiv="refresh" content="0;url=/">
+</head>
+<body>
+    <p>Redirecting...</p>
+    <script>document.write('<p>If not redirected, <a href="' + (redirects[window.location.pathname] || '/') + '">click here</a>.</p>');</script>
+</body>
+</html>
+<!-- cache-bust 20260511232142 -->

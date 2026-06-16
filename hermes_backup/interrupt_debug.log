@@ -1,0 +1,4 @@
+14:20:05 interrupt fired: msg='cli_a912890ce721dcee', children=0, parent._interrupt=True
+14:20:05 ENTER: queued interrupt msg='cli_a912890ce721dcee', agent_running=True
+14:20:20 interrupt fired: msg='你配置的是这个吗？', children=0, parent._interrupt=True
+14:20:20 ENTER: queued interrupt msg='你配置的是这个吗？', agent_running=True

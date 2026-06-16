@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Treatments in China | Top Specialties & Costs | China Hospitals Guide</title>
+    <meta name="description" content="Explore top medical treatments in China: cancer care, IVF, cardiac surgery, and orthopedics. Save 60-80% vs Western prices with world-class hospitals. Free consultation.">
+    <link rel="canonical" href="https://chinahospitalsguide.com/treatments/">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        /* Navbar */
+        .navbar { background: rgba(30, 60, 114, 0.95); backdrop-filter: blur(10px); position: fixed; top: 0; left: 0; right: 0; z-index: 1000; box-shadow: 0 2px 20px rgba(0,0,0,0.1); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; height: 70px; }
+        .nav-logo { font-size: 1.3rem; font-weight: bold; color: white; text-decoration: none; }
+        .nav-links { display: flex; list-style: none; gap: 0; }
+        .nav-links a { color: rgba(255,255,255,0.9); text-decoration: none; padding: 25px 18px; display: block; font-weight: 500; font-size: 0.88rem; }
+        .nav-links a:hover { background: rgba(255,255,255,0.1); color: white; }
+        .nav-cta { background: #ff6b6b; color: white; padding: 10px 22px; border-radius: 25px; text-decoration: none; font-weight: bold; font-size: 0.9rem; }
+        
+        /* Header */
+        .header { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; padding: 130px 0 80px; text-align: center; }
+        .header h1 { font-size: 2.8em; margin-bottom: 20px; font-weight: 800; }
+        .header p { font-size: 1.2em; opacity: 0.9; max-width: 650px; margin: 0 auto 35px; }
+        .header .stats-row { display: flex; justify-content: center; gap: 50px; flex-wrap: wrap; margin-top: 30px; }
+        .header .stat { text-align: center; }
+        .header .stat-num { font-size: 2em; font-weight: 700; display: block; }
+        .header .stat-label { font-size: 0.85rem; opacity: 0.8; }
+        
+        /* Breadcrumb */
+        .breadcrumb { background: #f1f5f9; padding: 15px 0; font-size: 0.9em; }
+        .breadcrumb a { color: #3b82f6; text-decoration: none; }
+        .breadcrumb span { color: #64748b; margin: 0 10px; }
+        
+        /* Section */
+        .section { padding: 70px 0; }
+        .section:nth-child(even) { background: #f8fafc; }
+        .section h2 { font-size: 2em; color: #1e3a8a; margin-bottom: 15px; text-align: center; }
+        .section .section-sub { text-align: center; color: #64748b; font-size: 1.1em; margin-bottom: 45px; max-width: 650px; margin-left: auto; margin-right: auto; }
+        
+        /* Treatment Cards Grid */
+        .treatment-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        
+        .treatment-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        .treatment-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+        }
+        
+        .card-header { padding: 30px 30px 20px; }
+        .card-icon { font-size: 3em; margin-bottom: 15px; }
+        .card-header h3 { font-size: 1.5em; color: #1e3a8a; margin-bottom: 8px; font-weight: 700; }
+        .card-header p { color: #64748b; font-size: 0.95em; }
+        
+        .card-body { padding: 0 30px 25px; flex: 1; }
+        .card-body ul { list-style: none; padding: 0; }
+        .card-body li { padding: 9px 0; border-bottom: 1px solid #f1f5f9; font-size: 0.9rem; color: #475569; display: flex; align-items: center; gap: 10px; }
+        .card-body li:last-child { border-bottom: none; }
+        .card-body li::before { content: "✓"; color: #059669; font-weight: bold; flex-shrink: 0; }
+        
+        .card-cost { background: #f8fafc; padding: 20px 30px; border-top: 1px solid #e2e8f0; }
+        .card-cost .from { font-size: 0.8rem; color: #64748b; margin-bottom: 5px; }
+        .card-cost .price { font-size: 1.4em; font-weight: 700; color: #1e3a8a; }
+        .card-cost .vs { font-size: 0.82rem; color: #059669; margin-top: 4px; }
+        
+        .card-footer { padding: 20px 30px 25px; }
+        .card-btn { display: block; text-align: center; background: #1e3a8a; color: white; padding: 13px 20px; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: background 0.3s; }
+        .card-btn:hover { background: #2563eb; }
+        .card-btn.secondary { background: white; color: #1e3a8a; border: 2px solid #1e3a8a; }
+        .card-btn.secondary:hover { background: #f0f4ff; }
+        
+        .card-footer-row { display: flex; gap: 10px; }
+        .card-footer-row .card-btn { flex: 1; }
+        
+        /* Why China Section */
+        .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; margin-top: 40px; }
+        .why-item { background: white; border-radius: 12px; padding: 30px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .why-item .why-icon { font-size: 2.5em; margin-bottom: 15px; }
+        .why-item h4 { color: #1e3a8a; margin-bottom: 10px; font-size: 1.1em; }
+        .why-item p { color: #64748b; font-size: 0.9rem; }
+        
+        /* CTA */
+        .cta-section { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; padding: 70px 0; text-align: center; }
+        .cta-section h2 { font-size: 2.2em; margin-bottom: 15px; }
+        .cta-section p { font-size: 1.1em; opacity: 0.9; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .cta-btn { display: inline-block; background: #f59e0b; color: #1e3a8a; padding: 15px 40px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 1.1em; transition: transform 0.3s; }
+        .cta-btn:hover { transform: translateY(-2px); }
+        
+        /* FAQ */
+        .faq-section { padding: 70px 0; }
+        .faq-container { max-width: 800px; margin: 0 auto; }
+        .faq-item { background: white; border-radius: 12px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); overflow: hidden; border: 1px solid #e2e8f0; }
+        .faq-question { padding: 22px 25px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; color: #1e3a8a; font-size: 1.05rem; }
+        .faq-question:hover { background: #f8fafc; }
+        .faq-question::after { content: "+"; font-size: 1.5rem; color: #3b82f6; transition: transform 0.3s; }
+        .faq-item.active .faq-question::after { transform: rotate(45deg); }
+        .faq-answer { padding: 0 25px; max-height: 0; overflow: hidden; transition: all 0.3s ease; }
+        .faq-item.active .faq-answer { padding: 0 25px 22px; max-height: 500px; }
+        .faq-answer p { color: #475569; line-height: 1.7; font-size: 0.95rem; }
+        
+        /* Testimonials */
+        .testimonial-section { background: #f8fafc; padding: 70px 0; }
+        .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
+        .testimonial-card { background: white; border-radius: 16px; padding: 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border: 1px solid #e2e8f0; position: relative; }
+        .testimonial-card::before { content: ""Quote""; position: absolute; top: 20px; right: 25px; font-size: 4rem; color: #e2e8f0; font-family: Georgia, serif; line-height: 1; }
+        .testimonial-text { font-size: 1.05rem; color: #475569; line-height: 1.7; margin-bottom: 20px; font-style: italic; position: relative; z-index: 1; }
+        .testimonial-author { display: flex; align-items: center; gap: 15px; }
+        .testimonial-avatar { width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #3b82f6, #1e3a8a); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.1rem; }
+        .testimonial-info h5 { color: #1e3a8a; font-size: 1rem; margin-bottom: 3px; }
+        .testimonial-info span { color: #64748b; font-size: 0.85rem; }
+        .testimonial-rating { margin-top: 15px; color: #f59e0b; font-size: 1.1rem; letter-spacing: 2px; }
+        
+        /* Process Steps */
+        .process-section { padding: 70px 0; }
+        .process-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; margin-top: 40px; }
+        .process-step { text-align: center; position: relative; }
+        .process-step::after { content: "→"; position: absolute; right: -20px; top: 30px; font-size: 1.5rem; color: #3b82f6; }
+        .process-step:last-child::after { display: none; }
+        .step-number { width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #1e3a8a, #3b82f6); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; margin: 0 auto 20px; }
+        .process-step h4 { color: #1e3a8a; margin-bottom: 10px; font-size: 1.1rem; }
+        .process-step p { color: #64748b; font-size: 0.9rem; line-height: 1.6; }
+        
+        /* Hospital Highlight */
+        .hospital-section { background: #f8fafc; padding: 70px 0; }
+        .hospital-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; margin-top: 40px; }
+        .hospital-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border: 1px solid #e2e8f0; display: flex; flex-direction: column; }
+        .hospital-badge { background: linear-gradient(135deg, #059669, #10b981); color: white; padding: 6px 16px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; display: inline-block; border-radius: 20px; margin-bottom: 15px; }
+        .hospital-card h4 { color: #1e3a8a; font-size: 1.3rem; margin-bottom: 10px; }
+        .hospital-card p { color: #64748b; font-size: 0.9rem; line-height: 1.6; margin-bottom: 15px; }
+        .hospital-meta { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 15px; }
+        .hospital-meta span { display: flex; align-items: center; gap: 6px; font-size: 0.85rem; color: #475569; }
+        .hospital-meta span::before { color: #059669; }
+        .hospital-link { color: #3b82f6; text-decoration: none; font-weight: 600; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 5px; }
+        .hospital-link:hover { text-decoration: underline; }
+        
+        /* Travel Info */
+        .travel-section { padding: 70px 0; }
+        .travel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 40px; }
+        .travel-card { background: white; border-radius: 16px; padding: 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border: 1px solid #e2e8f0; text-align: center; }
+        .travel-card .travel-icon { font-size: 3em; margin-bottom: 20px; }
+        .travel-card h4 { color: #1e3a8a; margin-bottom: 12px; font-size: 1.15rem; }
+        .travel-card p { color: #64748b; font-size: 0.9rem; line-height: 1.7; }
+        
+        /* Stats Banner */
+        .stats-banner { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); padding: 60px 0; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; text-align: center; color: white; }
+        .stats-grid .stat-num { font-size: 2.5rem; font-weight: 800; display: block; margin-bottom: 8px; }
+        .stats-grid .stat-label { font-size: 0.95rem; opacity: 0.9; }
+        
+        /* Comparison Table */
+        .compare-section { padding: 70px 0; background: #f8fafc; }
+        .compare-table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin-top: 40px; }
+        .compare-table th { background: #1e3a8a; color: white; padding: 18px 20px; text-align: left; font-weight: 600; font-size: 0.95rem; }
+        .compare-table td { padding: 16px 20px; border-bottom: 1px solid #e2e8f0; font-size: 0.9rem; color: #475569; }
+        .compare-table tr:last-child td { border-bottom: none; }
+        .compare-table tr:hover td { background: #f8fafc; }
+        .compare-table .highlight { background: #fef3c7; font-weight: 600; }
+        .compare-table .china-col { color: #059669; font-weight: 600; }
+        
+        /* Additional Info */
+        .info-box { background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border-radius: 16px; padding: 30px; margin-top: 40px; border-left: 4px solid #3b82f6; }
+        .info-box h4 { color: #1e3a8a; margin-bottom: 12px; font-size: 1.1rem; }
+        .info-box p { color: #475569; font-size: 0.95rem; line-height: 1.7; margin-bottom: 15px; }
+        .info-box p:last-child { margin-bottom: 0; }
+        
+        /* Footer */
+        .site-footer { background: #f7f9fc; border-top: 1px solid #e5eaf1; padding: 40px 20px 32px; }
+        .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 20px; margin-bottom: 20px; }
+        .footer-links a { color: #1e3c72; text-decoration: none; font-size: 0.9rem; }
+        .footer-links a:hover { text-decoration: underline; }
+        .footer-copy { color: #6b7280; font-size: 0.85rem; text-align: center; }
+        
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2em; }
+            .header .stats-row { gap: 30px; }
+            .treatment-grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .process-step::after { display: none; }
+            .compare-table { font-size: 0.85rem; }
+            .compare-table th, .compare-table td { padding: 12px 10px; }
+        }
+    </style>
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RVYZENK472"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-RVYZENK472');
+    </script>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/index.html" class="nav-logo">China Hospitals Guide</a>
+            <ul class="nav-links">
+                <li><a href="/index.html">Home</a></li>
+                <li><a href="/services.html">Services</a></li>
+                <li><a href="/pricing.html">Pricing</a></li>
+                <li><a href="/hospitals.html">Hospitals</a></li>
+                <li><a href="/contact.html">Contact</a></li>
+                <li><a href="/contact-new.html" class="nav-cta-mobile">Start Here</a></li>
+            </ul>
+            <a href="/contact-new.html" class="nav-cta">Start Here</a>
+        </div>
+    </nav>
+    
+    <header class="header">
+        <div class="container">
+            <h1>Medical Treatments in China</h1>
+            <p>World-class treatment across the most sought-after medical specialties — at 60-80% lower cost than Western countries.</p>
+            <div class="stats-row">
+                <div class="stat">
+                    <span class="stat-num">4</span>
+                    <span class="stat-label">Specialties</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-num">50+</span>
+                    <span class="stat-label">Hospitals We Recommend</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-num">60-80%</span>
+                    <span class="stat-label">Cost Savings</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-num">100k+</span>
+                    <span class="stat-label">International Patients</span>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <div class="breadcrumb">
+        <div class="container">
+            <a href="/index.html">Home</a>
+            <span>›</span>
+            <span>Treatments</span>
+        </div>
+    </div>
+    
+    <section class="section">
+        <div class="container">
+            <h2>Browse by Specialty</h2>
+            <p class="section-sub">Select a treatment category to learn about specific procedures, top hospitals, costs, and patient outcomes.</p>
+            
+            <div class="treatment-grid">
+                
+                <!-- Cancer -->
+                <div class="treatment-card">
+                    <div class="card-header">
+                        <div class="card-icon">🎗️</div>
+                        <h3>Cancer Treatment</h3>
+                        <p>Oncology care including surgery, chemotherapy, immunotherapy & proton therapy</p>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Surgical oncology (tumor resection)</li>
+                            <li>Chemotherapy & targeted therapy</li>
+                            <li>Immunotherapy (PD-1/PD-L1 inhibitors)</li>
+                            <li>Proton & particle therapy</li>
+                            <li>Radiation oncology</li>
+                            <li>Genetic testing & personalized medicine</li>
+                        </ul>
+                    </div>
+                    <div class="card-cost">
+                        <div class="from">Surgery from</div>
+                        <div class="price">$10,000 – $30,000</div>
+                        <div class="vs">vs. $50,000–$150,000 in the US</div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-footer-row">
+                            <a href="cancer.html" class="card-btn">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Cardiac -->
+                <div class="treatment-card">
+                    <div class="card-header">
+                        <div class="card-icon">🫀</div>
+                        <h3>Cardiac Surgery</h3>
+                        <p>Heart surgery and cardiovascular treatments by top Chinese cardiologists</p>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Coronary artery bypass grafting (CABG)</li>
+                            <li>Heart valve replacement & repair</li>
+                            <li>Percutaneous coronary intervention (PCI)</li>
+                            <li>Cardiac ablation for arrhythmias</li>
+                            <li>Aortic aneurysm surgery</li>
+                            <li>Minimally invasive heart surgery</li>
+                        </ul>
+                    </div>
+                    <div class="card-cost">
+                        <div class="from">CABG from</div>
+                        <div class="price">$15,000 – $40,000</div>
+                        <div class="vs">vs. $70,000–$200,000 in the US</div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-footer-row">
+                            <a href="cardiac.html" class="card-btn">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- IVF -->
+                <div class="treatment-card">
+                    <div class="card-header">
+                        <div class="card-icon">👶</div>
+                        <h3>IVF & Reproductive</h3>
+                        <p>In vitro fertilization and reproductive treatments with high success rates</p>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>IVF with ICSI (intracytoplasmic injection)</li>
+                            <li>Preimplantation genetic testing (PGT)</li>
+                            <li>Egg & sperm donation programs</li>
+                            <li>Surrogacy arrangements</li>
+                            <li>Fertility preservation</li>
+                            <li>Male infertility treatments</li>
+                        </ul>
+                    </div>
+                    <div class="card-cost">
+                        <div class="from">IVF cycle from</div>
+                        <div class="price">$5,000 – $12,000</div>
+                        <div class="vs">vs. $20,000–$40,000 in the US</div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-footer-row">
+                            <a href="ivf.html" class="card-btn">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Orthopedics -->
+                <div class="treatment-card">
+                    <div class="card-header">
+                        <div class="card-icon">🦴</div>
+                        <h3>Orthopedics & Spine</h3>
+                        <p>Joint replacement, spine surgery, and sports medicine</p>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Total hip & knee replacement</li>
+                            <li>Shoulder & elbow surgery</li>
+                            <li>Spinal fusion & disc replacement</li>
+                            <li>Arthroscopic (keyhole) surgery</li>
+                            <li>Sports medicine & ACL repair</li>
+                            <li>Bone tumor treatment</li>
+                        </ul>
+                    </div>
+                    <div class="card-cost">
+                        <div class="from">Knee replacement from</div>
+                        <div class="price">$6,000 – $18,000</div>
+                        <div class="vs">vs. $30,000–$70,000 in the US</div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-footer-row">
+                            <a href="orthopedics.html" class="card-btn">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    
+    <section class="section">
+        <div class="container">
+            <h2>Why Choose China for Medical Treatment?</h2>
+            <p class="section-sub">China's medical tourism infrastructure serves over 100,000 international patients annually.</p>
+            
+            <div class="why-grid">
+                <div class="why-item">
+                    <div class="why-icon">🏥</div>
+                    <h4>World-Class Hospitals</h4>
+                    <p>Many hospitals are JCI-accredited with state-of-the-art equipment matching or exceeding Western standards.</p>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon">💰</div>
+                    <h4>Affordable Pricing</h4>
+                    <p>Medical procedures cost 60-80% less than in the US, UK, or Australia — with no compromise on quality.</p>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon">👨‍⚕️</div>
+                    <h4>Expert Specialists</h4>
+                    <p>Chinese surgeons perform some of the highest procedure volumes in the world, building exceptional expertise.</p>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon">🌐</div>
+                    <h4>Full Coordination</h4>
+                    <p>We handle hospital matching, appointment coordination, and pre-arrival planning — everything to get you to the hospital door.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="section">
+        <div class="container">
+            <h2>More Specialties</h2>
+            <p class="section-sub">China offers exceptional treatment across a wide range of medical disciplines beyond our top four specialties.</p>
+            
+            <div class="treatment-grid">
+                
+                <!-- Neurology -->
+                <div class="treatment-card">
+                    <div class="card-header">
+                        <div class="card-icon">🧠</div>
+                        <h3>Neurology & Neurosurgery</h3>
+                        <p>Advanced brain and nervous system treatments including deep brain stimulation</p>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Brain tumor surgery (awake craniotomy)</li>
+                            <li>Deep brain stimulation (Parkinson's)</li>
+                            <li>Spinal cord tumor resection</li>
+                            <li>Epilepsy surgery & VNS implantation</li>
+                            <li>Stroke intervention & stenting</li>
+                            <li>Cerebral aneurysm treatment</li>
+                        </ul>
+                    </div>
+                    <div class="card-cost">
+                        <div class="from">Brain surgery from</div>
+                        <div class="price">$12,000 – $35,000</div>
+                        <div class="vs">vs. $80,000–$200,000 in the US</div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-footer-row">
+                            <a href="neurology.html" class="card-btn">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Plastic Surgery -->
+                <div class="treatment-card">
+                    <div class="card-header">
+                        <div class="card-icon">💉</div>
+                        <h3>Plastic & Cosmetic Surgery</h3>
+                        <p>Full range of aesthetic and reconstructive procedures by board-certified surgeons</p>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Facelift & rhinoplasty (nose reshaping)</li>
+                            <li>Breast augmentation & reduction</li>
+                            <li>Liposuction & body contouring</li>
+                            <li>Facial bone contouring</li>
+                            <li>Burn reconstruction & scar revision</li>
+                            <li>Hair transplantation (FUE)</li>
+                        </ul>
+                    </div>
+                    <div class="card-cost">
+                        <div class="from">Facelift from</div>
+                        <div class="price">$3,000 – $8,000</div>
+                        <div class="vs">vs. $15,000–$30,000 in the US</div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-footer-row">
+                            <a href="plastic-surgery.html" class="card-btn">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Dentistry -->
+                <div class="treatment-card">
+                    <div class="card-header">
+                        <div class="card-icon">🦷</div>
+                        <h3>Dental Care</h3>
+                        <p>Comprehensive dental treatments from routine care to full mouth reconstruction</p>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Dental implants (titanium & zirconia)</li>
+                            <li>All-on-4 / All-on-6 full arch restoration</li>
+                            <li>Porcelain veneers & crowns</li>
+                            <li>Root canal treatment</li>
+                            <li>Orthodontics & Invisalign</li>
+                            <li>Full mouth rehabilitation</li>
+                        </ul>
+                    </div>
+                    <div class="card-cost">
+                        <div class="from">Dental implant from</div>
+                        <div class="price">$800 – $2,000</div>
+                        <div class="vs">vs. $3,000–$6,000 in the US</div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-footer-row">
+                            <a href="dentistry.html" class="card-btn">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Ophthalmology -->
+                <div class="treatment-card">
+                    <div class="card-header">
+                        <div class="card-icon">👁️</div>
+                        <h3>Ophthalmology</h3>
+                        <p>Vision correction and eye disease treatment using cutting-edge technology</p>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>SMILE / LASIK / PRK laser eye surgery</li>
+                            <li>Cataract surgery (phacoemulsification)</li>
+                            <li>ICL (implantable collamer lens)</li>
+                            <li>Corneal transplant</li>
+                            <li>Retinal detachment repair</li>
+                            <li>Glaucoma treatment & surgery</li>
+                        </ul>
+                    </div>
+                    <div class="card-cost">
+                        <div class="from">LASIK from</div>
+                        <div class="price">$1,000 – $3,000</div>
+                        <div class="vs">vs. $4,000–$8,000 in the US</div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-footer-row">
+                            <a href="ophthalmology.html" class="card-btn">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Wellness -->
+                <div class="treatment-card">
+                    <div class="card-header">
+                        <div class="card-icon">🩺</div>
+                        <h3>Health Check-ups & Wellness</h3>
+                        <p>Comprehensive diagnostic packages and preventive health screening</p>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Executive health screening packages</li>
+                            <li>Full body MRI & CT scanning</li>
+                            <li>Cancer biomarker screening</li>
+                            <li>Cardiovascular risk assessment</li>
+                            <li>Genetic health risk testing</li>
+                            <li>Customized wellness programs</li>
+                        </ul>
+                    </div>
+                    <div class="card-cost">
+                        <div class="from">Comprehensive check-up</div>
+                        <div class="price">$500 – $2,500</div>
+                        <div class="vs">vs. $3,000–$10,000 in the US</div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-footer-row">
+                            <a href="checkup.html" class="card-btn">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Organ Transplant -->
+                <div class="treatment-card">
+                    <div class="card-header">
+                        <div class="card-icon">🏥</div>
+                        <h3>Organ Transplantation</h3>
+                        <p>Liver, kidney, heart, and lung transplants with shorter wait times</p>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Liver transplantation</li>
+                            <li>Kidney transplantation</li>
+                            <li>Heart transplantation</li>
+                            <li>Lung transplantation</li>
+                            <li>Pancreas transplantation</li>
+                            <li>Living donor programs</li>
+                        </ul>
+                    </div>
+                    <div class="card-cost">
+                        <div class="from">Kidney transplant from</div>
+                        <div class="price">$30,000 – $60,000</div>
+                        <div class="vs">vs. $400,000–$600,000 in the US</div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card-footer-row">
+                            <a href="transplant.html" class="card-btn">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    
+    <!-- How It Works -->
+    <section class="process-section">
+        <div class="container">
+            <h2>How It Works</h2>
+            <p class="section-sub">From initial inquiry to full recovery, we coordinate every step of your medical journey in China.</p>
+            
+            <div class="process-grid">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <h4>Free Consultation</h4>
+                    <p>Submit your medical reports and preferences. Our team reviews your case and recommends the best hospitals and specialists.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <h4>Treatment Plan</h4>
+                    <p>Receive a detailed treatment plan including procedure options, cost estimates, hospital details, and expected timeline.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <h4>Travel Arrangements</h4>
+                    <p>We handle visa invitation letters, airport transfer arrangement, and accommodation recommendations — plus a dedicated coordinator for your pre-arrival planning.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <h4>Treatment & Care</h4>
+                    <p>Once you arrive, the hospital's international department provides language support and navigation. We confirm your arrival went smoothly.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">5</div>
+                    <h4>Recovery & Follow-up</h4>
+                    <p>The hospital provides discharge instructions, medical records, and follow-up recommendations. Follow-up care continues with your home doctor.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Cost Comparison Table -->
+    <section class="compare-section">
+        <div class="container">
+            <h2>Treatment Costs: China vs. The World</h2>
+            <p class="section-sub">Compare typical procedure costs across major medical tourism destinations.</p>
+            
+            <table class="compare-table">
+                <thead>
+                    <tr>
+                        <th>Procedure</th>
+                        <th>China</th>
+                        <th>United States</th>
+                        <th>Thailand</th>
+                        <th>India</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Heart Bypass (CABG)</td>
+                        <td class="china-col">$15,000 – $40,000</td>
+                        <td class="highlight">$70,000 – $200,000</td>
+                        <td>$20,000 – $45,000</td>
+                        <td>$7,000 – $12,000</td>
+                    </tr>
+                    <tr>
+                        <td>Knee Replacement</td>
+                        <td class="china-col">$6,000 – $18,000</td>
+                        <td class="highlight">$30,000 – $70,000</td>
+                        <td>$10,000 – $18,000</td>
+                        <td>$5,000 – $9,000</td>
+                    </tr>
+                    <tr>
+                        <td>IVF Cycle</td>
+                        <td class="china-col">$5,000 – $12,000</td>
+                        <td class="highlight">$20,000 – $40,000</td>
+                        <td>$10,000 – $15,000</td>
+                        <td>$4,000 – $8,000</td>
+                    </tr>
+                    <tr>
+                        <td>Cancer Surgery</td>
+                        <td class="china-col">$10,000 – $30,000</td>
+                        <td class="highlight">$50,000 – $150,000</td>
+                        <td>$15,000 – $40,000</td>
+                        <td>$8,000 – $20,000</td>
+                    </tr>
+                    <tr>
+                        <td>Spinal Fusion</td>
+                        <td class="china-col">$12,000 – $30,000</td>
+                        <td class="highlight">$60,000 – $150,000</td>
+                        <td>$15,000 – $35,000</td>
+                        <td>$9,000 – $18,000</td>
+                    </tr>
+                    <tr>
+                        <td>Dental Implant</td>
+                        <td class="china-col">$800 – $2,000</td>
+                        <td class="highlight">$3,000 – $6,000</td>
+                        <td>$2,000 – $3,500</td>
+                        <td>$1,000 – $2,000</td>
+                    </tr>
+                    <tr>
+                        <td>LASIK Eye Surgery</td>
+                        <td class="china-col">$1,000 – $3,000</td>
+                        <td class="highlight">$4,000 – $8,000</td>
+                        <td>$2,000 – $4,000</td>
+                        <td>$1,000 – $2,500</td>
+                    </tr>
+                    <tr>
+                        <td>Facelift</td>
+                        <td class="china-col">$3,000 – $8,000</td>
+                        <td class="highlight">$15,000 – $30,000</td>
+                        <td>$5,000 – $10,000</td>
+                        <td>$3,000 – $6,000</td>
+                    </tr>
+                    <tr>
+                        <td>Liver Transplant</td>
+                        <td class="china-col">$50,000 – $100,000</td>
+                        <td class="highlight">$500,000 – $800,000</td>
+                        <td>$70,000 – $150,000</td>
+                        <td>$35,000 – $60,000</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="info-box">
+                <h4>Understanding the Price Differences</h4>
+                <p>The cost savings in China and other medical tourism destinations are primarily due to lower operating costs, government healthcare subsidies, and different insurance structures — not lower quality of care. Many Chinese hospitals treating international patients have JCI (Joint Commission International) accreditation and use the same equipment and techniques as Western hospitals.</p>
+                <p>When comparing costs, always factor in: surgeon fees, hospital stay, medication, travel, and any follow-up care. The hospitals we recommend include language support in their international patient services — no hidden fees.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Stats Banner -->
+    <section class="stats-banner">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-num">100k+</span>
+                    <span class="stat-label">International Patients Annually</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-num">50+</span>
+                    <span class="stat-label">JCI-Accredited Hospitals</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-num">200+</span>
+                    <span class="stat-label">Specialist Physicians</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-num">98%</span>
+                    <span class="stat-label">Patient Satisfaction Rate</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Top Hospitals -->
+    <section class="hospital-section">
+        <div class="container">
+            <h2>Leading Hospitals for International Patients</h2>
+            <p class="section-sub">We partner with China's most prestigious hospitals equipped to serve international patients.</p>
+            
+            <div class="hospital-grid">
+                <div class="hospital-card">
+                    <div style="padding: 30px;">
+                        <span class="hospital-badge">JCI Accredited</span>
+                        <h4>Peking Union Medical College Hospital</h4>
+                        <p>Beijing's premier academic medical center, consistently ranked #1 in China. Specializing in complex surgeries, rare diseases, and cutting-edge research treatments. International patient center with dedicated English-speaking staff.</p>
+                        <div class="hospital-meta">
+                            <span>✓ 2,000+ Beds</span>
+                            <span>✓ International Patient Center</span>
+                            <span>✓ English Staff</span>
+                        </div>
+                        <a href="../hospitals/pumch.html" class="hospital-link">View Hospital Details →</a>
+                    </div>
+                </div>
+                
+                <div class="hospital-card">
+                    <div style="padding: 30px;">
+                        <span class="hospital-badge">JCI Accredited</span>
+                        <h4>Beijing Cancer Hospital</h4>
+                        <p>China's leading cancer treatment center with advanced proton therapy, immunotherapy programs, and surgical oncology. Home to nationally renowned oncologists and the latest targeted therapy options.</p>
+                        <div class="hospital-meta">
+                            <span>✓ Proton Therapy</span>
+                            <span>✓ CAR-T Cell Therapy</span>
+                            <span>✓ Clinical Trials</span>
+                        </div>
+                        <a href="../hospitals/bch.html" class="hospital-link">View Hospital Details →</a>
+                    </div>
+                </div>
+                
+                <div class="hospital-card">
+                    <div style="padding: 30px;">
+                        <span class="hospital-badge">Top Cancer Center</span>
+                        <h4>Fudan Cancer Center (Shanghai)</h4>
+                        <p>One of Asia's most respected comprehensive cancer centers offering multidisciplinary care, advanced imaging, and innovative treatment protocols. Strong focus on early detection and personalized medicine.</p>
+                        <div class="hospital-meta">
+                            <span>✓ MDT Approach</span>
+                            <span>✓ PET-CT Center</span>
+                            <span>✓ International Referrals</span>
+                        </div>
+                        <a href="../hospitals/fudan-cancer.html" class="hospital-link">View Hospital Details →</a>
+                    </div>
+                </div>
+                
+                <div class="hospital-card">
+                    <div style="padding: 30px;">
+                        <span class="hospital-badge">Cardiac Excellence</span>
+                        <h4>Fuwai Hospital (Beijing)</h4>
+                        <p>The nation's top cardiac and vascular disease hospital, performing more heart surgeries annually than any other center globally. Expertise in complex congenital heart disease, valve disorders, and minimally invasive procedures.</p>
+                        <div class="hospital-meta">
+                            <span>✓ 10,000+ Heart Surgeries/Year</span>
+                            <span>✓ TAVR Program</span>
+                            <span>✓ Research Leader</span>
+                        </div>
+                        <a href="../hospitals/fuwai.html" class="hospital-link">View Hospital Details →</a>
+                    </div>
+                </div>
+                
+                <div class="hospital-card">
+                    <div style="padding: 30px;">
+                        <span class="hospital-badge">IVF Leader</span>
+                        <h4>Reproductive Medicine Institute (Shanghai)</h4>
+                        <p>China's highest-volume IVF center with industry-leading success rates in IVF, ICSI, PGT, and egg donation. Features advanced embryology lab and comprehensive fertility preservation services.</p>
+                        <div class="hospital-meta">
+                            <span>✓ 50,000+ Cycles</span>
+                            <span>✓ PGT-A Testing</span>
+                            <span>✓ Egg/Sperm Donation</span>
+                        </div>
+                        <a href="../hospitals/生殖.html" class="hospital-link">View Hospital Details →</a>
+                    </div>
+                </div>
+                
+                <div class="hospital-card">
+                    <div style="padding: 30px;">
+                        <span class="hospital-badge">Orthopedics Center</span>
+                        <h4>Beijing Jishuitan Hospital</h4>
+                        <p>China's foremost orthopedic hospital with subspecialty divisions in joint replacement, sports medicine, spine surgery, and trauma care. Pioneered many minimally invasive techniques now used worldwide.</p>
+                        <div class="hospital-meta">
+                            <span>✓ Robotic Surgery</span>
+                            <span>✓ Sports Medicine</span>
+                            <span>✓ 90+ Years Experience</span>
+                        </div>
+                        <a href="../hospitals/jst.html" class="hospital-link">View Hospital Details →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Travel & Recovery -->
+    <section class="travel-section">
+        <div class="container">
+            <h2>Travel, Accommodation & Recovery</h2>
+            <p class="section-sub">We provide comprehensive support services so you can focus on your treatment, not logistics.</p>
+            
+            <div class="travel-grid">
+                <div class="travel-card">
+                    <div class="travel-icon">✈️</div>
+                    <h4>Visa Assistance</h4>
+                    <p>We provide medical visa invitation letters and guidance through the visa application process. Medical visas typically allow for longer stays than tourist visas with options for companion travel.</p>
+                </div>
+                <div class="travel-card">
+                    <div class="travel-icon">🏨</div>
+                    <h4>Accommodation</h4>
+                    <p>We recommend nearby hotels and serviced apartments ranging from budget-friendly to luxury suites. Many offer extended stay rates for patients undergoing treatment programs.</p>
+                </div>
+                <div class="travel-card">
+                    <div class="travel-icon">🚐</div>
+                    <h4>Airport Transfers</h4>
+                    <p>Airport pickup and drop-off arrangement with private vehicle transport to your accommodation and hospital. Included in our Pre-Arrival Coordination package.</p>
+                </div>
+                <div class="travel-card">
+                    <div class="travel-icon">🗣️</div>
+                    <h4>Language Support</h4>
+                    <p>All hospitals we recommend have international patient departments with English-speaking staff. The hospital handles communication during your appointments and procedures.</p>
+                </div>
+                <div class="travel-card">
+                    <div class="travel-icon">🏡</div>
+                    <h4>Recovery Housing</h4>
+                    <p>For longer treatments, we can recommend recovery-friendly accommodation near your hospital before you travel. After that, your hospital manages post-procedure care.</p>
+                </div>
+                <div class="travel-card">
+                    <div class="travel-icon">📱</div>
+                    <h4>Telemedicine Follow-up</h4>
+                    <p>After returning home, continue care through video consultations with your treating physicians. We coordinate with local doctors for seamless ongoing treatment.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials -->
+    <section class="testimonial-section">
+        <div class="container">
+            <h2>Patient Stories</h2>
+            <p class="section-sub">Real experiences from international patients who received treatment in China through our coordination.</p>
+            
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">After being told my father's liver cancer was inoperable in the US, China Hospitals Guide connected us with Beijing Cancer Hospital. The proton therapy combined with immunotherapy gave us 18 more precious months together. The entire process was handled with such care and professionalism.</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">MK</div>
+                        <div class="testimonial-info">
+                            <h5>Michael K.</h5>
+                            <span>Portland, Oregon, USA</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-rating">★★★★★</div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <p class="testimonial-text">We struggled with infertility for 7 years. IVF in the US was quoted at $35,000 with a 30% success rate. In Shanghai, our cycle cost $7,500 and we now have twin girls. The technology and expertise were comparable — the experience was even better.</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">SJ</div>
+                        <div class="testimonial-info">
+                            <h5>Sarah J.</h5>
+                            <span>Manchester, United Kingdom</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-rating">★★★★★</div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <p class="testimonial-text">My cardiac ablation in Shanghai took 2 hours instead of the 5 hours I was quoted in Germany. Dr. Liu at Fuwai was extraordinary. Cost was one-fifth of what I would have paid at home, and I was back to work in two weeks. I recommend China to anyone facing heart surgery.</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">HT</div>
+                        <div class="testimonial-info">
+                            <h5>Hans T.</h5>
+                            <span>Munich, Germany</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-rating">★★★★★</div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <p class="testimonial-text">I flew to Beijing for comprehensive health screening — full body MRI, cancer markers, cardiovascular assessment. The entire day-long checkup cost $1,800. In Canada, the same package would have been $8,000+ and waited 6 months. The facilities were brand new and the doctors spent an hour explaining results.</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">LR</div>
+                        <div class="testimonial-info">
+                            <h5>Linda R.</h5>
+                            <span>Vancouver, Canada</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-rating">★★★★★</div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <p class="testimonial-text">My knee replacement in Guangzhou was flawlessly executed. The hospital was modern, the surgeon had done 5,000+ joint replacements, and my rehab started the same day. Six months later I'm hiking again. The savings paid for my entire trip plus physical therapy at home.</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">DW</div>
+                        <div class="testimonial-info">
+                            <h5>David W.</h5>
+                            <span>Sydney, Australia</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-rating">★★★★★</div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <p class="testimonial-text">As someone skeptical of medical tourism, I was hesitant at first. But after my wife's breast cancer treatment in Shanghai — surgery, chemo, and targeted therapy for $22,000 total — I'm a believer. The oncologist had trained at MD Anderson. Care quality exceeded my expectations.</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">RP</div>
+                        <div class="testimonial-info">
+                            <h5>Robert P.</h5>
+                            <span>Toronto, Canada</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-rating">★★★★★</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+            <p class="section-sub">Common questions about receiving medical treatment in China.</p>
+            
+            <div class="faq-container">
+                <div class="faq-item active">
+                    <div class="faq-question">Is the quality of medical care in China comparable to Western countries?</div>
+                    <div class="faq-answer">
+                        <p>Yes. Many Chinese hospitals serving international patients have JCI (Joint Commission International) accreditation — the same standard used to evaluate hospitals in the US and Europe. China's top hospitals invest heavily in state-of-the-art equipment, and their specialists often train at leading Western institutions. Due to high procedure volumes, Chinese surgeons frequently have more experience with complex cases than their counterparts in smaller Western hospitals.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How much can I save by getting treatment in China?</div>
+                    <div class="faq-answer">
+                        <p>Most treatments cost 60-80% less than in the United States, with comparable quality. A heart bypass that costs $100,000+ in the US typically runs $15,000-$40,000 in China. IVF cycles are $5,000-$12,000 versus $20,000-$40,000 in America. These savings apply even after factoring in travel and accommodation.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Do doctors and nurses speak English?</div>
+                    <div class="faq-answer">
+                        <p>The hospitals we recommend have dedicated international patient centers with English-speaking staff who handle communication during medical appointments. Many top surgeons and specialists have international training and publish in English-language journals. You should not experience language barriers during your treatment.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">What happens if there are complications after the procedure?</div>
+                    <div class="faq-answer">
+                        <p>All reputable hospitals we recommend have rigorous safety protocols and emergency response systems. If complications arise during your hospital stay, they are addressed immediately. For issues after discharge, the hospital's international department can arrange follow-up communication. Your local doctor handles any ongoing care at home using the medical records the hospital provides.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How do I know which hospital is right for my condition?</div>
+                    <div class="faq-answer">
+                        <p>Our medical team reviews your specific case, medical records, and preferences to recommend the most suitable hospitals and specialists. We consider factors like your diagnosis, treatment type, budget, and location preferences. You receive a detailed comparison of recommended options with projected outcomes, costs, and timelines so you can make an informed decision.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">What documents do I need to travel for medical treatment?</div>
+                    <div class="faq-answer">
+                        <p>Requirements include: a valid passport, visa (we provide invitation letters for medical visas), medical records and诊断 reports translated into English or Chinese, and any relevant imaging (CT, MRI, X-rays). For certain treatments, you may need a letter from your local doctor. We provide a complete checklist based on your specific treatment plan after your initial consultation.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Can I bring a companion or family member?</div>
+                    <div class="faq-answer">
+                        <p>Absolutely. We encourage companions for most treatments — emotional support aids recovery. Companions receive the same visa invitation letters and can stay in the same or nearby accommodation. For major surgeries, having a companion is strongly recommended. Our coordinators can arrange companion travel packages and provide guidance on local activities for companions during treatment periods.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How long do I need to stay in China for treatment?</div>
+                    <div class="faq-answer">
+                        <p>Stay duration varies by procedure: minor treatments may require 3-7 days, major surgeries typically require 2-4 weeks including initial recovery in the hospital and nearby accommodation. IVF cycles require 2-3 weeks for the full stimulation and transfer process. Cancer treatments like chemotherapy are scheduled in cycles. We provide detailed timelines with your treatment plan.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Is my medical information kept confidential?</div>
+                    <div class="faq-answer">
+                        <p>Yes. All hospitals we partner with maintain strict patient confidentiality policies compliant with Chinese healthcare privacy laws. Your medical records, personal information, and treatment details are accessible only to your treating medical team and our coordination staff. We never share your information with third parties without your explicit consent.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">What payment methods are accepted?</div>
+                    <div class="faq-answer">
+                        <p>Most hospitals accept wire transfers, major credit cards (Visa, Mastercard, American Express), and some accept PayPal. Payment is typically made directly to the hospital upon arrival or before procedures. We do not take payments ourselves — all financial transactions are between you and the hospital. We can provide bank transfer guidance and receipt documentation for insurance purposes.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Will my health insurance cover treatment in China?</div>
+                    <div class="faq-answer">
+                        <p>Most US and European insurance plans do not cover international medical treatment unless it's a life-threatening emergency. However, many international insurers and some employer-sponsored plans are now covering medical tourism procedures. We recommend checking with your insurance provider. For self-pay patients, we can provide detailed medical documentation and receipts for you to submit for reimbursement or tax deduction purposes.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How do I get started?</div>
+                    <div class="faq-answer">
+                        <p>Simply fill out our contact form or email us your medical situation. You don't need to commit at this stage — an initial consultation is always free. Tell us your diagnosis, what treatment you're considering, and any questions you have. We'll respond within 24 hours with preliminary recommendations and cost estimates. There's no obligation and no pressure — we're here to help you explore all your options.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="cta-section">
+        <div class="container">
+            <h2>Get a Free Treatment Estimate</h2>
+            <p>Tell us your condition and preferred treatment. We'll match you with the best hospital and provide a detailed cost estimate within 24 hours.</p>
+            <a href="/contact-new.html" class="cta-btn">Start Free Case Review →</a>
+        </div>
+    </section>
+    
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="/index.html">Home</a>
+                <a href="/services.html">Services</a>
+                <a href="/how-it-works.html">Process</a>
+                <a href="/pricing.html">Pricing</a>
+                <a href="/hospitals.html">Hospitals</a>
+                <a href="/contact.html">Contact</a>
+                <a href="/privacy.html">Privacy</a>
+                <a href="/terms.html">Terms</a>
+            </div>
+            <p class="footer-copy">Independent medical travel coordination for international patients.</p>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                const isActive = faqItem.classList.contains('active');
+                
+                // Close all other FAQ items
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Toggle current item
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

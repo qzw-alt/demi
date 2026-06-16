@@ -1,0 +1,180 @@
+{
+  "jobs": [
+    {
+      "id": "c2aefdf3bada",
+      "name": "daily-oriental-destiny-article",
+      "prompt": "\u6bcf\u5929\u4e3a oriental-destiny.com \u98ce\u6c34\u547d\u7406\u7f51\u7ad9\u53d1\u5e03\u4e00\u7bc7\u82f1\u6587 SEO \u79d1\u666e\u6587\u7ae0\u3002\n\n## \u4ed3\u5e93\n- GitHub: https://github.com/qzw-alt/oriental-destiny\n- \u5206\u652f: master\n- GitHub Pages \u76f4\u63a5\u4ece master \u90e8\u7f72\n\n## \u5de5\u4f5c\u6d41\u7a0b\uff086\u6b65\uff09\n1. **\u7814\u7a76**\uff1a\u4ece\u8bb0\u5fc6\u4e2d\u8bfb\u53d6\u7ade\u54c1\u516c\u53f8\u8d44\u6599\uff08memories/layer3/research/competitor-research.md\uff09\uff0c\u627e\u98ce\u6c34/\u516b\u5b57/\u547d\u7406\u76f8\u5173\u4e3b\u9898\n2. **SEO\u5199\u4f5c**\uff1a\u6309 skills/programmatic-seo/SKILL.md \u6d41\u7a0b\u5199\u82f1\u6587\u6587\u7ae0\uff08\u82f1\u6587\u8f93\u51fa\uff09\n3. **\u53bbAI\u5316**\uff1a\u7528 skills/humanizer/SKILL.md \u5904\u7406\uff0c\u8bc4\u5206>60\u5fc5\u987b\u4fee\u6539\u540e\u518d\u53d1\u5e03\n4. **\u53d1\u5e03**\uff1a\u6587\u7ae0\u4fdd\u5b58\u5230 oriental-destiny \u6839\u76ee\u5f55\uff0c\u547d\u540d\u683c\u5f0f `fate-YYYY-MM-DD.html`\n5. **\u66f4\u65b0sitemap**\uff1a\u5728 sitemap.xml \u4e2d\u6dfb\u52a0\u65b0\u6587\u7ae0\u6761\u76ee\n6. **\u63a8\u9001**\uff1agit add . && git commit -m \"article: $(date +%Y-%m-%d)\" && git push origin master\n\n## \u8d28\u91cf\u6807\u51c6\n- \u4e3b\u9898\u57fa\u4e8e\u7ade\u54c1\u516c\u53f8\u8d44\u6599\uff08feng shui / bazi / destiny / \u547d\u7406\u76f8\u5173\uff09\n- \u82f1\u6587\u8f93\u51fa\uff0c\u9762\u5411\u82f1\u6587\u8bfb\u8005\n- \u53bbAI\u5316\u8bc4\u5206\u5fc5\u987b >60 \u624d\u53d1\u5e03\n- \u6587\u7ae0\u5185\u5bb9\u9700\u539f\u521b\uff0c\u4e0d\u662f\u7b80\u5355\u590d\u8ff0\n\n## \u90e8\u7f72\u540e\u9a8c\u8bc1\n\u7b49 2-3 \u5206\u949f\u540e\u68c0\u67e5\u7f51\u7ad9\u662f\u5426\u6b63\u5e38\u8bbf\u95ee\u65b0\u6587\u7ae0\u3002\n\n## \u8f93\u51fa\u683c\u5f0f\n\u5b8c\u6210\u540e\u62a5\u544a\uff1a\n- \u6587\u7ae0\u6807\u9898\n- \u5b57\u6570\n- \u53bbAI\u5316\u8bc4\u5206\n- \u53d1\u5e03\u7684 URL",
+      "skills": [
+        "seo-content-writer",
+        "humanizer"
+      ],
+      "skill": "seo-content-writer",
+      "model": "mini-max-m2.7",
+      "provider": "custom:minimax_coding",
+      "base_url": null,
+      "script": null,
+      "no_agent": false,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 8 * * *",
+        "display": "0 8 * * *"
+      },
+      "schedule_display": "0 8 * * *",
+      "repeat": {
+        "times": null,
+        "completed": 20
+      },
+      "enabled": true,
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null,
+      "created_at": "2026-05-31T14:45:42.377747+08:00",
+      "next_run_at": "2026-06-17T08:00:00+08:00",
+      "last_run_at": "2026-06-16T08:06:55.496025+08:00",
+      "last_status": "ok",
+      "last_error": null,
+      "last_delivery_error": null,
+      "deliver": "feishu",
+      "origin": {
+        "platform": "feishu",
+        "chat_id": "oc_82a1a36b7bacddfbcae28d273674900a",
+        "chat_name": "oc_82a1a36b7bacddfbcae28d273674900a",
+        "thread_id": null
+      },
+      "enabled_toolsets": null,
+      "workdir": null
+    },
+    {
+      "id": "c2a393bb6257",
+      "name": "AI\u884c\u4e1a\u6bcf\u65e5\u7b80\u62a5",
+      "prompt": "\u751f\u6210\u4e00\u4efd\u7b80\u6d01\u7684AI\u884c\u4e1a\u6bcf\u65e5\u7b80\u62a5\uff0c\u5305\u542b\uff1a\n\n1. \u5927\u6a21\u578b\u52a8\u6001\uff082-3\u6761\u6700\u91cd\u8981\u7684\u53d1\u5e03/\u66f4\u65b0\uff09\n2. \u884c\u4e1a\u878d\u8d44\uff081-2\u6761\uff09\n3. \u4ea7\u54c1\u53d1\u5e03\uff081-2\u6761\uff09\n4. \u653f\u7b56\u76d1\u7ba1\uff081\u6761\uff09\n5. \u672c\u5468\u5173\u6ce8\uff082-3\u4e2a\u8d8b\u52bf\uff09\n6. \u672c\u5468\u6570\u636e\uff081-2\u4e2a\u5173\u952e\u6570\u5b57\uff09\n\n\u683c\u5f0f\u8981\u6c42\uff1a\n- \u6807\u9898\uff1a# AI\u884c\u4e1a\u6bcf\u65e5\u7b80\u62a5 + \u661f\u671f\u51e0\n- \u4f7f\u7528emoji\u589e\u52a0\u53ef\u8bfb\u6027\n- \u6bcf\u6761\u7b80\u8baf\u4e00\u53e5\u8bdd\u8bb2\u6e05\u91cd\u70b9\n- \u6570\u5b57\u8981\u5177\u4f53\n- \u6570\u636e\u8981\u65b0\uff082026\u5e74\uff09\n- \u603b\u5b57\u6570\u63a7\u5236\u5728500\u5b57\u4ee5\u5185\n\n\u5b8c\u6210\u540e\u53d1\u9001\u7ed9\u6211\u3002",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": null,
+      "no_agent": false,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 9 * * *",
+        "display": "0 9 * * *"
+      },
+      "schedule_display": "0 9 * * *",
+      "repeat": {
+        "times": null,
+        "completed": 16
+      },
+      "enabled": true,
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null,
+      "created_at": "2026-05-31T17:20:53.016111+08:00",
+      "next_run_at": "2026-06-17T09:00:00+08:00",
+      "last_run_at": "2026-06-16T09:03:53.751568+08:00",
+      "last_status": "ok",
+      "last_error": null,
+      "last_delivery_error": null,
+      "deliver": "origin",
+      "origin": {
+        "platform": "feishu",
+        "chat_id": "oc_82a1a36b7bacddfbcae28d273674900a",
+        "chat_name": "oc_82a1a36b7bacddfbcae28d273674900a",
+        "thread_id": null
+      },
+      "enabled_toolsets": null,
+      "workdir": null
+    },
+    {
+      "id": "d5ef67b81247",
+      "name": "Hermes\u5907\u4efd\u5230demi",
+      "prompt": "\u5907\u4efd ~/.hermes/ \u76ee\u5f55\u5230 GitHub \u5907\u4efd\u4ed3\u5e93 qzw-alt/demi\u3002\n\n**\u6ce8\u610f\uff1aexclude \u5305\u542b\u654f\u611f\u4fe1\u606f\u7684\u76ee\u5f55\uff0c\u9632\u6b62 GitHub secret scanning \u62e6\u622a**\n\n\u6b65\u9aa4\uff1a\n1. Clone \u6216\u66f4\u65b0 qzw-alt/demi \u4ed3\u5e93\u5230\u4e34\u65f6\u76ee\u5f55 /tmp/demi-backup/\n2. \u4f7f\u7528 rsync \u540c\u6b65\uff0cexclude \u4ee5\u4e0b\u76ee\u5f55\uff1a\n   - .git\n   - cache/\n   - audio_cache/\n   - image_cache/\n   - gateway.lock\n   - gateway.pid\n   - state.db*\n   - sandboxes/\n   - logs/\n   - sessions/ \uff08\u53ef\u80fd\u5305\u542b API key \u5bf9\u8bdd\u5386\u53f2\uff09\n   - memories/ \uff08\u53ef\u80fd\u5305\u542b\u654f\u611f\u914d\u7f6e\uff09\n3. \u63d0\u4ea4\u6240\u6709\u53d8\u66f4\uff08add . && commit -m \"Backup: $(date +%Y-%m-%d_%H:%M)\"\uff09\n4. \u63a8\u9001\u5230 GitHub\n5. \u6e05\u7406\u4e34\u65f6\u76ee\u5f55 /tmp/demi-backup/\n\n\u4f7f\u7528 GitHub PAT \u8ba4\u8bc1\uff1a\n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",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": null,
+      "no_agent": false,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 22 * * *",
+        "display": "0 22 * * *"
+      },
+      "schedule_display": "0 22 * * *",
+      "repeat": {
+        "times": null,
+        "completed": 18
+      },
+      "enabled": true,
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null,
+      "created_at": "2026-05-31T17:22:43.447182+08:00",
+      "next_run_at": "2026-06-17T22:00:00+08:00",
+      "last_run_at": "2026-06-15T22:01:14.261199+08:00",
+      "last_status": "ok",
+      "last_error": null,
+      "last_delivery_error": null,
+      "deliver": "origin",
+      "origin": {
+        "platform": "feishu",
+        "chat_id": "oc_82a1a36b7bacddfbcae28d273674900a",
+        "chat_name": "oc_82a1a36b7bacddfbcae28d273674900a",
+        "thread_id": null
+      },
+      "enabled_toolsets": null,
+      "workdir": null
+    },
+    {
+      "id": "fa7a29b3464e",
+      "name": "daily-chg-medical-news",
+      "prompt": "\u6bcf\u5929\u4e3a chinahospitalsguide.com \u533b\u7597\u65c5\u6e38\u7f51\u7ad9\u64b0\u5199\u4e00\u7bc7\u533b\u7597\u65b0\u95fb\u6587\u7ae0\u5e76\u53d1\u5e03\u3002\n\n## \u4ed3\u5e93\u914d\u7f6e\n- GitHub: https://github.com/qzw-alt/chinahospitalsguide\n- Branch: master\n- \u6587\u7ae0\u76ee\u5f55: news/\n- \u6587\u7ae0\u547d\u540d: YYYY-MM-DD.html\n- Sitemap: sitemap.xml\uff08\u6839\u76ee\u5f55\uff09\n- \u90e8\u7f72\u9a8c\u8bc1: curl -s -o /dev/null -w \"%{http_code}\" https://chinahospitalsguide.com/news/YYYY-MM-DD.html\uff08\u671f\u671b200\uff09\n- \u9a8c\u8bc1\u7b49\u5f85: 2-3\u5206\u949f\n\n## \u5de5\u4f5c\u6d41\u7a0b\n\n### Step 1: \u7814\u7a76\u70ed\u70b9\n\u52a0\u8f7d skill content-research-writer-cn \u83b7\u53d6\u4eca\u65e5\u70ed\u70b9\u3002\u6765\u6e90\uff1a\u4e01\u9999\u56ed\u3001\u56fd\u5bb6\u536b\u5065\u59d4\u3001\u5065\u5eb7\u62a5\u3001ASCO/ESMO\u3001\u6f8e\u6e43\u65b0\u95fb\u3002\u4e3b\u9898\u65b9\u5411\uff1a\u4e34\u5e8a\u7a81\u7834\u3001\u51fa\u5883\u533b\u7597\u7ade\u4e89\u3001Inbound\u52a8\u6001\u3001\u653f\u7b56\u5229\u597d\u3001\u6570\u5b57\u533b\u7597\u3001\u516c\u536b\u4e8b\u4ef6\u3002\u8d28\u91cf\u95e8\u69db\uff1a\u65e0\u597d\u70ed\u70b9\u5219\u8df3\u8fc7\u4eca\u65e5\u53d1\u5e03\u3002\n\n### Step 2: \u5199\u6587\u7ae0\n\u52a0\u8f7d skill programmatic-seo \u5199\u6587\u7ae0\uff0c\u53c2\u8003\u5df2\u6709\u6a21\u677f\uff1a/home/ubuntu/.hermes/workspace/website/news/2026-04-10-china-inbound-medical-tourism-1point28-million-2025.html\nSEO\u8981\u6c42\uff1a\u6807\u9898\u542b\u5173\u952e\u8bcd\u3001800-1200\u8bcd\u3001\u5185\u94fe\u5230\u76f8\u5173\u533b\u9662\u9875\u9762\u3001\u5916\u94fe\u5230\u6743\u5a01\u6765\u6e90\u3002\n\n### Step 3: \u53bbAI\u5316\n\u52a0\u8f7d skill humanizer \u5904\u7406\u8349\u7a3f\u3002\u8bc4\u5206\u5fc5\u987b >60 \u624d\u53d1\u5e03\u3002\n\n### Step 4: \u53d1\u5e03\n\u4fdd\u5b58\u6587\u7ae0\u5230 /home/ubuntu/.hermes/workspace/website/news/YYYY-MM-DD.html\n\n### Step 5: \u66f4\u65b0sitemap\u548c\u7d22\u5f15\n1. \u5728 sitemap.xml \u9876\u90e8\u63d2\u5165\u65b0url\u6761\u76ee\n2. \u5728 news/index.html \u6587\u7ae0\u5217\u8868\u9876\u90e8\u6dfb\u52a0\u94fe\u63a5\n\n### Step 6: Git Push\ncd /home/ubuntu/.hermes/workspace/website && git add news/YYYY-MM-DD.html sitemap.xml news/index.html && git commit -m \"article: YYYY-MM-DD\" && git push origin master\n\u63a8\u9001\u540e\u7b49\u5f853\u5206\u949f\u9a8c\u8bc1\u7ebf\u4e0a\u53ef\u7528\u3002\n\n## \u62a5\u544a\n\u5b8c\u6210\u540e\u62a5\u544a\uff1a\u70ed\u70b9\u6807\u9898\u3001\u5b57\u6570\u3001\u53bbAI\u5316\u8bc4\u5206\u3001\u53d1\u5e03URL\u3001\u9a8c\u8bc1\u72b6\u6001\u3002",
+      "skills": [
+        "content-research-writer-cn",
+        "programmatic-seo",
+        "humanizer"
+      ],
+      "skill": "content-research-writer-cn",
+      "model": "mini-max-m2.7",
+      "provider": "custom:minimax_coding",
+      "base_url": null,
+      "script": null,
+      "no_agent": false,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 9 * * *",
+        "display": "0 9 * * *"
+      },
+      "schedule_display": "0 9 * * *",
+      "repeat": {
+        "times": null,
+        "completed": 22
+      },
+      "enabled": true,
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null,
+      "created_at": "2026-06-02T08:16:41.523255+08:00",
+      "next_run_at": "2026-06-17T09:00:00+08:00",
+      "last_run_at": "2026-06-16T09:07:08.412183+08:00",
+      "last_status": "error",
+      "last_error": "RuntimeError: [ Cron budget exhausted \u2014 research phase only. No article written, no commit, no push. ]\n\n## Cron Run 2026-06-16 Summary\n\n### Pre-flight (clean)\n- Working tree clean, no pending recovery needed\n- Last commit `c8bffec` already on `origin/master` (2026-06-14 Akeso gumokimab, shipped cleanly yesterday)\n- SSH remote `git@github.com:qzw-alt/chinahospitalsguide.git` is in place\n- Branch: `master`\n\n### Research state\nSearched Bing News (4 queries), ChinaDaily China/Business/Health/Asia sections (15+ article titles checked), Akeso press archive, Manila Times PR Newswire (06-13 \u2192 06-16 range). All Yahoo Finance / BusinessWire / ContractPharma endpoints blocked (Cloudflare / 23-byte responses). Found **two candidates**, neither shippable today due to budget exhaustion.\n\n### Candidate 1 \u2014 CarsGen at EHA 2026 (strongest, but blocked by rate-limit)\n- Allogeneic CAR-T products CT0596 + CT1190B presented at EHA 2026 (June 12-15, Milan)\n- Source via wvgazettemail.com PR mirror \u2014 body returned `Too Many Requests`\n- Next-run action: retry via `https://www.manilatimes.net/2026/06/{12-15}/tmt-newswire/pr-newswire/carsgen-...` mirror, or fetch directly from CarsGen's IR page (carsgen.com)\n- Why shippable: allogeneic CAR-T (off-the-shelf, no need for patient-specific manufacturing) is a step-change for medical-tourism economics; complements the 06-09 Oricell GPC3 (autologous solid-tumor) and 06-10 Antengene ATG-201 (autoimmune bispecific) coverage\n\n### Candidate 2 \u2014 HK Lung Foundation COPD/asthma survey (June 15, weak angle)\n- 67.6% of HK residents lack adequate COPD/asthma knowledge; 25.9% of HK adults 60+ have COPD; 330-400k asthma patients\n- Source: ChinaDaily Asia article 635004\n- Marginal: HK public-health policy, not directly medical-tourism relevant\n\n### Akeso June 15 (rejected)\n- HER3 ADC AK138D1 + ivonescimab first-patient-enrolled (Phase Ib/II breast cancer)\n- Two consecutive Akeso articles (06-14 gumokimab + 06-15 AK138D1) would read as channel-overload; first-patient-enrolled is lower news value than approval or Phase III data\n\n### Pending-file handoff\nWriting the pending handoff so the next cron run (2026-06-17) can pick this up without re-researching.]<]minimax[>[<tool_call>\n]<]minimax[>[<invoke name=\"terminal\">]<]minimax[>[<command>mkdir -p /home/ubuntu/.hermes/skills/research/content-research-writer-cn/references && cat > /home/ubuntu/.hermes/skills/research/content-research-writer-cn/references/pending-2026-06-16-carsgen-eha-allogeneic-cart.md <<'EOF'\n# Pending handoff \u2014 2026-06-16 cron run (cron cap hit during research)\n\n## Status\n- Cron iteration cap reached during research phase\n- No article written, no commit, no push\n- Pre-flight: working tree clean, last commit `c8bffec` (06-14 Akeso gumokimab) already on origin/master\n- SSH remote confirmed in place (`git@github.com:qzw-alt/chinahospitalsguide.git`)\n- Branch: master\n\n## Recommended topic for 2026-06-17 \u2014 CarsGen at EHA 2026 (allogeneic CAR-T)\n**Hot topic:** CarsGen presented Phase 1 / preclinical data on its allogeneic (off-the-shelf) CAR-T cell products CT0596 and CT1190B at the European Hematology Association (EHA) 2026 Congress (Milan, June 12-15, 2026).\n\n### Why shippable\n- **Allogeneic CAR-T** is the next step-change for medical tourism: no need for patient-specific cell collection/manufacturing, lower cost, faster turnaround, scale-up compatible with international patient flow\n- Complements recent coverage: 06-09 Oricell Ori-C101 (autologous solid-tumor GPC3 CAR-T, HCC), 06-10 Antengene ATG-201 (CD19\u00d7CD3 bispecific TCE for autoimmune), 06-14 Akeso gumokimab (anti-IL-17 mAb for psoriasis)\n- EHA 2026 = international clinical congress = high credibility + Chinese biotech co-authorship angle\n- The \"off-the-shelf\" economics angle aligns with medical-tourism thesis: international patients who cannot afford US/EU autologous CAR-T ($500K+) or who cannot wait 4-6 weeks for manufacturing\n\n### Research that already happened (today)\n- Bing News hit `https://www.wvgazettemail.com/online_features/press_releases/carsgen-presents-allogeneic-car-t-cell-products-ct0596-and-ct1190b-at-eha-2026/article_244c6c22-e659-53f4-ba17-cac65d5ae120.html` but body returned `Too Many Requests` (rate-limited)\n- Manila Times PR Newswire feed scanned 06-12 to 06-16 \u2014 no CarsGen entry found\n\n### Fetch recipe for next run\n1. Try the manilatimes.net mirror pattern (verified working for Antengene 06-10 and Oricell 06-09):\n   ```\n   curl -A \"Mozilla/5.0 ...\" \"https://www.manilatimes.net/2026/06/{12,13,14,15}/tmt-newswire/pr-newswire/carsgen-eha-2026\" | grep -oE 'href=\"[^\"]+\"' | head\n   ```\n   Or search Bing: `CarsGen EHA 2026 allogeneic CT0596 CT1190B site:manilatimes.net`\n2. If that fails, fetch directly from CarsGen IR:\n   ```\n   curl -A \"Mozilla/5.0 ...\" \"https://www.carsgen.com/en/Media/News\" | grep -oE 'href=\"[^\"]+\"' | grep -i '2026'\n   ```\n3. If both blocked, use CrossRef for the EHA abstract (EHA abstracts get DOIs):\n   ```\n   curl \"https://api.crossref.org/works?query.bibliographic=CarsGen+CT0596+EHA+2026\" | python3 -c \"...\" (blocked \u2014 use bundled extract.py instead)\n   ```\n\n### Key facts to extract (any source)\n- Drug names: CT0596 (BCMA-targeted allogeneic CAR-T for multiple myeloma? \u2014 verify), CT1190B (CD19-targeted allogeneic CAR-T for B-cell lymphoma? \u2014 verify)\n- Indications\n- Patient numbers (n=X)\n- ORR / CR rate / safety profile\n- Manufacturing approach (gene-edited TCR-knockout / HLA-typed? \u2014 confirm)\n- China NMPA trial status (IND / Phase I / etc.)\n- EHA session details (poster / oral / abstract number)\n\n### Suggested article structure (9 sections, ~3,500 words)\n1. Lead \u2014 what EHA 2026 showed, why allogeneic matters for international patients\n2. The autologous CAR-T bottleneck \u2014 why off-the-shelf is the next frontier (medical-tourism economics: $500K US autologous vs projected <$200K allogeneic, 4-6 weeks vs <1 week)\n3. CT0596 data \u2014 myeloma cohort, efficacy, safety\n4. CT1190B data \u2014 lymphoma cohort, efficacy, safety\n5. The allogeneic manufacturing problem \u2014 TCR-knockout, HLA editing, lymphodepletion considerations\n6. China angle \u2014 CarsGen's Zhangjiang cell-therapy ecosystem, NMPA parallel trial path, Shanghai Ruijin / Tongji / Jiahui International as access hospitals\n7. International patient pathway \u2014 comparison with US/EU autologous CAR-T access timelines and costs\n8. Risks and unknowns \u2014 durability, GvHD risk, manufacturing scalability\n9. CTA \u2014 link to hospitals, link to China Hospitals Guide CAR-T hub, link to 06-09 Oricell + 06-10 Antengene pieces\n\n### Internal links to use\n- /news/2026-06-09-oricell-gpc3-cart-hcc-nmpa-phase2-clearance.html (sister article: autologous solid-tumor CAR-T)\n- /news/2026-06-10-antengene-atg-201-bispecific-autoimmune-pku.html (sister article: bispecific TCE autoimmune)\n- /news/2026-05-09-car-t-therapy-cost-china-solid-tumor-breakthrough.html (CAR-T cost framing)\n- /news/2026-06-11-china-medical-tourism-cutting-edge-cheap-bloomberg.html (medical-tourism economics anchor)\n\n### External links to use\n- EHA 2026 official site (ehaweb.org) for the abstract\n- CarsGen official IR (carsgen.com/en/Media/News) for canonical press release\n- 1-2 NMPA / clinicaltrials.gov references if available\n\n### Em-dash target\n- 17-23 per 1200 words (chinahospitalsguide baseline)\n- Use clinical parentheticals for drug mechanism (gene-editing, HLA-typed, lymphodepletion), trial design (Phase 1 dose-escalation), patient population (R/R, ECOG 0-1)\n\n### Banned-vocab awareness\n- Avoid: pivotal, crucial, landscape, actually, leverage, navigate, showcase, testament\n- \"Pivotal\" was a false-positive on the 06-14 article in clinical-prose context \u2014 use \"registrational\" or \"first-in-class\" for the Phase 3 / approval language\n- \"Navigate\" \u2014 only use in clinical-prose logistics sentences; CTA copy should say \"move through\" or \"work through\"\n\n### De-dup grep before writing (in news/ directory)\n```bash\ncd /home/ubuntu/.hermes/workspace/website/news && grep -lE \"(CT0596|CT1190B|allogeneic.CAR.T|EHA.2026|CarsGen)\" *.html\n```\nExpected return: 0 matches (none of these terms appear in existing articles \u2014 Antengene CD19\u00d7CD3 and Oricell GPC3 are different targets and modalities). If the grep returns matches, switch topic.\n\n## Recovery recipe\n1. Read this file\n2. Fetch the CarsGen / EHA source via the recipe above (try manilatimes first, then carsgen.com IR)\n3. Verify date is 2026-06-12 to 2026-06-15 (EHA 2026 window)\n4. Run de-dup grep (above)\n5. Write article `news/2026-06-17-carsgen-eha-allogeneic-cart-eha-2026.html` using the 9-section structure (date = cron run date, NOT press release date, since the press release date is co-terminal with the cron run)\n6. Humanize to >60 (likely needs 3-5 banned-vocab patches first time)\n7. Update sitemap.xml + news/index.html\n8. Commit + push + sleep 180 + curl HTTP 200 verify\n9. Write next pending note `pending-2026-06-17-carsgen-eha-allogeneic-cart-shipped.md` documenting the run\n\n## Cron state at end of run\n- Budget exhausted during research phase (~15 tool calls)\n- No file modifications\n- No commits\n- No push\nEOF\necho \"pending file written\"\nwc -l /home/ubuntu/.hermes/skills/research/content-research-writer-cn/references/pending-2026-06-16-carsgen-eha-allogeneic-cart.md]<]minimax[>[</command>]<]minimax[>[</invoke>\n]<]minimax[>[</tool_call>",
+      "last_delivery_error": null,
+      "deliver": "feishu",
+      "origin": {
+        "platform": "feishu",
+        "chat_id": "oc_82a1a36b7bacddfbcae28d273674900a",
+        "chat_name": "oc_82a1a36b7bacddfbcae28d273674900a",
+        "thread_id": null
+      },
+      "enabled_toolsets": null,
+      "workdir": null
+    }
+  ],
+  "updated_at": "2026-06-16T22:00:11.602063+08:00"
+}
