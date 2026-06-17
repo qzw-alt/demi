@@ -1,7 +1,7 @@
 ---
 name: programmatic-seo
 description: "Programmatic SEO article writing for content sites. Workflow: research → draft → humanize → publish → update sitemap. Currently serving oriental-destiny.com and chinahospitalsguide.com."
-version: 1.1.5
+version: 1.2.0
 author: Hermes Agent
 platforms: [linux]
 metadata:
@@ -15,6 +15,32 @@ metadata:
 Write and publish daily SEO articles for oriental-destiny.com (feng shui / BaZi / destiny) and chinahospitalsguide.com (Chinese medical tourism).
 
 ## Workflow (6 Steps)
+
+### Step 0: Cron Pre-flight (MUST RUN BEFORE ANYTHING ELSE)
+
+Every cron run, regardless of which site, must run these two checks before any research or writing. Detecting partial-completion state at the START saves a full cycle of wasted research.
+
+```bash
+# Check 1: Is there a partial-pipeline article from a previous run that didn't push?
+ls news/$(date +%Y-%m-%d)-*.html 2>/dev/null
+# Non-empty result = article was written but not committed/pushed. RECOVER, don't research.
+
+# Check 2: Is the local branch ahead of origin?
+git status
+# "Your branch is ahead of 'origin/<branch>' by N commit" = RECOVER (just push + verify).
+
+# Check 3: Are there pending recovery files from a previous run?
+ls references/pending-*.md 2>/dev/null
+# Or for oriental-destiny: ls memories/layer3/research/pending-*.md 2>/dev/null
+# Non-empty result = pending file handoff; pick it up and ship.
+```
+
+If any check is non-empty, **STOP and recover that state first**. Do not start fresh research on a day when a prior run left recoverable artifacts. Recovery recipes are site-specific:
+
+- **chinahospitalsguide.com:** see the "Cron iteration cap hit" pitfall below for the four documented failure modes (post-commit cap-hit, during-research cap-hit, mid-pipeline cap-hit, during-writing cap-hit). The detection signal determines which recovery recipe applies.
+- **oriental-destiny.com:** see the sibling-cron divergence pattern below. If a previous article was committed but not pushed, the merge-and-resolve recipe applies.
+
+Only after all three checks return empty should the run proceed to Step 1 (research).
 
 ### Step 1: Research
 Load and use `content-research-writer-cn` skill to find today's热点.
@@ -54,10 +80,22 @@ python scripts/humanize_score.py ../path/to/article.html --site oriental-destiny
 
 Exit 0 = passes the >60 threshold; non-zero = the notes list tells you which humanizer patterns fired. The script scores only — the rewrites come from reading the humanizer SKILL.md, not from the script.
 
+**Extended audit (oriental-destiny.com only):** for the broader humanizer-skill pattern catalogue (rule-of-three, negative parallelisms, copula avoidance, -ing filler, sentence variance, human voice signals) that `humanize_score.py` doesn't track, also run `scripts/humanize_audit.py`:
+
+```bash
+python3 scripts/humanize_audit.py /path/to/fate-YYYY-MM-DD.html
+```
+
+The two scripts are complementary — `humanize_score.py` is the site-aware baseline check, `humanize_audit.py` is the broad-pattern catalogue. Run both before publishing an oriental-destiny article.
+
+**Article template:** for the full HTML scaffold (head, CSS, JSON-LD, header, footer, content-block structure), use `templates/fate-article-template.html`. Copy it, fill in the bracketed placeholders, and you have a working article shell in 1 write_file call. The template includes the verified-working CSS variables (ink/cinnabar/gold/pine), JSON-LD Article schema (with the `@type` typo pitfall noted inline), Google Analytics snippet, and footer cross-link defaults for June/July articles.
+
 ### Step 4: Publish
 Save to news/ directory as `YYYY-MM-DD.html`
 
 **Filename ambiguity (PITFALL — verified 2026-06-06):** the oriental-destiny cron prompt says `fate-YYYY-MM-DD.html` at the repo root, but Step 4 above and the chinahospitalsguide site use `news/YYYY-MM-DD.html`. Trust the **site's existing article layout** over the cron prompt — `ls *.html | head` in the repo to see how prior articles are named and where they sit, then match that pattern. For oriental-destiny, the convention is descriptive names at root (`feng-shui-bracelet-meaning.html`, `bazi-calculator-guide.html`); the cron prompt's `fate-YYYY-MM-DD.html` filename is a recent (2026-06-02+) cron-specific convention, also at root, not under `news/`.
+
+**Filename date for recovery handoffs (PITFALL — verified 2026-06-11):** when a recovery handoff picks up a pending file from a prior cron run (e.g. the 2026-06-11 cron run shipping the 2026-06-10 Antengene ATG-201 article), the article filename, the article body's `Published: YYYY-MM-DD` meta, and the sitemap `<lastmod>` should ALL use the **press release date from the pending file** (e.g. `2026-06-10`), not the cron run date (e.g. `2026-06-11`). The pending file's `target_article_slug` field is the source of truth — match it exactly. Shipping an article dated for the cron run date about a press release that happened 1+ days earlier reads as either outdated or made-up. The article's freshness window is anchored to the news event, not to the cron scheduler.
 
 ### Step 5: Update Sitemap
 - Add article entry to `sitemap.xml` (insert new `<url>` entry at top of `<urlset>`)
@@ -77,6 +115,10 @@ Push to the branch the remote's HEAD actually points to — typically `origin/HE
 - **chinahospitalsguide.com:** `master` (NOT `main` — the chinahospitalsguide remote's HEAD points to `origin/master`, and `master` is what receives the force-push from cron)
 
 Always verify the remote URL has credentials embedded — otherwise push silently fails. Check with `git remote -v`.
+
+**Cron iteration cap hit BETWEEN local commit and `git push` (NEW pitfall, verified 2026-06-14):** the 2026-06-14 chinahospitalsguide cron run completed Steps 1-5 (research, write, humanize 95, sitemap, index.html) and the local commit (`c8bffec`) succeeded, but the cron iteration cap was reached before `git push origin master` and the `sleep 180 && curl HTTP 200 verify` could run. The article state is: local commit ahead of `origin/master` by 1, all three files (article + sitemap + index.html) committed, no remote push. **The next cron run should detect this state with `git status` ("Your branch is ahead of 'origin/master' by 1 commit" with a 2026-06-14 article in the working tree) and JUST push + verify, NOT start fresh research.** The recovery command is `git push origin master && sleep 180 && curl -s -o /dev/null -w "%{http_code}" https://chinahospitalsguide.com/news/2026-06-14-...html`. This is a NEW failure mode (vs. earlier 2026-06-XX runs that hit the cap during research or writing and used the pending-file handoff). The post-commit cap-hit is recoverable in a single tool call, but only if the next cron run recognizes the state. **Add a `git status` check to the START of every cron run** so a "branch ahead by 1 with a recent article" state is detected and recovered in 2 tool calls, not re-researched from scratch.
+
+**Cron iteration cap hit MID-PIPELINE between sitemap and news/index.html (NEW pitfall, verified 2026-06-17):** the 2026-06-17 cron run completed research, wrote the 4,701-word article, scored 90/100 on humanize, and patched sitemap.xml — but the cap fired before news/index.html insertion and before any git commit/push. **Detection signal at start of next run:** `ls news/$(date +%Y-%m-%d)-*.html 2>/dev/null` — if a file matching today's date exists but `git status` shows it as untracked (no ahead-of-origin state), this is the mid-pipeline cap-hit. Recovery is straightforward: insert news/index.html card, `git add news/...html sitemap.xml news/index.html && git commit -m "article: YYYY-MM-DD" && git push origin master && sleep 180 && curl ... 200`. Total ~5 tool calls. **The key insight:** the article file on disk is durable state, so partial completion mid-pipeline is recoverable in 1 cycle if detected. The detection command is the FIRST thing every cron run should do, before any research.
 
 **Git push authentication failure (RESOLVED on BOTH sites as of 2026-06-07):** the oriental-destiny.com cron runs on 2026-06-03, 2026-06-04, and 2026-06-06 all hit GitHub HTTPS auth failures (`fatal: could not read Username` / `Password authentication is not supported for Git operations`) because the remote URL had no embedded token and the cron-sandbox credential helper masked the PAT. The 2026-06-06 troubleshooting run switched the oriental-destiny remote to SSH (`git remote set-url origin git@github.com:qzw-alt/oriental-destiny.git`) using the existing `~/.ssh/id_ed25519` key. The 2026-06-07 cron run applied the **same SSH fix to chinahospitalsguide.com** (which had been failing on every cron since 2026-06-03 with the same auth error) and confirmed both fixes are durable. **If the push ever fails again, first check `git remote -v` — the URL should be `git@github.com:...` (SSH), not `https://github.com/...`.** If it has reverted to HTTPS, repeat the SSH switch from the troubleshooting reference.
 
@@ -149,7 +191,25 @@ Each em-dash should add a clinical aside, not break the sentence. Target: 17-23 
 
 **"Actually" is a false positive in clinical prose (verified 2026-06-08):** the script flags "actually" as banned vocab, but in clinical writing it appears in normal constructions like "would actually execute" or "had not actually been done" where it's just an emphasis word, not an AI tell. Don't strip it from body prose — only strip if it appears in a heading or in a sentence where "in fact" or "in practice" works equally well. The body text scan should tolerate 1-2 "actually" hits on a 4,000-word article.
 
-**Patch tool pitfall: use short unique substrings (verified 2026-06-08):** when editing with `patch` on a long article, the fuzzy matcher can match the WRONG paragraph if the `old_string` is a long unique-looking context that also appears (perhaps with small differences) elsewhere. Symptom: the patch fails OR matches the wrong location. Fix: use a SHORT unique substring (10-30 chars) that appears EXACTLY ONCE in the file as the `old_string`, and put the new content (which can be the full paragraph) in `new_string`. Example: instead of `old_string="The on-site team stays scrubbed and present for the entire case, ready to take over in the event of a network drop or an emergency that the remote surgeon judges should be finished in person."` use `old_string="an emergency that the remote surgeon judges should be finished in person."` (20 chars, unique). The full paragraph in `new_string` will replace just the matched substring. This avoids the "wrong paragraph patched" trap.
+**"`navigate the`" banned phrase — context-dependent (verified 2026-06-13):** the `humanize_score.py` script flags "navigate" as banned vocab. The chinahospitalsguide 2026-06-13 BT/Bloomberg article had one hit in the CTA box ("We help international patients navigate the Shanghai, Beijing, and Hainan Lecheng pathways") which patched cleanly to "move through" — outbound CTA copy is always safe to change. The 2026-06-11 Antengene article had a different hit ("the realistic near-term access path is to navigate the cross-border clinical-trial pathway") which is clinical-prose-appropriate and was left untouched. **Decision rule:** if the surrounding sentence rewrites cleanly with "move through" or "work through," patch it; if "navigate" is the load-bearing verb in a logistics sentence (the patient is genuinely moving between two healthcare systems), leave it. CTA / outbound-marketing copy is always a safe patch; body-prose load-bearing verbs are tolerated.
+
+**Canonical de-dup grep command (verified 2026-06-13):** before writing any chinahospitalsguide article sourced from a pending file or fresh research on a topic with prior coverage, run from the news directory:
+```bash
+cd news && grep -lE "(KEY_ENTITY_1|KEY_ENTITY_2|KEY_DATA_POINT_3|KEY_QUOTE_4)" *.html
+```
+Pick 4-6 anchor strings from the new article's key facts (specific numbers, person names, regulation names, market projections). Zero matches = shippable. 1-2 matches = shippable if new framing is genuinely different. 3+ matches = likely duplication, skip (宁缺毋滥). The 06-13 article shipped cleanly because this grep returned 0 matches across 65+ existing articles for the strings `(Stuart Lye|65,000|clinical-research fees|brain-implant|Market Research Future|US\$1\.3B)`.
+
+**Humanize score-band recovery pattern (verified 2026-06-13):** when a clean chinahospitalsguide article comes back at 55-65/100 from the script, the score is almost always being dragged down by 4-6 small banned-vocab hits (landscape, actually, leverage, navigate, etc.) that the writer missed in the first pass. Run the script, find each hit, patch with a synonym, re-score. The 06-13 article went from 57 → 95 in 6 small patches. Don't try to push the score by restructuring prose — fix the specific banned-vocab hits one at a time.
+
+**Long articles (5,000+ words) and the humanize score (verified 2026-06-11):** the 2026-06-11 Antengene ATG-201 article shipped at 5,229 words with a score of 62/100 — the script's "high word count" note was the dominant score penalty (-ing tails + word count together), not em-dash density. For any chinahospitalsguide article above ~4,500 words, **a score of 60-70 is the realistic ceiling** with the current script config, even for a clean draft. Do not waste tool calls trying to push the score higher by stripping legitimate clinical prose — the score formula penalizes word count directly, so longer articles will always score lower. The 06-09 Ori-C101 article (4,216 words) scored 82; the 06-11 Antengene article (5,229 words, +24% longer) scored 62. The score gap is almost entirely the word-count penalty, not prose quality. **Pass the >60 threshold, document the word count in the pending note, and ship.**
+
+**Long articles (5,000+ words) and the humanize score (verified 2026-06-11):**
+
+**Patch tool pitfall: HTML entities in `old_string` get decoded silently (verified 2026-06-12):** when patching an HTML file whose `old_string` contains an HTML entity like `&mdash;` (em-dash), `&hellip;` (ellipsis), `&nbsp;`, or `&rsquo;`, the patch tool's fuzzy matcher strips the entity back to the underlying character (`—`, `…`, ` `, `'`) before searching, so the literal `&mdash;` in your `old_string` will never match the file's encoded form. Symptom: `Could not find a match for old_string in the file` even though the substring is plainly there. Two fixes:
+1. Use the decoded character directly in `old_string` (e.g. `&mdash;` → `—`). This works as long as the underlying character is unique enough to match.
+2. Use a SHORTER unique substring that does NOT contain the entity, per the pitfall above. This is more robust when the surrounding text repeats.
+
+Example failure: trying to patch `directions as they actually sit in your home` (preceded by `&mdash;` 6 chars before) failed because the entity got decoded. Using `directions as they sit in your home` (the same 10-word string, no entity in the substring) succeeded on the second attempt. The general rule: when patching HTML, never include an HTML entity in `old_string` if you can avoid it.
 
 **Patch tool pitfall: Chinese-character accidents in English articles (verified 2026-06-09):** the `patch` tool can introduce Chinese characters into an English HTML file when the `new_string` is constructed in a hurry or copied from a search result with a stray CJK phrase. Symptom: the article body silently contains 2-4 bytes of UTF-8 Chinese (e.g. `实验室`) that breaks the visual flow and could cause encoding/parsing issues. The 2026-06-09 Ori-C101 article had `实验室` accidentally inserted mid-sentence ("the antigen was identified in the early 2000s (by the实验室 of Dr. Mitchell Ho at the NIH..."). The fix is two parts: (a) after every `patch` operation on an English article, grep for non-ASCII characters with `grep -P '[^\x00-\x7F]' news/FILE.html` and remove any CJK runs; (b) when constructing a `new_string` from a search result, paste it into a UTF-8 clean buffer first. The 2026-06-09 case was caught by searching for the literal `实验室` after the patch failed to match elsewhere. Generalize this to: **after every `write_file` or `patch` on a long English article, run `grep -P '[^\x00-\x7F]' FILE.html` to catch any non-ASCII content**. This is fast (< 1 second) and catches the class of bug that would otherwise ship to production.
 
@@ -192,11 +252,58 @@ The cron run on 2026-06-02 ran out of tool-call budget AFTER writing the article
 
 Total: 10 tool calls. The keys are: chain git operations in single terminal calls; combine the final push with the wait+verify curl; never delegate research to a subagent (per the 2026-06-02 burn); trust the existing `humanize_score.py` script rather than rolling your own (per the `-c` flag pitfall).
 
+**Reference: an EVEN cleaner run in ~9 tool calls (verified 2026-06-15 and again 2026-06-16, oriental-destiny.com Fire Month series, scores 95/100 both times, no sibling-cron divergence):**
+1. `terminal` — `ls *.html | head` + `git remote -v` + `git status` (combined) — verifies SSH, branch, clean working tree, no pending article
+2. `read_file` — `article_topics.md` + `terminology_mapping.md` (combined) — research
+3. `read_file` — most recent `fate-YYYY-MM-DD.html` — voice + scaffolding reference (NOT the bare template; the published article is what you want to mirror, see pitfall below)
+4. `terminal` — `grep -l` de-dup check for the chosen topic anchor strings (e.g. "kitchen feng shui", "stove", "burner")
+5. `write_file` — `fate-YYYY-MM-DD.html` — the article
+6. `terminal` — `python3 scripts/humanize_score.py …` — score check (first pass usually 85-90)
+7. `patch` — one targeted banned-vocab swap if step 6 flagged any (single hit, e.g. `actually` → something concrete)
+8. `terminal` — `git add . && git commit -m "article: YYYY-MM-DD" && git push origin main` (combined) — single chained commit+push
+9. `terminal` — `sleep 180 && curl -s -o /dev/null -w "HTTP %{http_code}\n" https://oriental-destiny.com/fate-YYYY-MM-DD.html` — verify
+
+Total: 9 tool calls, score 95/100 on the first re-score after one small patch. The recipe's whole point: when no sibling-cron divergence exists, you don't need the merge/sitemap-conflict dance (steps 8-10 of the 06-08 recipe). The `git status` check at step 1 is what tells you which recipe to follow — clean tree = this 9-call version; "branch ahead by 1" = the recovery-only 2-call version per the post-commit cap-hit pitfall above; conflict markers in sitemap = the 10-call merge-and-resolve version.
+
+**Voice reference vs. template (pitfall, verified 2026-06-16):** step 3 above should read the most recent **published article** (e.g. `fate-2026-06-15.html`), not `templates/fate-article-template.html`. The template is a bare bracketed scaffold with no prose, so mirroring it produces an article that reads as if generated from a template (which is what it is). The published article carries the actual voice, the H2/H3 rhythm, the pullquote placement, the FAQ density, the CTA copy, and the footer cross-link choices that match the current month's content. Use the template to confirm CSS class names and JSON-LD shape; use the published article to confirm voice. Future agents that skip step 3 and write straight from the template will produce articles that pass the humanize score but feel off-tone against the rest of the site.
+
+**Seasonal content threading (NEW pattern, verified 2026-06-16, extended 2026-06-17):** when the content calendar calls for a month-long theme (June 2026 = Fire Month / Summer), thread the daily articles through distinct sub-topics in a stable order so the series reads as a deliberate walk, not a random shuffle. Verified June 2026 sequence:
+- 06-10: Center of home (Earth sector — sets the element-of-the-month stage)
+- 06-11: Bing Day Master (Yang Fire chart primer — chart-side foundation)
+- 06-12: Xia Zhi (Summer Solstice — solar-term anchor)
+- 06-13: Ming Tang in Summer (Entryway — first room)
+- 06-14: Bedroom Fire Month (second room)
+- 06-15: Home Office Fire Month (third room)
+- 06-16: Kitchen Fire Month (fourth room)
+- **06-17: Living Room Fire Month (fifth room — completes the major-room walk)**
+
+The pattern: anchor pieces (solar terms, day-master explainers) at the start of the month, then a room-by-room walk through the home, each one referencing the season's element in a way that connects to the previous day's article implicitly (bedroom handles the body's night, home office handles the day's focus, kitchen handles the cook's evening, living room handles the family gathering). The reader who lands on any one article gets the full recommendation; the reader who reads the series gets a coherent seasonal practice. The `article_topics.md` content calendar only gives the umbrella theme (June = Summer Feng Shui / Fire Element / Energy Activation) — the room-by-room thread is the cron agent's job to plan at the start of each month.
+
+**Room walk completion milestone (verified 2026-06-17):** after the fifth major room (Living Room), the room-by-room thread is complete for the Fire Month. The next article (06-18+) should pivot to a different sub-thread: (a) a classical feng shui concept that hasn't been written yet (Flying Star, Bagua, annual flying stars) — check with `ls *.html | grep -i KEYWORD` for zero hits, (b) an element transition article (Earth/Metal element preview as July approaches), or (c) a chart-side Fire Month topic that deepens the BaZi angle (Ding Day Master was already covered in 06-07; consider Wu/Yang Earth chart in summer, or a Fire-heavy chart's summer reading).
+
+**Patch tool pitfall: sibling-subagent write warning (verified 2026-06-15, recurred 2026-06-16):** the `patch` tool will return a warning like `"<file> was modified by sibling subagent 'daff0dc8-9bab-4bea-924c-9c6cdd24a93a' but this agent never read it. Read the file before writing to avoid overwriting the sibling's changes."` when a parallel cron (or subagent) has modified a shared file (almost always `sitemap.xml`) since the current agent last read it. This happens because the oriental-destiny.com cron job runs on a schedule that overlaps with sibling sites (e.g. chinahospitalsguide), and both can touch the same `sitemap.xml` within a few seconds. The warning is **non-fatal** — the patch may still apply cleanly — but it is a yellow flag: the sibling may have written a different change to the same region, and the current patch may have silently clobbered it.
+
+**Fastest recovery (verified 2026-06-16):** `head -15 sitemap.xml` is enough to confirm the patch landed correctly. The sibling subagents almost always insert their entries at the top of the same region you are writing to, so a 15-line head shows whether your entry is present and whether a second entry from the sibling was also inserted (rare but possible). If your entry is the only one at the top, proceed to commit. If two entries are interleaved, read the full file and re-patch the merged version. This 1-call check is faster than the full `read_file` dance in the recipe below and works because the warning almost always fires on the same line region both agents target.
+
+Recovery recipe (verified 2026-06-15):
+1. After the warning fires, immediately `read_file` the file (don't trust the patch succeeded) and diff against what you expected your patch to produce.
+2. If the file content matches what you intended to write, proceed normally — the warning was a false positive (sibling made an equivalent or no-op change in the same region).
+3. If the file content differs from what you intended, decide which change wins:
+   - **Same-site, same-day:** almost always the current agent wins (you just wrote an article entry, the sibling can't have written the same one).
+   - **Cross-site:** the sibling probably wrote its own article entry to a non-overlapping region. Re-read, manually compose the merged version (insert BOTH entries at the top, in correct chronological order), and `patch` the merged result.
+4. As a preventive measure: `read_file` the shared file IMMEDIATELY BEFORE the `patch`, not just at the start of the run. The patch tool's "have I read this file" check is timestamp-based, not session-based, so a sibling write between read and patch will trigger the warning.
+
+General lesson: when multiple cron jobs can touch the same file (sitemap.xml, news/index.html, or any shared landing page), treat the file as a shared resource and re-read it before every write. The warning is the tool's way of saying "you're about to write to a file you don't have a fresh view of."
+
 ## Integration
 
 ```
 content-research-writer-cn → (hot topic) → programmatic-seo → (draft) → humanizer → (humanized) → publish → sitemap → git push
 ```
+
+## Failure-mode reference
+
+For operational pitfalls hit during daily cron runs (CSS-stripped-during-write_file, missing repo on fresh VM, tirith `python3 -c` block, `git clone` URL parse trap, cron-budget burnout patterns, weekly topic threading), see `references/cron-run-pitfalls.md` — verified across the2026-06-04 →2026-06-10 runs on oriental-destiny.com.
 
 Each skill feeds into the next. Always run in sequence.
 
@@ -238,6 +345,8 @@ For oriental-destiny: focus the humanize pass on banned vocab (`actually`, `leve
 
 For chinahospitalsguide: focus the humanize pass on banned vocab (full list in `humanizer` skill — same as oriental-destiny plus `leverage` is the highest-frequency offender in clinical writing). Do NOT touch em dashes.
 
+**`em_dash_check.py` reports 0 em-dashes when articles use `&mdash;` HTML entities (verified 2026-06-12):** the script counts raw `—` characters in the file's text. Articles in this repo consistently encode em-dashes as `&mdash;` entities (the prior `humanize_score.py` `extract_article_body()` bug for entity decoding was fixed on 2026-06-06, so that script counts them correctly — but `em_dash_check.py` was NOT updated alongside it). When you run `em_dash_check.py` on a repo article you will see "em-dashes: 0 (0.0 per 1200 words)" even when `humanize_score.py` reports 23+ em-dashes on the same file. **The correct em-dash count is the `humanize_score.py` number.** `em_dash_check.py` is still useful for banned-vocab hits and `-ing` analysis tails — just ignore its em-dash field. Patch the script's read-and-count block to decode `&mdash;` → `—` (e.g. `c = c.replace('&mdash;', '—')` after the file read) to align it with `humanize_score.py`.
+
 ## Research Source Bypass Patterns (PITFALL — verified 2026-06-02)
 
 Direct `curl` to Chinese-language medical sites is unreliable from the cron sandbox. Confirmed failures:
@@ -252,7 +361,7 @@ Direct `curl` to Chinese-language medical sites is unreliable from the cron sand
 - `lelezard.com` / `finanznachrichten.de` — work fine
 
 **Working bypass (in priority order):**
-1. `curl https://www.bing.com/news/search?q=QUERY&qft=interval%3d%229%22` — Bing News with `interval=9` (Past 30 days) returns hrefs that point to actual articles. Grep the returned HTML for `href="https://` URLs.
+1. **Bing News broken as of 2026-06-16 — DO NOT rely on the `qft=interval%3d%229%22` URL-extraction recipe.** Bing has shifted to a JS-rendered results layout; `curl ... bing.com/news/search | grep -oE 'href="https?://[^"]+"'` returns only Bing-internal navigation links, not article URLs. Multiple alternative extraction patterns also fail. See the `content-research-writer-cn` skill body for the full pitfall. **Fallback when Bing is broken:** go directly to known-good sources — ChinaDaily.com.cn `/china/`, `/business/`, `/life/health/` section scraping (full article list with `/a/202606/DD/WS{hash}.html` URLs and `<meta name="publishdate">` dates), biotech IR pages (akesobio.com/en/media/akeso-news/), Manila Times PR Newswire feed (`/YYYY/MM/DD/tmt-newswire/pr-newswire/SLUG/NNNN`), CrossRef for published papers. If Bing News worked in a prior run but returns noise today, skip Bing entirely after 2 failed fetches — do NOT keep iterating.
 2. Direct to English press release pages: `akesobio.com/en/media/akeso-news/`, company IR pages, PR Newswire syndications (`manilatimes.net` mirrors PR Newswire), `globenewswire.com`
 3. `https://api.crossref.org/works?query.bibliographic=...` — returns DOI + container-title + author list for published papers, even when the paper itself is paywalled
 4. Google Scholar search via `scholar.google.com/scholar?q=...` — works but rate-limited

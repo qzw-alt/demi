@@ -1,9 +1,0 @@
-{
-  "last_report_path": "/home/ubuntu/.hermes/logs/curator/20260607-063738",
-  "last_run_at": "2026-06-07T06:37:38.578134+00:00",
-  "last_run_duration_seconds": 117.654198,
-  "last_run_summary": "auto: no changes; llm: Now I have a complete picture. Let me make the assessment.\n\n---\n\n## Consolidation Analysis\n\n**Candidate set:** 2 agent-created skills (all others are bundled/hub-installed — verified against `.bundled_manifest`).\n\n### Cluster scan\n\n**Prefix…",
-  "last_run_summary_shown_at": null,
-  "paused": false,
-  "run_count": 1
-}

@@ -2,6 +2,33 @@
 
 Pattern for backing up a local directory (like `~/.hermes/`) to a GitHub repository using rsync + git, when the source contains sensitive files.
 
+## MANDATORY PRE-FLIGHT: Validate PAT First
+
+**Before doing anything else**, validate the PAT via API. If this fails, do not proceed:
+
+```python
+import urllib.request, json
+PAT = "<token>"
+req = urllib.request.Request(
+    "https://api.github.com/user",
+    headers={"Authorization": f"Bearer {PAT}", "Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28"}
+)
+try:
+    with urllib.request.urlopen(req) as resp:
+        user = json.loads(resp.read())
+        print(f"OK — authenticated as: {user['login']}")
+except urllib.error.HTTPError as e:
+    print(f"FAIL — HTTP {e.code}: token invalid or lacks repo scope")
+    raise SystemExit(1)
+```
+
+If this returns 401 → token is invalid or lacks `repo` scope. Stop and report to user.
+
+**Token format checks:**
+- Fine-Grained PAT: `github_pat_` prefix + 101 chars after (total ~111 chars) — **validate before use**
+- Classic PAT: `ghp_` prefix + 40 chars
+- Non-standard prefixes (e.g., `demi__`) are often **invitation tokens or exchange tokens**, NOT GitHub PATs — these work for API login flows but NOT for `git push`
+
 ## Overview
 
 ```bash
@@ -116,19 +143,22 @@ When HTTPS credential helpers are blocked in restricted containers (credential-s
 # Switch remote to SSH
 git remote set-url origin git@github.com:<owner>/<repo>.git
 
-# Push with SSH key
-GIT_SSH_COMMAND='ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no' git push -f origin master
+# Push with SSH key — use GIT_SSH_COMMAND to specify the key explicitly
+GIT_SSH_COMMAND="ssh -i ~/.ssh/id_ed25519" git push origin HEAD:refs/heads/main
 ```
 
-**Why this works in restricted containers:** SSH uses the key file directly — no credential helper, no netrc, no `~/.git-credentials` lookup. The key must be registered on GitHub and the remote URL must use `git@github.com:` (not HTTPS).
+**Why this works in restricted containers:** SSH uses the key file directly — no credential helper, no netrc, no `~/.git-credentials` lookup. Even when a credential helper is configured in `~/.gitconfig` and git invokes it during push, the helper itself may fail in restricted containers (returning "No such device or address" or simply failing silently). SSH bypasses the credential subsystem entirely.
 
-**Recovery when remote branch has diverged:** If the tip of your local branch is behind the remote, use `git push -f` (forced update) to overwrite. For backup repos where you own the push target, force-push is safe.
+**Key observations from a real session:**
+- Credential helper `/tmp/git-cred-helper.py` was called (`/tmp/git-cred-helper.py get`) but still returned auth failure
+- PAT embedded in HTTPS URL (`https://<PAT>@github.com/...`) fails with: `remote: Invalid username or token. Password authentication is not supported for Git operations.` — this error occurs even when PAT is valid for API calls
+- SSH push with `GIT_SSH_COMMAND="ssh -i ~/.ssh/id_ed25519"` succeeded immediately
 
-**When remote uses `main` but your local uses `master`:** If `git push -f origin master` fails with `! [rejected] master -> main (non-fast-forward)`, push with explicit destination mapping:
+**When remote uses `main` but your local uses `master`:** If `git push origin master` fails with `! [rejected] master -> main (non-fast-forward)`, push with explicit destination mapping:
 ```bash
 git push -f origin master:main   # pushes local master to remote main
 ```
-This session's backup repo had diverged commits on `main`; `master:main` with `--force` resolved it cleanly.
+For backup repos where you own the push target, force-push (`-f`) is safe.
 
 ---
 

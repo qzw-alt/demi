@@ -23,15 +23,15 @@
       "schedule_display": "0 8 * * *",
       "repeat": {
         "times": null,
-        "completed": 13
+        "completed": 21
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T14:45:42.377747+08:00",
-      "next_run_at": "2026-06-10T08:00:00+08:00",
-      "last_run_at": "2026-06-09T08:07:57.486475+08:00",
+      "next_run_at": "2026-06-18T08:00:00+08:00",
+      "last_run_at": "2026-06-17T08:06:55.141843+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -65,15 +65,15 @@
       "schedule_display": "0 9 * * *",
       "repeat": {
         "times": null,
-        "completed": 9
+        "completed": 17
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T17:20:53.016111+08:00",
-      "next_run_at": "2026-06-10T09:00:00+08:00",
-      "last_run_at": "2026-06-09T09:11:45.738023+08:00",
+      "next_run_at": "2026-06-18T09:00:00+08:00",
+      "last_run_at": "2026-06-17T09:03:24.784178+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -107,15 +107,15 @@
       "schedule_display": "0 22 * * *",
       "repeat": {
         "times": null,
-        "completed": 11
+        "completed": 19
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T17:22:43.447182+08:00",
-      "next_run_at": "2026-06-10T22:00:00+08:00",
-      "last_run_at": "2026-06-08T22:08:29.092487+08:00",
+      "next_run_at": "2026-06-18T22:00:00+08:00",
+      "last_run_at": "2026-06-16T22:04:26.086769+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -153,17 +153,17 @@
       "schedule_display": "0 9 * * *",
       "repeat": {
         "times": null,
-        "completed": 14
+        "completed": 23
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-02T08:16:41.523255+08:00",
-      "next_run_at": "2026-06-10T09:00:00+08:00",
-      "last_run_at": "2026-06-09T09:18:23.196064+08:00",
-      "last_status": "ok",
-      "last_error": null,
+      "next_run_at": "2026-06-18T09:00:00+08:00",
+      "last_run_at": "2026-06-17T09:10:03.608532+08:00",
+      "last_status": "error",
+      "last_error": "RuntimeError: ## Cron Run 2026-06-17 \u2014 Incomplete (Iteration Cap Reached Mid-Pipeline)\n\n### What was accomplished\n\n**Research (Step 1) \u2014 COMPLETE**\n- Working tree clean; last commit `c8bffec` already on origin/master\n- Confirmed no pending recovery files anywhere\n- Identified fresh hotspot: **Akeso's HER3 ADC AK138D1 + ivonescimab Phase Ib/II breast cancer study** (press release dated June 15, 2026, fetched from akesobio.com/en/media/akeso-news/260615/)\n- De-dup verified: zero matches against existing 18-article news library on anchor strings `AK138D1|HER3.ADC|IO2\\.0|ADC2\\.0|Dual-Shield ADC|HKEX.*9926.*HER3`\n- Press release details confirmed: HER3-targeting ADC with patritumab antibody + cleavable MC-AAA linker + DXd topo-I payload; AK138D1-202 trial in HR+/HER2- (65%) and TNBC (10-20%)\n\n**Article (Step 2) \u2014 COMPLETE**\n- Written to `news/2026-06-17-akeso-ak138d1-her3-adc-ivonescimab-breast-cancer.html`\n- 4,701 words, 9 sections (banner headline \u2192 news brief \u2192 why breast cancer \u2192 molecule design \u2192 trial design \u2192 ADC field comparison \u2192 IO2.0+ADC2.0 strategy \u2192 Akeso 2026 positioning \u2192 international patient angle \u2192 outlook)\n- Em-dash density 17.1 per 1200 words (right at the chinahospitalsguide baseline of 17-23)\n\n**Humanize (Step 3) \u2014 COMPLETE**\n- First pass: 36/100 (banned: actually \u00d71, enhance \u00d72, landscape \u00d76)\n- Applied 8 targeted patches: 2\u00d7 enhance\u2192amplify/increase, 5\u00d7 landscape\u2192field/state/market, 1\u00d7 removed \"actually\" from h3\n- Final score: **90/100** (threshold 60)\n\n**Sitemap (Step 5 partial) \u2014 DONE**\n- New `<url>` entry inserted at top of `sitemap.xml` with `lastmod=2026-06-17`\n\n### What remains for the next cron run\n\n- **`news/index.html` article card NOT YET inserted** \u2014 needs to be added at top of article list (above the 2026-06-14 gumokimab entry) with title, date, and excerpt\n- **Git commit NOT YET executed** \u2014 all 3 files need `git add` + `git commit -m \"article: 2026-06-17\"`\n- **`git push origin master` NOT YET executed**\n- **`sleep 180 && curl HTTP 200 verify` NOT YET executed**\n\n### Recovery recipe for next run\n\n```bash\ncd /home/ubuntu/.hermes/workspace/website\n# 1. Verify state (clean tree expected since no commit was made)\ngit status\n# 2. Insert news/index.html card above the 2026-06-14 gumokimab article\n# 3. Add + commit\ngit add news/2026-06-17-akeso-ak138d1-her3-adc-ivonescimab-breast-cancer.html \\\n        sitemap.xml news/index.html\ngit commit -m \"article: 2026-06-17\"\n# 4. Push + verify\ngit push origin master\nsleep 180\ncurl -s -o /dev/null -w \"%{http_code}\" \\\n  https://chinahospitalsguide.com/news/2026-06-17-akeso-ak138d1-her3-adc-ivonescimab-breast-cancer.html\n```\n\n### Recommended action\n**Do NOT re-research.** Article, humanize score (90), and sitemap are all already done. The next cron run should patch `news/index.html`, commit, push, and verify HTTP 200 \u2014 about 5-7 tool calls total.\n\n**\u70ed\u70b9\u6807\u9898:** Akeso's HER3 ADC AK138D1 Plus Ivonescimab Enters First Patient in a Phase Ib/II Breast Cancer Study \u2014 An \"IO2.0 + ADC2.0\" Strategy Built for Refractory Disease\n\n**\u5b57\u6570:** 4,701\n\n**\u53bbAI\u5316\u8bc4\u5206:** 90 / 100\n\n**\u53d1\u5e03URL:** https://chinahospitalsguide.com/news/2026-06-17-akeso-ak138d1-her3-adc-ivonescimab-breast-cancer.html (\u5f85\u63d0\u4ea4\u63a8\u9001)\n\n**\u9a8c\u8bc1\u72b6\u6001:** Not yet verified (push pending \u2014 recovery recipe above)",
       "last_delivery_error": null,
       "deliver": "feishu",
       "origin": {
@@ -176,5 +176,5 @@
       "workdir": null
     }
   ],
-  "updated_at": "2026-06-09T22:00:25.989978+08:00"
+  "updated_at": "2026-06-17T22:00:06.667411+08:00"
 }

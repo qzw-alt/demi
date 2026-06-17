@@ -1,9 +1,9 @@
 {
-  "last_report_path": "/home/ubuntu/.hermes/logs/curator/20260607-063738",
-  "last_run_at": "2026-06-07T06:37:38.578134+00:00",
-  "last_run_duration_seconds": 117.654198,
-  "last_run_summary": "auto: no changes; llm: Now I have a complete picture. Let me make the assessment.\n\n---\n\n## Consolidation Analysis\n\n**Candidate set:** 2 agent-created skills (all others are bundled/hub-installed — verified against `.bundled_manifest`).\n\n### Cluster scan\n\n**Prefix…",
+  "last_report_path": "/home/ubuntu/.hermes/logs/curator/20260614-065814",
+  "last_run_at": "2026-06-14T06:58:14.871352+00:00",
+  "last_run_duration_seconds": 28.691194,
+  "last_run_summary": "auto: no changes; llm: ## Analysis\n\n**Candidate landscape:** 84 skills total. The candidate list shows only 2 agent-created skills (`content-research-writer-cn` and `programmatic-seo`). All 82 remaining skills are bundled/hub-installed and off-limits.\n\n**Relation…",
   "last_run_summary_shown_at": null,
   "paused": false,
-  "run_count": 1
+  "run_count": 2
 }

@@ -65,7 +65,7 @@ Tell the user to go to: **https://github.com/settings/tokens**
 - Classic PAT: `ghp_` prefix + 40 chars
 - `x-access-token:` URL embedding works for `git clone` but **fails for `git push`** with: `remote: Invalid username or token. Password authentication is not supported for Git operations.`
 
-**Always validate a PAT before backup/restore operations:**
+**MANDATORY — validate PAT before any backup/restore operation:**
 ```python
 import urllib.request, json
 PAT = "<token>"
@@ -73,11 +73,15 @@ req = urllib.request.Request(
     "https://api.github.com/user",
     headers={"Authorization": f"Bearer {PAT}", "Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28"}
 )
-with urllib.request.urlopen(req) as resp:
-    print(f"Authenticated as: {json.loads(resp.read())['login']}")
-# If 401: token invalid or lacks repo scope. If 200: token is valid.
+try:
+    with urllib.request.urlopen(req) as resp:
+        user = json.loads(resp.read())
+        print(f"OK — authenticated as: {user['login']}")
+except urllib.error.HTTPError as e:
+    print(f"FAIL — HTTP {e.code}: token invalid or lacks repo scope")
+    raise SystemExit(1)
 ```
-
+If 401: token invalid or lacks repo scope — stop immediately and report to user. If 200: token is valid. **Never proceed to rsync+push without passing this check first.**
 If `git push` fails with embedded PAT (even though clone works), fall back to pushing via the GitHub REST API directly (see `github-repo-management` skill → `references/backup-to-github.md`)."
 
 **Alternative: cache helper (credentials expire from memory)**
@@ -102,6 +106,7 @@ git config --global user.name "Their Name"
 git config --global user.email "their-email@example.com"
 ```
 
+**Step 4: Verify**
 **Step 4: Verify**
 
 ```bash
@@ -166,6 +171,22 @@ git config --global url."git@github.com:".insteadOf "https://github.com/"
 git config --global user.name "Their Name"
 git config --global user.email "their-email@example.com"
 ```
+
+### Option C: Per-Repo SSH URL (Simplest When Keys Already Exist)
+
+If the machine already has an SSH key registered with GitHub, just switch the remote URL for that specific repo — no global config needed:
+
+```bash
+git remote set-url origin git@github.com:owner/repo.git
+git push origin main
+```
+
+This is the **most reliable push method** for cron jobs in restricted environments where:
+- Fine-Grained PATs are rejected from HTTPS URL embedding
+- netrc contains stale tokens that block credential helpers
+- git credential helpers are blocked at the syscall level
+
+Use this before spending time on PAT+helper configuration when SSH is available.
 
 ---
 
@@ -362,3 +383,19 @@ git config --global --unset url.git@github.com:.insteadOf
 - **Document which auth method the machine uses** — put a marker comment in netrc if it must coexist with SSH
 
 **Prevention:** For recurring backup jobs in restricted environments, use GitHub Actions (workflow_dispatch) or a CI runner instead of pushing directly from the sandboxed host.
+
+### Fine-Grained PAT + git-credential Helper Priority Pitfalls
+
+Two non-obvious pitfalls hit simultaneously when pushing Fine-Grained PATs via git:
+
+1. **Fine-Grained PATs (`github_pat_` prefix, ~111 chars) fail URL-embedded auth** — valid token, but `https://user:github_pat_xxx@github.com/repo` is rejected. Use a credential helper that reads from a file instead.
+2. **`~/.netrc` takes priority over `credential.helper`** — if netrc exists with ANY token content (even stale), the helper is never called. Remove netrc or keep it empty.
+
+See `references/fine-grained-pat-and-credential-helper.md` for full diagnosis + fix.
+See `references/backup-to-github-via-rsync.md` for the rsync+push backup workflow.
+
+**Prevention for recurring cron backup jobs:**
+- Store PAT in `/tmp/backup-pat.txt`
+- Write credential helper reading from that file
+- Remove/empty `~/.netrc`
+- Verify with `GIT_TRACE=1 git push` before scheduling
