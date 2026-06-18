@@ -102,8 +102,8 @@
       14168
     ],
     "creative/programmatic-seo/SKILL.md": [
-      1781222897691699671,
-      34016
+      1781745505974117256,
+      49881
     ],
     "creative/sketch/SKILL.md": [
       1778925537000000000,
@@ -154,8 +154,8 @@
       3628
     ],
     "github/github-auth/SKILL.md": [
-      1780669166358792083,
-      13865
+      1781705265732779174,
+      17311
     ],
     "github/github-code-review/SKILL.md": [
       1778925537000000000,
@@ -170,8 +170,8 @@
       9985
     ],
     "github/github-repo-management/SKILL.md": [
-      1781186738352917467,
-      18789
+      1781532127911144225,
+      22421
     ],
     "mcp/native-mcp/SKILL.md": [
       1778925537000000000,
@@ -286,8 +286,8 @@
       5111
     ],
     "research/content-research-writer-cn/SKILL.md": [
-      1781226363047514336,
-      24042
+      1781745437625894626,
+      43233
     ],
     "research/llm-wiki/SKILL.md": [
       1778925537000000000,
@@ -316,6 +316,14 @@
     "software-development/hermes-agent-skill-authoring/SKILL.md": [
       1778925537000000000,
       7618
+    ],
+    "software-development/linux-desktop-setup/SKILL.md": [
+      1781430801694006885,
+      3532
+    ],
+    "software-development/linux-system-setup/SKILL.md": [
+      1781439002240004084,
+      4148
     ],
     "software-development/node-inspect-debugger/SKILL.md": [
       1778925537000000000,
@@ -1778,6 +1786,34 @@
         "linux",
         "macos",
         "windows"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "linux-desktop-setup",
+      "category": "software-development",
+      "frontmatter_name": "linux-desktop-setup",
+      "description": "Linux 桌面系统安装配置（Ubuntu/Pop!_OS）— 发行版选择、分区、驱动、中文输入法、常见问题",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "linux-system-setup",
+      "category": "software-development",
+      "frontmatter_name": "linux-system-setup",
+      "description": "Linux系统安装、配置与日常使用技巧（桌面发行版）",
+      "platforms": [
+        "linux"
       ],
       "conditions": {
         "fallback_for_toolsets": [],

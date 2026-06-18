@@ -23,15 +23,15 @@
       "schedule_display": "0 8 * * *",
       "repeat": {
         "times": null,
-        "completed": 16
+        "completed": 22
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T14:45:42.377747+08:00",
-      "next_run_at": "2026-06-13T08:00:00+08:00",
-      "last_run_at": "2026-06-12T08:07:20.364057+08:00",
+      "next_run_at": "2026-06-19T08:00:00+08:00",
+      "last_run_at": "2026-06-18T08:08:38.592208+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -65,15 +65,15 @@
       "schedule_display": "0 9 * * *",
       "repeat": {
         "times": null,
-        "completed": 12
+        "completed": 18
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T17:20:53.016111+08:00",
-      "next_run_at": "2026-06-13T09:00:00+08:00",
-      "last_run_at": "2026-06-12T09:01:26.162750+08:00",
+      "next_run_at": "2026-06-19T09:00:00+08:00",
+      "last_run_at": "2026-06-18T09:01:42.151880+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -107,15 +107,15 @@
       "schedule_display": "0 22 * * *",
       "repeat": {
         "times": null,
-        "completed": 14
+        "completed": 20
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T17:22:43.447182+08:00",
-      "next_run_at": "2026-06-13T22:00:00+08:00",
-      "last_run_at": "2026-06-11T22:05:08.112998+08:00",
+      "next_run_at": "2026-06-19T22:00:00+08:00",
+      "last_run_at": "2026-06-17T22:06:28.111093+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -153,17 +153,17 @@
       "schedule_display": "0 9 * * *",
       "repeat": {
         "times": null,
-        "completed": 18
+        "completed": 24
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-02T08:16:41.523255+08:00",
-      "next_run_at": "2026-06-13T09:00:00+08:00",
-      "last_run_at": "2026-06-12T09:04:43.782853+08:00",
+      "next_run_at": "2026-06-19T09:00:00+08:00",
+      "last_run_at": "2026-06-18T09:16:17.462820+08:00",
       "last_status": "error",
-      "last_error": "RuntimeError: # Cron Run Summary \u2014 2026-06-12\n\n## Status: Recovery Cycle Handoff\n\nI researched extensively and identified a strong story, but exhausted the tool-call budget before I could write the article, humanize, publish, and push it. I'm handing the research off via a pending file for the next cron run to pick up.\n\n## Research Completed\n\n**Story selected:** Business Times / Bloomberg syndication \u2014 \"China's nascent medical tourism lures foreign patients with cutting-edge, cheap medical care\" (Business Times, 2026-06-11 09:02 SGT; syndicated to MSN, AP, Yahoo Finance; sourced from Bloomberg).\n\n**Why this story:**\n- Fresh: published yesterday, 2026-06-11\n- High-signal source: Business Times Singapore + Bloomberg wire\n- New angle not covered by recent chinahospitalsguide articles \u2014 the BT piece carries data points absent from the 2026-04-18 and 2026-06-06 SinoUnited pieces: the Stuart Lye / New Zealand patient narrative, the May 2026 clinical-trial-fee ban, China's March 2026 brain-implant milestone, the $1.3B \u2192 $3.4B 2025\u21922035 market projection, and a direct comparison vs Thailand/Singapore/US\n- Connects cleanly to medical tourism themes (CAR-T, advanced procedures, cost arbitrage, regulation, international patient path)\n\n**Key facts to use:**\n- Stuart Lye, 58, NZ high-risk myeloma patient; 2018 diagnosis, 3-month prognosis; traveled to Shanghai for CAR-T clinical trial; 7 weeks of treatment, US$65,000 all-in (vs A$500,000 in Australia)\n- SinoUnited Health, Shanghai: ~30 foreign CAR-T patients since late 2024; CEO Shi Haoying\n- Victor Cao, Joyful Medical agency, Shanghai \u2014 facilitates international cancer-patient access\n- US CAR-T: $300,000\u2013$475,000/infusion; China: $150,000\u2013$180,000; one therapy aimed at sub-300,000 yuan (S$57,036)\n- 7 approved commercial CAR-T products in China (matches US); China leads world in CAR-T clinical-trial count (ClinicalTrials.gov)\n- Global medical tourism market: US$34B \u2192 US$126B by 2035 (Grand View Research)\n- China market: US$1.3B (2025) \u2192 US$3.4B (2035) (Market Research Future)\n- McKinsey: by 2024, China at parity with US in experimental medicines entering clinical testing; trials 2-5x faster\n- 2024: China first to use homegrown cell therapy for pediatric lupus; 2025: Asia's first cross-species kidney transplant; March 2026: world's first commercial brain-implant approval (spinal cord injury)\n- May 2026: China banned hospitals from charging clinical-research fees; allowed qualified hospitals to commercialize cell therapy, BCI, xenotransplantation without traditional drug registration\n- Lecheng International Medical Tourism Pilot Zone (Hainan): designated 2013; \"just a few thousand foreign medical tourists last year\" vs \"hundreds of thousands of domestic patients\"\n- Jeroen Groenewegen-Lau (Mercator Institute) and Zhao Bing (China Renaissance Securities) commentary\n- Skeptical voices: Jacob Becraft (Strand Therapeutics), Zhao on Thailand/Singapore competition, lack of dedicated medical visa, fragmented services\n\n**Source URLs:**\n- Primary: https://www.businesstimes.com.sg/international/global/chinas-nascent-medical-tourism-lures-foreign-patients-cutting-edge-cheap-medical-care (Business Times, 2026-06-11)\n- PR Newswire mirror (China Daily / Lecheng service center angle, 2026-06-11): https://www.prnewswire.co.uk/news-releases/lecheng-launches-service-center-for-international-medical-tourism-302797757.html\n\n## Files Created\n\n1. **`/home/ubuntu/.hermes/skills/creative/content-research-writer-cn/references/pending-2026-06-12-china-medical-tourism-global-arbitrage.md`** \u2014 full recovery handoff with facts, suggested 9-section structure, internal link targets (existing 2026-04-18 CAR-T article, 2026-06-06 Pakistani CAR-T piece, 2026-06-03 Lecheng zone article, 2026-06-10 Antengene ATG-201), and em-dash target (17-23/1200)\n\n2. **`/home/ubuntu/.hermes/workspace/website/.hermes/tmp/lecheng-research/`** \u2014 cached raw fetches (bt1.html 218KB, lecheng.html 183KB) for the next run to skip the research step\n\n## What The Next Cron Run Should Do\n\n1. Read `/home/ubuntu/.hermes/skills/creative/content-research-writer-cn/references/pending-2026-06-12-china-medical-tourism-global-arbitrage.md`\n2. Target article filename: **`2026-06-11-china-medical-tourism-cutting-edge-cheap-bloomberg.html`** (date = press release date, not cron run date, per the verified 2026-06-11 rule)\n3. Write 9-section article using BT body quotes as primary source\n4. Humanize, commit on `article-2026-06-11` branch, push to `origin/master`, verify HTTP 200\n\n## Working Tree State\n\n- Branch: `master`, clean\n- Remote: `git@github.com:qzw-alt/chinahospitalsguide.git` (SSH, durable)\n- Last shipped article: `2026-06-10-antengene-atg-201-bispecific-autoimmune-pku.html`\n- SSH fix from 2026-06-07 cron is still in place\n\nThe research and handoff are complete \u2014 the next cron run will be a clean recovery cycle.",
+      "last_error": "RuntimeError: ## Cron Run Summary \u2014 2026-06-18\n\n### 06-17 Recovery (COMPLETED \u2713)\nDetected failure mode #4 (mid-pipeline cap-hit) on the 06-17 Akeso AK138D1 article. The article (4,701 words, humanize 90/100) was already on disk and the sitemap was patched, but `news/index.html` was missing the entry and no commit/push had happened.\n\n- Inserted 06-17 card into `news/index.html` (before the 06-14 entry)\n- Committed as `8188c41` and pushed to `origin/master`\n- Verified HTTP 200 at https://chinahospitalsguide.com/news/2026-06-17-akeso-ak138d1-her3-adc-ivonescimab-breast-cancer.html\n\n### 06-18 Fresh Article (PARTIAL \u2014 hit iteration cap before commit)\n**Topic:** Akeso ligufalimab (AK117) \u2014 next-generation anti-CD47 monoclonal antibody \u2014 Phase II AK117-206 data in frontline chemo-ineligible AML, presented orally at EHA 2026 in Milan (June 13, 2026). Strong de-dup: 0 matches across the news library for `ligufalimab|AK117|CD47|AML|EHA`.\n\n**Key data points (from PR Newswire via finanznachrichten.de, June 17, 2026):**\n- EFS hazard ratio 0.46 (54% reduction in event risk)\n- Median EFS: 9.1 vs 6.9 months\n- 9-month EFS: 53.2% vs 14.1%\n- 9-month OS: 78.7% vs 43.1%\n- Composite CR rate: 56.7% vs 53.3%\n- MRD-negative CRc: 46.7% vs 36.7%\n- Median CRc duration: 10.4 vs 5.6 months\n\n**Article written:** `news/2026-06-18-akeso-ligufalimab-cd47-frontline-aml-eha-2026.html` (26,654 bytes, 9 sections, complete with JSON-LD, data table, sources block, CTA box).\n\n### What I Did NOT Get To Before the Cap\nThis is the **same failure mode #4 as 06-17** \u2014 article is on disk but:\n- sitemap.xml has NOT been patched with the 06-18 entry\n- news/index.html has NOT been patched with the 06-18 card\n- No git commit, no git push, no HTTP 200 verify\n\n**Recovery recipe for next cron run (estimated 5 tool calls):**\n1. `python3 /home/ubuntu/.hermes/skills/creative/programmatic-seo/scripts/humanize_score.py news/2026-06-18-akeso-ligufalimab-cd47-frontline-aml-eha-2026.html --site chinahospitalsguide --sitemap sitemap.xml` (verify score \u2265 60)\n2. `patch` sitemap.xml to insert the 06-18 entry at top of urlset\n3. `patch` news/index.html to insert the 06-18 card before the 06-17 entry\n4. `git add news/2026-06-18-*.html sitemap.xml news/index.html && git commit -m \"article: 2026-06-18 Akeso ligufalimab CD47 + AZA + VEN Phase II AML EHA 2026\" && git push origin master`\n5. `sleep 180 && curl -s -o /dev/null -w \"HTTP %{http_code}\\n\" https://chinahospitalsguide.com/news/2026-06-18-akeso-ligufalimab-cd47-frontline-aml-eha-2026.html`\n\n### Detection signal for next run\n```bash\nls news/2026-06-18-*.html 2>/dev/null  # non-empty \u2192 recovery mode\ngit status  # article file will show as untracked\n```\n\n### Report\n- **\u70ed\u70b9\u6807\u9898:** Akeso Ligufalimab (CD47) Plus AZA + VEN Cuts EFS Hazard by More Than Half in Frontline AML \u2014 EHA 2026 Phase II Readout\n- **\u5b57\u6570:** ~3,400 words (file size 26,654 bytes)\n- **\u53bbAI\u5316\u8bc4\u5206:** Not yet scored (cap hit before humanize verify)\n- **\u53d1\u5e03URL:** https://chinahospitalsguide.com/news/2026-06-18-akeso-ligufalimab-cd47-frontline-aml-eha-2026.html (NOT YET LIVE \u2014 pending recovery)\n- **\u9a8c\u8bc1\u72b6\u6001:** Pending \u2014 article on disk, push not executed",
       "last_delivery_error": null,
       "deliver": "feishu",
       "origin": {
@@ -176,5 +176,5 @@
       "workdir": null
     }
   ],
-  "updated_at": "2026-06-12T22:00:46.827137+08:00"
+  "updated_at": "2026-06-18T22:00:11.944710+08:00"
 }
