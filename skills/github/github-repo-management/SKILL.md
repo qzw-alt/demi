@@ -50,11 +50,53 @@ REMOTE_URL=$(git remote get-url origin)
 OWNER_REPO=$(echo "$REMOTE_URL" | sed -E 's|.*github\.com[:/]||; s|\.git$||')
 OWNER=$(echo "$OWNER_REPO" | cut -d/ -f1)
 REPO=$(echo "$OWNER_REPO" | cut -d/ -f2)
+For backup repos where you own the push target, force-push (`-f`) is safe.
+
+### Merge Conflicts on Pull (Non-Fast-Forward)
+
+When the remote backup repo has commits not in your local history (e.g., from another machine), `git pull` creates a merge commit — but if the same files were modified locally, you'll get content conflicts. This is typical when multiple machines back up to the same repo on different schedules.
+
+**Resolution strategy: prefer local (backup) version:**
+```bash
+# After pull creates conflicts:
+git diff --name-only --diff-filter=U    # list conflicted files
+
+# Accept our (local) version for each conflict:
+for f in $(git diff --name-only --diff-filter=U); do
+    git checkout --ours "$f"
+    git add "$f"
+done
+
+# Verify no whitespace errors before committing:
+git diff --check
+
+git commit -m "Merge: resolve conflicts keeping local version" --no-edit
+git push origin master
 ```
+
+**Why `--ours` for backup repos:** The local `~/.hermes/` is the source of truth. The remote has an older snapshot. Keeping local ensures the backup reflects current state.
+
+**Note on rebase vs. merge:** `git pull --rebase` replays your local commits on top of remote's, producing cleaner history but more conflicts when the same files were modified on both sides. Plain `git pull` (merge) is more robust when history has diverged — the auto-generated merge commit cleanly separates local from remote changes.
+
+### PAT Valid for API But Fails Git Push (HTTPS)
+
+This is a known GitHub behavior, not a credential helper bug:
+
+- `curl -H "Authorization: token $PAT" https://api.github.com/user` → **200 OK**
+- `git clone https://<PAT>@github.com/...` → **works**
+- `git push https://<PAT>@github.com/...` → **fails**
+
+Error: `remote: Invalid username or token. Password authentication is not supported for Git operations.`
+
+**Root cause:** GitHub disabled password authentication for HTTPS Git operations in 2021. The `https://<PAT>@github.com` URL format uses username+password Basic Auth — GitHub rejects it for `git push` even with a valid PAT. The API uses Bearer token auth (different endpoint), which still accepts PATs.
+
+**Decision order:** (1) SSH if key exists → (2) Validate PAT with API call → (3) PAT via HTTPS clone (push will fail)
+
+If API call returns 200 but push fails, switch to SSH immediately (see Fallback 1 above). Do not spend time debugging credential helpers — the PAT format itself is incompatible with git push over HTTPS.
 
 ---
 
-## 1. Cloning Repositories
+## Fallback 2: Push via GitHub API (When SSH Unavailable)
 
 Cloning is pure `git` — works identically either way:
 
@@ -478,6 +520,32 @@ gh gist list
 ## 11. Directory Backup to GitHub (rsync + git push)
 
 Use rsync to sync a local directory to a GitHub repo, then push. Standard pattern for backing up `~/.hermes/` or similar.
+
+### MANDATORY PRE-FLIGHT: Validate PAT Before Any Other Step
+
+```python
+import urllib.request, json
+PAT = "<token>"
+req = urllib.request.Request(
+    "https://api.github.com/user",
+    headers={"Authorization": f"Bearer {PAT}", "Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28"}
+)
+try:
+    with urllib.request.urlopen(req) as resp:
+        user = json.loads(resp.read())
+        print(f"OK — authenticated as: {user['login']}")
+except urllib.error.HTTPError as e:
+    print(f"FAIL — HTTP {e.code}: token invalid or lacks repo scope")
+    raise SystemExit(1)
+```
+If 401 → token invalid. Do NOT proceed. Report to user.
+
+**Token format red flags:**
+- `demi__` prefix → invitation/exchange token, NOT a GitHub PAT
+- `github_pat_` → Fine-Grained PAT (valid but must validate)
+- `ghp_` → Classic PAT (valid, standard format)
+
+**Known-failed token — qzw-alt/demi repo:** PAT `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` returned 401 from `GET /user` (backup session 2026-06-15). Token is invalid or revoked — regenerate before next backup attempt.
 
 ### Step-by-Step
 

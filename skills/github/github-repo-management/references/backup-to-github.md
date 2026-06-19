@@ -2,6 +2,33 @@
 
 Pattern for backing up a local directory (like `~/.hermes/`) to a GitHub repository using rsync + git, when the source contains sensitive files.
 
+## MANDATORY PRE-FLIGHT: Validate PAT First
+
+**Before doing anything else**, validate the PAT via API. If this fails, do not proceed:
+
+```python
+import urllib.request, json
+PAT = "<token>"
+req = urllib.request.Request(
+    "https://api.github.com/user",
+    headers={"Authorization": f"Bearer {PAT}", "Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28"}
+)
+try:
+    with urllib.request.urlopen(req) as resp:
+        user = json.loads(resp.read())
+        print(f"OK — authenticated as: {user['login']}")
+except urllib.error.HTTPError as e:
+    print(f"FAIL — HTTP {e.code}: token invalid or lacks repo scope")
+    raise SystemExit(1)
+```
+
+If this returns 401 → token is invalid or lacks `repo` scope. Stop and report to user.
+
+**Token format checks:**
+- Fine-Grained PAT: `github_pat_` prefix + 101 chars after (total ~111 chars) — **validate before use**
+- Classic PAT: `ghp_` prefix + 40 chars
+- Non-standard prefixes (e.g., `demi__`) are often **invitation tokens or exchange tokens**, NOT GitHub PATs — these work for API login flows but NOT for `git push`
+
 ## Overview
 
 ```bash

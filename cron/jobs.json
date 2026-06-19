@@ -23,15 +23,15 @@
       "schedule_display": "0 8 * * *",
       "repeat": {
         "times": null,
-        "completed": 22
+        "completed": 23
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T14:45:42.377747+08:00",
-      "next_run_at": "2026-06-19T08:00:00+08:00",
-      "last_run_at": "2026-06-18T08:08:38.592208+08:00",
+      "next_run_at": "2026-06-20T08:00:00+08:00",
+      "last_run_at": "2026-06-19T08:08:40.673055+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -65,15 +65,15 @@
       "schedule_display": "0 9 * * *",
       "repeat": {
         "times": null,
-        "completed": 18
+        "completed": 19
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T17:20:53.016111+08:00",
-      "next_run_at": "2026-06-19T09:00:00+08:00",
-      "last_run_at": "2026-06-18T09:01:42.151880+08:00",
+      "next_run_at": "2026-06-20T09:00:00+08:00",
+      "last_run_at": "2026-06-19T09:04:04.439216+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -107,15 +107,15 @@
       "schedule_display": "0 22 * * *",
       "repeat": {
         "times": null,
-        "completed": 20
+        "completed": 21
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T17:22:43.447182+08:00",
-      "next_run_at": "2026-06-19T22:00:00+08:00",
-      "last_run_at": "2026-06-17T22:06:28.111093+08:00",
+      "next_run_at": "2026-06-20T22:00:00+08:00",
+      "last_run_at": "2026-06-18T22:11:53.283536+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -153,17 +153,17 @@
       "schedule_display": "0 9 * * *",
       "repeat": {
         "times": null,
-        "completed": 24
+        "completed": 25
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-02T08:16:41.523255+08:00",
-      "next_run_at": "2026-06-19T09:00:00+08:00",
-      "last_run_at": "2026-06-18T09:16:17.462820+08:00",
-      "last_status": "error",
-      "last_error": "RuntimeError: ## Cron Run Summary \u2014 2026-06-18\n\n### 06-17 Recovery (COMPLETED \u2713)\nDetected failure mode #4 (mid-pipeline cap-hit) on the 06-17 Akeso AK138D1 article. The article (4,701 words, humanize 90/100) was already on disk and the sitemap was patched, but `news/index.html` was missing the entry and no commit/push had happened.\n\n- Inserted 06-17 card into `news/index.html` (before the 06-14 entry)\n- Committed as `8188c41` and pushed to `origin/master`\n- Verified HTTP 200 at https://chinahospitalsguide.com/news/2026-06-17-akeso-ak138d1-her3-adc-ivonescimab-breast-cancer.html\n\n### 06-18 Fresh Article (PARTIAL \u2014 hit iteration cap before commit)\n**Topic:** Akeso ligufalimab (AK117) \u2014 next-generation anti-CD47 monoclonal antibody \u2014 Phase II AK117-206 data in frontline chemo-ineligible AML, presented orally at EHA 2026 in Milan (June 13, 2026). Strong de-dup: 0 matches across the news library for `ligufalimab|AK117|CD47|AML|EHA`.\n\n**Key data points (from PR Newswire via finanznachrichten.de, June 17, 2026):**\n- EFS hazard ratio 0.46 (54% reduction in event risk)\n- Median EFS: 9.1 vs 6.9 months\n- 9-month EFS: 53.2% vs 14.1%\n- 9-month OS: 78.7% vs 43.1%\n- Composite CR rate: 56.7% vs 53.3%\n- MRD-negative CRc: 46.7% vs 36.7%\n- Median CRc duration: 10.4 vs 5.6 months\n\n**Article written:** `news/2026-06-18-akeso-ligufalimab-cd47-frontline-aml-eha-2026.html` (26,654 bytes, 9 sections, complete with JSON-LD, data table, sources block, CTA box).\n\n### What I Did NOT Get To Before the Cap\nThis is the **same failure mode #4 as 06-17** \u2014 article is on disk but:\n- sitemap.xml has NOT been patched with the 06-18 entry\n- news/index.html has NOT been patched with the 06-18 card\n- No git commit, no git push, no HTTP 200 verify\n\n**Recovery recipe for next cron run (estimated 5 tool calls):**\n1. `python3 /home/ubuntu/.hermes/skills/creative/programmatic-seo/scripts/humanize_score.py news/2026-06-18-akeso-ligufalimab-cd47-frontline-aml-eha-2026.html --site chinahospitalsguide --sitemap sitemap.xml` (verify score \u2265 60)\n2. `patch` sitemap.xml to insert the 06-18 entry at top of urlset\n3. `patch` news/index.html to insert the 06-18 card before the 06-17 entry\n4. `git add news/2026-06-18-*.html sitemap.xml news/index.html && git commit -m \"article: 2026-06-18 Akeso ligufalimab CD47 + AZA + VEN Phase II AML EHA 2026\" && git push origin master`\n5. `sleep 180 && curl -s -o /dev/null -w \"HTTP %{http_code}\\n\" https://chinahospitalsguide.com/news/2026-06-18-akeso-ligufalimab-cd47-frontline-aml-eha-2026.html`\n\n### Detection signal for next run\n```bash\nls news/2026-06-18-*.html 2>/dev/null  # non-empty \u2192 recovery mode\ngit status  # article file will show as untracked\n```\n\n### Report\n- **\u70ed\u70b9\u6807\u9898:** Akeso Ligufalimab (CD47) Plus AZA + VEN Cuts EFS Hazard by More Than Half in Frontline AML \u2014 EHA 2026 Phase II Readout\n- **\u5b57\u6570:** ~3,400 words (file size 26,654 bytes)\n- **\u53bbAI\u5316\u8bc4\u5206:** Not yet scored (cap hit before humanize verify)\n- **\u53d1\u5e03URL:** https://chinahospitalsguide.com/news/2026-06-18-akeso-ligufalimab-cd47-frontline-aml-eha-2026.html (NOT YET LIVE \u2014 pending recovery)\n- **\u9a8c\u8bc1\u72b6\u6001:** Pending \u2014 article on disk, push not executed",
+      "next_run_at": "2026-06-20T09:00:00+08:00",
+      "last_run_at": "2026-06-19T09:06:41.885302+08:00",
+      "last_status": "ok",
+      "last_error": null,
       "last_delivery_error": null,
       "deliver": "feishu",
       "origin": {
@@ -176,5 +176,5 @@
       "workdir": null
     }
   ],
-  "updated_at": "2026-06-18T22:00:11.944710+08:00"
+  "updated_at": "2026-06-19T22:00:16.473129+08:00"
 }

@@ -102,8 +102,8 @@
       14168
     ],
     "creative/programmatic-seo/SKILL.md": [
-      1781745505974117256,
-      49881
+      1781831306136004347,
+      53939
     ],
     "creative/sketch/SKILL.md": [
       1778925537000000000,
@@ -120,6 +120,10 @@
     "data-science/jupyter-live-kernel/SKILL.md": [
       1778925537000000000,
       5285
+    ],
+    "devops/hermes-backup/SKILL.md": [
+      1781791898569380903,
+      3193
     ],
     "devops/kanban-orchestrator/SKILL.md": [
       1778925537000000000,
@@ -962,6 +966,19 @@
         "macos",
         "windows"
       ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "hermes-backup",
+      "category": "devops",
+      "frontmatter_name": "hermes-backup",
+      "description": "Backup ~/.hermes/ to GitHub backup repository, excluding ...",
+      "platforms": [],
       "conditions": {
         "fallback_for_toolsets": [],
         "requires_toolsets": [],
