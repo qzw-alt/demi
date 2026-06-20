@@ -23,15 +23,15 @@
       "schedule_display": "0 8 * * *",
       "repeat": {
         "times": null,
-        "completed": 23
+        "completed": 24
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T14:45:42.377747+08:00",
-      "next_run_at": "2026-06-20T08:00:00+08:00",
-      "last_run_at": "2026-06-19T08:08:40.673055+08:00",
+      "next_run_at": "2026-06-21T08:00:00+08:00",
+      "last_run_at": "2026-06-20T08:08:13.463482+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -65,15 +65,15 @@
       "schedule_display": "0 9 * * *",
       "repeat": {
         "times": null,
-        "completed": 19
+        "completed": 20
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T17:20:53.016111+08:00",
-      "next_run_at": "2026-06-20T09:00:00+08:00",
-      "last_run_at": "2026-06-19T09:04:04.439216+08:00",
+      "next_run_at": "2026-06-21T09:00:00+08:00",
+      "last_run_at": "2026-06-20T09:04:08.134246+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -107,15 +107,15 @@
       "schedule_display": "0 22 * * *",
       "repeat": {
         "times": null,
-        "completed": 21
+        "completed": 22
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T17:22:43.447182+08:00",
-      "next_run_at": "2026-06-20T22:00:00+08:00",
-      "last_run_at": "2026-06-18T22:11:53.283536+08:00",
+      "next_run_at": "2026-06-21T22:00:00+08:00",
+      "last_run_at": "2026-06-19T22:09:24.389877+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -153,17 +153,17 @@
       "schedule_display": "0 9 * * *",
       "repeat": {
         "times": null,
-        "completed": 25
+        "completed": 26
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-02T08:16:41.523255+08:00",
-      "next_run_at": "2026-06-20T09:00:00+08:00",
-      "last_run_at": "2026-06-19T09:06:41.885302+08:00",
-      "last_status": "ok",
-      "last_error": null,
+      "next_run_at": "2026-06-21T09:00:00+08:00",
+      "last_run_at": "2026-06-20T09:14:37.130298+08:00",
+      "last_status": "error",
+      "last_error": "RuntimeError: # Status Report: 2026-06-20 cron run (partial completion)\n\n## Research decision\nSelected **Hengrui Pharma at ASCO 2026** (June 8, 2026 press release via finanznachrichten.de PR Newswire mirror) as today's\u70ed\u70b9. The release covers 91 oncology studies including 11 oral talks at ASCO 2026 (Chicago, May 29-June 2), with four Phase III readouts that map cleanly to the medical-tourism audience:\n- **HORIZON-CRC01** \u2014 trastuzumab rezetecan in HER2+ colorectal cancer (PFS 5.5 vs 2.8 mo)\n- **CARES-336** \u2014 camrelizumab + rivoceranib + TACE in uHCC (PFS 11.1 vs 8.3 mo)\n- **FUZUPRO** \u2014 fluzoparib + abiraterone in mCRPC (rPFS 24.8 vs 19.9 mo)\n- **SHR-A2102 + adebrelimab** \u2014 perioperative muscle-invasive bladder cancer (pCR 48.1%)\n\nDe-dup grep across the news library returned **zero matches** for `(trastuzumab rezetecan|FUZUPRO|HORIZON.CRC|CARES.336|Nectin.4|SHR.A2102|fluzoparib)` \u2014 fresh angle not yet covered.\n\n## Completed work\n| Step | Result |\n|---|---|\n| Article written | `news/2026-06-20-hengrui-asco-2026-trastuzumab-rezetecan-colorectal-horizon-crc01.html` |\n| Word count | ~3,445 words (humanize_score counts 2,880) |\n| Em-dash density | 52 raw / **18.1 per 1200** (within verified 17\u201323 baseline) |\n| Non-ASCII check | clean (no Chinese contamination) |\n| Humanize score | **95 / 100** (threshold 60) \u2014 after 5 targeted banned-vocab patches (`actually` \u00d72, `pivotal` \u00d73 in title/JSON-LD/body) |\n| Sitemap updated | `<url>` entry inserted at top of `sitemap.xml` (priority 0.6, lastmod 2026-06-20) |\n| News index updated | article card inserted at top of `news/index.html` |\n\n## NOT yet done (work remaining for next run)\n1. **`git add news/...html sitemap.xml news/index.html`** \u2014 files are modified but untracked\n2. **`git commit -m \"article: 2026-06-20 Hengrui ASCO 2026 four Phase III readouts\"`**\n3. **`git push origin master`**\n4. **`sleep 180 && curl -s -o /dev/null -w \"%{http_code}\" https://chinahospitalsguide.com/news/2026-06-20-hengrui-asco-2026-trastuzumab-rezetecan-colorectal-horizon-crc01.html`** \u2014 verify HTTP 200\n\n## Failure mode\nThis is the **06-17-style mid-pipeline cap-hit** (the FOURTH documented failure mode per the programmatic-seo skill). Article is written, humanize-verified, sitemap patched, index patched \u2014 but **no commit, no push, no live verification**. The article file on disk is durable and recoverable in 1 cycle.\n\n## Detection signal for next run\n```bash\nls news/$(date +%Y-%m-%d)-*.html   # non-empty = mid-pipeline cap-hit\ngit status                          # article shown as untracked\n```\n\n## Recovery recipe (\u22646 tool calls)\n```bash\ncd /home/ubuntu/.hermes/workspace/website\ngit add news/2026-06-20-hengrui-asco-2026-trastuzumab-rezetecan-colorectal-horizon-crc01.html sitemap.xml news/index.html\ngit commit -m \"article: 2026-06-20 Hengrui ASCO 2026 four Phase III readouts\"\ngit push origin master\nsleep 180\ncurl -s -o /dev/null -w \"%{http_code}\" https://chinahospitalsguide.com/news/2026-06-20-hengrui-asco-2026-trastuzumab-rezetecan-colorectal-horizon-crc01.html\n```\nExpected: HTTP 200.\n\n## \u62a5\u544a\n- **\u70ed\u70b9\u6807\u9898**: Hengrui Pharma at ASCO 2026: 91 Studies, Four Phase III Readouts, and What It Means for Patients Coming to China\n- **\u5b57\u6570**: 3,445 words\n- **\u53bbAI\u5316\u8bc4\u5206**: 95 / 100\n- **\u672c\u5730\u6587\u4ef6**: `news/2026-06-20-hengrui-asco-2026-trastuzumab-rezetecan-colorectal-horizon-crc01.html`\n- **\u53d1\u5e03URL (\u5f85push)**: https://chinahospitalsguide.com/news/2026-06-20-hengrui-asco-2026-trastuzumab-rezetecan-colorectal-horizon-crc01.html\n- **\u9a8c\u8bc1\u72b6\u6001**: \u26a0\ufe0f \u672a\u9a8c\u8bc1 \u2014 git push + HTTP 200 check \u5f85\u6267\u884c",
       "last_delivery_error": null,
       "deliver": "feishu",
       "origin": {
@@ -176,5 +176,5 @@
       "workdir": null
     }
   ],
-  "updated_at": "2026-06-19T22:00:16.473129+08:00"
+  "updated_at": "2026-06-20T22:00:22.400274+08:00"
 }

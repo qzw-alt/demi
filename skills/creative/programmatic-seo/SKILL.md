@@ -428,6 +428,35 @@ For git push authentication failures (masked `~/.git-credentials`, no embedded P
 
 The fat-finger risk is writing `"@@type"` (double `@`) on the `publisher` line because the eye just saw `@type` two lines up and the fingers autocomplete. The schema.org validator will silently fail the whole Article block and Google will lose the article rich-result eligibility. Always re-read the JSON-LD block once after `write_file` to confirm single `@type` on every key. Same risk applies if you `patch` a JSON-LD block — `old_string="@type": "Organization"` is a fine target, but copying the new block from another file can reintroduce a `@@type` you didn't see.
 
-**Cron prompt dead reference:** the oriental-destiny cron job prompt also lists `seo-content-writer` as an attached skill. That skill does not exist in the library and is silently skipped. The actual workflow is this skill (`programmatic-seo`) + `humanizer`. Ignore the `seo-content-writer` mention and proceed.
+**Cron prompt dead references (verified 2026-06-07 + re-verified 2026-06-20):**
+
+The oriental-destiny cron job prompt contains two references that look authoritative
+but are wrong. Both have been verified dead as of 2026-06-20:
+
+1. **`seo-content-writer` skill (does not exist).** The cron prompt lists this as an
+   attached skill. It is not in the Hermes library and is silently skipped on every
+   run. The actual workflow is this skill (`programmatic-seo`) + `humanizer`. Ignore
+   the `seo-content-writer` mention and proceed.
+
+2. **`memories/layer3/research/competitor-research.md` (does not exist).** The cron
+   prompt instructs the agent to read this file for research. That path returns
+   "file not found" on every run. The actual research notes for this site live at:
+   - `/home/ubuntu/.hermes/memories/layer3/research/article_topics.md` — high-traffic
+     topic categories, content calendar by month, low-competition opportunities
+   - `/home/ubuntu/.hermes/memories/layer3/research/terminology_mapping.md` — Chinese →
+     English terminology mapping, Western SEO phrasing, banned romanization patterns
+
+   Read both at the start of every run before picking the day's topic. The
+   `article_topics.md` content calendar tells you the primary + secondary topic for
+   the current month (e.g. June = Summer Feng Shui / Fire Element). The
+   `terminology_mapping.md` file defines the canonical English rendering of each
+   Chinese term — using "Tai Sui" not "Grand Duke Jupiter", "Bing Wu" not "Bing-Wu",
+   "Wu mountain" not "Horse sector", etc. Misusing the canonical terms drops the
+   article out of the site's voice pattern and weakens cross-link recognition by
+   Googlebot.
+
+Both dead references persist in the cron prompt indefinitely (verified across
+multiple runs from 2026-06-07 to 2026-06-20). Trust the actual filesystem
+inventory, not the prompt text.
 
 **`@context` typo (PITFALL — verified 2026-06-09):** adjacent to the `@@type` risk — when typing `"@context": "https://schema.org"`, the same autocorrect pressure can produce `"@@context"`. A single-character typo here invalidates the entire JSON-LD payload. Re-read line 1 of the schema block.

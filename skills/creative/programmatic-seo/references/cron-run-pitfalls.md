@@ -634,3 +634,153 @@ classical-concept articles are consistently more text-dense
 and parenthetical-light than the room-specific articles).
 Sticking to the per-topic voice profile is more important
 than hitting the global em-dash baseline.
+
+## 19. Google Analytics URL typo trap — `googletermanger` (verified 2026-06-20)
+
+**Symptom:** The first `write_file` for an article ships with the GA4
+snippet misspelled as `googletermanger.com` instead of
+`googletagmanager.com`. The browser silently swallows the failed
+script load (the `<script>` tag has no `async` onerror handler that
+would surface the error to the page), so the article renders normally
+and the typo is invisible until the next manual review or until the
+analytics traffic is suspiciously absent.
+
+**Why this typo is easy to make:** the canonical URL
+`https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX` is a
+30-character string with `tagmanager` as the only non-obvious token.
+When transposed by typing too fast, `tag` → `term` (the fingers move
+one key right on the keyboard — `g`/`r` and `a`/`e` slip). Every
+existing published article on the site has the correct URL because
+it was copy-pasted from the canonical template. The risk surface is
+when the article is written from a fresh `write_file` rather than a
+copy-paste from the prior day.
+
+**Recipe — verify the GA URL after every fresh `write_file` (verified
+2026-06-20):**
+
+```bash
+grep -E 'googletagmanager' /home/ubuntu/oriental-destiny/fate-YYYY-MM-DD.html
+# Expect: one match with the exact URL https://www.googletagmanager.com/gtag/js?id=G-TBGDZRZZEJ
+
+grep -E 'googletermanger' /home/ubuntu/oriental-destiny/fate-YYYY-MM-DD.html
+# Expect: no match (any match = typo, patch immediately with one line)
+```
+
+**Fix when the typo fires:** single-line `patch` from the broken URL
+to the canonical one. Cost: 1 tool call. The fix is mechanical and
+can be applied AFTER the humanize score check (the typo is not a
+content issue, so it does not change the score).
+
+**Combine the GA-URL check with the existing JSON-LD typo check
+(verified):** the SKILL.md pitfall #15 already recommends a
+`grep -E '"@@(type|context)"'` check. Run both greps in a single
+`terminal` call alongside the non-ASCII check and the em-dash count:
+
+```bash
+cd /home/ubuntu/oriental-destiny && grep -E 'googletagmanager|googletermanger|"@@' fate-YYYY-MM-DD.html
+# Expect: exactly one match for the canonical GA URL, zero for the typo,
+# zero for the JSON-LD typo pattern.
+```
+
+This combines three write-time typo checks into one tool call. Cost:
+1 slot for both pitfall-prevention measures.
+
+**Lesson:** the JSON-LD typo, the CJK accidental insert, and the GA
+URL typo are all **typo classes that fire on `write_file` of a fresh
+HTML file**. Bundle their prevention into a single post-write grep
+that catches all three. The pattern is: any URL or quoted string
+with >20 characters and an uncommon token has a non-trivial
+probability of a single-character transposition under typing
+pressure; a quick grep is cheaper than a post-publish analytics
+discrepancy.
+
+## 20. "Referenced-but-never-covered" topic discovery — strict-regex grep recipe (verified 2026-06-20)
+
+The SKILL.md "Room walk completion milestone" and "Referenced-but-never-covered pivot"
+notes describe the discovery technique in narrative form. The verified 2026-06-20
+cron run (Tai Sui article) hit a **false-positive trap** that the narrative does
+not catch: a fuzzy grep across the repo can return matches for substring overlap
+with other concepts, making a virgin topic look covered.
+
+**The trap (verified 2026-06-20):** `grep -lEi "(tai sui|grand duke|fire horse)" *.html`
+returns 18 matches, including `tiger-zodiac-sign.html` (which has "tiger" +
+"horse" inside zodiac text), `bazi-guide.html` (mentions all the branches), and
+the various `<animal>-zodiac-sign.html` files. None of those are dedicated Tai Sui
+articles, but the fuzzy grep makes it LOOK like the topic is covered.
+
+**Verified recipe — strict-regex grep with case-sensitive exact phrases (verified 2026-06-20):**
+
+```bash
+cd /home/ubuntu/oriental-destiny
+for term in "Tai Sui" "Grand Duke" "Bing Wu" "Fire Horse" "Sui Po" "fan tai sui" "clash tai sui"; do
+  count=$(grep -l "$term" *.html 2>/dev/null | wc -l)
+  echo "$term: $count"
+done
+```
+
+Each term is the **exact canonical English phrase** the article would use, with
+spaces and capital letters as they appear in body text. This catches:
+
+- **Real dedicated coverage:** standalone articles where the term is in the H1
+  or appears >3 times in body prose
+- **Passing mentions:** foundational articles (bazi guide, li-chun piece) where
+  the term is mentioned once in a list
+- **False positives caught by fuzzy grep:** "tiger" matching "tai" in a regex
+  without word boundaries
+
+**Decision rule (verified):**
+
+- Term count = 0 across the entire repo → virgin topic, ship the article
+- Term count = 1-2 AND those articles are foundational guides (bazi-guide.html,
+  li-chun-bazi-beginning-of-spring.html, what-is-bazi-complete-guide.html) →
+  still virgin as a dedicated pillar piece, ship the article
+- Term count = 1-2 AND one of those articles IS a dedicated piece → topic is
+  covered, pick a different angle or skip
+- Term count ≥3 → topic is well-covered, skip and find a different pivot
+
+**The Tai Sui case (verified 2026-06-20):**
+
+```
+Tai Sui: 2   (bazi-guide.html + li-chun-bazi-beginning-of-spring.html — passing mentions)
+Grand Duke: 1 (li-chun piece — single mention)
+Bing Wu: 2  (bazi-guide + fate-2026-06-11 Bing Day Master — both are about the stem, not the year pillar as a Tai Sui concept)
+Fire Horse: 17 (the various <animal>-zodiac-sign.html pages — zodiac context, not Tai Sui)
+Sui Po: 0   (genuinely unused)
+fan tai sui: 0  (genuinely unused)
+clash tai sui: 0  (genuinely unused)
+```
+
+Two passing mentions in foundational guides does NOT count as dedicated
+coverage. The deeper Tai Sui sub-concepts (Sui Po, Fan Tai Sui, clash
+direction, harm direction) all have zero hits across the whole repo. That
+combination = ship.
+
+**Why case-sensitive exact phrases matter (vs. `-i`):** Chinese-derived
+English terms are usually rendered with consistent capitalization in published
+text ("Tai Sui" not "tai sui", "Bing Wu" not "bing wu"). A case-sensitive
+grep filters out accidental-lowercase hits in code blocks, JSON-LD strings,
+or alt text. For animal-derived terms ("Horse", "Rat") the case-sensitive
+approach is also useful because lowercase "horse" is more likely to appear in
+incidental prose ("the horse statue") than the capitalized term in a proper
+noun position.
+
+**Pair this check with `grep -lEi` (case-insensitive, no word boundaries) for a
+sanity check:** if the fuzzy grep returns ≤5 matches and the strict grep
+returns 0-2, the topic is genuinely virgin. If the fuzzy grep returns ≥10
+matches and the strict grep returns ≥3, the topic is covered. The gap between
+the two greps is your real signal — the bigger the gap, the more the topic is
+referenced-but-never-covered.
+
+**Application: when to run this recipe (verified):**
+
+- After a thread completion (per pitfall #17), to find the next pivot target
+- After a referenced-but-never-covered article ships (the article naturally
+  introduces terms like "the luo pan" or "the Grand Duke" — those terms
+  become the next day's pivot candidates)
+- At month-start, to plan the month's content calendar from the gap map
+  (run for 10-15 high-traffic terms, see which have the lowest coverage)
+
+**Integration with the existing skill body:** this is the operational version
+of the "Referenced-but-never-covered pivot (NEW pattern, verified 2026-06-19)"
+paragraph in SKILL.md. The skill body tells you when to use the technique;
+this pitfall tells you HOW to do the grep without false positives.
