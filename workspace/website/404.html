@@ -3,25 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Not Found — China Hospitals Guide</title>
+    <meta name="robots" content="noindex, follow">
+    <title>Page Not Found (404) — China Hospitals Guide | Medical Tourism Directory</title>
+    <meta name="description" content="The page you requested was not found. Browse our hospital directory, cost comparisons, and medical tourism guides for international patients in China.">
     <script>
-    // 301-style redirects for legacy/phantom URLs
+    // Client-side redirects for legacy/phantom URLs
     var redirects = {
         "/course/services.html":     "/services.html",
         "/course/resources.html":    "/resources.html",
         "/course/news/":            "/news/",
         "/course/blog/":            "/blog/",
-        "/course/how-it-works.html": "/how-it-works.html"
+        "/course/how-it-works.html": "/how-it-works.html",
+        "/services/oncology.html": "/treatments/cancer.html",
+        "/blog/why-medical-tourism-coordinator-china.html": "/contact-new.html",
+        "/blog/spinal-surgery-cost-china.html": "/blog/spine-surgery-cost-china.html",
+        "/blog/china-medical-visa-guide.html": "/blog/china-medical-visa-guide-2026.html",
+        "/stories/james-thompson.html": "/stories/james-wilson.html",
+        "/blog/recovery-tips-after-surgery-in-china.html": "/contact-new.html",
+        "/blog/how-to-choose-best-plastic-surgeon.html": "/blog/plastic-surgery-china-guide-2026.html",
+        "/treatments/endoscopy.html": "/how-it-works.html",
+        "/blog.html": "/blog/"
     };
     var path = window.location.pathname;
     var dest = redirects[path] || "/";
     window.location.replace(dest);
     </script>
     <meta http-equiv="refresh" content="0;url=/">
+    <style>
+        body { margin:0; background:#f8f9fa; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; }
+    </style>
 </head>
 <body>
-    <p>Redirecting...</p>
-    <script>document.write('<p>If not redirected, <a href="' + (redirects[window.location.pathname] || '/') + '">click here</a>.</p>');</script>
+    <div style="max-width:600px;margin:100px auto;padding:40px;text-align:center;">
+        <h1 style="color:#1e3c72;font-size:2em;margin-bottom:20px;">Page Not Found</h1>
+        <p style="font-size:1.1em;color:#555;margin-bottom:30px;">The page you're looking for doesn't exist or has moved. Redirecting...</p>
+        <div style="display:flex;gap:15px;justify-content:center;flex-wrap:wrap;">
+            <a href="/" style="background:#1e3c72;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;">Homepage</a>
+            <a href="/hospitals.html" style="background:#2a5298;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;">Hospital Directory</a>
+            <a href="/blog/" style="background:#3a6ab5;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;">Blog</a>
+        </div>
+    </div>
 </body>
 </html>
-<!-- cache-bust 20260511232142 -->
+<!-- cache-bust 20260620210000 -->

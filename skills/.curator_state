@@ -1,9 +1,9 @@
 {
-  "last_report_path": "/home/ubuntu/.hermes/logs/curator/20260614-065814",
-  "last_run_at": "2026-06-14T06:58:14.871352+00:00",
-  "last_run_duration_seconds": 28.691194,
-  "last_run_summary": "auto: no changes; llm: ## Analysis\n\n**Candidate landscape:** 84 skills total. The candidate list shows only 2 agent-created skills (`content-research-writer-cn` and `programmatic-seo`). All 82 remaining skills are bundled/hub-installed and off-limits.\n\n**Relation…",
+  "last_report_path": "/home/ubuntu/.hermes/logs/curator/20260621-074626",
+  "last_run_at": "2026-06-21T07:46:26.509792+00:00",
+  "last_run_duration_seconds": 78.928246,
+  "last_run_summary": "auto: no changes; llm: The consolidation is complete. Here's the summary:\n\n---\n\n## Consolidation Summary\n\n**Only one cluster existed in this 4-skill set:** the two Linux desktop skills.\n\n### Cluster processed: Linux desktop/system setup\n\n**`linux-system-setup` → …\narchived 1 skill(s):\n  • linux-system-setup → linux-desktop-setup\nfull report: hermes curator status\nkeep an umbrella stable: hermes curator pin linux-desktop-setup",
   "last_run_summary_shown_at": null,
   "paused": false,
-  "run_count": 2
+  "run_count": 3
 }

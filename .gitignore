@@ -1,0 +1,14 @@
+# Sensitive / runtime data — never commit
+cache/
+audio_cache/
+image_cache/
+sandboxes/
+logs/
+sessions/
+memories/
+cron/output/
+state.db*
+gateway.lock
+gateway.pid
+.env
+*.log

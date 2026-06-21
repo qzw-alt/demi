@@ -18,3 +18,11 @@
 /blog/recovery-tips-after-surgery-in-china.html /contact-new.html 301
 /treatments/endoscopy.html /how-it-works.html 301
 /blog.html /blog/ 301
+# Additional redirects for known 404s
+/blog/how-to-see-a-doctor-in-beijing.html /blog/how-to-see-a-doctor-in-beijing-as-a-foreigner.html 301
+/blog/how-to-see-a-doctor-in-shenzhen.html /blog/how-to-see-a-doctor-in-shenzhen-as-a-foreigner.html 301
+/blog/china-cancer-hospital-rankings.html /blog/best-cancer-hospitals-china-2026.html 301
+/news/index.html /news/ 301
+/stories/index.html /stories/ 301
+/course/index.html /course.html 301
+/index.html / 301
