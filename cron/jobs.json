@@ -23,15 +23,15 @@
       "schedule_display": "0 8 * * *",
       "repeat": {
         "times": null,
-        "completed": 25
+        "completed": 26
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T14:45:42.377747+08:00",
-      "next_run_at": "2026-06-22T08:00:00+08:00",
-      "last_run_at": "2026-06-21T08:06:46.511392+08:00",
+      "next_run_at": "2026-06-23T08:00:00+08:00",
+      "last_run_at": "2026-06-22T08:06:20.296226+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -65,15 +65,15 @@
       "schedule_display": "0 9 * * *",
       "repeat": {
         "times": null,
-        "completed": 21
+        "completed": 22
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T17:20:53.016111+08:00",
-      "next_run_at": "2026-06-22T09:00:00+08:00",
-      "last_run_at": "2026-06-21T09:10:15.897594+08:00",
+      "next_run_at": "2026-06-23T09:00:00+08:00",
+      "last_run_at": "2026-06-22T09:01:37.644058+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -90,7 +90,7 @@
     {
       "id": "d5ef67b81247",
       "name": "Hermes\u5907\u4efd\u5230demi",
-      "prompt": "\u5907\u4efd ~/.hermes/ \u76ee\u5f55\u5230 GitHub \u5907\u4efd\u4ed3\u5e93 qzw-alt/demi\u3002\n\n**\u6ce8\u610f\uff1aexclude \u5305\u542b\u654f\u611f\u4fe1\u606f\u7684\u76ee\u5f55\uff0c\u9632\u6b62 GitHub secret scanning \u62e6\u622a**\n\n\u6b65\u9aa4\uff1a\n1. Clone \u6216\u66f4\u65b0 qzw-alt/demi \u4ed3\u5e93\u5230\u4e34\u65f6\u76ee\u5f55 /tmp/demi-backup/\n2. \u4f7f\u7528 rsync \u540c\u6b65\uff0cexclude \u4ee5\u4e0b\u76ee\u5f55\uff1a\n   - .git\n   - cache/\n   - audio_cache/\n   - image_cache/\n   - gateway.lock\n   - gateway.pid\n   - state.db*\n   - sandboxes/\n   - logs/\n   - sessions/ \uff08\u53ef\u80fd\u5305\u542b API key \u5bf9\u8bdd\u5386\u53f2\uff09\n   - memories/ \uff08\u53ef\u80fd\u5305\u542b\u654f\u611f\u914d\u7f6e\uff09\n3. \u63d0\u4ea4\u6240\u6709\u53d8\u66f4\uff08add . && commit -m \"Backup: $(date +%Y-%m-%d_%H:%M)\"\uff09\n4. \u63a8\u9001\u5230 GitHub\n5. \u6e05\u7406\u4e34\u65f6\u76ee\u5f55 /tmp/demi-backup/\n\n\u4f7f\u7528 GitHub PAT \u8ba4\u8bc1\uff1a\n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",
+      "prompt": "\u5907\u4efd ~/.hermes/ \u76ee\u5f55\u5230 GitHub \u5907\u4efd\u4ed3\u5e93 qzw-alt/demi\u3002\n\n**\u6ce8\u610f\uff1aexclude \u5305\u542b\u654f\u611f\u4fe1\u606f\u7684\u76ee\u5f55\uff0c\u9632\u6b62 GitHub secret scanning \u62e6\u622a**\n\n\u6b65\u9aa4\uff1a\n1. Clone \u6216\u66f4\u65b0 qzw-alt/demi \u4ed3\u5e93\u5230\u4e34\u65f6\u76ee\u5f55 /tmp/demi-backup/\n2. \u4f7f\u7528 rsync \u540c\u6b65\uff0cexclude \u4ee5\u4e0b\u76ee\u5f55\uff1a\n   - .git\n   - cache/\n   - audio_cache/\n   - image_cache/\n   - gateway.lock\n   - gateway.pid\n   - state.db*\n   - sandboxes/\n   - logs/\n   - sessions/ \uff08\u53ef\u80fd\u5305\u542b API key \u5bf9\u8bdd\u5386\u53f2\uff09\n   - memories/ \uff08\u53ef\u80fd\u5305\u542b\u654f\u611f\u914d\u7f6e\uff09\n3. \u63d0\u4ea4\u6240\u6709\u53d8\u66f4\uff08add . && commit -m \"Backup: $(date +%Y-%m-%d_%H:%M)\"\uff09\n4. \u63a8\u9001\u5230 GitHub\n5. \u6e05\u7406\u4e34\u65f6\u76ee\u5f55 /tmp/demi-backup/\n\n\u4f7f\u7528 GitHub PAT \u8ba4\u8bc1\uff1a\n[PAT_REMOVED]",
       "skills": [],
       "skill": null,
       "model": null,
@@ -107,15 +107,15 @@
       "schedule_display": "0 22 * * *",
       "repeat": {
         "times": null,
-        "completed": 23
+        "completed": 24
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T17:22:43.447182+08:00",
-      "next_run_at": "2026-06-22T22:00:00+08:00",
-      "last_run_at": "2026-06-20T22:06:54.912562+08:00",
+      "next_run_at": "2026-06-23T22:00:00+08:00",
+      "last_run_at": "2026-06-21T22:08:04.522052+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -153,15 +153,15 @@
       "schedule_display": "0 9 * * *",
       "repeat": {
         "times": null,
-        "completed": 27
+        "completed": 28
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-02T08:16:41.523255+08:00",
-      "next_run_at": "2026-06-22T09:00:00+08:00",
-      "last_run_at": "2026-06-21T09:05:14.532748+08:00",
+      "next_run_at": "2026-06-23T09:00:00+08:00",
+      "last_run_at": "2026-06-22T09:08:40.360879+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -176,5 +176,5 @@
       "workdir": null
     }
   ],
-  "updated_at": "2026-06-21T22:00:28.383888+08:00"
+  "updated_at": "2026-06-22T22:00:33.858579+08:00"
 }

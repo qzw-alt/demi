@@ -138,6 +138,7 @@ rm -rf /tmp/hermes-backup/
 | `gateway.lock` / `gateway.pid` | Runtime state |
 | `state.db*` | State database |
 | `.env` | Environment secrets |
+| `cron/output/` | Cron output logs may contain API key traces |
 
 ## Pitfalls
 - **PAT auth may fail** — GitHub fine-grained PATs expire, get truncated in messages, or are revoked. Always verify with `ssh -T git@github.com` first. SSH keys don't expire.
