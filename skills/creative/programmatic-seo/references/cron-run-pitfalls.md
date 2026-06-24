@@ -780,6 +780,39 @@ referenced-but-never-covered.
 - At month-start, to plan the month's content calendar from the gap map
   (run for 10-15 high-traffic terms, see which have the lowest coverage)
 
+**Filename-coverage grep as the first-pass short-circuit (verified 2026-06-24):**
+before running the body-phrase loop above, do a **filename-level grep** that
+catches the obvious dedicated-article cases in one cheap pass:
+
+```bash
+cd /home/ubuntu/oriental-destiny
+ls *.html | grep -iE "(bagua|pa-kua|eight-trigram|flying.star|annual.stars|luo.pan|compass)"
+```
+
+This is the **first** check, not a substitute for the body loop. Zero matches
+at the filename level confirms a pillar piece does not exist for the topic and
+the body loop only needs to confirm "how referenced vs. how covered." The
+2026-06-24 Bagua run did `ls *.html | grep -iE "(bagua|pa-kua|eight-trigram)"`
+first — empty result in 1 second, then ran `grep -lE "Bagua map" *.html` for
+body-reference density (11 hits, all passing mentions in adjacent compass
+articles — confirmed virgin as a pillar). Total discovery cost: 2 tool calls.
+
+**Decision rule update (verified 2026-06-24):** if the filename grep returns
+zero matches AND the body-phrase grep returns ≤5 hits all of which are
+passing mentions in adjacent-thread articles, the topic is virgin as a
+**pillar piece** even when body-reference density is non-zero. The Bagua case
+shipped on this exact signal — 11 body-reference hits but zero filename hits,
+zero dedicated pillar, and the new article cross-links to all 11 referencing
+articles via its footer, which is exactly the internal-linking win the SKILL.md
+"Voice reference vs. template" pitfall calls for.
+
+**Why filename-first is faster than body-first:** the body-phrase loop returns
+a count per term but the count alone doesn't tell you whether the hits are
+dedicated articles or passing mentions. Filename grep returns zero matches
+unambiguously — there is no dedicated pillar file for the topic — and you
+only run the slower body loop to characterize the gap. Saves ~1 tool call per
+discovery.
+
 **Integration with the existing skill body:** this is the operational version
 of the "Referenced-but-never-covered pivot (NEW pattern, verified 2026-06-19)"
 paragraph in SKILL.md. The skill body tells you when to use the technique;
