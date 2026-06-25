@@ -69,6 +69,14 @@ Based on research findings, write article following these rules:
 
 **Tone:** Professional but accessible; factual; no sensationalism
 
+**Four verified article archetypes (the article structure depends on the news type):** the Step 2 "3-5 sections with H2/H3" guidance is generic; the actual published length and structure depend on what kind of news is being reported. Four archetypes are verified as of 2026-06-25, each with its own section count and word count target:
+1. **Phase X data readout (4-part structure):** the trial reported ORR/PFS/OS data. Lead → why-this-matters → data details → patient access path. ~3,000-4,500 words. Reference: 2026-06-09 Ori-C101 GPC3 CAR-T HCC (4,216 words, 82/100).
+2. **Regulatory approval (7-part structure):** an asset got NMPA/FDA/MHRA approval. Lead → approval mechanics → eligibility → access path → cost comparison → what this changes → medical-tourism translation. ~4,500-5,500 words. Reference: 2026-06-23 CarsGen satri-cel (5,308 words, 90/100).
+3. **IND clearance (6-section structure):** an asset cleared IND; preclinical data only, no efficacy signal. Lead → why-shippable → mechanism → preclinical data → indications → competitive context → what-to-watch → medical-tourism translation. ~2,500-3,500 words. Reference: 2026-06-24 Mabwell 6MW5311 (3,115 words, 75/100).
+4. **Cell-therapy Phase 1 (NEW 2026-06-25):** iPSC, gene therapy, CAR-T Phase 1 expansion — no efficacy data, manufacturing platform IS the news, mature competitive landscape. Lead + dual-track framing → why-structural-not-just-PR (data-box) → what-the-molecule-actually-is → what-was-actually-announced → competitive context → what-to-watch → medical-tourism translation (bulleted patient questions). ~2,000-2,500 words. Reference: 2026-06-25 Unixell UX-DA003 (2,112 words, 72/100). Reference for archetype: `references/pending-2026-06-25-unixell-ux-da003-fda-ind-ipsc-parkinson-shipped.md`.
+
+Sections 2 (data-box callout) and the closing section (medical-tourism translation with bulleted patient questions) are the consistent differentiators across all four archetypes — without them, every article reads as a press-release paraphrase and the humanize score drops 15-20 points.
+
 ### Step 3: Humanize
 Load `humanizer` skill and apply to draft. Score must be >60.
 
@@ -212,6 +220,14 @@ Each em-dash should add a clinical aside, not break the sentence. Target: 17-23 
 
 **Proper-noun banned-vocab hits are NOT real violations (verified 2026-06-18):** the `humanize_score.py` script flags proper-noun embedded banned words as banned vocab, but they are not actionable. The 2026-06-18 Akeso ligufalimab article had two "enhance" hits that were both part of the ALL-CAPS proper noun `ENHANCE-3` (the magrolimab MDS trial name). The script's regex doesn't distinguish case or proper-noun boundaries. **Decision rule:** when a banned-vocab hit is inside an ALL-CAPS proper noun (trial names like `ENHANCE-3`, `ENHANCE`, `KEYNOTE`, `CHECKMATE`, `HARMONi`; drug names like `Leqvio`, `Tukysa`; or any ALL-CAPS compound string of 6+ characters), leave it. When it appears in body prose in lowercase form, patch it. The score penalty is real (1-2 points per false-positive hit) but the proper-noun hit is non-actionable — don't strip or lowercase the proper noun just to clear the script flag.
 
+**Banned-vocab hits inside source-quote attributions are FALSE POSITIVES (NEW pitfall — verified 2026-06-25):** when `leverage`, `landscape`, `pivotal`, `navigate`, or `actually` appears inside a `<blockquote>`, `<div class="pullquote">`, or any other direct-quote container that is being attributed to a named source (a person, a company, a press release), LEAVE IT VERBATIM. The 06-25 Unixell article had one `leverage` hit inside a UniXell pullquote (`"We leverage a unified iPSC seed cell platform..."`) that was left untouched and shipped at 72/100. Rewriting the quote to "We use" would have changed the source's stated position from "exploit strategic advantage" to "apply mechanically." **Decision rule:** if removing the word changes the source's stated position, leave it; if the swap is purely lexical (e.g. actually → in fact in body prose), patch it. The score penalty is 1 point per false-positive hit but the journalistic value of verbatim source quotes outweighs the score optimization. This is the sibling rule to "actually in headings" — both are about tolerating false-positive hits where the cost of patching outweighs the score gain.
+
+**Two `actually` H2 hits compound to a 16-point swing (RECONFIRMED 2026-06-25):** the 06-25 Unixell article had TWO `actually` H2 hits ("What UX-DA003 actually is" + "What UniXell actually announced") that dragged the score from 72 (would have been 80+) → 56 — a 16-point swing from 2 hits. Patching both H2s in one cycle each pushed the score back to 72/100. The 06-22 rule (single `actually` H2 = 5-8 points) scales linearly: each additional `actually` H2 hit is another 5-8 points. **Always run a pre-humanize grep** for `actually` across H1/H2/H3 tags before writing the article:
+```bash
+grep -nE '<h[1-3][^>]*>[^<]*actually[^<]*</h[1-3]>' news/FILE.html
+```
+Zero matches = safe to write. 1+ matches = patch the headings before scoring.
+
 **Canonical de-dup grep command (verified 2026-06-13):** before writing any chinahospitalsguide article sourced from a pending file or fresh research on a topic with prior coverage, run from the news directory:
 ```bash
 cd news && grep -lE "(KEY_ENTITY_1|KEY_ENTITY_2|KEY_DATA_POINT_3|KEY_QUOTE_4)" *.html
@@ -261,6 +277,15 @@ The cron run on 2026-06-02 ran out of tool-call budget AFTER writing the article
 
 **Hard rule: write the article first (Step 2), publish second (Step 4).** If budget gets tight, having a saved-but-not-pushed article is a much better state than having a researched-but-not-written run, because the article can be picked up by a manual push later. The research notes alone cannot be republished without re-deriving the article.
 
+**`sleep N && curl` 60-second foreground timeout (NEW pitfall — verified 2026-06-25):** the standard post-push verify sequence `sleep 180 && curl -s -o /dev/null -w "HTTP %{http_code}\n" https://chinahospitalsguide.com/news/YYYY-MM-DD.html` can hit the terminal tool's 60-second foreground timeout, especially when chained in one call. The 2026-06-25 run hit this twice on chinahospitalsguide — the first 60 seconds of `sleep` consumes the foreground budget, and then the curl is aborted before it returns. **Always use `--max-time 30` on the curl call from the start.** If the budget allows, split the sleep and curl into two calls so the curl gets a fresh 60-second foreground budget:
+```bash
+# Call 1: sleep (will hit 60s timeout, but the cron run can move on)
+sleep 180
+# Call 2: verify with bounded curl
+curl --max-time 30 -s -o /dev/null -w "HTTP %{http_code}\n" https://chinahospitalsguide.com/news/YYYY-MM-DD.html
+```
+The 06-25 article was pushed successfully (commit `4de969a`); the verify HTTP 200 came on the third attempt using `--max-time 30`. **Belt-and-suspenders:** if the verify still times out, the article is almost certainly live (the push succeeded, the CDN just took longer than 30 seconds to propagate). Trust the `git push` output and move on.
+
 **Reference: a clean run in ~10 tool calls (verified 2026-06-08, oriental-destiny.com Wu Day Master):**
 1. `terminal` — `ls` of repo + `git remote -v` (combined) — verifies SSH is still in place, branch is correct, no stale files
 2. `read_file` — `fate-YYYY-MM-DD.html` body excerpt — voice reference for the day's piece
@@ -284,9 +309,9 @@ Total: 10 tool calls. The keys are: chain git operations in single terminal call
 6. `terminal` — `python3 scripts/humanize_score.py …` — score check (first pass usually 85-90)
 7. `patch` — one targeted banned-vocab swap if step 6 flagged any (single hit, e.g. `actually` → something concrete)
 8. `terminal` — `git add . && git commit -m "article: YYYY-MM-DD" && git push origin main` (combined) — single chained commit+push
-9. `terminal` — `sleep 180 && curl -s -o /dev/null -w "HTTP %{http_code}\n" https://oriental-destiny.com/fate-YYYY-MM-DD.html` — verify
+9. `terminal` — `sleep 180 && curl --max-time 30 -s -o /dev/null -w "HTTP %{http_code}\n" https://oriental-destiny.com/fate-YYYY-MM-DD.html` — verify. **Use `--max-time 30` on the curl (verified 2026-06-25)** — without it, the terminal tool's 60-second foreground timeout can abort the curl mid-sequence if the GitHub Pages CDN is slow. The 2026-06-25 cron run hit this exact failure mode twice on the chinahospitalsguide verify before adding `--max-time 30`.
 
-Total: 9 tool calls, score 95/100 on the first re-score after one small patch. The recipe's whole point: when no sibling-cron divergence exists, you don't need the merge/sitemap-conflict dance (steps 8-10 of the 06-08 recipe). The `git status` check at step 1 is what tells you which recipe to follow — clean tree = this 9-call version; "branch ahead by 1" = the recovery-only 2-call version per the post-commit cap-hit pitfall above; conflict markers in sitemap = the 10-call merge-and-resolve version.
+Total: 9 tool calls, score 95/100 on the first re-score after one small patch. The keys are: chain git operations in single terminal calls; combine the final push with the wait+verify curl; never delegate research to a subagent (per the 2026-06-02 burn); trust the existing `humanize_score.py` script rather than rolling your own (per the `-c` flag pitfall). The recipe's whole point: when no sibling-cron divergence exists, you don't need the merge/sitemap-conflict dance (steps 8-10 of the 06-08 recipe). The `git status` check at step 1 is what tells you which recipe to follow — clean tree = this 9-call version; "branch ahead by 1" = the recovery-only 2-call version per the post-commit cap-hit pitfall above; conflict markers in sitemap = the 10-call merge-and-resolve version.
 
 **Voice reference vs. template (pitfall, verified 2026-06-16):** step 3 above should read the most recent **published article** (e.g. `fate-2026-06-15.html`), not `templates/fate-article-template.html`. The template is a bare bracketed scaffold with no prose, so mirroring it produces an article that reads as if generated from a template (which is what it is). The published article carries the actual voice, the H2/H3 rhythm, the pullquote placement, the FAQ density, the CTA copy, and the footer cross-link choices that match the current month's content. Use the template to confirm CSS class names and JSON-LD shape; use the published article to confirm voice. Future agents that skip step 3 and write straight from the template will produce articles that pass the humanize score but feel off-tone against the rest of the site.
 

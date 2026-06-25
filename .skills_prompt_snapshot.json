@@ -102,8 +102,12 @@
       14168
     ],
     "creative/programmatic-seo/SKILL.md": [
-      1782177586855252025,
-      66449
+      1782350061011748981,
+      72352
+    ],
+    "creative/seo-article-publish-cron/SKILL.md": [
+      1782346229566791667,
+      13346
     ],
     "creative/sketch/SKILL.md": [
       1778925537000000000,
@@ -201,6 +205,10 @@
       1778925537000000000,
       3218
     ],
+    "medical-tourism/medical-tourism-client-intake/SKILL.md": [
+      1782348643169884236,
+      4947
+    ],
     "mlops/evaluation/lm-evaluation-harness/SKILL.md": [
       1778925537000000000,
       12020
@@ -290,8 +298,8 @@
       5111
     ],
     "research/content-research-writer-cn/SKILL.md": [
-      1782263433901015939,
-      63467
+      1782349988120459561,
+      71654
     ],
     "research/llm-wiki/SKILL.md": [
       1778925537000000000,
@@ -360,6 +368,10 @@
     "software-development/writing-plans/SKILL.md": [
       1778925537000000000,
       7229
+    ],
+    "web-development/hospital-directory/SKILL.md": [
+      1782348668505332799,
+      8605
     ],
     "yuanbao/SKILL.md": [
       1778925537000000000,
@@ -902,6 +914,21 @@
       }
     },
     {
+      "skill_name": "seo-article-publish-cron",
+      "category": "creative",
+      "frontmatter_name": "seo-article-publish-cron",
+      "description": "Run a daily SEO article publishing cron job — verify repo...",
+      "platforms": [
+        "linux"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
       "skill_name": "sketch",
       "category": "creative",
       "frontmatter_name": "sketch",
@@ -1297,6 +1324,19 @@
         "macos",
         "windows"
       ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "medical-tourism-client-intake",
+      "category": "medical-tourism",
+      "frontmatter_name": "medical-tourism-client-intake",
+      "description": "处理国际患者来华就医咨询的全流程：接收邮件 → 分析病情 → 确定服务方案 → 与医院初步沟通 → 回复客户。适用...",
+      "platforms": [],
       "conditions": {
         "fallback_for_toolsets": [],
         "requires_toolsets": [],
@@ -1965,6 +2005,19 @@
         "macos",
         "windows"
       ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "hospital-directory",
+      "category": "web-development",
+      "frontmatter_name": "hospital-directory",
+      "description": "Maintain the hospital directory on chinahospitalsguide.co...",
+      "platforms": [],
       "conditions": {
         "fallback_for_toolsets": [],
         "requires_toolsets": [],
