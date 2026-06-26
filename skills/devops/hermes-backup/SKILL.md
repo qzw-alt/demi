@@ -79,14 +79,38 @@ done
 rm -f gateway.lock gateway.pid auth.lock kanban.db.init.lock
 # Remove auth.json from tracking if it was committed in older backups
 git rm --cached auth.json 2>/dev/null && echo "auth.json removed from tracking" || true
+# Add auth.json to .gitignore so rsync doesn't re-expose it as untracked
+if ! grep -q '^auth.json$' .gitignore 2>/dev/null; then
+  echo "auth.json" >> .gitignore
+  sort -u .gitignore -o .gitignore
+  echo "auth.json added to .gitignore"
+fi
 ```
 
 ### 4. Strip API keys from tracked files
 ```bash
 cd /tmp/hermes-backup
 # config.yaml keys are usually truncated (sk-8bc...87d2 format) and safe for GitHub.
-# If they were stored as full keys, strip them:
-sed -i '/api_key:/ {/'"'"'\\'"'"'/!s/api_key:.*/api_key: '"'"'\\'"'"'/}' config.yaml
+# DO NOT attempt sed-based stripping — complex quoting breaks in bash and destroys truncated keys.
+# Instead, scan for non-truncated keys and warn if any are found:
+python3 << 'PYEOF'
+import re, glob
+full_keys = []
+for f in ['config.yaml'] + glob.glob('providers/*.json'):
+    try:
+        with open(f) as fh:
+            for i, line in enumerate(fh, 1):
+                m = re.search(r"api_key:\s*['\"]?(sk-[a-zA-Z0-9]{20,})['\"]?", line)
+                if m and '...' not in m.group(1):
+                    full_keys.append(f'{f}:{i}')
+    except FileNotFoundError:
+        pass
+if full_keys:
+    print('WARNING: full API keys found — strip manually:')
+    for k in full_keys: print(f'  {k}')
+else:
+    print('config.yaml keys are truncated or empty — safe for GitHub')
+PYEOF
 # auth.json is excluded from rsync entirely (--exclude='auth.json' in step 2),
 # so no stripping needed. If it was previously committed, remove it in step 3.
 

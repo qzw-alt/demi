@@ -102,8 +102,8 @@
       14168
     ],
     "creative/programmatic-seo/SKILL.md": [
-      1782350061011748981,
-      72352
+      1782432547815678887,
+      76915
     ],
     "creative/seo-article-publish-cron/SKILL.md": [
       1782346229566791667,
@@ -126,8 +126,8 @@
       5285
     ],
     "devops/hermes-backup/SKILL.md": [
-      1782223979576563089,
-      8485
+      1782396279861026190,
+      9376
     ],
     "devops/kanban-orchestrator/SKILL.md": [
       1778925537000000000,
@@ -298,8 +298,8 @@
       5111
     ],
     "research/content-research-writer-cn/SKILL.md": [
-      1782349988120459561,
-      71654
+      1782436189542308722,
+      76370
     ],
     "research/llm-wiki/SKILL.md": [
       1778925537000000000,
@@ -312,6 +312,10 @@
     "research/research-paper-writing/SKILL.md": [
       1778925537000000000,
       103375
+    ],
+    "research/terminal-web-research/SKILL.md": [
+      1782436388859901313,
+      4865
     ],
     "smart-home/openhue/SKILL.md": [
       1778925537000000000,
@@ -1776,6 +1780,19 @@
           "terminal",
           "files"
         ],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "terminal-web-research",
+      "category": "research",
+      "frontmatter_name": "terminal-web-research",
+      "description": "Gather real-time web data (news, trends, stats) via termi...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
         "fallback_for_tools": [],
         "requires_tools": []
       }
