@@ -1,7 +1,7 @@
 ---
 name: seo-article-publish-cron
 description: "Run a daily SEO article publishing cron job — verify repo state, match existing article template, write English article, de-AI pass, update sitemap, commit and push to the deployed branch. Use when a cron task says 'publish daily SEO article to <site>' with a GitHub Pages deployment from a repo."
-version: 1.0.0
+version: 1.1.0
 author: Hermes Agent
 license: MIT
 platforms: [linux]
@@ -47,9 +47,9 @@ Then verify the spec's referenced resources:
 - If the spec names a skill that isn't installed — note it, fall back to a sibling skill (`programmatic-seo` covers most SEO workflow needs), and tell the user.
 
 Common spec drift to expect:
-- Branch name (`master` vs `main`)
-- Topic-source filename (often renamed or never existed)
-- Skill names (spec author remembered wrong)
+- Branch name (`master` vs `main`) — **`oriental-destiny.com` actually runs on `main`, not the `master` the original spec says. Always run `git branch -a` and check `remotes/origin/HEAD -> origin/<branch>` to discover the real deployed branch before pushing.**
+- Topic-source filename (often renamed or never existed — search `~/.hermes/memories/` recursively for the closest match; the oriental-destiny memory files are `article_topics.md` and `terminology_mapping.md`, not `competitor-research.md`)
+- Skill names (spec author remembered wrong — fall back to sibling skills and tell the user)
 - The deployed branch ≠ the spec's stated branch
 
 ## The article-template fingerprint (read before writing)
@@ -76,7 +76,7 @@ done
 #    - JSON-LD Article schema in <head>
 ```
 
-Match these exactly. Copy yesterday's <style> block, replace the title/date/headline/body, keep the rest identical. Future agents can edit content without breaking the visual contract.
+Match these exactly. Use `templates/fate-article.html` as the boilerplate — it has the full CSS, JSON-LD, navigation, footer, and CTA already wired with `{{PLACEHOLDER}}` markers. Copy it to `fate-YYYY-MM-DD.html`, fill the placeholders, and edit body content. This is faster and more reliable than re-reading yesterday's <style> block on every run.
 
 ## Article-length calibration
 
@@ -127,6 +127,12 @@ Avoid:
 The cron spec usually says "de-AI score > 60 to publish." Treat it as a hard gate. Run the humanizer skill audit (the SKILL.md lists 29 patterns to scan).
 
 Quick programmatic scan (catches most tells in seconds):
+
+```bash
+python3 references/../scripts/de-ai-scan.py fate-YYYY-MM-DD.html
+```
+
+Or the inline version (kept here for reference; the script above is the maintained version):
 
 ```python
 from hermes_tools import read_file
@@ -239,6 +245,15 @@ If yesterday's article was "Bagua Map" and today you write "Five Elements," you'
 
 If the spec says "score > 60 required," treat it as a hard gate. A humanizer audit that finds 12 instances of `delve`/`tapestry`/`testament`/`underscore` should be rewritten, not shipped. Programmatic scan catches most of these in seconds.
 
+### Don't repeat the same parallel structure across listicle cards
+
+The humanizer's 29 patterns are mostly about vocabulary and grammar. There's a class-level structural tell that doesn't show up in any word list: **when every card in a listicle opens with the same parallel structure, the article starts to read as templated**. Example failure mode from the 2026-06-27 cron run: six "mistake" cards each opened with "The popular version: X. The classical version: Y. Cleaner prescription: Z." The structure is fine for one card. After three or four repetitions the article reads like a fill-in-the-blank form.
+
+Mitigation:
+- Vary the opener of each card (1-2 lines that set up the specific mistake in its own terms)
+- Keep the structural skeleton identical only if you have to (and at most 2-3 cards in a row)
+- If the article has 5+ list items with the same skeleton, run `references/../scripts/de-ai-scan.py` which now flags repeated sentence-openings and repeated section markers as warnings
+
 ### Don't bury the article in unrelated cross-links
 
 The footer "Explore more" block should link to the prior 3-5 articles in the same series. Linking to `/checkout.html` and `/index.html` is fine for the static links, but the series-context links should be dated articles, not random other pages.
@@ -262,5 +277,5 @@ Total: ~30 minutes. Buffer: 5-10 minutes for fixes if any step goes wrong.
 
 ## Reference files
 
-- `references/site-fingerprint-template.md` — what the oriental-destiny.com template fingerprint looks like, for new agents who haven't seen the site
-- `references/de-ai-scan-script.py` — copy-paste de-AI scanner from the audit step above
+- `references/site-fingerprint-template.md` — what the oriental-destiny.com template fingerprint looks like, with measured baselines (em-dash density, word count, section norms) and a live series-continuity table
+- `scripts/de-ai-scan.py` — runnable de-AI scanner that catches humanizer 29-pattern hits plus structural tells (repeated sentence-openers, repeated section markers, heading-restated-by-intro). Run with `--strict` for CI-style gating

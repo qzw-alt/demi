@@ -7,26 +7,107 @@
     <title>Page Not Found (404) — China Hospitals Guide | Medical Tourism Directory</title>
     <meta name="description" content="The page you requested was not found. Browse our hospital directory, cost comparisons, and medical tourism guides for international patients in China.">
     <script>
-    // Client-side redirects for legacy/phantom URLs
-    var redirects = {
-        "/course/services.html":     "/services.html",
-        "/course/resources.html":    "/resources.html",
-        "/course/news/":            "/news/",
-        "/course/blog/":            "/blog/",
-        "/course/how-it-works.html": "/how-it-works.html",
-        "/services/oncology.html": "/treatments/cancer.html",
-        "/blog/why-medical-tourism-coordinator-china.html": "/contact-new.html",
-        "/blog/spinal-surgery-cost-china.html": "/blog/spine-surgery-cost-china.html",
-        "/blog/china-medical-visa-guide.html": "/blog/china-medical-visa-guide-2026.html",
-        "/stories/james-thompson.html": "/stories/james-wilson.html",
-        "/blog/recovery-tips-after-surgery-in-china.html": "/contact-new.html",
-        "/blog/how-to-choose-best-plastic-surgeon.html": "/blog/plastic-surgery-china-guide-2026.html",
-        "/treatments/endoscopy.html": "/how-it-works.html",
-        "/blog.html": "/blog/"
-    };
-    var path = window.location.pathname;
-    var dest = redirects[path] || "/";
-    window.location.replace(dest);
+    (function() {
+        var path = window.location.pathname;
+        var exact = {
+            // Course sub-pages
+            "/course/services.html":     "/services.html",
+            "/course/resources.html":    "/resources.html",
+            "/course/news/":             "/news/",
+            "/course/blog/":             "/blog/",
+            "/course/how-it-works.html": "/how-it-works.html",
+            "/course.html":              "/course.html",
+            // Legacy treatment paths
+            "/services/oncology.html":    "/treatments/cancer.html",
+            "/services/cardiac.html":     "/treatments/cardiac.html",
+            "/services/orthopedics.html": "/treatments/orthopedics.html",
+            "/services/ivf.html":         "/treatments/ivf.html",
+            "/treatments/endoscopy.html": "/how-it-works.html",
+            // Known blog renames
+            "/blog/why-medical-tourism-coordinator-china.html": "/contact-new.html",
+            "/blog/spinal-surgery-cost-china.html":            "/blog/spine-surgery-cost-china.html",
+            "/blog/china-medical-visa-guide.html":             "/blog/china-medical-visa-guide-2026.html",
+            "/blog/recovery-tips-after-surgery-in-china.html": "/contact-new.html",
+            "/blog/how-to-choose-best-plastic-surgeon.html":   "/blog/plastic-surgery-china-guide-2026.html",
+            "/blog/cost-of-spine-surgery-china.html":          "/blog/spine-surgery-cost-china.html",
+            "/blog/heart-surgery-cost-china.html":             "/blog/cardiac-bypass-surgery-china-2026.html",
+            "/blog/how-to-see-doctor-in-china.html":           "/blog/foreigners-guide-healthcare-china.html",
+            "/blog/china-hospital-guide.html":                 "/blog/choose-hospital-china.html",
+            // Known story renames
+            "/stories/james-thompson.html":                    "/stories/james-wilson.html",
+            // Legacy landing pages
+            "/blog.html": "/blog/",
+            "/news.html": "/news/",
+            // Common misspellings / alternate paths
+            "/hospital.html":        "/hospitals.html",
+            "/service.html":         "/services.html",
+            "/price.html":           "/pricing.html",
+            "/priceing.html":        "/pricing.html",
+            "/contact-us.html":      "/contact.html",
+            "/contactus.html":       "/contact.html",
+            "/about-us.html":        "/about.html",
+            "/howitworks.html":      "/how-it-works.html",
+            "/costcomparison.html":  "/cost-comparison.html",
+            "/start-here.html":      "/contact-new.html",
+            "/starthere.html":       "/contact-new.html",
+            "/get-started.html":     "/contact-new.html",
+            "/free-consultation.html": "/contact-new.html",
+            "/free-case-review.html":  "/contact-new.html",
+            "/case-review.html":       "/contact-new.html",
+            "/checklist.html":         "/checklist.html",
+            "/phrases.html":           "/medical-chinese-phrases.html",
+            "/chinese-phrases.html":   "/medical-chinese-phrases.html",
+            "/index.php": "/",
+            "/index.asp": "/",
+            "/home.html": "/",
+            "/home.php": "/",
+            "/main.html": "/",
+            "/wordpress/": "/",
+            "/wp-content/": "/",
+            "/wp-admin/": "/",
+            // Old blog path
+            "/blog-articles/": "/blog/",
+            "/articles/": "/blog/",
+            "/posts/": "/blog/"
+        };
+        if (exact[path]) { window.location.replace(exact[path]); return; }
+
+        // Pattern redirects
+        var blogMatch = path.match(/^\/blog\/([a-z0-9-]+)\.html$/);
+        if (blogMatch) {
+            window.location.replace('/blog/' + blogMatch[1] + '-2026.html');
+            return;
+        }
+        var oldBlogMatch = path.match(/^\/blog-articles\/([a-z0-9-]+\.html)$/);
+        if (oldBlogMatch) {
+            window.location.replace('/blog/' + oldBlogMatch[1]);
+            return;
+        }
+        if (/^\/news\/\d{4}-\d{2}-\d{2}-.+/.test(path)) {
+            window.location.replace('/news/');
+            return;
+        }
+        var treatMatch = path.match(/^\/treatments\/([a-z-]+)$/);
+        if (treatMatch) {
+            window.location.replace('/treatments/' + treatMatch[1] + '.html');
+            return;
+        }
+        var storyMatch = path.match(/^\/stories\/([a-z-]+)$/);
+        if (storyMatch) {
+            window.location.replace('/stories/' + storyMatch[1] + '.html');
+            return;
+        }
+        if (path.endsWith('/')) {
+            var clean = path.slice(0, -1);
+            if (exact[clean]) { window.location.replace(exact[clean]); return; }
+        }
+        var rootMatch = path.match(/^\/([a-z-]+)$/);
+        if (rootMatch && rootMatch[1] !== 'blog' && rootMatch[1] !== 'news' && rootMatch[1] !== 'stories' && rootMatch[1] !== 'treatments') {
+            window.location.replace('/' + rootMatch[1] + '.html');
+            return;
+        }
+        window.location.replace('/');
+    })();
     </script>
     <meta http-equiv="refresh" content="0;url=/">
     <style>
@@ -36,7 +117,7 @@
 <body>
     <div style="max-width:600px;margin:100px auto;padding:40px;text-align:center;">
         <h1 style="color:#1e3c72;font-size:2em;margin-bottom:20px;">Page Not Found</h1>
-        <p style="font-size:1.1em;color:#555;margin-bottom:30px;">The page you're looking for doesn't exist or has moved. Redirecting...</p>
+        <p style="font-size:1.1em;color:#555;margin-bottom:30px;">The page you&apos;re looking for doesn&apos;t exist or has moved. Redirecting...</p>
         <div style="display:flex;gap:15px;justify-content:center;flex-wrap:wrap;">
             <a href="/" style="background:#1e3c72;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;">Homepage</a>
             <a href="/hospitals.html" style="background:#2a5298;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;">Hospital Directory</a>
@@ -45,4 +126,4 @@
     </div>
 </body>
 </html>
-<!-- cache-bust 20260620210000 -->
+<!-- cache-bust 20260626000000 -->

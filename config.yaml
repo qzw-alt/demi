@@ -1,14 +1,14 @@
 model:
   api_mode: chat_completions
   provider: deepseek
-  api_key: sk-8bc56de96cdf425d883f96b81a1287d2
+  api_key: sk-8bc56d...87d2
   base_url: https://api.deepseek.com/v1
   default: deepseek-v4-flash
 providers:
   minimax_coding:
     base_url: https://api.minimaxi.com/anthropic
     protocol: ''
-    api_key: sk-cp-lL-JHWT01qD9UAz4t_N300h8hIqoFV1GWHGxjTYNxP3N1Hc-qk9icduUCcDnsxSqiUUdd1HipSw4sfrNm77Q_CnR6du8JojcQS4_6yewtB_6S3OF5B4YOSg
+    api_key: sk-cp-lL-...YOSg
     api_mode: anthropic_messages
     model: MiniMax-M2.7
     model_display_name: MiniMax M2.7
@@ -17,7 +17,7 @@ providers:
   deepseek:
     base_url: https://api.deepseek.com/v1
     protocol: ''
-    api_key: sk-8bc56de96cdf425d883f96b81a1287d2
+    api_key: sk-8bc56d...87d2
     api_mode: chat_completions
     model: deepseek-v4-flash
     model_display_name: DeepSeek V4 Flash

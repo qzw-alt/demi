@@ -102,12 +102,12 @@
       14168
     ],
     "creative/programmatic-seo/SKILL.md": [
-      1782432547815678887,
-      76915
+      1782522666239779956,
+      79544
     ],
     "creative/seo-article-publish-cron/SKILL.md": [
-      1782346229566791667,
-      13346
+      1782519180233217213,
+      15353
     ],
     "creative/sketch/SKILL.md": [
       1778925537000000000,
@@ -206,8 +206,8 @@
       3218
     ],
     "medical-tourism/medical-tourism-client-intake/SKILL.md": [
-      1782348643169884236,
-      4947
+      1782526333100671170,
+      5326
     ],
     "mlops/evaluation/lm-evaluation-harness/SKILL.md": [
       1778925537000000000,
@@ -248,6 +248,10 @@
     "note-taking/obsidian/SKILL.md": [
       1778925537000000000,
       2919
+    ],
+    "pending-2026-06-27-cms-silevimig-shipped/SKILL.md": [
+      1782522731800947367,
+      4360
     ],
     "productivity/airtable/SKILL.md": [
       1778925537000000000,
@@ -298,8 +302,8 @@
       5111
     ],
     "research/content-research-writer-cn/SKILL.md": [
-      1782436189542308722,
-      76370
+      1782528572742065722,
+      77376
     ],
     "research/llm-wiki/SKILL.md": [
       1778925537000000000,
@@ -1507,6 +1511,19 @@
         "macos",
         "windows"
       ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "pending-2026-06-27-cms-silevimig-shipped",
+      "category": "pending-2026-06-27-cms-silevimig-shipped",
+      "frontmatter_name": "pending-2026-06-27-cms-silevimig-shipped",
+      "description": "22nd chinahospitalsguide cron run shipped CMS silevimig (...",
+      "platforms": [],
       "conditions": {
         "fallback_for_toolsets": [],
         "requires_toolsets": [],

@@ -16,6 +16,13 @@ tags: [medical-tourism, client-intake, hospital-coordination, email]
 - 用户说「有个客户咨询，你看看」
 - 需要起草/发送回复邮件给海外患者
 
+### 0. 快速定位——中国独有医疗卖点
+
+收到客户咨询时，先对照 `references/china-unique-medical-selling-points.md` 判断：
+- 客户的疾病是否属于中国有独特优势的领域？
+- 如果是，回复中**主动植入**卖点（"该手术由唐都/四医大首创"等）
+- 如果不是，重点突出成本优势（50-80% less）和零等待时间
+
 ## 核心原则
 
 ### 1. 先初步沟通，后谈费用

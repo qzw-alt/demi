@@ -185,6 +185,14 @@ Sections 2 (data-box) and 7 (medical-tourism translation with bulleted questions
 
 **Do NOT delegate research to a subagent in a cron run.** The 2026-06-02 subagent delegation timed out at 600s without producing a result, because the subagent hit the same anti-bot walls and burned its entire budget on failed fetches. Do the research inline using the bypass patterns above.
 
+## Content Theme Direction
+
+This site has a recurring content mandate from the user: focus on the **"特殊性唯一性"** (special/unique) factor — medical procedures and projects that are truly unique to China or where China offers a genuine advantage that cannot be replicated elsewhere.
+
+When the user says "都以上面的信息处理" (use the above info for everything), they mean: take the established research or theme and run it through ALL content streams — blog articles, daily news, social media, etc. — for a defined period (typically 2 days).
+
+For theme-driven periods, the daily news cron prompt should be updated to carry the theme instruction so each cron run writes in that direction rather than searching for unrelated hot topics.
+
 ## Hot Topic Categories (优先级排序)
 
 1. **重大政策** — 医保改革, 分级诊疗, 药品审评审批, 医疗器械政策
@@ -194,6 +202,7 @@ Sections 2 (data-box) and 7 (medical-tourism translation with bulleted questions
 5. **AI/数字医疗** — 医疗AI, 远程医疗, 智慧医院
 6. **患者故事** — 真实就医经历 (适合旅游场景)
 7. **医疗机构动态** — 知名医院新技术/新科室
+8. **中国独有/领先医疗项目** — 特殊性唯一性的项目: 自律机器人手术, CAR-T获批数量, 干细胞监管差异, 中西医结合, 显微外科/再植, 器官移植等。详见 `references/china-unique-medical-procedures.md`
 
 ## Research Process
 

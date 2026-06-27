@@ -1,0 +1,192 @@
+<!--
+  Starter template for fate-YYYY-MM-DD.html articles on oriental-destiny.com.
+
+  Copy this file to fate-YYYY-MM-DD.html, then replace placeholders:
+
+    {{DATE}}          - YYYY-MM-DD format (e.g. 2026-06-28)
+    {{TITLE}}         - Article H1 (50-80 chars, practical and concrete)
+    {{META_DESC}}     - 150-160 char meta description, keyword-dense
+    {{SUBTITLE}}      - 3 short phrases separated by middots (e.g. "Foundations · Cures · Late June Reading")
+    {{LEAD_PARA}}     - Hero lead paragraph, 1-3 sentences, references yesterday's article by date
+    {{READ_TIME}}     - "X min read" (e.g. "11 min read")
+    {{H2_1..H2_N}}    - Section h2 headings (5-8 sections)
+    {{H3_1..H3_N}}    - Subsection h3 headings as needed
+    {{BODY_1..BODY_N}} - Paragraph HTML blocks
+    {{QUOTE_1..}}     - Pullquote blocks (optional, 1-3 per article)
+    {{CHECKLIST}}     - Checklist items (optional)
+    {{FAQ_Q_1..FAQ_Q_N}} - FAQ questions (5-7 typical)
+    {{FAQ_A_1..FAQ_A_N}} - FAQ answers
+    {{CTA_TEXT}}      - CTA h2 text
+    {{CTA_PARA}}      - CTA paragraph
+    {{FOOTER_LINKS}}  - 3-5 prior articles in reverse chronological order
+
+  Field-tested dimensions (oriental-destiny.com 2026-06-25..06-27):
+    Body wordcount: 3,200-4,500
+    Sections: 5-8 main + FAQ + CTA
+    FAQ items: 5-7
+    Em-dash density: 6.8 per 1,200 words (encode as &mdash;)
+    Article voice: mechanism-first, conditional, practitioner-Wikipedia hybrid
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{TITLE}} | Oriental Destiny</title>
+    <meta name="description" content="{{META_DESC}}">
+    <link rel="canonical" href="https://oriental-destiny.com/fate-{{DATE}}.html">
+    <meta property="og:title" content="{{TITLE}} | Oriental Destiny">
+    <meta property="og:description" content="{{META_DESC}}">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://oriental-destiny.com/fate-{{DATE}}.html">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "{{TITLE}}",
+        "description": "{{META_DESC}}",
+        "author": { "@type": "Organization", "name": "Oriental Destiny" },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Oriental Destiny",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://oriental-destiny.com/assets/logo.png"
+            }
+        },
+        "datePublished": "{{DATE}}",
+        "dateModified": "{{DATE}}",
+        "mainEntityOfPage": "https://oriental-destiny.com/fate-{{DATE}}.html"
+    }
+    </script>
+    <style>
+        :root {
+            --ink: #241915;
+            --cinnabar: #a63a2c;
+            --gold: #b78a42;
+            --pine: #315247;
+            --line: #e6dccb;
+            --paper: #fdf6ec;
+            --shadow: 0 8px 32px rgba(36, 25, 21, 0.08);
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Georgia, serif;
+            background: var(--paper);
+            color: var(--ink);
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+        }
+        .container { max-width: 880px; margin: 0 auto; padding: 0 24px; }
+        .topbar { background: rgba(255, 252, 246, 0.96); border-bottom: 1px solid var(--line); padding: 18px 0; position: sticky; top: 0; z-index: 10; backdrop-filter: blur(8px); }
+        .topbar-inner { display: flex; justify-content: space-between; align-items: center; }
+        .brand-mark { font-size: 1.15rem; font-weight: 700; color: var(--cinnabar); letter-spacing: 0.02em; display: block; }
+        .brand-name { font-size: 0.78rem; color: var(--pine); letter-spacing: 0.08em; }
+        .nav a { color: var(--ink); text-decoration: none; margin-left: 22px; font-size: 0.92rem; }
+        .nav a:hover { color: var(--cinnabar); }
+        .hero { padding: 60px 0 30px; text-align: center; }
+        .hero .subtitle { font-size: 0.82rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+        .hero h1 { font-size: 2.2rem; line-height: 1.25; color: var(--ink); margin: 0 0 18px; max-width: 760px; margin-left: auto; margin-right: auto; }
+        .hero .lead { font-size: 1.08rem; color: rgba(36, 25, 21, 0.78); max-width: 720px; margin: 0 auto 14px; line-height: 1.65; }
+        .meta { font-size: 0.85rem; color: rgba(36, 25, 21, 0.6); text-align: center; margin: 12px 0 0; }
+        .content-block { background: white; border-radius: 14px; padding: 38px 44px; margin: 24px auto; box-shadow: var(--shadow); border: 1px solid var(--line); }
+        .content-block h2 { font-size: 1.55rem; color: var(--pine); margin: 0 0 18px; padding-bottom: 10px; border-bottom: 2px solid var(--line); }
+        .content-block h3 { font-size: 1.2rem; color: var(--pine); margin-top: 28px; margin-bottom: 12px; }
+        .content-block p { margin-bottom: 16px; color: var(--ink); font-size: 1.02rem; }
+        .content-block ul, .content-block ol { margin: 16px 0 22px 22px; color: var(--ink); }
+        .content-block li { margin-bottom: 10px; }
+        .content-block em { color: var(--cinnabar); font-style: italic; }
+        .pullquote { border-left: 4px solid var(--cinnabar); padding: 16px 22px; margin: 24px 0; background: rgba(166, 58, 44, 0.06); font-style: italic; color: var(--ink); font-size: 1.08rem; border-radius: 0 8px 8px 0; }
+        .corner-callout { background: linear-gradient(135deg, rgba(183, 138, 66, 0.14), rgba(49, 82, 71, 0.10)); border: 1px solid rgba(183, 138, 66, 0.32); border-radius: 10px; padding: 22px 26px; margin: 26px 0; font-size: 1rem; color: var(--ink); }
+        .corner-callout strong { color: var(--cinnabar); display: block; font-size: 0.82rem; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 8px; }
+        .checklist { list-style: none; margin: 20px 0 22px; padding: 0; }
+        .checklist li { background: rgba(255, 252, 246, 0.6); border-left: 3px solid var(--gold); padding: 12px 16px; margin-bottom: 10px; border-radius: 0 6px 6px 0; font-size: 1rem; }
+        .checklist li strong { color: var(--pine); }
+        .cta-section { background: linear-gradient(135deg, var(--cinnabar), #8c2f23); color: #fdf6ec; border-radius: 14px; padding: 38px 40px; text-align: center; margin: 40px auto; max-width: 820px; box-shadow: var(--shadow); }
+        .cta-section h2 { color: #fdf6ec; border: none; font-size: 1.5rem; margin-bottom: 14px; }
+        .cta-section p { color: rgba(253, 246, 236, 0.92); margin-bottom: 22px; font-size: 1.02rem; }
+        .cta-btn { display: inline-block; background: #fdf6ec; color: var(--cinnabar); padding: 14px 32px; border-radius: 8px; font-weight: 600; font-size: 1rem; letter-spacing: 0.04em; transition: background 0.2s; text-decoration: none; }
+        .cta-btn:hover { background: #f5e7d6; }
+        .faq-item { border-bottom: 1px solid var(--line); padding: 20px 0; }
+        .faq-item:last-child { border-bottom: none; }
+        .faq-q { font-weight: 600; font-size: 1.05rem; margin-bottom: 8px; color: var(--ink); }
+        .faq-a { font-size: 0.95rem; color: rgba(36, 25, 21, 0.8); line-height: 1.65; }
+        footer { text-align: center; padding: 2rem; font-size: 0.85rem; color: rgba(36, 25, 21, 0.5); border-top: 1px solid var(--line); margin-top: 40px; }
+        footer a { color: var(--cinnabar); text-decoration: underline; }
+        @media (max-width: 768px) { .content-block { padding: 26px 22px; } .topbar-inner { flex-direction: column; gap: 12px; } .hero h1 { font-size: 1.7rem; } }
+    </style>
+</head>
+<body>
+    <header class="topbar">
+        <div class="container topbar-inner">
+            <a class="brand" href="index.html">
+                <span class="brand-mark">Oriental Destiny</span>
+                <span class="brand-name">Feng Shui &middot; BaZi &middot; Destiny</span>
+            </a>
+            <nav class="nav">
+                <a href="index.html">Home</a>
+                <a href="instant_reading.html">Free Reading</a>
+                <a href="products.html">Plans</a>
+                <a href="report_demo.html">Sample Report</a>
+                <a href="checkout.html">Order</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <p class="subtitle">{{SUBTITLE}}</p>
+            <h1>{{TITLE}}</h1>
+            <p class="lead">{{LEAD_PARA}}</p>
+            <p class="meta">Published {{DATE_HUMAN}} &middot; {{READ_TIME}}</p>
+        </section>
+
+        <article class="content-block">
+            <h2>{{H2_1}}</h2>
+            <p>{{BODY_1}}</p>
+            <p>{{BODY_2}}</p>
+            <div class="pullquote">{{QUOTE_1}}</div>
+        </article>
+
+        <article class="content-block">
+            <h2>{{H2_2}}</h2>
+            <p>{{BODY_3}}</p>
+            <p>{{BODY_4}}</p>
+        </article>
+
+        <article class="content-block">
+            <h2>{{H2_3}}</h2>
+            <p>{{BODY_5}}</p>
+            <h3>{{H3_1}}</h3>
+            <p>{{BODY_6}}</p>
+        </article>
+
+        <article class="content-block">
+            <h2>Frequently Asked Questions</h2>
+            <!-- repeat faq-item 5-7 times -->
+            <div class="faq-item">
+                <div class="faq-q">{{FAQ_Q_1}}</div>
+                <div class="faq-a">{{FAQ_A_1}}</div>
+            </div>
+        </article>
+
+        <div class="cta-section">
+            <h2>{{CTA_TEXT}}</h2>
+            <p>{{CTA_PARA}}</p>
+            <a href="instant_reading.html" class="cta-btn">Get Your Free Mini Reading &rarr;</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>Explore more: {{FOOTER_LINKS}}</p>
+        <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 12px; color: rgba(36, 25, 21, 0.55);">
+            <a href="policies.html#shipping" style="color: rgba(36, 25, 21, 0.7); margin: 0 6px; text-decoration: none;">Shipping</a> &middot;
+            <a href="policies.html#refund" style="color: rgba(36, 25, 21, 0.7); margin: 0 6px; text-decoration: none;">Refund</a> &middot;
+            <a href="policies.html#privacy" style="color: rgba(36, 25, 21, 0.7); margin: 0 6px; text-decoration: none;">Privacy</a> &middot;
+            <a href="mailto:434338480@qq.com" style="color: rgba(36, 25, 21, 0.7); margin: 0 6px; text-decoration: none;">Contact</a>
+        </div>
+        <p style="margin-top: 8px; font-size: 11px; color: rgba(36, 25, 21, 0.5);">For self-reflection and symbolic guidance only. Not medical, legal, financial, or professional advice.</p>
+    </footer>
+</body>
+</html>

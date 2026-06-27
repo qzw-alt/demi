@@ -1,4 +1,4 @@
-    <div class="nav-overlay" id="navOverlay"></div>
+﻿    <div class="nav-overlay" id="navOverlay"></div>
     <nav class="navbar">
         <div class="nav-container">
             <a href="{{ '/index.html' | url }}" class="nav-logo">{{ site.name }}</a>
@@ -8,6 +8,7 @@
                 <li><a href="{{ '/how-it-works.html' | url }}"{% if activeNav == 'process' %} class="active"{% endif %}>Process</a></li>
                 <li><a href="{{ '/pricing.html' | url }}"{% if activeNav == 'pricing' %} class="active"{% endif %}>Pricing</a></li>
                 <li><a href="{{ '/hospitals.html' | url }}"{% if activeNav == 'hospitals' %} class="active"{% endif %}>Hospitals</a></li>
+                <li><a href="{{ '/blog/' | url }}"{% if activeNav == 'blog' %} class="active"{% endif %}>Blog</a></li>
                 <li><a href="{{ '/contact.html' | url }}"{% if activeNav == 'contact' %} class="active"{% endif %}>Contact</a></li>
                 <li><a href="{{ '/contact-new.html' | url }}" class="nav-cta-mobile">Start Here</a></li>
             </ul>

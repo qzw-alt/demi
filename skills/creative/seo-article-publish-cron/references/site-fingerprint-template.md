@@ -111,7 +111,7 @@ Pick 3 phrases that locate the article in the feng shui taxonomy.
 - Use specific numbers ("the south wall of the home is the Wu mountain, the 15-degree slice from 172.5 to 187.5")
 - Use worked examples: walk through 2-3 home orientations, not just one
 - Acknowledge the symbolic-system nature honestly (the FAQ "does it actually work" answer admits feng shui is symbolic, not a proven mechanism)
-- Em dashes used as stylistic tic — count varies by article but ~1 per 1000 words is the average for recent articles
+- Em dashes used as stylistic tic — measured baseline for this site (2026-06-25 through 2026-06-27): **6.8 per 1,200 words** (≈5.7 per 1,000). Encode as `&mdash;` in source. Match this density — going below 3 per 1,200 reads as LLM-terse; going above 12 per 1,200 reads as AI-saleswriting.
 - No emojis, no curly quotes, no bold-as-emphasis patterns, no "rule of three" padding
 
 ## Series continuity (so far, June 2026)
@@ -125,13 +125,17 @@ Pick 3 phrases that locate the article in the feng shui taxonomy.
 | 06-23 | Dining Room Feng Shui for the Fire Month | Room-specific application |
 | 06-24 | The Bagua Map: How to Lay the 9-Section Energy Grid | Form-school foundation |
 | 06-25 | The Wealth Corner (Xiu) | First cell-specific article |
+| 06-26 | Yin and Yang in Feng Shui: What the Two Sides Mean for a Home | Polarity foundation (the "missing pillar" from earlier pieces) |
+| 06-27 | Common Feng Shui Mistakes: Six Cures and Decor Trends That Quietly Disrupt Qi | Mythbusting / six-mistake listicle applied to the 06-26 framework |
 
-Next logical topics to ladder from 06-25:
-- Reading another bagua cell (career, family, partnership, fame)
-- How the Xun cell interacts with a specific BaZi Day Master in detail
-- Common wealth-corner mistakes and fixes (with photo examples)
-- The 2027 wealth star position (preview)
-- Wealth corner activation by season (annual rhythm)
+Topic ladder pattern observed: each article explicitly references the previous 1-3 pieces by date and topic in its hero `.lead` paragraph. The 06-26 piece opens with "Earlier this month the Fire Month articles leaned on the word 'yang' without ever defining it... Today's piece is the missing pillar." The 06-27 piece opens with "Most of what shows up under 'feng shui' on a Pinterest board is a fragment of a real classical idea, with the part that made it work cut off." This continuity is the site's signature voice pattern — never write a "cold open" article.
+
+Next logical topics to ladder from 06-27:
+- One-cure-per-room deep dives (taking each of the six mistakes and doing the room-specific version)
+- The Luo Pan reading of the same six cures (compass-school perspective vs. form-school perspective)
+- A worked example: read one home from front door to back using the five-question diagnostic from 06-27
+- Common BaZi chart mistakes (mirror of the 06-27 feng shui mistakes pattern applied to BaZi)
+- Late-summer (Li Qiu) Earth-Month transition piece (continues the seasonal arc)
 
 ## Sitemap entry format
 
