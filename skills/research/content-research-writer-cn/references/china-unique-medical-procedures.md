@@ -43,6 +43,7 @@ Research compiled June 2026. These are procedures where China offers genuine "�
 - **2006**: World's first penis transplant (Guangzhou)
 - China's military hospitals have unmatched replantation volume and expertise
 - Key hospitals: Xijing Hospital (Xi'an), Shanghai Sixth People's Hospital, Beijing Jishuitan Hospital
+- **2025**: World's first robotic living-donor liver transplant — HKUMed Queen Mary Hospital (Hong Kong), using the Versius robotic surgery system. HKUMed QMH's microsurgery team has performed 48 robotic microsurgery procedures (≈50% of global robotic microsurgery volume). Named surgeon: Dr. Ka-chun Cheung, Division of Hepatobiliary Surgery. The case extends China's microsurgery leadership into the robotic platform era, and positions HKUMed QMH as a sister jurisdiction for international patients who want robotic precision with cross-border access logistics. Source: HKUMed press release mirrored on Mirage News, 2026-06-25.
 
 ## 6. Hepatobiliary Surgery — Wu Mengchao Legacy
 - **1960**: Wu Mengchao established "five-lobe, four-segment" liver anatomy theory — global standard

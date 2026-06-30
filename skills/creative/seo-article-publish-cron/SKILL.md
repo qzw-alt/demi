@@ -241,6 +241,22 @@ A repo with two article styles (e.g., one template for `fate-YYYY-MM-DD.html` an
 
 If yesterday's article was "Bagua Map" and today you write "Five Elements," you've broken the series continuity. The footer cross-link block will look weird, the reader's mental model breaks, and the site's topical authority is split across disjoint articles. Always read yesterday first.
 
+### Topic threading: the "conceptual foundation ladder" pattern (verified 2026-06-24 → 2026-06-28)
+
+The seasonal threading pitfall above covers month-long themes (June = Fire Month room walk). A second, complementary pattern emerged in late June 2026: the **conceptual foundation ladder** — a 4-5 day sequence of articles that climb from one layer of the practice to the next, where each new article assumes the prior one as background. Verified sequence from oriental-destiny.com June 2026:
+
+- 06-24: Bagua Map (the 9-cell energy grid — the spatial map)
+- 06-25: Wealth Corner (Xiu cell) (one specific cell of the bagua, with activation rules)
+- 06-26: Yin and Yang (the polarity concept that sits UNDER yin/yang-style cell readings)
+- 06-27: Common Feng Shui Mistakes (6 cures applied without diagnosis — depends on bagua + yin/yang literacy)
+- 06-28: Five Elements (the next layer down from yin/yang — Wood/Fire/Earth/Metal/Water as the qualities a room carries)
+
+**Recipe to recognize a foundation-ladder opportunity:** at the start of the run, after reading yesterday's article, check whether yesterday (or the 2-3 prior articles) introduced a new concept (a tool, a layer, a methodology) without defining it. If 1+ articles assumed the concept is known, that concept is the **next ladder rung** — write the foundational piece that the prior articles assumed the reader already had. The lead paragraph of the new piece should explicitly reference the prior articles ("Earlier this month the Fire Month articles leaned on the word 'yang' without ever defining it..." — see programmatic-seo skill's "referenced-but-never-covered pivot" recipe for the full sentence pattern).
+
+**Why this matters for SEO:** Google ranks sites that demonstrate topical depth. A site with 30 articles on room-specific feng shui reads as a topical cluster; a site with 5 articles on concepts + 25 on applications reads as having a coherent body of work. The ladder pattern produces both kinds of article in the same week, with each piece explicitly cross-linking the others via the footer "Explore more" block.
+
+**Detection signal:** run `ls -t fate-YYYY-MM-DD-*.html | head -7 | xargs grep -l "[UNDEFINED_TERM]"` to find articles that USED a term without defining it. If 2+ recent articles assume the term, that term is a ladder-rung candidate. The 06-26 Yin/Yang article emerged from finding `yin|yang` referenced but never pillar-defined in the prior 30 days.
+
 ### Don't ship before verifying de-AI
 
 If the spec says "score > 60 required," treat it as a hard gate. A humanizer audit that finds 12 instances of `delve`/`tapestry`/`testament`/`underscore` should be rewritten, not shipped. Programmatic scan catches most of these in seconds.
@@ -278,4 +294,5 @@ Total: ~30 minutes. Buffer: 5-10 minutes for fixes if any step goes wrong.
 ## Reference files
 
 - `references/site-fingerprint-template.md` — what the oriental-destiny.com template fingerprint looks like, with measured baselines (em-dash density, word count, section norms) and a live series-continuity table
+- `references/oriental-destiny-element-card-css.md` — the `.element-card` CSS class scheme with per-element border colors (Wood/Fire/Earth/Metal/Water), for articles that walk through individual elements. Reverse-engineered from the seo-generator's `ELEMENT_THEMES` constant.
 - `scripts/de-ai-scan.py` — runnable de-AI scanner that catches humanizer 29-pattern hits plus structural tells (repeated sentence-openers, repeated section markers, heading-restated-by-intro). Run with `--strict` for CI-style gating

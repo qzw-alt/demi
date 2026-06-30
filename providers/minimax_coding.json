@@ -5,12 +5,16 @@
   "context_length": "",
   "models": [
     {
+      "id": "MiniMax-M3",
+      "name": "MiniMax-M3"
+    },
+    {
       "id": "MiniMax-M2.7",
-      "name": "MiniMax M2.7"
+      "name": "MiniMax-M2.7"
     },
     {
       "id": "MiniMax-M2.7-highspeed",
-      "name": "MiniMax M2.7 Highspeed"
+      "name": "MiniMax-M2.7-Highspeed"
     }
   ]
 }

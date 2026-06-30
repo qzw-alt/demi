@@ -79,6 +79,17 @@ _JSON_PATH_RE = re.compile(r'"path"\s*:\s*"(/[^"]+)"')
 # trailing-space form is removed cleanly.
 _STREAM_CURSORS: tuple[str, ...] = (" \u2589", " \u258a", "\u2589", "\u258a")
 
+# 匹配流式模型输出中的 MEDIA: 协议行。
+# 框架要求格式：单独一行 "MEDIA:<绝对路径>"。
+# 模型有时会将其作为普通文本输出——发送给客户端前必须去除，
+# 避免原始路径出现在聊天界面中。
+# 实际文件投递由框架的 _deliver_media_from_response / _deliver_pending_files 负责，
+# 此处只需将原始标签从视图中隐藏。
+_MEDIA_TAG_RE = re.compile(
+    r'(?:^|\n)([ \t]*MEDIA:(?:[A-Za-z]:[/\\]|/|~/)\S+)([ \t]*)(?=\n|$)',
+    re.MULTILINE,
+)
+
 
 def _strip_stream_cursor(text: str) -> str:
     """Remove a trailing streaming-cursor glyph if present.
@@ -92,6 +103,26 @@ def _strip_stream_cursor(text: str) -> str:
         if text.endswith(cursor):
             return text[: -len(cursor)]
     return text
+
+
+def _strip_media_tags(text: str) -> str:
+    """Remove MEDIA:<path> lines from streamed model output before delivery.
+
+    The framework uses ``MEDIA:<absolute-path>`` as an internal protocol to
+    signal that a local file should be attached.  The gateway's post-stream
+    handlers (_deliver_media_from_response / _deliver_pending_files) consume
+    these tags and convert them to proper attachment links.  However, when the
+    model outputs ``MEDIA:/path/to/file`` during streaming, the raw text is
+    forwarded to the client verbatim before any post-stream processing runs.
+
+    This function erases those lines so the raw path never appears in the
+    chat bubble.  Newlines surrounding the tag are preserved to avoid
+    disrupting paragraph layout.
+    """
+    if "MEDIA:" not in text:
+        return text
+    # 将每个 MEDIA: 行替换为空字符串。正则已通过换行符锚定行边界，只需丢弃标签内容，保持原有换行结构不变。
+    return _MEDIA_TAG_RE.sub(lambda m: m.group(0).replace(m.group(1) + m.group(2), ""), text)
 
 
 class OutboundMixin:
@@ -388,10 +419,12 @@ class OutboundMixin:
             if is_tool_progress:
                 self._track_write_file_path(chat_id, content)
 
-            # Record cursor-stripped snapshot for edit_message() delta computation.
-            # Use `content` (no cursor, no "\n\n" prefix).
+            # 记录去除光标和 MEDIA 标签后的快照，供 edit_message() 计算增量。
+            # 此处也必须去除 MEDIA 标签——edit_message() 在比较前会先 strip，
+            # 若 send() 保存的是含 MEDIA 标签的原始内容，两侧快照不一致，
+            # 会触发 delta fallback，将整段可见文本作为增量重复下发。
             if msg_kind == "stream_chunk":
-                self._edit_snapshot[chat_id] = content
+                self._edit_snapshot[chat_id] = _strip_media_tags(content)
 
             # Never close round here — typing_stop is sent by stop_typing()
             # which is called by the framework when the agent finishes.
@@ -599,6 +632,8 @@ class OutboundMixin:
         # the next turn.
         self._last_round_id[chat_id] = round_msg_id
         self._edit_snapshot.pop(chat_id, None)
+        # 每轮结束时重置去重表，避免下一轮同名文件被误判为已投递而漏发。
+        self._delivered_paths.pop(chat_id, None)
         self._clear_round_id(chat_id)
 
     async def edit_message(
@@ -635,6 +670,10 @@ class OutboundMixin:
         """
         # 1. Strip cursor suffix
         content = _strip_stream_cursor(content)
+
+        # 1b. 去除 MEDIA: 协议行——模型可能在流式输出时将其作为普通文本输出；这些是内部投递标记，不应展示给用户。
+        #     文件投递由_deliver_media_from_response / _deliver_pending_files 单独处理。
+        content = _strip_media_tags(content)
 
         # 2. Only process edits matching the current round (filter tool progress edits)
         round_msg_id = self._round_ids.get(chat_id)
@@ -838,12 +877,18 @@ class OutboundMixin:
         abs_path = os.path.abspath(file_path)
         display_name = file_name or os.path.basename(abs_path)
 
-        # Record the resolved (possibly corrected) real path so the
-        # stop_typing() → _deliver_pending_files fallback skips it.  The
-        # framework may have routed a *different* (bogus) path string into
-        # send_document, so deduping on the actual delivered path — not the
-        # caller's string — is what prevents a double link.
-        self._delivered_paths.setdefault(chat_id, set()).add(abs_path)
+        # 去重：若本轮已通过任意路径（_deliver_pending_files、send_document 或直接调用）
+        # 投递过该文件，则直接跳过。stop_typing() 和框架的 _deliver_media_from_response()
+        # 可能独立发现同一文件并都走到此处；在发送前检查（而非发送后）可确保第二次调用被静默丢弃。
+        delivered = self._delivered_paths.setdefault(chat_id, set())
+        if abs_path in delivered:
+            logger.info(
+                "[lightclaw] _send_attachment dedup (already delivered this turn): "
+                "chat=%s path=%r",
+                chat_id, abs_path,
+            )
+            return SendResult(success=True, message_id=None)
+        delivered.add(abs_path)
 
         # Build the Markdown link: "📎 [name](localfile:///abs/path) (size)"
         link = f"📎 [{display_name}]({LOCALFILE_SCHEME}{abs_path})"
@@ -1032,7 +1077,10 @@ class OutboundMixin:
         pending = self._pending_file_paths.pop(chat_id, [])
         if not pending:
             return
-        delivered = self._delivered_paths.pop(chat_id, set())
+        # 使用 setdefault 确保与 send_document() 和 _send_attachment() 共享同一个 set 对象。
+        # dict.get(key, set()) 返回的是临时 set，.add() 不会写回 _delivered_paths，
+        # 导致 _send_attachment 中的去重守卫始终看到空 set，每次调用都会通过。
+        delivered = self._delivered_paths.setdefault(chat_id, set())
         for path in pending:
             abs_path = os.path.abspath(path)
             if abs_path in delivered:
@@ -1053,6 +1101,8 @@ class OutboundMixin:
                 "chat=%s path=%r",
                 chat_id, path,
             )
+            # _send_attachment 在发送前会将 abs_path 加入 delivered，
+            # 后续对同一路径的并发/重复调用都会被拦截。
             await self._send_attachment(chat_id, path)
 
     async def send_document(

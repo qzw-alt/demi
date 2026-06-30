@@ -216,6 +216,14 @@ When assigning `trust.score`, use these guidelines:
 - **0.80-0.85 (medium):** Dual-source, one official
 - **<0.80 (low):** Single source or unverified claims
 
+### Customer report files live in repo root (legacy)
+
+When the older markdown-based report generation was used, output files went to:
+- `hospital-directory-basic-49.md` — ¥49 basic edition (legacy — superseded by `scripts/generate-report.js --basic`)
+- `hospital-directory-premium-399.md` — ¥399 premium edition (legacy — superseded by `scripts/generate-report.js --premium`)
+
+These are now legacy. Current report generation uses `scripts/generate-report.js` which outputs standalone HTML files to `reports/` and the repo root. See `hospital-customer-report` skill for the current workflow.
+
 ### 🚩 International department info
 
 When available, always include `international_dept` as a structured sub-object with phone, email, services, and appointment_lead_days. This is a key differentiator for medical tourism SEO and directly supports the `medical-tourism-client-intake` skill's workflow.
@@ -223,4 +231,5 @@ When available, always include `international_dept` as a structured sub-object w
 ## Related Skills
 
 - `medical-tourism-client-intake` — uses hospital database during patient intake
+- `hospital-customer-report` — generates customer-facing hospital report packages (basic ¥49 + premium ¥399) from the directory JSON data. Report files live in repo root: `hospital-directory-basic-49.md`, `hospital-directory-premium-399.md`, `sample-customer-report-redesign.md`.
 - `programmatic-seo` — broader site content management for chinahospitalsguide.com

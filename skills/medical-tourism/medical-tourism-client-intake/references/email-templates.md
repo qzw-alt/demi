@@ -97,6 +97,101 @@ Team at China Hospitals Guide
 https://chinahospitalsguide.com
 ```
 
+## 模板4：客户询问套餐详情/价格（¥49 vs ¥399） 
+
+**场景：** 患者发送咨询后，进一步问"What do you offer? How much does it cost? What's included?"
+**前提：** 已评估患者需要医院对接服务（适合¥399而非¥49）
+
+```
+Dear [Name],
+
+Thank you for your message — it's a very good question, and I'm happy to walk you through the options clearly.
+
+---
+
+## Our Two Packages
+
+### ¥49 Basic Edition ($49 USD)
+This gives you **2-3 hospital recommendations** matched to your condition, with transport guides and a pre-departure checklist. It's designed for patients who want to know **where to go** and then handle the hospital contact, appointment booking, and logistics themselves.
+
+### ¥399 Premium — Pre-Arrival Coordination ($399 USD)
+This is designed for patients who need **hands-on support** throughout the entire journey — from matching through treatment and discharge.
+
+---
+
+## What ¥399 Includes in Detail
+
+### ✅ All 18 Services Across 6 Stages
+
+**Stage 1 — Needs Assessment (1-2 days)**
+- One-on-one consultation to understand your full medical history
+- Precision matching from our database of 51 hospitals
+- Custom adjustments if the initial recommendation doesn't feel right
+
+**Stage 2 — Hospital Contact (3-7 days)**
+- We translate, organize, and submit your medical records to the hospital's international department
+- We follow up until we get a response
+- We coordinate with multiple hospitals so you can compare quotes
+- We handle all communication so you don't have to chase people
+
+**Stage 3 — Pre-Departure Preparation (1-4 weeks)**
+- Visa guidance — we coordinate the hospital's invitation letter for your visa application
+- Appointment booking — we lock in your admission date
+- Accommodation recommendations near the hospital
+- A detailed pre-departure packing checklist (medical records, documents, essentials)
+- **Airport pickup coordination** — you'll be met when you arrive
+
+**Stage 4 — During Treatment**
+- We stay in communication with the hospital's international department on your behalf
+- We coordinate if any unexpected issues arise (emergency hotline available)
+
+**Stage 5 — Discharge & Return**
+- We organize your medical records in both Chinese and English
+- We help translate your discharge medication instructions
+- We arrange follow-up appointments before you leave
+
+**Stage 6 — Post-Return Follow-up** *(extra fee service)*
+- Remote follow-up channel to stay in touch with your doctor
+- Health record archiving
+
+---
+
+## What Costs Extra
+
+| Service | How It's Charged |
+|---------|-----------------|
+| Family companion life assistance during treatment | Per actual service |
+| Return travel assistance (booking flights) | At actual cost |
+| Post-return remote follow-up + health archive | Annual subscription or per-visit |
+
+---
+
+## Fee Flow
+
+- **¥399 ($399 USD)** → paid to **us** (our coordination service fee)
+- **Hospital treatment costs** → paid **directly to the hospital**, not through us
+
+---
+
+## When to Purchase
+
+Recommend purchasing before we contact the hospital on your behalf. Once you purchase:
+1. Share your medical documents
+2. We translate and format them for the hospital's international department
+3. We send them and follow up
+4. We present you with the hospital's response and quote
+
+---
+
+**To summarize:** ¥49 gives you information (recommendations + guides), ¥399 gives you a coordinator (someone who actually handles the hospital contact, logistics, and follow-up).
+
+Please let me know if you have any questions — I'm happy to clarify anything.
+
+Warm regards,
+Team at China Hospitals Guide
+https://chinahospitalsguide.com
+```
+
 ## 通用规则
 
 - 保持邮件线程（Re: 原主题），不要新建

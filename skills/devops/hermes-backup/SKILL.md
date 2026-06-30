@@ -88,29 +88,52 @@ fi
 ```
 
 ### 4. Strip API keys from tracked files
+
+**⚠️ Terminal display trap:** The terminal truncates long strings in the middle with `...` when printing.
+`read_file` and `print(repr(line))` can SHOW `sk-8bc...87d2` while the ACTUAL FILE contains the full
+key `sk-8bc...87d2`. Always verify with `xxd` / Python hex if in doubt.
+
+**Use ACTIVE key truncation** (not just scan-and-warn) — in cron context there is no user to respond to warnings:
+
 ```bash
 cd /tmp/hermes-backup
-# config.yaml keys are usually truncated (sk-8bc...87d2 format) and safe for GitHub.
-# DO NOT attempt sed-based stripping — complex quoting breaks in bash and destroys truncated keys.
-# Instead, scan for non-truncated keys and warn if any are found:
+
+# Truncate all full API keys in config.yaml automatically.
+# Regex handles keys with -, _, and alphanumeric chars (covers DeepSeek, MinMax, Anthropic, etc.)
 python3 << 'PYEOF'
-import re, glob
-full_keys = []
-for f in ['config.yaml'] + glob.glob('providers/*.json'):
-    try:
-        with open(f) as fh:
-            for i, line in enumerate(fh, 1):
-                m = re.search(r"api_key:\s*['\"]?(sk-[a-zA-Z0-9]{20,})['\"]?", line)
-                if m and '...' not in m.group(1):
-                    full_keys.append(f'{f}:{i}')
-    except FileNotFoundError:
-        pass
-if full_keys:
-    print('WARNING: full API keys found — strip manually:')
-    for k in full_keys: print(f'  {k}')
-else:
-    print('config.yaml keys are truncated or empty — safe for GitHub')
+import re
+
+with open('config.yaml', 'r', encoding='utf-8') as f:
+    content = f.read()
+
+def truncate_key(match):
+    full_key = match.group(1)
+    if len(full_key) <= 15:
+        return match.group(0)  # already short / already truncated
+    prefix = full_key[3:9]   # first 6 after sk-
+    suffix = full_key[-4:]   # last 4
+    return f"api_key: sk-{prefix}...{suffix}"
+
+content_new = re.sub(
+    r'api_key:\s*(sk-[a-zA-Z0-9_-]{10,})',
+    truncate_key,
+    content
+)
+
+with open('config.yaml', 'w', encoding='utf-8') as f:
+    f.write(content_new)
+
+# Verify: hex-dump any remaining sk- lines to be sure they're truncated
+with open('config.yaml', 'rb') as f:
+    for i, line in enumerate(f, 1):
+        if b'api_key:' in line and b'sk-' in line:
+            val = line.split(b':', 1)[1].strip()
+            truncated = b'...' in val
+            print(f"  Line {i}: {val[:20]} (len={len(val)}, truncated={truncated})")
+            if not truncated and len(val) > 14:
+                print(f"    WARNING: FULL KEY — hex: {val.hex()}")
 PYEOF
+
 # auth.json is excluded from rsync entirely (--exclude='auth.json' in step 2),
 # so no stripping needed. If it was previously committed, remove it in step 3.
 
@@ -119,7 +142,7 @@ git rm --cached .env 2>/dev/null; rm -f .env
 
 # Check providers/ for literal keys (env var refs like env:DEEPSEEK_API_KEY are safe)
 for f in providers/*.json; do
-  [ -f "$f" ] && grep -q '"api_key": "[a-zA-Z0-9]\{16,\}"' "$f" && \
+  [ -f "$f" ] && grep -q '"api_key": "[a-zA-Z0-9_-]\{16,\}"' "$f" && \
     echo "WARNING: literal API key in $f — strip manually!"
 done
 
@@ -134,8 +157,8 @@ done
 ### 5. Check for remaining secrets
 ```bash
 cd /tmp/hermes-backup
-# Check for sk-* API keys in tracked source files
-grep -rn "sk-[a-zA-Z0-9]\{20,\}" --include='*.{yaml,yml,json,py,sh,txt,md,env,toml,conf,ini}' . 2>/dev/null | grep -v '.git/' | head -10
+# Check for sk-* API keys in tracked source files (broader pattern: allows -, _ chars)
+grep -rn "sk-[a-zA-Z0-9_-]\{16,\}" --include='*.{yaml,yml,json,py,sh,txt,md,env,toml,conf,ini}' . 2>/dev/null | grep -v '.git/' | grep -v '\.\.\.' | grep -v 'xxx' | grep -v 'Xxx' | head -10
 # Check for env-var-style API keys with actual values (not just env:VAR references)
 grep -rn "DEEPSEEK\|OPENAI\|ANTHROPIC.*API\|HF_TOKEN\|HUGGINGFACE" --include='*.{yaml,yml,json,py,sh,txt,md,env}' . 2>/dev/null | grep -v '.git/' | grep -v ':\s*$' | head -10
 # Check providers/ for any literal keys
@@ -195,6 +218,16 @@ rm -rf /tmp/hermes-backup/
 | `hermes-agent/__pycache__/` | Python bytecode cache |
 
 ## Pitfalls
+- **Terminal display truncation trap** — The terminal (read_file / print / repr) truncates long strings in the 
+  middle with `...`. A key displayed as `sk-8bc...87d2` is NOT necessarily truncated in the file — it may be the full
+  35-char key `sk-8bc...87d2` with only the middle hidden. Always verify with Python hex (`val.hex()`) or `xxd`
+  when checking whether keys are safe for GitHub.
+- **API keys may contain `-` and `_` characters** — DeepSeek keys are hex-only (`a-zA-Z0-9`), but MinMax,
+  Anthropic, and other providers use `-` and `_` in their keys (e.g. `sk-cp-lL-JHWT...`). The regex for scanning
+  and truncation must use `[a-zA-Z0-9_-]` not just `[a-zA-Z0-9]` to catch all keys.
+- **Active truncation required in cron context** — The old approach of "scan and warn" works when a user is
+  present to respond, but cron backups run autonomously. Always use the automated truncation script in step 4,
+  which replaces full keys with `sk-PREFIX...SUFFIX` format before commit.
 - **PAT auth may fail** — GitHub fine-grained PATs expire, get truncated in messages, or are revoked. Always verify with `ssh -T git@github.com` first. SSH keys don't expire. If using a custom cred helper (e.g. `/tmp/git-cred-helper.py`), check it's still valid by running it: `echo "" | /tmp/git-cred-helper.py get | grep password`
 - **Remote URL switching** — If cloned with HTTPS (PAT) and auth fails, switch to SSH: `git remote set-url origin git@github.com:qzw-alt/demi.git`
 - **Credentials storage** — PATs are stored in two places: `~/.config/git/credentials` (credential store) and potentially `/tmp/git-cred-helper.py` (custom helper). Both must be updated when the PAT rotates. The custom helper is registered via `git config --global credential.https://github.com.helper /tmp/git-cred-helper.py`.

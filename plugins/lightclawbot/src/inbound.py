@@ -308,6 +308,10 @@ class InboundMixin:
                         f"\n[用户发送了文件: {name} ({size_str})，"
                         f"已保存到: {saved_path}]"
                     )
+                # 追加 [media attached: ...] 标记，为了刷新后 history.extract_file_attachments()
+                # 从 transcript 中恢复文件的 mimeType 和 localfile:// uri
+                # 格式与 history.py 的 _MEDIA_ATTACH_RE 对齐：[media attached: <path> (<mime>) | localfile://<path>]
+                desc += f"\n[media attached: {saved_path} ({mime}) | {local_uri}]"
                 logger.info(
                     "[lightclaw] file saved: %s (%s, %s)",
                     saved_path, mime, format_file_size(len(buf)),
@@ -437,17 +441,38 @@ class InboundMixin:
         """Return all sessions from sessions.json index.
 
         Mirrors: handlers.ts → EVENT_SESSIONS_REQUEST handler.
+
+        Multi-tenant safety (D2):
+            ``sessions.json`` lives at Hermes-instance level — every tenant
+            shares one file.  Without filtering, user A asking for "my
+            sessions list" would see user B's sessionKeys (peer_uin leak,
+            cross-tenant data exposure).  We pin results to entries whose
+            sessionKey carries ``:dm:<from>`` and the LightClaw
+            ``channel_key`` prefix.  Falls back to unfiltered behaviour
+            only when ``data["from"]`` is empty (legacy / synthetic
+            requests).
         """
         from .config import EVENT_SESSIONS_RESPONSE, generate_msg_id
         from .history import list_sessions
 
-        sessions = list_sessions(getattr(self, "_sessions_dir", None))
+        owner_uin = (data.get("from") or "").strip() or None
+
+        sessions = list_sessions(
+            getattr(self, "_sessions_dir", None),
+            owner_uin=owner_uin,
+            channel_key=CHANNEL_KEY,
+        )
 
         msg_id = generate_msg_id()
         self._fire_and_forget(EVENT_SESSIONS_RESPONSE, {
             "requestId": data.get("requestId"),
             "sessions":  sessions,
             "msgId":     msg_id,
+            # Echo the requester so the per-uin session router can deliver
+            # the response back via the right WS (see adapter._fire_and_forget,
+            # which inspects data["to"] / data["from"] for chat routing).
+            "from":      self._bot_client_id,
+            "to":        owner_uin or "",
         })
 
 

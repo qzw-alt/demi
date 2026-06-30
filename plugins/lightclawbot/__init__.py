@@ -65,9 +65,18 @@ def _load_platform_hint() -> str:
 
 
 def _validate_config(config) -> bool:
-    """Check whether the platform config has enough info to connect."""
+    """Check whether the platform config has enough info to connect.
+    多用户隔离格式 LIGHTCLAW_API_KEY_${UIN}。
+    """
     extra = getattr(config, "extra", {}) or {}
-    return bool(extra.get("api_keys") or os.getenv("LIGHTCLAW_API_KEY", "").strip())
+    if extra.get("api_keys"):
+        return True
+    # 检查多用户格式
+    for key in os.environ:
+        if key.startswith("LIGHTCLAW_API_KEY_"):
+            if os.environ[key].strip():
+                return True
+    return False
 
 
 def _is_connected(config) -> bool:
@@ -76,7 +85,7 @@ def _is_connected(config) -> bool:
     Hermes gateway 在启动时会用一个空的 ``PlatformConfig(enabled=True)`` 作为
     *probe_cfg* 来调用这个函数（见 ``gateway/config.py`` 的 plugin-platform
     enablement pass）。如果只检查 ``extra.api_keys``，env-only 配置（也就是
-    把 ``LIGHTCLAW_API_KEY`` 写在 ``.env`` 而不写在 ``config.yaml``）会被
+    把 ``LIGHTCLAW_API_KEY_${UIN}`` 写在 ``.env`` 而不写在 ``config.yaml``）会被
     误判为「未配置」，导致 gateway 跳过该平台、永不连接。
 
     所以必须兜底读 ENV。API key 等敏感凭证只应放在 ``.env``，``config.yaml``
@@ -84,7 +93,14 @@ def _is_connected(config) -> bool:
     hermes 官方插件（IRC / Teams / Line / ntfy 等）的通用做法。
     """
     extra = getattr(config, "extra", {}) or {}
-    return bool(extra.get("api_keys") or os.getenv("LIGHTCLAW_API_KEY", "").strip())
+    if extra.get("api_keys"):
+        return True
+    # 检查多用户格式
+    for key in os.environ:
+        if key.startswith("LIGHTCLAW_API_KEY_"):
+            if os.environ[key].strip():
+                return True
+    return False
 
 
 def register(ctx):
@@ -106,7 +122,7 @@ def register(ctx):
         check_fn=check_lightclaw_requirements,
         validate_config=_validate_config,
         is_connected=_is_connected,
-        required_env=["LIGHTCLAW_API_KEY"],
+        required_env=["LIGHTCLAW_API_KEY_${UIN}"],
         install_hint="See https://pypi.org/project/lightclawbot/",
         allowed_users_env="LIGHTCLAW_ALLOWED_USERS",
         allow_all_env="LIGHTCLAW_ALLOW_ALL_USERS",

@@ -3,7 +3,7 @@ name: medical-tourism-client-intake
 description: "处理国际患者来华就医咨询的全流程：接收邮件 → 分析病情 → 确定服务方案 → 与医院初步沟通 → 回复客户。适用于 chinahospitalsguide.com 的客户咨询处理。"
 version: 1.0.0
 author: agent
-tags: [medical-tourism, client-intake, hospital-coordination, email]
+tag: [medical-tourism, client-intake, hospital-coordination, email, whatsapp, payment-flow]
 ---
 
 # 医疗旅游客户咨询处理流程
@@ -64,6 +64,25 @@ tags: [medical-tourism, client-intake, hospital-coordination, email]
 - 发摘要给医院获取初步意向
 - 直接报价
 
+### Step 2.5 — 客户询问定价/服务范围
+
+当患者问"What do you offer?" "How much?" "What's included?"时：
+
+1. **判断推荐版本** — 如果患者需要我们联系/协调医院 → ¥399。如果患者只想自己研究 → ¥49
+2. **起草回复** — 使用 `references/email-templates.md` 模板4（英文版¥399/¥49对比说明）
+3. **明确购买时机建议** — 建议患者在需要我们对接医院**之前**购买（"Recommend purchasing before we contact the hospital"）
+4. **说明费用流向** — ¥399付给我们（协调服务费），治疗费直接付医院
+5. **如适用，提供sample报告预览** — 帮助患者降低决策门槛
+6. **提供支付入口** — 引导客户到 `pricing.html` 页面或直接发PayPal链接
+
+### ⚠️ 支付流程验证（重要！）
+
+在引导客户去网站支付前，先检查支付流程是否通畅：
+
+1. **检查 pricing.html** — PayPal按钮是否正常渲染（SDK加载、Button ID正确）
+2. **检查 contact-new.html → pricing.html 路由** — 填表后的成功页面是否有"去支付"按钮？如果没有，先修网站再发指引
+3. **已知问题（2026-06-30）**：contact-new.html 提交成功后没有通往 pricing.html 的链接，需要手动添加
+
 ### Step 3 — 起草回复邮件
 
 邮件结构要素：
@@ -73,6 +92,50 @@ tags: [medical-tourism, client-intake, hospital-coordination, email]
 - 回答对方可能有的附加问题（如：May Thurner是否也能治）
 - 提供发送文件的方式（邮件附件/云盘链接）
 - 落款：Team at China Hospitals Guide + 网站链接
+
+### ⚠️ 邮件内容输出格式（用户强偏好 — 2026-06-30）
+
+用户原话：**「我复制到邮箱那里的话一堆太乱了」**
+
+**规则：发给用户的邮件内容必须满足：**
+
+1. **一整块纯净文本** — 不要在邮件正文前后夹"以下是..."、"Subject:"、"---"分割线、解释说明、emoji装饰边框
+2. **可直接复制粘贴到 Gmail/Outlook** — 全选后能一次性复制，不带我的"下面是"那种引导词
+3. **不要 Markdown 标题** — 标题用粗体文字（`**Stage 1**`）而不是 `#` Markdown 符号
+4. **不要富文本装饰** — 避免 `💡` 装饰性emoji分散注意力（正文用，签名档可以保留）
+5. **分块用 `---`** — 多个段落之间用三横线分隔，不是大段空白
+6. **结尾必须有"可以直接复制到邮箱里了"** — 提醒用户这是终稿
+
+**❌ 反例（不要这样做）：**
+```
+好的，下面是邮件内容，你可以复制到 Gmail：
+
+---
+
+**Subject:** Your case
+
+Dear Maria,
+
+...
+
+---
+
+还需要我修改吗？
+```
+
+**✅ 正例：**
+```
+**Subject:** Your case
+
+Dear Maria,
+
+...
+
+Warm regards,
+Demi
+```
+
+> 这条偏好是用户明确说"太乱"后的强信号，必须遵守。下次起草任何给客户的邮件/文档时直接按此格式输出。
 
 ### Step 4 — 发送邮件
 
@@ -119,10 +182,21 @@ tags: [medical-tourism, client-intake, hospital-coordination, email]
 
 详见 `hospital-directory` 技能。
 
+### 生成客户报告（针对已购买资料包的客户）
+
+如果客户已购买资料包（¥49基础版 / ¥399升级版），生成标准医院报告：
+
+- **¥49基础版** — 51家医院信息卡片格式
+- **¥399升级版** — 带有人性化温度的完整报告（致客户信 + 医院深度画像 + 行动指南 + FAQ）
+
+详见 `hospital-customer-report` 技能。生成后 push 到 GitHub 或直接发送给客户。
+
 ## 相关引用
 
 - `references/patient-questionnaire.md` — 标准咨询问题清单
 - `references/email-templates.md` — 常见邮件模板
+- `references/china-unique-medical-selling-points.md` — 中国独有医疗领域卖点（用于回复时主动植入）
+- `references/whatsapp-business-profile.md` — WhatsApp Business 资料设置（头像、简介、快捷回复、目录）
 
 ## 注意事项
 

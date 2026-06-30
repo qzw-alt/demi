@@ -102,12 +102,12 @@
       14168
     ],
     "creative/programmatic-seo/SKILL.md": [
-      1782522666239779956,
-      79544
+      1782778022095525130,
+      95102
     ],
     "creative/seo-article-publish-cron/SKILL.md": [
-      1782519180233217213,
-      15353
+      1782605238425207154,
+      18091
     ],
     "creative/sketch/SKILL.md": [
       1778925537000000000,
@@ -126,8 +126,8 @@
       5285
     ],
     "devops/hermes-backup/SKILL.md": [
-      1782396279861026190,
-      9376
+      1782569409347441920,
+      11217
     ],
     "devops/kanban-orchestrator/SKILL.md": [
       1778925537000000000,
@@ -205,9 +205,13 @@
       1778925537000000000,
       3218
     ],
+    "medical-tourism/hospital-customer-report/SKILL.md": [
+      1782783058363782385,
+      33675
+    ],
     "medical-tourism/medical-tourism-client-intake/SKILL.md": [
-      1782526333100671170,
-      5326
+      1782827402320572186,
+      8580
     ],
     "mlops/evaluation/lm-evaluation-harness/SKILL.md": [
       1778925537000000000,
@@ -302,8 +306,8 @@
       5111
     ],
     "research/content-research-writer-cn/SKILL.md": [
-      1782528572742065722,
-      77376
+      1782782088542362076,
+      94819
     ],
     "research/llm-wiki/SKILL.md": [
       1778925537000000000,
@@ -378,8 +382,8 @@
       7229
     ],
     "web-development/hospital-directory/SKILL.md": [
-      1782348668505332799,
-      8605
+      1782621787749633218,
+      9491
     ],
     "yuanbao/SKILL.md": [
       1778925537000000000,
@@ -1332,6 +1336,19 @@
         "macos",
         "windows"
       ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "hospital-customer-report",
+      "category": "medical-tourism",
+      "frontmatter_name": "hospital-customer-report",
+      "description": "Generate customer-facing medical tourism hospital report ...",
+      "platforms": [],
       "conditions": {
         "fallback_for_toolsets": [],
         "requires_toolsets": [],

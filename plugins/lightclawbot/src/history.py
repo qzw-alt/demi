@@ -17,6 +17,7 @@ tiers (see ``read_session_history``):
 
 import json
 import logging
+import mimetypes
 import os
 import re
 from pathlib import Path
@@ -292,14 +293,29 @@ _MEDIA_TAG_RE = re.compile(
 )
 
 
+def _mime_from_filename(name: str) -> Optional[str]:
+    """根据文件扩展名推断 MIME 类型，无法识别时返回 None。"""
+    mime, _ = mimetypes.guess_type(name)
+    return mime or None
+
+
 def _extract_localfile_links(text: str) -> List[Dict[str, str]]:
-    """Extract ``[name](localfile://...)`` links from assistant replies."""
+    """从助手回复中提取 ``[name](localfile://...)`` 格式的链接。
+
+    每条记录包含 ``name``、``uri``，以及（可推断时）``mimeType``。
+    前端 ``file-card.tsx`` 的 ``isImageFile`` 依赖 ``mimeType`` 字段判断图片；
+    若缺失，图片附件会被归入 ``otherFiles``，渲染成灰色不可交互的静态卡片。
+    """
     if not text or LOCALFILE_SCHEME not in text:
         return []
-    return [
-        {"name": m.group("name"), "uri": m.group("uri")}
-        for m in _LOCALFILE_MD_RE.finditer(text)
-    ]
+    result = []
+    for m in _LOCALFILE_MD_RE.finditer(text):
+        entry: Dict[str, str] = {"name": m.group("name"), "uri": m.group("uri")}
+        mime = _mime_from_filename(m.group("name"))
+        if mime:
+            entry["mimeType"] = mime
+        result.append(entry)
+    return result
 
 
 def _convert_media_tags_to_localfile(text: str) -> str:
@@ -363,6 +379,14 @@ def normalize_message(msg: dict) -> Optional[dict]:
         files = extract_file_attachments(text)
         if files:
             result["files"] = deduplicate_files(files)
+        # 清除 [media attached: ...] 标记，这是内部历史恢复注解，不应展示给用户或 LLM。
+        # 注意：此处使用条件更新（cleaned != text）而非始终覆盖，是因为：
+        #   1. 若无标记，cleaned == text，跳过可避免一次不必要的 dict 写入。
+        #   2. 若仅有标记而无其他文字，cleaned == ""，条件成立，result["content"] 被置空，
+        #      与 assistant 分支「始终覆盖」的语义等价——前端只渲染 files 数组。
+        cleaned_user_text = _MEDIA_ATTACH_RE.sub("", text).strip()
+        if cleaned_user_text != text:
+            result["content"] = cleaned_user_text
     elif role == "assistant":
         # Extract file links for the "files" field by converting MEDIA: tags
         # to localfile:// format temporarily, but keep original content intact.
@@ -370,6 +394,23 @@ def normalize_message(msg: dict) -> Optional[dict]:
         localfile_links = _extract_localfile_links(converted_text)
         if localfile_links:
             result["files"] = localfile_links
+            # Remove MEDIA: tags from content to avoid double rendering.
+            # The files field already contains the file info, so we strip the
+            # raw MEDIA: tags from content to prevent the front-end from
+            # rendering them twice (once as text, once as files array).
+            cleaned_text = text
+            for link in localfile_links:
+                path = link["uri"].replace(LOCALFILE_SCHEME, "")
+                cleaned_text = re.sub(
+                    rf"^[`\"']?MEDIA:\s*{re.escape(path)}[`\"']?\s*$",
+                    "",
+                    cleaned_text,
+                    flags=re.MULTILINE,
+                )
+            cleaned_text = cleaned_text.strip()
+            # 始终用清理后的版本覆盖 content，如果原始内容仅包含 MEDIA: 标签（cleaned_text==""）
+            # 则将 content 置为空字符串，使前端只渲染 files 数组，而不会将原始协议标签作为纯文本展示。
+            result["content"] = cleaned_text
 
     return result
 
@@ -732,7 +773,11 @@ def _parse_transcript(
     limit: int = 200,
     chat_only: bool = True,
 ) -> List[dict]:
-    """Parse a legacy JSONL transcript into HistoryMessage dicts."""
+    """Parse a legacy JSONL transcript into HistoryMessage dicts.
+
+    JSONL files are written line-by-line as messages arrive, so the line order
+    naturally reflects chronological order. No additional sorting is needed.
+    """
     messages: list[dict] = []
     for line in raw.splitlines():
         line = line.strip()
@@ -771,6 +816,22 @@ def _parse_transcript(
 
         messages.append(normalized)
 
+    # Log message order for debugging (only build the order_info string when
+    # DEBUG logging is actually enabled; otherwise the per-message preview /
+    # join would burn cycles for nothing on every history fetch).
+    if messages and logger.isEnabledFor(logging.DEBUG):
+        order_info = []
+        for i, m in enumerate(messages[:10]):  # First 10 messages
+            preview = str(m.get("content", ""))[:30].replace("\n", " ")
+            ts = m.get("timestamp", "N/A")
+            order_info.append(f"[{i}] {m['role']} (ts={ts}): {preview}...")
+        if len(messages) > 10:
+            order_info.append(f"... and {len(messages) - 10} more")
+        logger.debug(
+            "[lightclaw] Parsed %d messages from JSONL transcript (line order): %s",
+            len(messages), "; ".join(order_info),
+        )
+
     return messages[-limit:] if len(messages) > limit else messages
 
 
@@ -787,6 +848,12 @@ def _normalize_db_messages(
     and sanitised).  We reuse :func:`normalize_message` for file-attachment /
     ``MEDIA:`` link recovery, and drop delivery-mirror echoes (``observed``)
     plus system-injected user turns to match the previous JSONL behaviour.
+
+    Note: ``SessionDB.get_messages_as_conversation`` uses ``ORDER BY id`` (auto-increment
+    primary key) rather than ``ORDER BY timestamp``. This is usually correct, but may
+    be out of order in edge cases (concurrent writes, message compression). If messages
+    appear out of order in the UI, consider modifying the core library to use
+    ``ORDER BY timestamp`` and include the ``timestamp`` field in the response.
     """
     messages: list[dict] = []
     for msg in raw_messages:
@@ -810,6 +877,20 @@ def _normalize_db_messages(
 
         messages.append(normalized)
 
+    # Log message order for debugging (only build the order_info string when
+    # DEBUG logging is actually enabled — see _parse_transcript for rationale).
+    if messages and logger.isEnabledFor(logging.DEBUG):
+        order_info = []
+        for i, m in enumerate(messages[:10]):  # First 10 messages
+            preview = str(m.get("content", ""))[:30].replace("\n", " ")
+            order_info.append(f"[{i}] {m['role']}: {preview}...")
+        if len(messages) > 10:
+            order_info.append(f"... and {len(messages) - 10} more")
+        logger.debug(
+            "[lightclaw] Normalized %d messages from SessionDB (ORDER BY id): %s",
+            len(messages), "; ".join(order_info),
+        )
+
     return messages[-limit:] if len(messages) > limit else messages
 
 
@@ -817,13 +898,60 @@ def _normalize_db_messages(
 # Session list (mirrors session-reader.ts: listSessions)
 # ---------------------------------------------------------------------------
 
-def list_sessions(sessions_dir: Optional[str] = None) -> List[dict]:
-    """List all sessions from the sessions.json index."""
+def list_sessions(
+    sessions_dir: Optional[str] = None,
+    *,
+    owner_uin: Optional[str] = None,
+    channel_key: Optional[str] = None,
+) -> List[dict]:
+    """List sessions from the sessions.json index.
+
+    Multi-tenant filtering (D2):
+        ``sessions.json`` is shared by the whole Hermes instance — every
+        tenant's conversations live in the same dict.  In LightClaw, sessionKey
+        format is ``agent:main:<channel_key>:dm:<peer_uin>[:<agent_id>]`` where
+        ``peer_uin`` is the user side of the DM.
+
+        When ``owner_uin`` is set, we only return entries whose sessionKey's
+        ``peer_uin`` segment matches ``owner_uin`` — i.e. "the sessions
+        belonging to user X", filtering out other tenants' sessions.
+
+        ``channel_key`` further narrows results to a specific platform
+        prefix (``agent:main:<channel_key>:``); set it to LightClaw's
+        ``CHANNEL_KEY`` to avoid leaking sessions from other adapters that
+        share the same Hermes instance.
+
+        With neither set, behaviour matches the pre-D2 build (return all
+        entries).  This keeps the function safe to use in single-tenant
+        deployments and in hosts that have no concept of "owner".
+    """
     store = load_session_store(sessions_dir)
     result: list[dict] = []
+
+    # Pre-compute the prefix we use for filtering once.  sessionKey segments
+    # are ":"-delimited and the per-tenant dm chunk we care about always
+    # appears at the same depth, so a substring check is sufficient and
+    # avoids a full split per row.
+    channel_prefix = f"agent:main:{channel_key}:" if channel_key else None
+    dm_marker = f":dm:{owner_uin}" if owner_uin else None
+
     for key, entry in store.items():
         if not entry:
             continue
+
+        if channel_prefix and not key.startswith(channel_prefix):
+            continue
+
+        if dm_marker:
+            # Match `:dm:<owner_uin>` followed by either end-of-string or
+            # `:` (so `:dm:1234` does not falsely match `:dm:12345`).
+            idx = key.find(dm_marker)
+            if idx < 0:
+                continue
+            tail_pos = idx + len(dm_marker)
+            if tail_pos < len(key) and key[tail_pos] != ":":
+                continue
+
         # Support both snake_case and camelCase field names
         sid = entry.get("session_id") or entry.get("sessionId") or ""
         if not sid:
