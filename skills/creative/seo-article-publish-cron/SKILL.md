@@ -229,9 +229,50 @@ Expected: `HTTP 200`, title matches what you wrote, byte count ~ matches your fi
 
 The biggest time-saver is the pre-flight check. Specs get written once, then the repo changes. Spec says `master`, repo is on `main`. Spec says `competitor-research.md`, file is `article_topics.md`. Always verify before writing.
 
-### Don't auto-push without verifying
+**Don't auto-push without verifying**
 
 Always check `git status` and `git log` before pushing. A cron that runs at 8am every day could collide with a manual push from the user. If `git status` shows unstaged changes or `git log` shows a commit you didn't make, stop and investigate before pushing.
+
+**Pillar-page slug collision across subagents and crons (NEW pitfall — verified 2026-07-01):**
+Two agents writing the same pillar topic on the same day will create two URLs with different slugs (e.g. `china-unique-medical-procedures-guide.html` and `china-unique-medical-procedures.html`). Both pages ship, both get indexed, Google sees duplicate content and ranks neither well, and the sitemap ends up with near-duplicate entries. The 2026-07-01 case had a 24e927c commit at 16:35 creating `china-unique-medical-procedures-guide.html`, then a separate agent created `china-unique-medical-procedures.html` as part of a 11-page pillar batch — same topic, different slug, twice the size, 0% incremental SEO value.
+
+**Pre-flight check for pillar / evergreen pages — added 2026-07-01:**
+Before writing any evergreen / pillar / pillar-hub page (file pattern: not dated, lives in a topic directory), run:
+
+```bash
+cd <repo>
+# Detect existing URL with same topic from sibling crons / subagents / past commits
+git log --all --pretty=format: --name-only --since="7 days ago" | grep -E "^<dir>/<topic-slug-stem>" | sort -u
+# If 1+ similar slugs exist in the last 7 days, the topic is already covered. Either:
+#   a) reuse the existing slug and append new content
+#   b) if the existing page is genuinely thin (< 2000 chars), expand it instead of creating a duplicate
+#   c) if 2+ subagents are working concurrently, coordinate the slug naming in a shared lead-up message BEFORE writing
+```
+
+**Slug-coordination rule (NEW — added 2026-07-01):**
+When a session prompt says "build a pillar for <topic>", the first action (BEFORE writing) is `ls <dir>/<topic>*` and `grep -l "<topic-phrase-1>\|<topic-phrase-2>" <dir>/*.html`. If a near-duplicate exists, STOP and pick one of three resolutions:
+1. Reuse the existing slug, expand the existing page
+2. Pick a more specific slug (`<topic>-guide.html`, `<topic>-hub.html`, `<topic>-overview.html`)
+3. Push-back to the orchestrator before writing
+
+The third option is the cheapest — flagging the collision costs 1 message; recovering from duplicate content + 301 redirect setup costs 4-6 tool calls + a re-push.
+
+**301 redirect for the deprecated pillar (verified 2026-07-01):**
+For the duplicate-pillar cleanup, the patch to add to `_redirects`:
+```
+/<dir>/<deprecated-slug>.html /<dir>/<kept-slug>.html 301
+```
+Cloudflare Pages / Netlify auto-apply on the next deploy. One line, one push, both URLs converge on the kept slug. Verify with `curl -I https://example.com/<dir>/<deprecated-slug>.html | head -1` returning `HTTP/2 301`.
+
+**Subject-page stub verification before batch-creating 10+ pages (verified 2026-07-01):**
+When a session is asked to build a "10 sub-pages for pillar X" or any coordinated batch, the pre-batch check is:
+
+```bash
+ls <dir>/<topic-prefix>-* 2>/dev/null
+git log --all --pretty=format: --name-only --since="30 days ago" -- <dir>/ | grep -E "<topic-prefix>" | sort -u
+```
+
+If ≥1 page with the topic prefix already exists, prefer appending to the existing series (`<topic>-2.html`, `<topic>-index.html`) instead of starting from `<topic>.html`. The 2026-07-01 batch shipped 10 new `<topic>-*.html` sub-pages that all cross-linked to the existing `<topic>-guide.html` correctly, but also tried to ship an 11th page called exactly `<topic>.html` which created the duplicate-content bug.
 
 ### Don't write into the wrong template
 

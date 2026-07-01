@@ -61,10 +61,13 @@ rsync -a --delete \
   --exclude='sessions/' \
   --exclude='memories/' \
   --exclude='auth.json' \
+  --exclude='auth.lock' \
   --exclude='cron/output/' \
   --exclude='hermes-agent/node_modules/' \
   --exclude='hermes-agent/__pycache__/' \
   --exclude='hermes-agent/**/__pycache__/' \
+  --exclude='**/__pycache__/' \
+  --exclude='**/*.pyc' \
   --exclude='.env' \
   /home/ubuntu/.hermes/ /tmp/hermes-backup/
 ```
@@ -147,9 +150,12 @@ for f in providers/*.json; do
 done
 
 # Redact PAT tokens from cron job definitions (prompt fields may contain embedded tokens)
-for f in cron/jobs.json skills/.curator_backups/*/cron-jobs.json; do
-  [ -f "$f" ] && grep -q 'github_pat_' "$f" && \
-    sed -i 's/github_pat_[a-zA-Z0-9_-]*/[PAT_REMOVED]/g' "$f" && \
+# CRITICAL: also self-redact the *running* job — when a user-provided prompt embeds
+# the PAT (as the cron job's `prompt` field), `cron/jobs.json` itself contains the
+# full token. The known-glob scan below catches it, but a broader sweep is more
+# future-proof: scan ALL JSON/YAML/MD files for the github_pat_ prefix.
+for f in $(grep -rl "github_pat_" --include='*.json' --include='*.yaml' --include='*.yml' --include='*.md' --include='*.txt' . 2>/dev/null | grep -v '\.git/'); do
+  sed -i 's/github_pat_[a-zA-Z0-9_-]\{20,\}/[PAT_REMOVED]/g' "$f" && \
     echo "Redacted PAT in $f"
 done
 ```
@@ -212,6 +218,7 @@ rm -rf /tmp/hermes-backup/
 | `gateway.lock` / `gateway.pid` | Runtime state |
 | `state.db*` | State database |
 | `auth.json` | Full API keys in credential store |
+| `auth.lock` | Lockfile companion to `auth.json` |
 | `.env` | Environment secrets |
 | `cron/output/` | Cron output logs may contain API key traces |
 | `hermes-agent/node_modules/` | Node dependencies, huge (100k+ files) |
@@ -239,4 +246,20 @@ rm -rf /tmp/hermes-backup/
 - **providers/\\*.json** — May contain model configs without literal keys, but check anyway.
 - **Amending history requires `--force` push** — fine for personal backup repos.
 - **Large rsync timeout** — `rsync -a --delete` on a large ~/.hermes/ may take >60s. Use a 300s timeout or run in background.
+- **Self-referential PAT leak in cron prompts** — When the user provides a PAT in the
+  cron job's `prompt` field (e.g. "use this PAT to push: github_pat_..."), it gets stored
+  verbatim in `cron/jobs.json`. The next backup will sync that file into the working tree.
+  If step 4 doesn't redact it, the push will be blocked by GitHub's secret scanner AND the
+  PAT will be exposed in the commit history (one commit before the block). The fix is the
+  broad `grep -rl 'github_pat_' --include=...` sweep in step 4, which catches it regardless
+  of which file holds the prompt. **Tell the user the PAT is compromised** if it was ever
+  embedded in a committed prompt — assume it's leaked.
+- **__pycache__ lives outside hermes-agent/ too** — Plugins under `plugins/*/src/` and
+  `plugins/*/socket/` generate `__pycache__/*.pyc` files. The skill's original exclusion
+  only covered `hermes-agent/__pycache__/`, so plugin bytecode got committed in past
+  backups. The `--exclude='**/__pycache__/'` and `--exclude='**/*.pyc'` rsync patterns
+  fix this for new backups; for existing tracked files use `git rm -rf --cached <path>`.
+- **auth.lock is auth.json's companion** — When `auth.json` is excluded from rsync, the
+  `auth.lock` lockfile that pairs with it can still appear in the working tree on
+  every backup (gateway runtime state). Exclude it alongside `auth.json`.
 - **Temp directory name** — Can be any path like `/tmp/demi-backup/`; just be consistent across all steps. The absolute path matters for rsync source and repo destination paths.

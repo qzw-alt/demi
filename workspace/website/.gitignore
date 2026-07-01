@@ -101,3 +101,5 @@ memory-system/
 memory-toolkit/
 memory/
 releases/
+# Customer reports (generated)
+reports/

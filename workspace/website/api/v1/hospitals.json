@@ -1970,6 +1970,67 @@
       "address": "北京市东城区海运仓5号（东城院区）"
     },
     {
+      "id": "tangdu-hospital",
+      "name": "Tangdu Hospital (Fourth Military Medical University)",
+      "name_zh": "空军军医大学唐都医院",
+      "city": "Xi'an",
+      "district": "Baqiao",
+      "airport_info": "50-65min from Xi'an Xianyang International Airport",
+      "tags": [
+        "thoracic-surgery",
+        "neurosurgery",
+        "orthopedics",
+        "infectious-disease",
+        "general"
+      ],
+      "rank": "#1 Thoracic Surgery (#6 nationally), Top Military Hospital",
+      "phone": "029-84777502",
+      "email": "tangdu_foreign@fmmu.edu.cn",
+      "website": "http://tdwww.fmmu.edu.cn",
+      "international": true,
+      "international_dept": {
+        "phone": "029-84777502",
+        "email": "tangdu_foreign@fmmu.edu.cn",
+        "services": "Foreign patient reception, Chinese-English translation, VIP wards, bilingual coordinators",
+        "appointment_lead_days": "7-15"
+      },
+      "jci": false,
+      "trust": {
+        "score": 0.86,
+        "level": "high",
+        "verified_fields": [
+          "name",
+          "city",
+          "district",
+          "rank",
+          "phone",
+          "email"
+        ],
+        "data_source": "multi_source",
+        "cross_validated": [
+          "official_website",
+          "public_ranking",
+          "direct_contact"
+        ],
+        "last_verified": "2026-06-25",
+        "notes": [
+          "Military tertiary Class A hospital (军队三甲), ranked #98 nationally, #6 among military hospitals",
+          "#1 Thoracic Surgery specialty backed by Fudan public hospital ranking",
+          "Strong neurosurgery, orthopedics, and infectious disease departments",
+          "Vascular surgery department handles nutcracker syndrome and May Thurner syndrome — 3D stent for nutcracker ¥45,000-60,000 (~$6,300-8,500), recurrence rate <3%",
+          "International department requires 7-15 days advance appointment, accepts medical records via email",
+          "Same parent institution (Fourth Military Medical University / 空军军医大学) as Xijing Hospital in Xi'an"
+        ]
+      },
+      "address": "陕西省西安市灞桥区新寺路1号",
+      "specialties": {
+        "thoracic-surgery": "#6 nationally, #1 military hospital",
+        "neurosurgery": "Top tier",
+        "orthopedics": "Top tier",
+        "infectious-disease": "Top tier"
+      }
+    },
+    {
       "id": "guangzhou-dental-hospital",
       "name": "Guangzhou Dental Hospital",
       "name_zh": "广州医科大学附属口腔医院",

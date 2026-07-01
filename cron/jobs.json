@@ -23,15 +23,15 @@
       "schedule_display": "0 8 * * *",
       "repeat": {
         "times": null,
-        "completed": 34
+        "completed": 35
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T14:45:42.377747+08:00",
-      "next_run_at": "2026-07-01T08:00:00+08:00",
-      "last_run_at": "2026-06-30T08:05:41.949121+08:00",
+      "next_run_at": "2026-07-02T08:00:00+08:00",
+      "last_run_at": "2026-07-01T08:06:04.587974+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -43,7 +43,8 @@
         "thread_id": null
       },
       "enabled_toolsets": null,
-      "workdir": null
+      "workdir": null,
+      "fire_claim": null
     },
     {
       "id": "c2a393bb6257",
@@ -65,17 +66,17 @@
       "schedule_display": "0 9 * * *",
       "repeat": {
         "times": null,
-        "completed": 30
+        "completed": 31
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T17:20:53.016111+08:00",
-      "next_run_at": "2026-07-01T09:00:00+08:00",
-      "last_run_at": "2026-06-30T09:00:20.274206+08:00",
-      "last_status": "error",
-      "last_error": "RuntimeError: Error code: 402 - {'error': {'message': 'Insufficient Balance', 'type': 'unknown_error', 'param': None, 'code': 'invalid_request_error'}}",
+      "next_run_at": "2026-07-02T09:00:00+08:00",
+      "last_run_at": "2026-07-01T09:01:55.353909+08:00",
+      "last_status": "ok",
+      "last_error": null,
       "last_delivery_error": null,
       "deliver": "origin",
       "origin": {
@@ -85,7 +86,8 @@
         "thread_id": null
       },
       "enabled_toolsets": null,
-      "workdir": null
+      "workdir": null,
+      "fire_claim": null
     },
     {
       "id": "d5ef67b81247",
@@ -107,17 +109,17 @@
       "schedule_display": "0 22 * * *",
       "repeat": {
         "times": null,
-        "completed": 32
+        "completed": 33
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T17:22:43.447182+08:00",
-      "next_run_at": "2026-07-01T22:00:00+08:00",
-      "last_run_at": "2026-06-29T22:00:18.054455+08:00",
-      "last_status": "error",
-      "last_error": "RuntimeError: Error code: 402 - {'error': {'message': 'Insufficient Balance', 'type': 'unknown_error', 'param': None, 'code': 'invalid_request_error'}}",
+      "next_run_at": "2026-07-02T22:00:00+08:00",
+      "last_run_at": "2026-06-30T22:04:38.633394+08:00",
+      "last_status": "ok",
+      "last_error": null,
       "last_delivery_error": null,
       "deliver": "origin",
       "origin": {
@@ -127,12 +129,13 @@
         "thread_id": null
       },
       "enabled_toolsets": null,
-      "workdir": null
+      "workdir": null,
+      "fire_claim": null
     },
     {
       "id": "fa7a29b3464e",
       "name": "daily-chg-medical-news",
-      "prompt": "\u6bcf\u5929\u4e3a chinahospitalsguide.com \u533b\u7597\u65c5\u6e38\u7f51\u7ad9\u64b0\u5199\u4e00\u7bc7\u65b0\u95fb\u6587\u7ae0\u5e76\u53d1\u5e03\u3002\n\n## \u672c\u5468\u4e3b\u9898\u65b9\u5411\uff08**\u7279\u6b8a\u6027\u548c\u552f\u4e00\u6027**\uff09\n\n\u8fd9\u5468\u7684\u6240\u6709\u6587\u7ae0\u4ee5 **\u4e2d\u56fd\u72ec\u6709/\u9886\u5148\u7684\u533b\u7597\u9879\u76ee** \u4e3a\u4e3b\u9898\uff0c\u805a\u7126\"\u7279\u6b8a\u6027\u552f\u4e00\u6027\u7684\u533b\u7597\u9879\u76ee\"\u2014\u2014\u90a3\u4e9b\u53ea\u6709\u5728\u6216\u4e3b\u8981\u5728\u4e2d\u56fd\u624d\u80fd\u83b7\u5f97\u7684\u6cbb\u7597\u3002\n\n\u6f5c\u5728\u9009\u9898\u65b9\u5411\uff08\u4ece\u4ee5\u4e0b\u89d2\u5ea6\u5207\u5165\u5199\u4eca\u5929\u7684\u65b0\u95fb\uff09\uff1a\n1. **\u897f\u5b89\u7a7a\u519b\u519b\u533b\u5927\u5b66\uff08\u5510\u90fd\u533b\u9662\u6bcd\u5355\u4f4d\uff09\u7684\u4e16\u754c\u9996\u521b** \u2014 2017\u5e74\u4e16\u754c\u9996\u4f8b\u5168\u81ea\u4e3b\u673a\u5668\u4eba\u79cd\u690d\u7259\uff0c\u4ee5\u53ca\u540e\u7eedAI\u624b\u672f\u673a\u5668\u4eba\u53d1\u5c55\n2. **\u4e2d\u56fdCAR-T\u83b7\u6279\u6570\u91cf\u5168\u7403\u7b2c\u4e00** \u2014 2026\u5e746\u6708satri-cel\u83b7\u6279\uff08\u5168\u7403\u9996\u4e2a\u5b9e\u4f53\u7624CAR-T\uff09\uff0c\u5bf9\u6bd4\u7f8e\u56fd/\u6b27\u6d32\u83b7\u6279\u6570\u91cf\n3. **\u5e72\u7ec6\u80de\u6cbb\u7597\u76d1\u7ba1\u5dee\u5f02** \u2014 \u4e2d\u56fd\u66f4\u5bbd\u677e\u7684\u76d1\u7ba1\u8ba9\u60a3\u8005\u80fd\u83b7\u5f97\u4e34\u5e8a\u7ea7\u5e72\u7ec6\u80de\u6cbb\u7597\uff08\u810a\u9ad3\u635f\u4f24\u3001\u7cd6\u5c3f\u75c5\u3001\u5e15\u91d1\u68ee\u7b49\uff09\uff0c\u9009\u62e9\u4e00\u5bb6\u533b\u9662\u6df1\u5165\u62a5\u9053\n4. **\u4e2d\u897f\u533b\u7ed3\u5408\u6a21\u5f0f** \u2014 \u5168\u7403\u552f\u4e00\u4e2d\u897f\u533b\u7ed3\u5408\u533b\u7597\u4f53\u7cfb\uff0c\u672f\u540e\u5eb7\u590d\u3001\u80bf\u7624\u652f\u6301\u6cbb\u7597\u7684\u5b9e\u9645\u6548\u679c\n5. **\u5668\u5b98\u79fb\u690d** \u2014 \u5168\u7403\u6700\u5927\u79fb\u690d\u9879\u76ee\u4e4b\u4e00\uff0c\u7b49\u5f85\u65f6\u95f4\u6700\u77ed\uff0c\u4ef7\u683c\u662f\u7f8e\u56fd\u76841/5-1/3\n6. **CRISPR\u57fa\u56e0\u6cbb\u7597** \u2014 \u4e2d\u56fd\u5360\u5168\u7403\u6700\u591aCRISPR\u4e34\u5e8a\u8bd5\u9a8c\uff0c\u60a3\u8005\u53ef\u5728\u4e34\u5e8a\u8bd5\u9a8c\u4e2d\u83b7\u53d6\u672c\u56fd\u5bb6\u65e0\u6cd5\u83b7\u5f97\u7684\u57fa\u56e0\u6cbb\u7597\n7. **3D\u6253\u5370\u5b9a\u5236\u690d\u5165\u7269** \u2014 \u5ba1\u6279\u5feb\u3001\u5468\u671f\u77ed\u3001\u6210\u672c\u4f4e\uff0c\u4e2d\u56fd\u5728\u8fd9\u9886\u57df\u5168\u7403\u9886\u5148\n8. **\u809d\u810f\u5916\u79d1** \u2014 \u5434\u5b5f\u8d85\u9662\u58eb\u7684\"\u4e94\u53f6\u56db\u6bb5\"\u7406\u8bba\u81f3\u4eca\u4e3a\u5168\u7403\u809d\u5916\u79d1\u6807\u51c6\uff0c\u4e2d\u56fd\u809d\u5916\u79d1\u624b\u672f\u91cf\u5168\u7403\u6700\u5927\n9. **\u663e\u5fae\u5916\u79d1/\u65ad\u6307\u518d\u690d** \u2014 \u4e16\u754c\u9996\u4f8b\u8db3\u8dbe\u79fb\u690d\u62c7\u6307\uff081966\u4e0a\u6d77\uff09\uff0c\u4e2d\u56fd\u519b\u533b\u7cfb\u7edf\u663e\u5fae\u5916\u79d1\u5168\u7403\u9886\u5148\n\n\u9009\u62e9\u4e00\u4e2a\u6700\u9002\u5408\u4eca\u5929\u53d1\u5e03\u7684\u5177\u4f53\u89d2\u5ea6\uff0c\u6df1\u5165\u64b0\u5199\u3002\n\n## \u4ed3\u5e93\u914d\u7f6e\n- GitHub: https://github.com/qzw-alt/chinahospitalsguide\n- SSH remote\u5df2\u914d\u7f6e\u4e3a git@github.com:qzw-alt/chinahospitalsguide.git\n- \u6587\u7ae0\u76ee\u5f55: news/\n- \u6587\u4ef6\u547d\u540d: YYYY-MM-DD-<slug>.html\n- sitemap.xml \u5728\u6839\u76ee\u5f55\n- news/index.html \u9700\u8981\u4e00\u8d77\u66f4\u65b0\n\n## \u5199\u4f5c\u8981\u6c42\n- \u6587\u7ae0\u957f\u5ea63000-5000\u5b57\n- \u4f7f\u7528SEO\u4f18\u5316\u6807\u9898\u548c\u63cf\u8ff0\n- \u5fc5\u987b\u5305\u542b\u7ed3\u6784\u5316\u6570\u636e\uff08schema.org Article\uff09\n- \u5305\u542b\u6210\u672c\u5bf9\u6bd4\uff08\u5982\u679c\u6709\u4ef7\u683c\u6570\u636e\uff09\n- \u5f15\u7528\u771f\u5b9e\u6765\u6e90\u548c\u65e5\u671f\n- \u4f7f\u7528\u7a0b\u5e8f\u5316SEO\u6280\u80fd\u4f18\u5316\n- \u5199\u5b8c\u540e\u8fd0\u884chumanizer\u8bc4\u5206\uff0c\u8bc4\u5206>60\u624d\u53ef\u53d1\u5e03\n\n## \u53d1\u5e03\u6d41\u7a0b\n1. \u641c\u7d22\u7814\u7a76\u2192\u786e\u5b9a\u89d2\u5ea6\n2. \u64b0\u5199\u6587\u7ae0\u5230 news/YYYY-MM-DD-<slug>.html\n3. \u66f4\u65b0 sitemap.xml \u6dfb\u52a0\u65b0\u6761\u76ee\n4. \u66f4\u65b0 news/index.html \u6dfb\u52a0\u65b0\u6587\u7ae0\u5361\u7247\n5. git add \u2192 git commit \u2192 git push origin master\n6. sleep 180 && curl --max-time 30 \u9a8c\u8bc1HTTP 200\n\n## \u8d28\u91cf\u63a7\u5236\n- \u5f15\u7528\u771f\u5b9e\u6765\u6e90\n- \u94fe\u63a5\u5230\u5df2\u6709\u76f8\u5173\u6587\u7ae0\uff08\u5185\u90e8\u94fe\u63a5\uff09\n- \u6807\u9898\u5305\u542b\u5e74\u4efd\uff082026\uff09\n- \u8bc4\u5206>60\u540e\u53d1\u5e03",
+      "prompt": "\u6bcf\u5929\u4e3a chinahospitalsguide.com \u533b\u7597\u65c5\u6e38\u7f51\u7ad9\u64b0\u5199\u4e00\u7bc7\u65b0\u95fb\u6587\u7ae0\u5e76\u53d1\u5e03\u3002\n\n## \u672c\u5468\u4e3b\u9898\u65b9\u5411\uff08**\u7279\u6b8a\u6027\u548c\u552f\u4e00\u6027 + \u4e2d\u56fd\u7279\u8272\u7597\u6cd5**\uff09\n\n\u672c\u5468\u6240\u6709\u6587\u7ae0\u56f4\u7ed5\u4e24\u4e2a\u6838\u5fc3\u8f74\u7ebf\u5c55\u5f00\uff1a\n\n**\u8f74\u7ebf A\uff1a\u4e2d\u56fd\u72ec\u6709/\u9886\u5148\u7684\u533b\u7597\u9879\u76ee**\uff08CAR-T\u5b9e\u4f53\u7624/\u624b\u672f\u673a\u5668\u4eba/\u5e72\u7ec6\u80de/3D\u6253\u5370/\u5668\u5b98\u79fb\u690d/CRISPR/\u663e\u5fae\u5916\u79d1/\u773c\u79d1\uff09\n**\u8f74\u7ebf B\uff1a\u4e2d\u56fd\u7279\u8272\u7597\u6cd5**\uff08\u4e2d\u897f\u533b\u7ed3\u5408\u3001\u9488\u7078\u4e34\u5e8a\u5e94\u7528\u3001\u4e2d\u8349\u836f\u8f85\u52a9\u3001\u827e\u7078/\u62d4\u7f50/\u63a8\u62ff/\u6c14\u529f\u3001\u6d77\u5357\u4e50\u57ceTCM\u53ef\u53ca\u6027\uff09\n\n## \u9009\u9898\u4f18\u5148\u7ea7\uff08\u5f3a\u5236\u6392\u5e8f\uff09\n\n\u6bcf\u5929 1 \u7bc7\uff0c\u6309\u4ee5\u4e0b\u4f18\u5148\u7ea7\u7b5b\u9009\uff1a\n\n1. **\u9996\u9009\uff08\u226550%\u65f6\u95f4\uff09\uff1a\u4e2d\u56fd\u7279\u8272\u533b\u7597\u65b0\u95fb**\n   - CAR-T \u5b9e\u4f53\u7624/\u8840\u6db2\u7624\u65b0\u8fdb\u5c55\uff08satri-cel, Oricell GPC3, Akeso HER3 \u7b49\uff09\n   - \u624b\u672f\u673a\u5668\u4eba/\u8fdc\u7a0b\u624b\u672f/5G \u8fdc\u7a0b\u624b\u672f\n   - \u5e72\u7ec6\u80de\u4e34\u5e8a\u8bd5\u9a8c\uff08Parkinson, \u7cd6\u5c3f\u75c5, \u809d\u75c5\uff09\n   - \u4e2d\u897f\u533b\u7ed3\u5408\u4e34\u5e8a\u8bc1\u636e\uff08NEJM/Lancet/JAMA \u4e0a\u9488\u7078/\u4e2d\u8349\u836f\u7814\u7a76\uff09\n   - \u6d77\u5357\u535a\u9ccc\u4e50\u57ce\u65b0\u6279\u51c6\u7597\u6cd5\n   - 3D \u6253\u5370\u5b9a\u5236\u690d\u5165\u7269\u3001CRISPR \u4e34\u5e8a\u8bd5\u9a8c\n   - \u663e\u5fae\u5916\u79d1\u3001\u5668\u5b98\u79fb\u690d\u3001\u809d\u80c6\u5916\u79d1\n\n2. **\u6b21\u9009\uff08\u226430%\u65f6\u95f4\uff09\uff1a\u9488\u7078/\u4e2d\u533b\u4e34\u5e8a\u5e94\u7528**\n   - \u9488\u7078\u8f85\u52a9 IVF\uff08acupuncture for embryo transfer\uff09\n   - \u9488\u7078\u6cbb\u504f\u5934\u75db/\u6162\u6027\u75bc\u75db/\u5316\u7597\u5455\u5410\n   - \u4e2d\u8349\u836f\u51cf\u8f7b\u653e\u5316\u7597\u526f\u4f5c\u7528\n   - \u62d4\u7f50/\u827e\u7078/\u63a8\u62ff\u7684\u5faa\u8bc1\u533b\u5b66\u8bc1\u636e\n   - WHO \u4f20\u7edf\u533b\u5b66\u6218\u7565 / \u56fd\u9645\u673a\u6784\u5bf9 TCM \u6001\u5ea6\u53d8\u5316\n   - \u516b\u6bb5\u9526/\u592a\u6781\u5eb7\u590d\u7814\u7a76\n\n3. **\u515c\u5e95\uff08\u226420%\u65f6\u95f4\uff09\uff1a\u56fd\u9645\u70ed\u70b9 + \u4e2d\u56fd\u5bf9\u6bd4**\n   - \"X\u56fd\u53d1\u751fX\u4e8b \u2014 \u4e2d\u56fd\u600e\u4e48\u505a\"\u5bf9\u6bd4\u6587\u7ae0\n   - \u5f53\u5468\u6ca1\u6709\u597d TCM \u70ed\u70b9\u65f6\u4f7f\u7528\uff0c**\u5b81\u7f3a\u6bcb\u6ee5**\n\n## \u4e09\u5927\u5185\u5bb9\u6a21\u677f\uff08\u6bcf\u5929\u5fc5\u987b\u5957\u7528\u5176\u4e2d\u4e00\u79cd\uff09\n\n### \u6a21\u677f A\uff1a\u4e2d\u897f\u533b\u7ed3\u5408\u6848\u4f8b\u578b\uff08\u9996\u9009\uff09\n**\u7ed3\u6784\uff1a**\n- \u94a9\u5b50\uff1a\u56fd\u9645\u5a92\u4f53/\u671f\u520a\u6700\u65b0\u62a5\u9053\n- \u4e2d\u56fd\u5b9e\u8df5\uff1aX \u533b\u9662 X \u79d1\u5df2\u7528 X \u5e74\uff0cX \u4e34\u5e8a\u6570\u636e\n- \u5bf9\u6bd4\uff1a\u4e0e\u897f\u65b9\u5355\u7eaf\u897f\u533b\u7684\u5dee\u5f02\n- \u56fd\u9645\u60a3\u8005\u8def\u5f84\uff1a\u54ea\u5bb6\u533b\u9662\u3001\u627e\u8c01\u3001\u600e\u4e48\u6302\u53f7\n- \u5185\u94fe 3+\uff08\u75c5\u79cd\u6307\u5357 + \u533b\u9662\u6307\u5357 + TCM \u4e13\u9898\uff09\n\n**\u6807\u9898\u6a21\u677f\uff1a** `Acupuncture Cuts Chemo Nausea by 40%: What Chinese Cancer Hospitals Do Differently`\n`Chinese Herbal Medicine for Chemo Side Effects: 30-Year Clinical Experience at XX Hospital`\n`Integrated TCM-Western Oncology at XX Hospital: What International Cancer Patients Get`\n\n### \u6a21\u677f B\uff1a\u4f20\u7edf\u7597\u6cd5\u73b0\u4ee3\u5316\uff08\u6b21\u9009\uff09\n**\u7ed3\u6784\uff1a**\n- \u94a9\u5b50\uff1aNature/Springer/NEJM \u4e0a\u5173\u4e8e TCM \u673a\u5236\u7684\u7814\u7a76\n- \u73b0\u4ee3\u533b\u5b66\u600e\u4e48\u89e3\u91ca X\uff08\u795e\u7ecf\u673a\u5236\u3001\u5206\u5b50\u673a\u5236\uff09\n- \u4f20\u7edf\u533b\u5b66 X \u5e74\u5e94\u7528\u53f2\n- \u4e2d\u56fd\u533b\u9662\u5177\u4f53\u5b9e\u8df5 + \u540d\u533b\n- \u56fd\u9645\u53ef\u53ca\u6027\n\n**\u6807\u9898\u6a21\u677f\uff1a** `Why Major US Hospitals Now Offer Acupuncture: A Chinese Medicine Origin Story`\n`How Acupuncture Works for Migraine: fMRI Studies + Chinese Hospital Practice`\n`Baduanjin for Stroke Recovery: Clinical Evidence from XX Hospital`\n\n### \u6a21\u677f C\uff1a\u653f\u7b56\u4e0e\u53ef\u53ca\u6027\uff08\u515c\u5e95+\u91cd\u8981\u653f\u7b56\uff09\n**\u7ed3\u6784\uff1a**\n- NMPA \u6279\u51c6 / \u536b\u5065\u59d4\u653f\u7b56 / \u6d77\u5357\u4e50\u57ce / \u8de8\u5883\u533b\u7597\n- \u56fd\u9645\u60a3\u8005\u80fd\u7528\u4ec0\u4e48\u3001\u4ec0\u4e48\u65f6\u5019\u80fd\u7528\u3001\u8d39\u7528\u591a\u5c11\n- \u653f\u7b56\u5bf9\u533b\u7597\u65c5\u6e38\u7684\u5f71\u54cd\n- \u64cd\u4f5c\u8def\u5f84\n\n**\u6807\u9898\u6a21\u677f\uff1a** `Hainan Boao Lecheng Adds 3 New TCM Therapies: What Foreign Patients Can Access Now`\n`China's NMPA Approves X: What It Means for International Patients`\n`Nine Ministries Medical Tourism Policy: TCM Benefits for Foreign Patients`\n\n## TCM/\u9488\u7078\u9009\u9898\u786c\u6307\u6807\n\n- \u6bcf\u6708 TCM \u9009\u9898 **\u2265 10 \u7bc7\uff08\u7ea6 33%\uff09**\n- \u6bcf\u5468\u81f3\u5c11 1 \u7bc7\u6a21\u677f B\uff08\u4f20\u7edf\u7597\u6cd5\u73b0\u4ee3\u5316\uff09\n- \u6bcf\u6708\u81f3\u5c11 1 \u7bc7\u6d77\u5357\u4e50\u57ce TCM \u53ef\u53ca\u6027\u6587\u7ae0\n\n**\u9009\u9898\u6e90\u52a0\u5206\u9879\uff1a**\n- Nature/Lancet/JAMA \u4e0a\u5173\u4e8e TCM \u673a\u5236\u7684\u9ad8\u5f15\u8bba\u6587\n- WHO \u4f20\u7edf\u533b\u5b66\u6218\u7565\u6587\u4ef6\n- \u82f1\u6587\u4e3b\u6d41\u5a92\u4f53\u5bf9\u4e2d\u533b\u7684\u62a5\u9053\uff08NYT, BBC, Guardian, SCMP\uff09\n- NMPA \u6279\u51c6\u516c\u544a\n- \u5927\u578b\u4e09\u7532\u533b\u9662\u56fd\u9645\u90e8\u65b0\u9879\u76ee\n\n**\u9009\u9898\u6e90\u51cf\u5206\u9879\uff1a**\n- \u7eaf\u4e2d\u533b\u6587\u5316\u5ba3\u4f20\u7a3f\n- \u7f3a\u4e4f\u4e34\u5e8a\u6570\u636e\u7684\"\u8001\u4e2d\u533b\u6545\u4e8b\"\n- \u653f\u6cbb\u654f\u611f\u8bdd\u9898\uff08\u8fbe\u8d56\u3001\u7ef4\u65cf\u3001\u90aa\u6559\u7b49\uff09\n- \u4e2d\u533b\u66ff\u4ee3\u764c\u75c7\u4e3b\u6d41\u6cbb\u7597\u7684\u4f2a\u79d1\u5b66\u5ba3\u4f20\n- \u672a\u7ecf\u540c\u884c\u8bc4\u5ba1\u7684\u5355\u4e00\u6848\u4f8b\n\n## \u6587\u7ae0\u8981\u6c42\n\n\u6bcf\u7bc7\u65b0\u95fb\u5fc5\u987b\uff1a\n- **\u5b57\u6570 1200-1800 \u5b57**\uff08\u7ee7\u627f\u73b0\u6709\u8282\u594f\uff09\n- **\u6807\u9898\u7528\u82f1\u6587**\uff08\u7ee7\u627f\u73b0\u6709 SEO \u4e60\u60ef\uff09\n- **\u9996\u6bb5\u76f4\u63a5\u7ed9\u4e8b\u5b9e**\uff08\u4e0d\u7ed5\u5f2f\u5b50\uff09\n- **\u81f3\u5c11 3 \u4e2a\u5185\u94fe**\u5230 blog/\uff08\u75c5\u79cd\u6307\u5357/\u533b\u9662\u6307\u5357/TCM \u4e13\u9898\uff09\n- **\u81f3\u5c11 1 \u4e2a\u5916\u94fe**\u5230\u6743\u5a01\u6e90\uff08NMPA / PubMed / WHO / \u533b\u9662\u5b98\u7f51\uff09\n- **\u81f3\u5c11 1 \u6bb5\"\u4e2d\u56fd\u7279\u8272\"\u5185\u5bb9**\uff08\u4e2d\u897f\u533b\u7ed3\u5408/\u9488\u7078/\u4e2d\u8349\u836f/\u6d77\u5357\u4e50\u57ce/\u72ec\u7279\u6280\u672f\uff09\n- \u672b\u5c3e\"Related Reading\" 3-5 \u7bc7\u5185\u94fe\n- \u56fe\u7247 alt \u542b\u5173\u952e\u8bcd\n- \u90e8\u7f72\u540e\u66f4\u65b0 sitemap.xml\n\n## \u8d28\u91cf\u95e8\u69db\n\n**\u5b81\u7f3a\u6bcb\u6ee5**\uff1a\u5f53\u5468\u6ca1\u6709\u597d\u70ed\u70b9\u65f6\uff0c\u628a\u4f18\u5148\u7ea7 1 \u548c 2 \u90fd\u6ca1\u6709\u5408\u9002\u9009\u9898\u4f5c\u4e3a\u53d1\u7a3f\u6807\u51c6\uff0c\u800c\u4e0d\u662f\u964d\u7ea7\u5230\u515c\u5e95\u6a21\u677f C\u3002\n**\u8d28\u91cf\u95e8\u69db**\uff1a\u6a21\u677f A/B \u4f18\u5148\uff0c\u6a21\u677f C \u91cd\u8981\u653f\u7b56\u624d\u7528\uff0c\u4e0d\u8981\u4e3a\u4e86\u53d1\u7a3f\u800c\u53d1\u7a3f\u3002\n\n## \u6d41\u7a0b\n\n\u6309 `content-research-writer-cn` \u6280\u80fd\u7684\u6d41\u7a0b\uff1a\n1. \u7814\u7a76\u70ed\u70b9\uff08\u4e2d\u6587+\u82f1\u6587\u53cc\u6e90\uff09\n2. SEO \u9009\u9898\uff08\u53c2\u8003 `programmatic-seo`\uff09\n3. \u64b0\u5199\uff08\u5957\u7528\u6a21\u677f A/B/C\uff09\n4. \u53bb AI \u5316\uff08**\u5fc5\u987b\uff0c** `humanizer` \u6280\u80fd\uff0cAI \u8bc4\u5206>60 \u5fc5\u987b\u4fee\u6539\uff09\n5. \u53d1\u5e03\uff08\u90e8\u7f72\u6d41\u7a0b\u89c1 AGENTS.md\uff09\n6. \u63a8\u9001 sitemap \u66f4\u65b0\n\n## TCM \u5173\u952e\u8bcd\u5e93\uff08\u6bcf\u7bc7\u81f3\u5c11\u542b 2-3 \u4e2a\uff09\n\n```\nTCM \u6574\u4f53\uff1a\n  traditional Chinese medicine, TCM, Chinese herbal medicine\n  integrated Chinese Western medicine, \u4e2d\u897f\u533b\u7ed3\u5408\n\n\u5177\u4f53\u7597\u6cd5\uff1a\n  acupuncture, moxibustion, cupping, tuina, gua sha\n  qigong, baduanjin, tai chi, acupotomy\n  \u9488\u7078, \u827e\u7078, \u62d4\u7f50, \u63a8\u62ff, \u522e\u75e7, \u6c14\u529f, \u516b\u6bb5\u9526, \u592a\u6781, \u9488\u5200\n\n\u5e94\u7528\u573a\u666f\uff1a\n  acupuncture for IVF, acupuncture for migraine\n  acupuncture for chemo-induced nausea, acupuncture analgesia\n  TCM oncology support, herbal medicine chemo side effects\n  post-surgical acupuncture, chronic pain acupuncture\n  stroke rehabilitation TCM\n```\n",
       "skills": [
         "content-research-writer-cn",
         "programmatic-seo",
@@ -153,16 +156,59 @@
       "schedule_display": "0 9 * * *",
       "repeat": {
         "times": null,
-        "completed": 36
+        "completed": 37
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-02T08:16:41.523255+08:00",
-      "next_run_at": "2026-07-01T09:00:00+08:00",
-      "last_run_at": "2026-06-30T09:12:35.885401+08:00",
+      "next_run_at": "2026-07-02T09:00:00+08:00",
+      "last_run_at": "2026-07-01T09:07:58.965834+08:00",
       "last_status": "ok",
+      "last_error": null,
+      "last_delivery_error": null,
+      "deliver": "feishu",
+      "origin": {
+        "platform": "feishu",
+        "chat_id": "oc_82a1a36b7bacddfbcae28d273674900a",
+        "chat_name": "oc_82a1a36b7bacddfbcae28d273674900a",
+        "thread_id": null
+      },
+      "enabled_toolsets": null,
+      "workdir": null,
+      "fire_claim": null
+    },
+    {
+      "id": "16a08d0ea83d",
+      "name": "GSC \u5468\u62a5 - chinahospitalsguide.com",
+      "prompt": "\u62a5\u544a\u5df2\u751f\u6210\u3002\u65e0\u9700\u4efb\u4f55\u989d\u5916\u64cd\u4f5c\u3002",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": "gsc-weekly-report.sh",
+      "no_agent": true,
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 7 * * 1",
+        "display": "0 7 * * 1"
+      },
+      "schedule_display": "0 7 * * 1",
+      "repeat": {
+        "times": null,
+        "completed": 0
+      },
+      "enabled": true,
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null,
+      "created_at": "2026-07-01T21:00:11.425129+08:00",
+      "next_run_at": "2026-07-06T07:00:00+08:00",
+      "last_run_at": null,
+      "last_status": null,
       "last_error": null,
       "last_delivery_error": null,
       "deliver": "feishu",
@@ -176,5 +222,5 @@
       "workdir": null
     }
   ],
-  "updated_at": "2026-06-30T22:00:48.072327+08:00"
+  "updated_at": "2026-07-01T22:00:51.659880+08:00"
 }

@@ -1087,6 +1087,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://chinahospitalsguide.com/news/2026-06-29-hku-qmh-robotic-microsurgery-world-first-living-donor-liver-transplant.html</loc>
+    <lastmod>2026-06-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://chinahospitalsguide.com/news/2026-07-01-cuhk-medicine-world-no-2-hepatology-lancet-commission-liver-cancer-first.html</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://chinahospitalsguide.com/news/2026-06-30-china-order-818-advanced-therapeutic-clinical-translation-cell-gene-therapy-regulation.html</loc>
+    <lastmod>2026-06-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://chinahospitalsguide.com/news/2026-06-27-cms-silevimig-worlds-first-bispecific-rabies-passive-immunization-nmpa-approval.html</loc>
     <lastmod>2026-06-27</lastmod>
     <changefreq>weekly</changefreq>
@@ -1253,5 +1271,71 @@
     <lastmod>2026-06-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://chinahospitalsguide.com/blog/china-unique-medical-procedures.html</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://chinahospitalsguide.com/blog/integrated-chinese-western-medicine-china.html</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://chinahospitalsguide.com/blog/autonomous-robotic-surgery-china.html</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://chinahospitalsguide.com/blog/solid-tumor-car-t-china.html</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://chinahospitalsguide.com/blog/microsurgery-replantation-china.html</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://chinahospitalsguide.com/blog/organ-transplant-china-cost-access.html</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://chinahospitalsguide.com/blog/3d-printed-implants-china.html</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://chinahospitalsguide.com/blog/hepatobiliary-surgery-china-wu-mengchao.html</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://chinahospitalsguide.com/blog/stem-cell-therapy-china-access.html</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://chinahospitalsguide.com/blog/crispr-gene-therapy-china-clinical-trials.html</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://chinahospitalsguide.com/blog/ophthalmology-china-volume-expertise.html</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
   </url>
 </urlset>
