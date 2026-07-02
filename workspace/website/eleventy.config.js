@@ -1,6 +1,7 @@
 module.exports = function(eleventyConfig) {
   // Passthrough copy: static assets that don't need processing
   eleventyConfig.addPassthroughCopy("styles.css");
+  eleventyConfig.addPassthroughCopy("ga4-events.js");
   eleventyConfig.addPassthroughCopy("images");
   eleventyConfig.addPassthroughCopy("CNAME");
   eleventyConfig.addPassthroughCopy(".nojekyll");

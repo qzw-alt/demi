@@ -102,8 +102,8 @@
       14168
     ],
     "creative/programmatic-seo/SKILL.md": [
-      1782895533306002536,
-      98765
+      1782954780003927130,
+      99309
     ],
     "creative/seo-article-publish-cron/SKILL.md": [
       1782896366605886983,
@@ -126,8 +126,12 @@
       5285
     ],
     "devops/hermes-backup/SKILL.md": [
-      1782828315353976376,
-      13096
+      1782914776549120072,
+      15296
+    ],
+    "devops/hermes-cron-troubleshooting/SKILL.md": [
+      1782951829382518639,
+      11717
     ],
     "devops/kanban-orchestrator/SKILL.md": [
       1778925537000000000,
@@ -306,8 +310,8 @@
       5111
     ],
     "research/content-research-writer-cn/SKILL.md": [
-      1782868095135242780,
-      96194
+      1782954756069494161,
+      97631
     ],
     "research/llm-wiki/SKILL.md": [
       1778925537000000000,
@@ -386,8 +390,8 @@
       9491
     ],
     "web-development/medical-tourism-site-ops/SKILL.md": [
-      1782911137054209637,
-      27695
+      1782998089575993643,
+      63446
     ],
     "yuanbao/SKILL.md": [
       1778925537000000000,
@@ -1018,6 +1022,21 @@
       "frontmatter_name": "hermes-backup",
       "description": "Backup ~/.hermes/ to GitHub backup repository, excluding ...",
       "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "hermes-cron-troubleshooting",
+      "category": "devops",
+      "frontmatter_name": "hermes-cron-troubleshooting",
+      "description": "Diagnose and repair failing Hermes cron jobs. Load whenev...",
+      "platforms": [
+        "linux"
+      ],
       "conditions": {
         "fallback_for_toolsets": [],
         "requires_toolsets": [],

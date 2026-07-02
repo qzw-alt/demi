@@ -1,4 +1,5 @@
 auth.json
+.env
 gsc/client_secret.json
 gsc/token.json
 .hermes_history

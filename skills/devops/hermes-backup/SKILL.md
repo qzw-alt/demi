@@ -33,6 +33,14 @@ ls /tmp/git-cred-helper.py 2>/dev/null && echo "Custom cred helper found: /tmp/g
 If neither works, set up SSH: `ssh-keygen -t ed25519 -C "backup" && cat ~/.ssh/id_ed25519.pub` and add to GitHub.
 If the credential store has an expired PAT, renew it by editing `~/.config/git/credentials` (or the custom helper script) with a new fine-grained token. Generate PAT at https://github.com/settings/tokens?type=beta with repo:Contents:Write scope.
 
+**SSH key auth is preferred over PAT** — `git@github.com:qzw-alt/demi.git` works when PAT fails.
+Verify with: `ssh -T git@github.com` (should print "Hi <username>! You've successfully authenticated").
+If SSH works but PAT doesn't, switch the remote to SSH after clone:
+```bash
+git remote set-url origin git@github.com:qzw-alt/demi.git
+git push origin master
+```
+
 ### 1. Clone repo (use SSH — PATs expire, SSH keys don't)
 ```bash
 rm -rf /tmp/hermes-backup/
@@ -69,6 +77,9 @@ rsync -a --delete \
   --exclude='**/__pycache__/' \
   --exclude='**/*.pyc' \
   --exclude='.env' \
+  --exclude='.hermes_history' \
+  --exclude='gsc/client_secret.json' \
+  --exclude='gsc/token.json' \
   /home/ubuntu/.hermes/ /tmp/hermes-backup/
 ```
 
@@ -263,3 +274,7 @@ rm -rf /tmp/hermes-backup/
   `auth.lock` lockfile that pairs with it can still appear in the working tree on
   every backup (gateway runtime state). Exclude it alongside `auth.json`.
 - **Temp directory name** — Can be any path like `/tmp/demi-backup/`; just be consistent across all steps. The absolute path matters for rsync source and repo destination paths.
+- **`.hermes_history` is a plaintext credential trap** — This file (lives at `~/.hermes/.hermes_history`) contains a running log of shell commands and pasted content. Past entries include plaintext Feishu app secrets (`cli_a912890ce721dcee...`), pasted API keys in conversation snippets, and other credentials. It MUST be excluded from rsync AND removed from git history if previously committed. Add `--exclude='.hermes_history'` to the rsync invocation, and `git rm --cached .hermes_history` if it was tracked.
+- **`gsc/client_secret.json` and `gsc/token.json` are Google OAuth secrets** — These files contain Google Search Console OAuth client secrets and refresh tokens. GitHub push protection blocks any commit containing them. Exclude from rsync (`--exclude='gsc/client_secret.json' --exclude='gsc/token.json'`), remove from tracking, and add to .gitignore. If a previous commit included them, the push will be rejected; use `git reset --soft HEAD~1 && git commit --amend --no-edit && git push --force-with-lease` to rewrite history. (`gsc/authorize.py` is safe to keep — it's just code.)
+- **Force-push is required to rewrite history** — When push protection blocks a push because secrets leaked into a commit, you must rewrite local history (soft reset + amend, or filter-branch) then `git push --force-with-lease origin master`. Use `--force-with-lease` instead of `--force` to avoid clobbering concurrent pushes.
+- **PAT auth may show false success on `git ls-remote`** — `git ls-remote` works on public repos without valid auth (it ignores bad credentials silently). The only real auth test is `git push` or `curl -H "Authorization: token <PAT>" https://api.github.com/user` (returns 200 = valid, 401 = invalid).

@@ -5,10 +5,10 @@
       "name": "daily-oriental-destiny-article",
       "prompt": "\u6bcf\u5929\u4e3a oriental-destiny.com \u98ce\u6c34\u547d\u7406\u7f51\u7ad9\u53d1\u5e03\u4e00\u7bc7\u82f1\u6587 SEO \u79d1\u666e\u6587\u7ae0\u3002\n\n## \u4ed3\u5e93\n- GitHub: https://github.com/qzw-alt/oriental-destiny\n- \u5206\u652f: master\n- GitHub Pages \u76f4\u63a5\u4ece master \u90e8\u7f72\n\n## \u5de5\u4f5c\u6d41\u7a0b\uff086\u6b65\uff09\n1. **\u7814\u7a76**\uff1a\u4ece\u8bb0\u5fc6\u4e2d\u8bfb\u53d6\u7ade\u54c1\u516c\u53f8\u8d44\u6599\uff08memories/layer3/research/competitor-research.md\uff09\uff0c\u627e\u98ce\u6c34/\u516b\u5b57/\u547d\u7406\u76f8\u5173\u4e3b\u9898\n2. **SEO\u5199\u4f5c**\uff1a\u6309 skills/programmatic-seo/SKILL.md \u6d41\u7a0b\u5199\u82f1\u6587\u6587\u7ae0\uff08\u82f1\u6587\u8f93\u51fa\uff09\n3. **\u53bbAI\u5316**\uff1a\u7528 skills/humanizer/SKILL.md \u5904\u7406\uff0c\u8bc4\u5206>60\u5fc5\u987b\u4fee\u6539\u540e\u518d\u53d1\u5e03\n4. **\u53d1\u5e03**\uff1a\u6587\u7ae0\u4fdd\u5b58\u5230 oriental-destiny \u6839\u76ee\u5f55\uff0c\u547d\u540d\u683c\u5f0f `fate-YYYY-MM-DD.html`\n5. **\u66f4\u65b0sitemap**\uff1a\u5728 sitemap.xml \u4e2d\u6dfb\u52a0\u65b0\u6587\u7ae0\u6761\u76ee\n6. **\u63a8\u9001**\uff1agit add . && git commit -m \"article: $(date +%Y-%m-%d)\" && git push origin master\n\n## \u8d28\u91cf\u6807\u51c6\n- \u4e3b\u9898\u57fa\u4e8e\u7ade\u54c1\u516c\u53f8\u8d44\u6599\uff08feng shui / bazi / destiny / \u547d\u7406\u76f8\u5173\uff09\n- \u82f1\u6587\u8f93\u51fa\uff0c\u9762\u5411\u82f1\u6587\u8bfb\u8005\n- \u53bbAI\u5316\u8bc4\u5206\u5fc5\u987b >60 \u624d\u53d1\u5e03\n- \u6587\u7ae0\u5185\u5bb9\u9700\u539f\u521b\uff0c\u4e0d\u662f\u7b80\u5355\u590d\u8ff0\n\n## \u90e8\u7f72\u540e\u9a8c\u8bc1\n\u7b49 2-3 \u5206\u949f\u540e\u68c0\u67e5\u7f51\u7ad9\u662f\u5426\u6b63\u5e38\u8bbf\u95ee\u65b0\u6587\u7ae0\u3002\n\n## \u8f93\u51fa\u683c\u5f0f\n\u5b8c\u6210\u540e\u62a5\u544a\uff1a\n- \u6587\u7ae0\u6807\u9898\n- \u5b57\u6570\n- \u53bbAI\u5316\u8bc4\u5206\n- \u53d1\u5e03\u7684 URL",
       "skills": [
-        "seo-content-writer",
+        "programmatic-seo",
         "humanizer"
       ],
-      "skill": "seo-content-writer",
+      "skill": "programmatic-seo",
       "model": "mini-max-m2.7",
       "provider": "custom:minimax_coding",
       "base_url": null,
@@ -23,15 +23,15 @@
       "schedule_display": "0 8 * * *",
       "repeat": {
         "times": null,
-        "completed": 35
+        "completed": 37
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T14:45:42.377747+08:00",
-      "next_run_at": "2026-07-02T08:00:00+08:00",
-      "last_run_at": "2026-07-01T08:06:04.587974+08:00",
+      "next_run_at": "2026-07-03T08:00:00+08:00",
+      "last_run_at": "2026-07-02T08:22:18.240323+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -66,15 +66,15 @@
       "schedule_display": "0 9 * * *",
       "repeat": {
         "times": null,
-        "completed": 31
+        "completed": 32
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T17:20:53.016111+08:00",
-      "next_run_at": "2026-07-02T09:00:00+08:00",
-      "last_run_at": "2026-07-01T09:01:55.353909+08:00",
+      "next_run_at": "2026-07-03T09:00:00+08:00",
+      "last_run_at": "2026-07-02T09:02:10.862197+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -92,7 +92,7 @@
     {
       "id": "d5ef67b81247",
       "name": "Hermes\u5907\u4efd\u5230demi",
-      "prompt": "\u5907\u4efd ~/.hermes/ \u76ee\u5f55\u5230 GitHub \u5907\u4efd\u4ed3\u5e93 qzw-alt/demi\u3002\n\n**\u6ce8\u610f\uff1aexclude \u5305\u542b\u654f\u611f\u4fe1\u606f\u7684\u76ee\u5f55\uff0c\u9632\u6b62 GitHub secret scanning \u62e6\u622a**\n\n\u6b65\u9aa4\uff1a\n1. Clone \u6216\u66f4\u65b0 qzw-alt/demi \u4ed3\u5e93\u5230\u4e34\u65f6\u76ee\u5f55 /tmp/demi-backup/\n2. \u4f7f\u7528 rsync \u540c\u6b65\uff0cexclude \u4ee5\u4e0b\u76ee\u5f55\uff1a\n   - .git\n   - cache/\n   - audio_cache/\n   - image_cache/\n   - gateway.lock\n   - gateway.pid\n   - state.db*\n   - sandboxes/\n   - logs/\n   - sessions/ \uff08\u53ef\u80fd\u5305\u542b API key \u5bf9\u8bdd\u5386\u53f2\uff09\n   - memories/ \uff08\u53ef\u80fd\u5305\u542b\u654f\u611f\u914d\u7f6e\uff09\n3. \u63d0\u4ea4\u6240\u6709\u53d8\u66f4\uff08add . && commit -m \"Backup: $(date +%Y-%m-%d_%H:%M)\"\uff09\n4. \u63a8\u9001\u5230 GitHub\n5. \u6e05\u7406\u4e34\u65f6\u76ee\u5f55 /tmp/demi-backup/\n\n\u4f7f\u7528 GitHub PAT \u8ba4\u8bc1\uff1a\n[PAT_REMOVED]",
+      "prompt": "\u5907\u4efd ~/.hermes/ \u76ee\u5f55\u5230 GitHub \u5907\u4efd\u4ed3\u5e93 qzw-alt/demi\u3002\n\n**\u6ce8\u610f\uff1aexclude \u5305\u542b\u654f\u611f\u4fe1\u606f\u7684\u76ee\u5f55\uff0c\u9632\u6b62 GitHub secret scanning \u62e6\u622a**\n\n\u6b65\u9aa4\uff1a\n1. Clone \u6216\u66f4\u65b0 qzw-alt/demi \u4ed3\u5e93\u5230\u4e34\u65f6\u76ee\u5f55 /tmp/demi-backup/\n2. \u4f7f\u7528 rsync \u540c\u6b65\uff0cexclude \u4ee5\u4e0b\u76ee\u5f55\uff1a\n   - .git\n   - cache/\n   - audio_cache/\n   - image_cache/\n   - gateway.lock\n   - gateway.pid\n   - state.db*\n   - sandboxes/\n   - logs/\n   - sessions/ \uff08\u53ef\u80fd\u5305\u542b API key \u5bf9\u8bdd\u5386\u53f2\uff09\n   - memories/ \uff08\u53ef\u80fd\u5305\u542b\u654f\u611f\u914d\u7f6e\uff09\n3. \u63d0\u4ea4\u6240\u6709\u53d8\u66f4\uff08add . && commit -m \"Backup: $(date +%Y-%m-%d_%H:%M)\"\uff09\n4. \u63a8\u9001\u5230 GitHub\n5. \u6e05\u7406\u4e34\u65f6\u76ee\u5f55 /tmp/demi-backup/\n\n\u4f7f\u7528 GitHub PAT \u8ba4\u8bc1\uff1a\ngithub...REMOVED_LEAKED_TOKEN...REMOVED",
       "skills": [],
       "skill": null,
       "model": null,
@@ -109,15 +109,15 @@
       "schedule_display": "0 22 * * *",
       "repeat": {
         "times": null,
-        "completed": 33
+        "completed": 34
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T17:22:43.447182+08:00",
-      "next_run_at": "2026-07-02T22:00:00+08:00",
-      "last_run_at": "2026-06-30T22:04:38.633394+08:00",
+      "next_run_at": "2026-07-03T22:00:00+08:00",
+      "last_run_at": "2026-07-01T22:06:25.600146+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -156,15 +156,15 @@
       "schedule_display": "0 9 * * *",
       "repeat": {
         "times": null,
-        "completed": 37
+        "completed": 38
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-02T08:16:41.523255+08:00",
-      "next_run_at": "2026-07-02T09:00:00+08:00",
-      "last_run_at": "2026-07-01T09:07:58.965834+08:00",
+      "next_run_at": "2026-07-03T09:00:00+08:00",
+      "last_run_at": "2026-07-02T09:10:15.371819+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -222,5 +222,5 @@
       "workdir": null
     }
   ],
-  "updated_at": "2026-07-01T22:00:51.659880+08:00"
+  "updated_at": "2026-07-02T22:00:55.191647+08:00"
 }
