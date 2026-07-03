@@ -403,7 +403,7 @@ See `references/backup-to-github-via-rsync.md` for the rsync+push backup workflo
 **Safe PAT storage — use Python file I/O (not shell echo/redirect):**
 ```python
 with open('/tmp/backup-pat.txt', 'w') as f:
-    f.write("github...REMOVED_LEAKED_TOKEN...REMOVED")
+    f.write("github...REMOVED_LEAKED_TOKEN")
 ```
 
 **However:** Even Python-written PAT files may be redacted on read in subsequent sessions if the scanner re-intercepts. The most reliable fix is **SSH fallback**.

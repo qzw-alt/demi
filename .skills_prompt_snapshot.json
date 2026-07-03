@@ -106,8 +106,8 @@
       99309
     ],
     "creative/seo-article-publish-cron/SKILL.md": [
-      1782896366605886983,
-      21448
+      1783037227632457141,
+      23172
     ],
     "creative/sketch/SKILL.md": [
       1778925537000000000,
@@ -126,8 +126,8 @@
       5285
     ],
     "devops/hermes-backup/SKILL.md": [
-      1782914776549120072,
-      15296
+      1783001432216607346,
+      22207
     ],
     "devops/hermes-cron-troubleshooting/SKILL.md": [
       1782951829382518639,
@@ -140,6 +140,10 @@
     "devops/kanban-worker/SKILL.md": [
       1778925537000000000,
       10030
+    ],
+    "devops/memory-hygiene/SKILL.md": [
+      1783086654188876512,
+      11959
     ],
     "devops/webhook-subscriptions/SKILL.md": [
       1778925537000000000,
@@ -310,8 +314,8 @@
       5111
     ],
     "research/content-research-writer-cn/SKILL.md": [
-      1782954756069494161,
-      97631
+      1783041045022291770,
+      98211
     ],
     "research/llm-wiki/SKILL.md": [
       1778925537000000000,
@@ -1071,6 +1075,19 @@
         "macos",
         "windows"
       ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "memory-hygiene",
+      "category": "devops",
+      "frontmatter_name": "memory-hygiene",
+      "description": "Use when maintaining the multi-layer memory system on Her...",
+      "platforms": [],
       "conditions": {
         "fallback_for_toolsets": [],
         "requires_toolsets": [],

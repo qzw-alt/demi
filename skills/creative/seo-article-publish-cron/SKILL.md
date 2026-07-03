@@ -1,7 +1,7 @@
 ---
 name: seo-article-publish-cron
 description: "Run a daily SEO article publishing cron job — verify repo state, match existing article template, write English article, de-AI pass, update sitemap, commit and push to the deployed branch. Use when a cron task says 'publish daily SEO article to <site>' with a GitHub Pages deployment from a repo."
-version: 1.1.0
+version: "1.2.0"
 author: Hermes Agent
 license: MIT
 platforms: [linux]
@@ -298,6 +298,8 @@ The seasonal threading pitfall above covers month-long themes (June = Fire Month
 
 **Detection signal:** run `ls -t fate-YYYY-MM-DD-*.html | head -7 | xargs grep -l "[UNDEFINED_TERM]"` to find articles that USED a term without defining it. If 2+ recent articles assume the term, that term is a ladder-rung candidate. The 06-26 Yin/Yang article emerged from finding `yin|yang` referenced but never pillar-defined in the prior 30 days.
 
+**Scaled-companion extension (NEW — verified 2026-07-03):** when the current thread assumes a property the majority of readers don't have (e.g. "back garden" for an audience of mostly apartment-dwellers), write a companion piece at a different scale using the same structural skeleton. The 07-03 Balcony article extended the 07-01 Front Garden + 07-02 Back Garden thread by writing the same Fu Wei concept at apartment-dweller scale, with the same bridge-sentence → 5 moves → Day-Master-by-element → undo-at-Li-Qiu → FAQs structure. Pattern generalizes: full property → apartment, full chart → child chart, surgery → outpatient, US pathway → cross-border pathway. Always use the SAME close-out checkpoint as the original thread (both 07-02 and 07-03 land on "undo at Li Qiu on July 7"). Full recipe and pitfalls: `references/thread-extension-patterns.md`.
+
 ### Don't ship before verifying de-AI
 
 If the spec says "score > 60 required," treat it as a hard gate. A humanizer audit that finds 12 instances of `delve`/`tapestry`/`testament`/`underscore` should be rewritten, not shipped. Programmatic scan catches most of these in seconds.
@@ -314,6 +316,8 @@ Mitigation:
 ### Don't bury the article in unrelated cross-links
 
 The footer "Explore more" block should link to the prior 3-5 articles in the same series. Linking to `/checkout.html` and `/index.html` is fine for the static links, but the series-context links should be dated articles, not random other pages.
+
+**Don't inherit a sibling-agent's sitemap indent (verified 2026-07-03):** when patching sitemap.xml, the new entry's indentation should match the file's DOMINANT convention (typically 4 spaces in this repo), not the immediately-prior entry's indent. The 2026-07-03 patch initially came in at 6-space indent because I copy-pasted the 07-02 entry as my anchor — and the 07-02 entry itself was at 6-space indent (a sibling-agent artifact from the prior day). The fix was a second patch to normalize the new entry to 4 spaces. Check `head -20 sitemap.xml` after the first patch and compare the new entry's indent to entries 3-5 lines down (the historical convention) before committing. Don't "fix" the sibling's wrong indent in the same commit — that's a separate concern, and mixing it with the new article's commit pollutes the article's diff.
 
 ### Don't use wrong date format
 

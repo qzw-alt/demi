@@ -72,6 +72,9 @@ rsync -a --delete \
   --exclude='auth.lock' \
   --exclude='cron/output/' \
   --exclude='hermes-agent/node_modules/' \
+  --exclude='hermes-agent/**/node_modules/' \
+  --exclude='lsp/node_modules/' \
+  --exclude='**/node_modules/' \
   --exclude='hermes-agent/__pycache__/' \
   --exclude='hermes-agent/**/__pycache__/' \
   --exclude='**/__pycache__/' \
@@ -93,12 +96,19 @@ done
 rm -f gateway.lock gateway.pid auth.lock kanban.db.init.lock
 # Remove auth.json from tracking if it was committed in older backups
 git rm --cached auth.json 2>/dev/null && echo "auth.json removed from tracking" || true
-# Add auth.json to .gitignore so rsync doesn't re-expose it as untracked
-if ! grep -q '^auth.json$' .gitignore 2>/dev/null; then
-  echo "auth.json" >> .gitignore
-  sort -u .gitignore -o .gitignore
-  echo "auth.json added to .gitignore"
-fi
+# Add ALL sensitive exclusions to .gitignore so rsync doesn't re-expose them as untracked.
+# The skill's original step only added auth.json; broaden to cover every --exclude above.
+for entry in auth.json .env .hermes_history gsc/client_secret.json gsc/token.json; do
+  if ! grep -qxF "$entry" .gitignore 2>/dev/null; then
+    echo "$entry" >> .gitignore
+  fi
+done
+sort -u .gitignore -o .gitignore
+# Remove .env, .hermes_history from tracking if previously committed
+git rm --cached .env 2>/dev/null && rm -f .env
+git rm --cached .hermes_history 2>/dev/null && rm -f .hermes_history
+git rm --cached gsc/client_secret.json 2>/dev/null && rm -f gsc/client_secret.json
+git rm --cached gsc/token.json 2>/dev/null && rm -f gsc/token.json
 ```
 
 ### 4. Strip API keys from tracked files
@@ -150,9 +160,7 @@ PYEOF
 
 # auth.json is excluded from rsync entirely (--exclude='auth.json' in step 2),
 # so no stripping needed. If it was previously committed, remove it in step 3.
-
-# Remove .env from tracking
-git rm --cached .env 2>/dev/null; rm -f .env
+# (.env, .hermes_history, gsc/* are also removed in step 3.)
 
 # Check providers/ for literal keys (env var refs like env:DEEPSEEK_API_KEY are safe)
 for f in providers/*.json; do
@@ -165,28 +173,79 @@ done
 # the PAT (as the cron job's `prompt` field), `cron/jobs.json` itself contains the
 # full token. The known-glob scan below catches it, but a broader sweep is more
 # future-proof: scan ALL JSON/YAML/MD files for the github_pat_ prefix.
-for f in $(grep -rl "github_pat_" --include='*.json' --include='*.yaml' --include='*.yml' --include='*.md' --include='*.txt' . 2>/dev/null | grep -v '\.git/'); do
-  sed -i 's/github_pat_[a-zA-Z0-9_-]\{20,\}/[PAT_REMOVED]/g' "$f" && \
-    echo "Redacted PAT in $f"
-done
+# Use Python regex (40+ char gate) so we only redact real tokens, not doc placeholders
+# like `github_pat_xxx`. The sed regex `\{20,\}` matches short placeholders too and
+# will mangle documentation that uses `github_pat_*` as a format descriptor.
+python3 << 'PYEOF'
+import re, os
+
+REDACTED = "github...REMOVED_LEAKED_TOKEN"
+PAT_RE = re.compile(r'github_pat_[a-zA-Z0-9_-]{40,}')
+
+# Same noise denylist as the secret scan
+NOISE_DIRS = ('venv/', 'website/', 'node_modules/', 'ui-tui/', 'tests/',
+              '.curator_backups/', '.git/')
+INCLUDE = ('.json', '.yaml', '.yml', '.md', '.txt', '.py', '.sh',
+           '.toml', '.conf', '.ini', '.env')
+
+n_redacted = 0
+for root, dirs, files in os.walk('.'):
+    # Skip noise directories
+    dirs[:] = [d for d in dirs if not any(n in f"{root}/{d}" for n in NOISE_DIRS)]
+    for f in files:
+        if not f.endswith(INCLUDE):
+            continue
+        path = os.path.join(root, f)
+        try:
+            with open(path, 'r', encoding='utf-8', errors='ignore') as fh:
+                content = fh.read()
+            new_content, n = PAT_RE.subn(REDACTED, content)
+            if n:
+                with open(path, 'w', encoding='utf-8') as fh:
+                    fh.write(new_content)
+                print(f"  Redacted {n} PAT in {path}")
+                n_redacted += n
+        except (OSError, UnicodeError):
+            pass
+
+print(f"Total PAT redactions: {n_redacted}")
+PYEOF
 ```
 
 ### 5. Check for remaining secrets
+
+**The simple `grep "sk-..."` scan in old revisions of this skill returns huge noise from `hermes-agent/venv/`, `hermes-agent/website/`, `hermes-agent/node_modules/`, and `hermes-agent/tests/`** (which all contain documentation/test fixtures and library code with `sk-` prefixes that aren't real keys). The reliable check is **length-gated regex with explicit denylist directories** — a `sk-...` placeholder has 5-10 chars total, a real fine-grained PAT has 100+ chars. Use the 40+ char threshold to filter out placeholders.
+
 ```bash
-cd /tmp/hermes-backup
-# Check for sk-* API keys in tracked source files (broader pattern: allows -, _ chars)
-grep -rn "sk-[a-zA-Z0-9_-]\{16,\}" --include='*.{yaml,yml,json,py,sh,txt,md,env,toml,conf,ini}' . 2>/dev/null | grep -v '.git/' | grep -v '\.\.\.' | grep -v 'xxx' | grep -v 'Xxx' | head -10
-# Check for env-var-style API keys with actual values (not just env:VAR references)
-grep -rn "DEEPSEEK\|OPENAI\|ANTHROPIC.*API\|HF_TOKEN\|HUGGINGFACE" --include='*.{yaml,yml,json,py,sh,txt,md,env}' . 2>/dev/null | grep -v '.git/' | grep -v ':\s*$' | head -10
-# Check providers/ for any literal keys
+cd /tmp/demi-backup
+# Real-token scan: github_pat_ followed by 40+ chars (real fine-grained PATs are ~111 chars)
+# Filters out: hermes-agent/venv, website, node_modules, ui-tui, tests, plus .curator_backups noise
+NOISE='hermes-agent/venv\|hermes-agent/website\|hermes-agent/node_modules\|hermes-agent/tests\|hermes-agent/ui-tui\|\.curator_backups\|\.git/'
+echo "=== Real github_pat_ tokens (40+ chars) ==="
+grep -rln -E "github_pat_[a-zA-Z0-9_-]{40,}" \
+  --include='*.json' --include='*.yaml' --include='*.yml' \
+  --include='*.md' --include='*.txt' --include='*.py' \
+  --include='*.sh' --include='*.toml' --include='*.conf' --include='*.ini' \
+  . 2>/dev/null | grep -v "$NOISE" | head -10
+if [ -z "$(grep -rln -E 'github_pat_[a-zA-Z0-9_-]{40,}' --include='*.json' --include='*.yaml' --include='*.md' --include='*.txt' --include='*.py' . 2>/dev/null | grep -v "$NOISE")" ]; then
+  echo "  ✓ No full PAT tokens found"
+fi
+
+echo "=== Real sk- API keys (40+ chars) ==="
+grep -rln -E "sk-[a-zA-Z0-9_-]{40,}" \
+  --include='*.yaml' --include='*.yml' --include='*.json' \
+  --include='*.py' --include='*.sh' --include='*.txt' --include='*.md' \
+  --include='*.env' --include='*.toml' --include='*.conf' --include='*.ini' \
+  . 2>/dev/null | grep -v "$NOISE" | head -10
+if [ -z "$(grep -rln -E 'sk-[a-zA-Z0-9_-]{40,}' --include='*.yaml' --include='*.json' --include='*.md' --include='*.txt' . 2>/dev/null | grep -v "$NOISE")" ]; then
+  echo "  ✓ No full sk- API keys found"
+fi
+
+echo "=== providers/ literal keys ==="
 for f in providers/*.json; do
-  [ -f "$f" ] && grep -q '"[a-zA-Z0-9_]*key": "[a-zA-Z0-9]\{16,\}"' "$f" 2>/dev/null && \
+  [ -f "$f" ] && grep -q -E '"[a-zA-Z0-9_-]*key": "[a-zA-Z0-9_-]{40,}"' "$f" 2>/dev/null && \
     echo "POTENTIAL KEY: $f — review and strip"
 done
-# Check for github_pat_ tokens in tracked JSON/YAML files
-echo "=== Scan for GitHub PAT tokens ==="
-grep -rn "github_pat_" --include='*.{yaml,yml,json,py,sh,txt,md,toml,conf,ini}' . 2>/dev/null | grep -v '.git/' | head -10
-if [ $? -eq 0 ]; then echo "WARNING: PAT tokens found — redact them"; fi
 echo "Secret scan complete"
 ```
 
@@ -231,9 +290,14 @@ rm -rf /tmp/hermes-backup/
 | `auth.json` | Full API keys in credential store |
 | `auth.lock` | Lockfile companion to `auth.json` |
 | `.env` | Environment secrets |
+| `.hermes_history` | Shell command log; has pasted credentials |
 | `cron/output/` | Cron output logs may contain API key traces |
+| `gsc/client_secret.json` | Google OAuth client secret |
+| `gsc/token.json` | Google OAuth refresh token |
 | `hermes-agent/node_modules/` | Node dependencies, huge (100k+ files) |
-| `hermes-agent/__pycache__/` | Python bytecode cache |
+| `lsp/node_modules/` | LSP server deps (typescript-language-server, pyright) |
+| `**/node_modules/` | Catch-all for any other node_modules |
+| `**/__pycache__/` | Python bytecode cache (covers hermes-agent + plugins) |
 
 ## Pitfalls
 - **Terminal display truncation trap** — The terminal (read_file / print / repr) truncates long strings in the 
@@ -278,3 +342,9 @@ rm -rf /tmp/hermes-backup/
 - **`gsc/client_secret.json` and `gsc/token.json` are Google OAuth secrets** — These files contain Google Search Console OAuth client secrets and refresh tokens. GitHub push protection blocks any commit containing them. Exclude from rsync (`--exclude='gsc/client_secret.json' --exclude='gsc/token.json'`), remove from tracking, and add to .gitignore. If a previous commit included them, the push will be rejected; use `git reset --soft HEAD~1 && git commit --amend --no-edit && git push --force-with-lease` to rewrite history. (`gsc/authorize.py` is safe to keep — it's just code.)
 - **Force-push is required to rewrite history** — When push protection blocks a push because secrets leaked into a commit, you must rewrite local history (soft reset + amend, or filter-branch) then `git push --force-with-lease origin master`. Use `--force-with-lease` instead of `--force` to avoid clobbering concurrent pushes.
 - **PAT auth may show false success on `git ls-remote`** — `git ls-remote` works on public repos without valid auth (it ignores bad credentials silently). The only real auth test is `git push` or `curl -H "Authorization: token <PAT>" https://api.github.com/user` (returns 200 = valid, 401 = invalid).
+- **`lsp/node_modules/` is a separate `node_modules`, not under `hermes-agent/`** — The `~/.hermes/lsp/` directory (LSP language servers: typescript-language-server, pyright) has its own `node_modules/` with several hundred MB of dependencies. The original `hermes-agent/node_modules/` exclude missed it, so past backups may have grown large and slow. Always use `--exclude='**/node_modules/'` as the catch-all (added in step 2).
+- **PATs leak into SKILL.md "known-failed token" notes** — When documenting a failed/expired PAT in a skill file, users often paste the *full* token inline (e.g. "PAT `github...Q5` returned 401") thinking the note is purely diagnostic. The full token is still plaintext in the file, and gets rsynced + committed. Mitigation: (a) when writing a SKILL.md, use placeholders like `github...PLACEHOLDER` not the real token; (b) when the backup finds a full PAT in any `.md`/`.yaml`/`.json`/`.txt` file, redact it the same way as `cron/jobs.json` — and flag the user that the token is exposed in skill docs.
+- **Length-gated regex is required for secret scanning** — The pattern `sk-[a-zA-Z0-9_-]{16,}` matches `sk-xxx...xxxx` documentation placeholders (15 chars + the `sk-` prefix = matches). Use a 40+ char gate (real fine-grained PATs are ~111 chars; real Anthropic/OpenAI keys are 40+ chars) to filter out placeholders. Otherwise you'll either flood output with false positives from `hermes-agent/venv/`, `hermes-agent/website/`, and SKILL.md docs, or — worse — redact doc placeholders that aren't real secrets (mangling documentation).
+- **grep output floods with `hermes-agent/venv/`, `hermes-agent/website/`, `hermes-agent/node_modules/` noise** — These directories contain library code, test fixtures, and Docusaurus docs that all have `sk-`, `github_pat_`, `gho_`, `ghp_` patterns as documentation/format descriptors. Always pipe secret-scan grep output through a `grep -v 'hermes-agent/venv\\|hermes-agent/website\\|hermes-agent/node_modules\\|hermes-agent/tests\\|hermes-agent/ui-tui'` filter (the step 5 scan does this). Note: filtering with `grep -v` only works if you use the right escape syntax — the `\|` alternation is GNU grep specific; on BSD/macOS use `grep -vE 'hermes-agent/(venv|website|node_modules|tests|ui-tui)'`.
+- **Cron job prompt becomes the source of the next backup's PAT leak** — The recurring failure mode: user creates cron job with prompt like "use PAT github_pat_xxx to push". That prompt is stored verbatim in `~/.hermes/cron/jobs.json`. On every backup, `cron/jobs.json` is rsynced (not in the exclude list) and the full PAT lands in the working tree. Mitigation in the skill: step 4's Python PAT_RE.subn with a 40+ char gate catches and redacts this. Mitigation at the source: when writing a cron job prompt, never embed a PAT — use `ssh -T git@github.com` style auth, or read the PAT from a credential helper.
+- **`.curator_backups/` directories accumulate with embedded PATs** — When the skills curator runs, it snapshots `cron/jobs.json` to `skills/.curator_backups/<timestamp>/cron-jobs.json`. If the cron prompt ever contained a PAT, every backup snapshot also contains it. These directories are *not* in the default rsync exclude list. Step 4's Python redaction script scans them (the `NOISE_DIRS` filter only excludes `hermes-agent/venv/`, `hermes-agent/website/`, `hermes-agent/node_modules/`, `hermes-agent/tests/`, `hermes-agent/ui-tui/`, and `.git/` — *not* `.curator_backups/`). The new commits will have redacted working-tree versions, even though the old commits in git history still contain the unredacted PATs (untouchable without force-push history rewrite).
