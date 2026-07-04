@@ -149,7 +149,7 @@ git push origin master
 
 ## 🔑 API Keys
 
-- **Kimi API (2.5)**: sk-kimi-i...NGGW（新配置中）
+- **Kimi API (2.5)**: sk-kimi-iGuVj23Mgkz5ZSKkW9vdkVTg6PQY5FIlpTiPn8ryhrGA8jO4UyVWredtEfbDNGGW（新配置中）
 - **Tavily API**: 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
 
 ---

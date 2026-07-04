@@ -124,6 +124,8 @@ cd /tmp/hermes-backup
 
 # Truncate all full API keys in config.yaml automatically.
 # Regex handles keys with -, _, and alphanumeric chars (covers DeepSeek, MinMax, Anthropic, etc.)
+# IMPORTANT: skip tokens containing '...' (already truncated) — otherwise the regex
+# matches across the truncation marker and mangles the output. Verify with xxd on the first match.
 python3 << 'PYEOF'
 import re
 
@@ -132,6 +134,8 @@ with open('config.yaml', 'r', encoding='utf-8') as f:
 
 def truncate_key(match):
     full_key = match.group(1)
+    if '...' in full_key:
+        return match.group(0)  # already truncated, don't re-touch
     if len(full_key) <= 15:
         return match.group(0)  # already short / already truncated
     prefix = full_key[3:9]   # first 6 after sk-
@@ -139,7 +143,7 @@ def truncate_key(match):
     return f"api_key: sk-{prefix}...{suffix}"
 
 content_new = re.sub(
-    r'api_key:\s*(sk-[a-zA-Z0-9_-]{10,})',
+    r'api_key:\s*(sk-[a-zA-Z0-9_-]+)',
     truncate_key,
     content
 )
@@ -343,6 +347,9 @@ rm -rf /tmp/hermes-backup/
 - **Force-push is required to rewrite history** — When push protection blocks a push because secrets leaked into a commit, you must rewrite local history (soft reset + amend, or filter-branch) then `git push --force-with-lease origin master`. Use `--force-with-lease` instead of `--force` to avoid clobbering concurrent pushes.
 - **PAT auth may show false success on `git ls-remote`** — `git ls-remote` works on public repos without valid auth (it ignores bad credentials silently). The only real auth test is `git push` or `curl -H "Authorization: token <PAT>" https://api.github.com/user` (returns 200 = valid, 401 = invalid).
 - **`lsp/node_modules/` is a separate `node_modules`, not under `hermes-agent/`** — The `~/.hermes/lsp/` directory (LSP language servers: typescript-language-server, pyright) has its own `node_modules/` with several hundred MB of dependencies. The original `hermes-agent/node_modules/` exclude missed it, so past backups may have grown large and slow. Always use `--exclude='**/node_modules/'` as the catch-all (added in step 2).
+- **`x-access-token:` URL-embedded PAT silently fails for push** — Embedding `github_pat_xxx` as `https://x-access-token:PAT@github.com/owner/repo.git` works for `git clone` (download doesn't require auth on a public repo, or reads the URL credentials), but **`git push` returns `remote: Invalid username or token. Password authentication is not supported for Git operations.`** — GitHub removed password-style auth for fine-grained PATs in HTTPS push. The clone "succeeds" without prompting because git reads the embedded credentials, so the failure only surfaces at push time. **Always switch to SSH before pushing** when this error appears: `git remote set-url origin git@github.com:owner/repo.git`. Verify SSH works first with `ssh -T git@github.com`.
+- **Truncation regex `[a-zA-Z0-9_-]{40,}` falsely matches across `...` markers** — A first-pass scan of `sk-[a-zA-Z0-9_-]{40,}` matches both `sk-kimi-iGU...NGGW` (the literal string with `...` in the middle) AND the full unredacted key (when checked against the source). When a second pass applies `re.sub(r'sk-[a-zA-Z0-9_-]{30,}', truncate, content)`, the regex matches the full token up to the first non-alphanumeric/underscore/dash char — which for a Chinese-context line may be a CJK character, mangling the output to `sk-kimi-i...配置中` instead of the intended `sk-kimi-i...NGGW`. Fix: in the replace function, check `'...' in m.group(0)` and skip those (they're already truncated), AND match against the unredacted source so the boundary is correct. Always verify with `xxd` on the first matched line before declaring clean.
+- **Re-restore from source after a bad regex pass** — If a first-pass truncation script mangled some keys, don't try to fix them in place by guessing what the original was. Read the unredacted source from `~/.hermes/` (the rsync source, which still has the originals), apply the truncation there, and overwrite the bad file. Faster and less error-prone than trying to invert a corrupted regex.
 - **PATs leak into SKILL.md "known-failed token" notes** — When documenting a failed/expired PAT in a skill file, users often paste the *full* token inline (e.g. "PAT `github...Q5` returned 401") thinking the note is purely diagnostic. The full token is still plaintext in the file, and gets rsynced + committed. Mitigation: (a) when writing a SKILL.md, use placeholders like `github...PLACEHOLDER` not the real token; (b) when the backup finds a full PAT in any `.md`/`.yaml`/`.json`/`.txt` file, redact it the same way as `cron/jobs.json` — and flag the user that the token is exposed in skill docs.
 - **Length-gated regex is required for secret scanning** — The pattern `sk-[a-zA-Z0-9_-]{16,}` matches `sk-xxx...xxxx` documentation placeholders (15 chars + the `sk-` prefix = matches). Use a 40+ char gate (real fine-grained PATs are ~111 chars; real Anthropic/OpenAI keys are 40+ chars) to filter out placeholders. Otherwise you'll either flood output with false positives from `hermes-agent/venv/`, `hermes-agent/website/`, and SKILL.md docs, or — worse — redact doc placeholders that aren't real secrets (mangling documentation).
 - **grep output floods with `hermes-agent/venv/`, `hermes-agent/website/`, `hermes-agent/node_modules/` noise** — These directories contain library code, test fixtures, and Docusaurus docs that all have `sk-`, `github_pat_`, `gho_`, `ghp_` patterns as documentation/format descriptors. Always pipe secret-scan grep output through a `grep -v 'hermes-agent/venv\\|hermes-agent/website\\|hermes-agent/node_modules\\|hermes-agent/tests\\|hermes-agent/ui-tui'` filter (the step 5 scan does this). Note: filtering with `grep -v` only works if you use the right escape syntax — the `\|` alternation is GNU grep specific; on BSD/macOS use `grep -vE 'hermes-agent/(venv|website|node_modules|tests|ui-tui)'`.
