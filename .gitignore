@@ -1,41 +1,36 @@
-# Hermes - sensitive / cache files never to be committed
-.git/
 
-# Caches
-cache/
 audio_cache/
-image_cache/
-
-# Runtime state
+auth.json
+auth.lock
+cache/
+# Caches
+cron/output/
+.env
 gateway.lock
 gateway.pid
-state.db*
-auth.lock
-auth.json
+.git/
+gsc/client_secret.json
+gsc/token.json
+hermes-agent/**/node_modules/
+hermes-agent/node_modules/
+hermes-agent/**/__pycache__/
+hermes-agent/__pycache__/
+.hermes_history
+image_cache/
 kanban.db.init.lock
-
-# Sensitive content
-sessions/
+logs/
+lsp/node_modules/
 memories/
 memory/
 memory_backup_*/
 migration/
-.env
-.hermes_history
-
-# Sandboxes and logs
-sandboxes/
-logs/
-cron/output/
-gsc/client_secret.json
-gsc/token.json
-
-# Node / Python dependencies and bytecode
 **/node_modules/
-hermes-agent/node_modules/
-hermes-agent/**/node_modules/
-lsp/node_modules/
-hermes-agent/__pycache__/
-hermes-agent/**/__pycache__/
-**/__pycache__/
+# Node / Python deps
 **/*.pyc
+**/__pycache__/
+# Runtime state
+sandboxes/
+# Sandboxes, logs, OAuth tokens
+# Sensitive content
+sessions/
+state.db*

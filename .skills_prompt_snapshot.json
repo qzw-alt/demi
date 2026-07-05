@@ -102,8 +102,8 @@
       14168
     ],
     "creative/programmatic-seo/SKILL.md": [
-      1783127332282871365,
-      98857
+      1783213970279189191,
+      100206
     ],
     "creative/seo-article-publish-cron/SKILL.md": [
       1783037227632457141,
@@ -121,13 +121,17 @@
       1778925537000000000,
       15429
     ],
+    "cron-content-pipeline-cap-safe/SKILL.md": [
+      1783217059044511889,
+      8533
+    ],
     "data-science/jupyter-live-kernel/SKILL.md": [
       1778925537000000000,
       5285
     ],
     "devops/hermes-backup/SKILL.md": [
-      1783087531057659477,
-      24476
+      1783173952600488737,
+      26547
     ],
     "devops/hermes-cron-troubleshooting/SKILL.md": [
       1782951829382518639,
@@ -314,8 +318,8 @@
       5111
     ],
     "research/content-research-writer-cn/SKILL.md": [
-      1783041045022291770,
-      98211
+      1783217063934599391,
+      100166
     ],
     "research/llm-wiki/SKILL.md": [
       1778925537000000000,
@@ -995,6 +999,21 @@
         "linux",
         "macos",
         "windows"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "cron-content-pipeline-cap-safe",
+      "category": "cron-content-pipeline-cap-safe",
+      "frontmatter_name": "cron-content-pipeline-cap-safe",
+      "description": "Reference pattern for cron-driven content publishing (new...",
+      "platforms": [
+        "linux"
       ],
       "conditions": {
         "fallback_for_toolsets": [],

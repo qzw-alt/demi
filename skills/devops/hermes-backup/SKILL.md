@@ -19,10 +19,15 @@ Backup `~/.hermes/` to a GitHub backup repository (e.g., `qzw-alt/demi`).
 
 ### 0. Verify GitHub auth first
 ```bash
-# Prefer SSH key auth — verify it works
-ssh -T git@github.com 2>&1 | grep -q "successfully authenticated" && echo "SSH OK"
-# Check credential store
-cat ~/.config/git/credentials 2>/dev/null | head -1 || echo "No credential store"
+# Prefer SSH key auth — verify it works.
+# Note: `ssh -T git@github.com` ALWAYS exits 1 on success (GitHub deliberately
+# rejects the shell session — "successfully authenticated" still appears on stderr).
+# Check stderr text, NOT return code. Using `&& echo OK` masks the non-zero exit
+# and makes SSH look broken, but technically still works because grep finds the match.
+SSH_OUT=$(ssh -T -o StrictHostKeyChecking=no -o ConnectTimeout=10 git@github.com 2>&1)
+echo "$SSH_OUT" | grep -q "successfully authenticated" && echo "SSH OK" || echo "SSH NOT available"
+# Check credential store (don't cat it — never print the PAT)
+grep -q '^https://.*github.com' ~/.config/git/credentials 2>/dev/null && echo "credential store: present"
 # Check for custom credential helpers
 git config --global --get-all credential.https://github.com.helper 2>/dev/null
 git config --global --get credential.helper 2>/dev/null
@@ -96,8 +101,55 @@ done
 rm -f gateway.lock gateway.pid auth.lock kanban.db.init.lock
 # Remove auth.json from tracking if it was committed in older backups
 git rm --cached auth.json 2>/dev/null && echo "auth.json removed from tracking" || true
-# Add ALL sensitive exclusions to .gitignore so rsync doesn't re-expose them as untracked.
-# The skill's original step only added auth.json; broaden to cover every --exclude above.
+
+# If .gitignore was wiped by rsync --delete, restore it from the canonical template below.
+# Otherwise just ensure every rsync --exclude is also listed (defense in depth).
+GITIGNORE_NEEDED=0
+[ ! -s .gitignore ] && GITIGNORE_NEEDED=1
+if [ "$GITIGNORE_NEEDED" = 1 ]; then
+  cat > .gitignore <<'EOF'
+.git/
+
+# Caches
+cache/
+audio_cache/
+image_cache/
+
+# Runtime state
+gateway.lock
+gateway.pid
+state.db*
+auth.lock
+auth.json
+kanban.db.init.lock
+
+# Sensitive content
+sessions/
+memories/
+memory/
+memory_backup_*/
+migration/
+.env
+.hermes_history
+
+# Sandboxes, logs, OAuth tokens
+sandboxes/
+logs/
+cron/output/
+gsc/client_secret.json
+gsc/token.json
+
+# Node / Python deps
+**/node_modules/
+hermes-agent/node_modules/
+hermes-agent/**/node_modules/
+lsp/node_modules/
+hermes-agent/__pycache__/
+hermes-agent/**/__pycache__/
+**/__pycache__/
+**/*.pyc
+EOF
+fi
 for entry in auth.json .env .hermes_history gsc/client_secret.json gsc/token.json; do
   if ! grep -qxF "$entry" .gitignore 2>/dev/null; then
     echo "$entry" >> .gitignore
@@ -319,6 +371,7 @@ rm -rf /tmp/hermes-backup/
 - **Credentials storage** — PATs are stored in two places: `~/.config/git/credentials` (credential store) and potentially `/tmp/git-cred-helper.py` (custom helper). Both must be updated when the PAT rotates. The custom helper is registered via `git config --global credential.https://github.com.helper /tmp/git-cred-helper.py`.
 - **GitHub push protection** blocks commits containing `sk-*` API keys. Always strip them before committing, then scan with grep. Note: config.yaml keys are usually truncated (e.g. `sk-8bc...87d2`) which doesn't trigger push protection.
 - **`rsync --delete` may warn** about non-empty directories from old backup artifacts. Just git rm + rm them manually.
+- **`rsync --delete` can wipe the working tree's `.gitignore` if the source doesn't have one** — During rsync, if `~/.hermes/.gitignore` is absent (e.g., because the user never created one, or the file is `.gitignore` in root but not in `~/.hermes/`), the step's already-existing `.gitignore` from the previous commit gets deleted from `/tmp/<backup>/`, and step 3's append loop then creates a near-empty `.gitignore` containing only the 5 entries it adds. **Fix:** after rsync and before step 3, verify `.gitignore` exists in the working tree. If it's missing, immediately write the FULL exclusion list (caches, node_modules, **pycache**, secrets) rather than just augmenting it. A near-empty `.gitignore` allows sensitive files to be tracked by `git add -A` in step 6 even though they were excluded from rsync in step 2 — because git tracks them on subsequent commits when `.gitignore` doesn't list them.
 - **auth.json is excluded entirely** from rsync (unlike the old approach of syncing then stripping). `auth.lock` (its companion lock file) should also be cleaned up.
 - **hermes-agent/node_modules/ is huge** (~100k+ files). Exclude it from rsync to avoid timeouts (can take >60s otherwise). Same for `__pycache__/` directories.
 - **config.yaml keys are usually truncated** (e.g. `sk-8bc...87d2`) — GitHub's secret scanning won't flag them. Only auth.json has full credential payloads.

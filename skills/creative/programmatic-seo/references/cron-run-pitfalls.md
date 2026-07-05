@@ -983,3 +983,55 @@ H1/H2 are English so the article is found by the primary English
 audience. The 06-29 article's structure (`<h1>` all English, body
 prose with 4 inline Chinese etymological references) is the correct
 template.
+
+## 24. Patch tool can DELETE body content when `old_string` spans two paragraphs (verified 2026-07-04, chinahospitalsguide)
+
+**Symptom:** A `patch` call intended to insert an em-dash parenthetical into a paragraph silently deletes 100-200 words of body prose. The patch returns `success: true` with a clean diff that shows the old paragraph replaced by a shorter new paragraph — but the deleted text is gone from the file. The article still renders, but the missing paragraph's content (typically institutional context, hospital list, or protocol detail) is absent.
+
+**The trap (verified 2026-07-04, chinahospitalsguide Yue et al. electroacupuncture article):** I tried to "split" a long paragraph by patching it in two — `old_string` was the first 2 sentences of paragraph A and the entire paragraph B (because I wanted the new em-dash to land inside paragraph A while keeping paragraph B unchanged). The patch tool's fuzzy matcher found a unique match at the start of paragraph A, and the replacement included only paragraph A's modified version — paragraph B got silently dropped. The success-flagged diff showed the change cleanly; only a follow-up `head -260` read showed paragraph B was missing.
+
+**Why this happens:** the `patch` tool treats `old_string` as a single block to remove. If `old_string` spans two paragraphs, both paragraphs are removed. If `new_string` only contains a modified version of the first paragraph, the second paragraph is GONE, not preserved. The tool's diff output makes it look like a clean replacement, not a deletion.
+
+**Recipe — to insert an em-dash (or any parenthetical) into an existing paragraph WITHOUT deleting other content (verified 2026-07-04):**
+
+1. Make `old_string` a SINGLE sentence or sub-clause inside the target paragraph, NOT the whole paragraph and definitely not "this paragraph + the next paragraph."
+2. Make `new_string` ONLY that sentence/clause with the em-dash added — do NOT include any other sentences in `new_string`.
+3. Verify after the patch: `grep -c "<unique-string-from-paragraph-B>" FILE.html` — if the count dropped from 1 to 0, the paragraph B was deleted and must be restored.
+
+**Recovery when the deletion has already happened (verified 2026-07-04):**
+
+1. Run `git diff FILE.html` to see the exact text that was removed
+2. Re-patch with `old_string = <modified version of paragraph A from current file>` and `new_string = <modified paragraph A> + <deleted paragraph B restored>`
+3. Re-verify with the same grep from step 3 above (count should be back to 1)
+4. Cost: 1 extra patch call + 1 grep call. The article is back to its pre-deletion state, with the new em-dash added.
+
+**Pre-patch verification recipe (verified, always run):**
+
+```bash
+# 1. Confirm old_string is unique in the file (catches fuzzy-matcher surprises)
+grep -c -F "<first 30 chars of old_string>" FILE.html
+# Expect: 1 match. If >1, narrow old_string or the fuzzy matcher may pick the wrong one.
+
+# 2. After patch, confirm any content adjacent to old_string is still present
+# Pick a unique 10-char substring from the paragraph BEFORE the patch target,
+# and a unique 10-char substring from the paragraph AFTER
+grep -c "<before-substring>" FILE.html  # expect same count as before patch
+grep -c "<after-substring>" FILE.html   # expect same count as before patch
+```
+
+**Cost of the verification recipe:** 2 grep calls before patch + 2 after = 4 tool calls. The cost of NOT verifying is a deleted-paragraph bug that ships to production or requires a multi-call recovery.
+
+**Why this matters more for em-dash density tuning:** the natural humanize-pass workflow is "add 5-10 em-dashes via patch to lift density from 10/1200 to 17/1200" — i.e. many small patches to many paragraphs. Each patch is a potential deletion site if `old_string` accidentally spans paragraph boundaries. The 2026-07-04 run hit this on the second em-dash-insertion patch of the humanize loop. Always re-verify paragraph boundary integrity after EACH em-dash-insertion patch, not just at the end of the loop.
+
+**Combine with the existing patch pitfalls (06-12 + 06-09 + 07-04):** three independent failure modes on the same tool — HTML entity decoding (06-12), Chinese-character accidents (06-09), paragraph-deletion on multi-paragraph `old_string` (07-04). One pre-write grep + one post-write grep covers all three at a 2-tool-call cost:
+
+```bash
+# Pre-write: confirm old_string is unique
+grep -c -F "<first 30 chars of old_string>" FILE.html
+# Post-write: confirm 3 invariants at once
+grep -E 'googletagmanager|googletermanger|"@@' FILE.html  # JSON-LD + GA URL (per pitfall #15 + #19)
+grep -c "<before-substring>" FILE.html                     # paragraph before still intact
+grep -c "<after-substring>" FILE.html                      # paragraph after still intact
+```
+
+If any of the three post-write greps fails, the patch had a side effect — investigate before committing.

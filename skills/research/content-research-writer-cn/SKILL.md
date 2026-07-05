@@ -1,7 +1,7 @@
 ---
 name: content-research-writer-cn
 description: "Research Chinese medical/health news热点 for daily article publishing on chinahospitalsguide.com. Find timely, relevant stories from Chinese medical sources."
-version: 1.1.9
+version: 1.2.0
 author: Hermes Agent
 platforms: [linux]
 metadata:
@@ -15,11 +15,13 @@ metadata:
 Research Chinese medical/health news热点 for daily article publishing on chinahospitalsguide.com.
 
 ## Context
-
+-- Research Chinese medical/health news热点 for daily article publishing on chinahospitalsguide.com.
 - Website: https://chinahospitalsguide.com (medical tourism guide for China)
 - Article output: `news/` directory, file naming `YYYY-MM-DD.html`
 - Publishing cadence: 1 article per day (栏目新建期)
 - Quality bar: 去AI化评分 >60; no good热点 = no publish (宁缺毋滥)
+
+**⛔ CRITICAL — cap-safe execution (10 documented mid-pipeline cap-hits, 2026-06-14 → 2026-07-05):** The classic order `research → write → humanize loop → commit → push → verify` burns 30+ tool calls and reliably hits the cron iteration cap during the humanize loop, leaving articles uncommitted. **Commit + push MUST happen BEFORE the humanize loop.** Ship at 60/100 first, polish later. See `cron-content-pipeline-cap-safe` skill for the full pattern. The previous "next cron run recovers" recipe is broken by design — the next run doesn't have budget for both recovery AND a fresh article.
 
 ## Research Sources
 
@@ -73,6 +75,8 @@ For clinical advances with Chinese relevance (新疗法, 新药上市, 国际临
 3. Only fetch the source for candidates with 0 matches
 
 This front-loads the de-dup check to save source-fetch tool calls. The 2026-06-13 BT/Bloomberg record is `grep -lE "(Stuart Lye|65,000|clinical-research fees|brain-implant|Market Research Future|US\$1\.3B)" news/*.html` returning 0 matches; the 2026-06-14 candidates would have failed the same grep on `xenotransplant|pig liver|Guangxi Medical` (matched 06-11 article) and on `Lecheng Service Center|10,000 inbound|560 innovative` (matched 06-03 article), saving 5-6 tool calls.
+
+**⛔ Cap-hit recovery — READ THIS BEFORE TRUSTING THE NEXT-CRON-RUN RECIPES BELOW (updated 2026-07-05):** The skill historically recommends "the next cron run should detect this state with `git status` and JUST push + verify, NOT start fresh research." **This recipe is broken by design.** In practice the next cron run has ~30 calls of budget; recovery takes ~5 calls; that leaves ~25 calls for a fresh article — which is usually not enough. The actual observed failure rate is 10 documented cap-hits in 2 months following this exact recipe (06-14, 06-16, 06-17, 06-21, 06-28, 07-02, 07-04, 07-05 + 2 unlabelled). **The correct fix is structural: commit+push BEFORE humanize, not "let the next run recover."** See `cron-content-pipeline-cap-safe` skill for the full pattern. The specific case-by-case recovery recipes below are kept as historical documentation of what failed, not as current best-practice — when a fresh cap-hit happens, the priority is to apply the structural fix, not to add another "next cron recovers" entry. See `references/cron-cap-hit-log.md` for the running log + failure-mode taxonomy (phase A-F, 3-in-30-days trigger rule). See `references/cron-cap-hit-log.md` for the running log + failure-mode taxonomy.
 
 **Cron iteration cap near-miss: state on disk is durable (verified 2026-06-14):** the 2026-06-14 cron run completed Steps 1-5 (research, article, humanize to 95, sitemap, index.html) and the local git commit (hash `c8bffec`) succeeded, but the cron iteration cap was hit before `git push origin master` and the `sleep 180 && curl HTTP 200 verify` could run. The article is fully baked and on the master branch locally, just not pushed. **The next cron run should detect this state with `git status` ("Your branch is ahead of 'origin/master' by N commits" with N≥1 and a 2026-06-14 article in the working tree) and JUST push + verify, NOT start fresh research.** The recovery command is documented in `references/pending-2026-06-14-akeso-gumokimab-shipped.md`. This is the first cron run where the cap was hit between commit and push — earlier 2026-06-XX runs hit the cap earlier (during research or writing) and used the pending-file handoff instead. The post-commit cap-hit is a NEW failure mode and a NEW recovery pattern.
 
