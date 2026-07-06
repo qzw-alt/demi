@@ -1,7 +1,7 @@
 ---
 name: seo-article-publish-cron
 description: "Run a daily SEO article publishing cron job — verify repo state, match existing article template, write English article, de-AI pass, update sitemap, commit and push to the deployed branch. Use when a cron task says 'publish daily SEO article to <site>' with a GitHub Pages deployment from a repo."
-version: "1.2.0"
+version: "1.3.0"
 author: Hermes Agent
 license: MIT
 platforms: [linux]
@@ -122,7 +122,38 @@ Avoid:
 - Topics too narrow (single-day search traffic)
 - Topics the site has already established a position on (don't contradict yesterday's stance)
 
-## De-AI pass (hard gate)
+### Primary keyword and headline template (HARD RULE)
+
+Every article on this site has a **Primary Keyword** that MUST appear in `<title>`, `<h1>`, `og:title`, and `schema.org headline`. The template is:
+
+```
+[Primary Keyword]: [Long-tail Hook] | Oriental Destiny
+```
+
+Where:
+- **Primary Keyword** = `X Feng Shui` | `X BaZi` | `X Destiny` form. The head term (`Feng Shui` / `BaZi` / `Destiny`) **must not be dropped**.
+- **X** = a concrete topic object (Front Garden / Back Garden / Balcony / Rooftop / Li Qiu / Door / Bedroom / Kitchen / a specific solar term). NOT a pure temporal adverb like "Eve" or "Morning" without an anchor object.
+- **Long-tail Hook** = a scene-setting long-tail phrase, e.g. "What to Do on the Eve Before the Fire-to-Earth Handoff".
+
+**Examples (✅ / ❌):**
+- ✅ `Front Garden Feng Shui for July: What to Do in the Fire-to-Earth Transition`
+- ✅ `Li Qiu Feng Shui: What to Do on the Eve Before the Fire-to-Earth Handoff`
+- ❌ `Li Qiu Eve: The Night Before the Fire-to-Earth Handoff` (head term `Feng Shui` dropped — the article was realigned on 2026-07-06 to fix exactly this)
+- ❌ `July Outdoor Reading` (no head term, no concrete object)
+
+The `<meta name="description">` MUST contain the Primary Keyword in the **first sentence** — don't make readers wait until sentence 3 to see what the article is about.
+
+**Why this matters:** a daily SEO site earns topical authority by clustering. The oriental-destiny.com July thread was built on `Front Garden / Back Garden / Balcony / Rooftop / Outdoor + Feng Shui for July`. If one article in the thread drops the head term (`Feng Shui`), the cluster fractures and that one article ranks for a near-zero-volume phrase (`Li Qiu Eve` ≠ `Li Qiu Feng Shui`). The cron is responsible for this — topic research notes won't catch it.
+
+**Self-check before publishing (run after drafting, before de-AI):**
+1. `grep -oE '<title>[^<]+</title>' fate-YYYY-MM-DD.html` — does it match the template? If not, rewrite.
+2. `grep -oE '<h1[^>]*>[^<]+</h1>' fate-YYYY-MM-DD.html` — does it match the `<title>` exactly (modulo the "| Oriental Destiny" suffix)?
+3. `grep -oE 'og:title"[^>]*content="[^"]+"' fate-YYYY-MM-DD.html` — does it match?
+4. `grep -A1 '"headline"' fate-YYYY-MM-DD.html` — does the schema.org headline match?
+
+If any of the four mismatch the template, **fix and re-verify before running the de-AI gate**.
+
+### Continuity over novelty
 
 The cron spec usually says "de-AI score > 60 to publish." Treat it as a hard gate. Run the humanizer skill audit (the SKILL.md lists 29 patterns to scan).
 
@@ -282,6 +313,36 @@ A repo with two article styles (e.g., one template for `fate-YYYY-MM-DD.html` an
 
 If yesterday's article was "Bagua Map" and today you write "Five Elements," you've broken the series continuity. The footer cross-link block will look weird, the reader's mental model breaks, and the site's topical authority is split across disjoint articles. Always read yesterday first.
 
+### Don't ship an article that dropped the head term from the cluster (verified 2026-07-06)
+
+The most subtle cluster-fracture is the one where the article is *about* the same topic as yesterday but the **headline doesn't carry the cluster's keyword**. The 2026-07-06 `fate-2026-07-06.html` shipped with `Li Qiu Eve: The Night Before the Fire-to-Earth Handoff` — a phrase that has near-zero search volume — breaking the July thread's `Front/Back/Balcony/Rooftop + Feng Shui for July` cluster on the article that was supposed to *cap* the thread (the eve-of-Li-Qiu closing article).
+
+**Recipe to catch this BEFORE de-AI / publish:**
+```bash
+# Show today's headline + the prior 6 articles' headlines for visual coherence check
+for f in $(ls -t fate-*.html | head -7); do
+  echo -n "$(basename $f): "
+  grep -oE '<title>[^<]+</title>' "$f" | head -1
+done
+```
+
+If today's title is the odd one out (no shared head term with the prior 6), rewrite the headline to match the cluster before publishing. The body content can be left alone — the topic was right, only the keyword wrapper was wrong.
+
+**Fix recipe for a ship-already article (verified 2026-07-06):** the fix is in 5 places that must move together:
+- `<title>` (and ensure it's the only `<title>` — duplicate `<title>` tags break SEO)
+- `<meta name="description">` (Primary Keyword in first sentence)
+- `<meta property="og:title">` + `og:description`
+- `<h1>` and hero `.subtitle` (subtitle usually mirrors the keyword too)
+- `schema.org` JSON-LD `"headline"` and `"description"`
+
+Use `patch` with a precise multi-line `old_string` that captures all 5 in one block, NOT one-by-one. One-by-one is brittle because of the `og:title` content length and the JSON-LD formatting. Do NOT add a `<meta name="keywords">` tag — Google has ignored that meta since 2009 and the prior 5 articles don't have one (consistency matters more than a 0-impact tag).
+
+Verify with:
+```bash
+grep -E '<title>|<h1>|headline|og:title' fate-YYYY-MM-DD.html | head -10
+```
+All four should show the same Primary Keyword in the same position.
+
 ### Topic threading: the "conceptual foundation ladder" pattern (verified 2026-06-24 → 2026-06-28)
 
 The seasonal threading pitfall above covers month-long themes (June = Fire Month room walk). A second, complementary pattern emerged in late June 2026: the **conceptual foundation ladder** — a 4-5 day sequence of articles that climb from one layer of the practice to the next, where each new article assumes the prior one as background. Verified sequence from oriental-destiny.com June 2026:
@@ -319,6 +380,19 @@ The footer "Explore more" block should link to the prior 3-5 articles in the sam
 
 **Don't inherit a sibling-agent's sitemap indent (verified 2026-07-03):** when patching sitemap.xml, the new entry's indentation should match the file's DOMINANT convention (typically 4 spaces in this repo), not the immediately-prior entry's indent. The 2026-07-03 patch initially came in at 6-space indent because I copy-pasted the 07-02 entry as my anchor — and the 07-02 entry itself was at 6-space indent (a sibling-agent artifact from the prior day). The fix was a second patch to normalize the new entry to 4 spaces. Check `head -20 sitemap.xml` after the first patch and compare the new entry's indent to entries 3-5 lines down (the historical convention) before committing. Don't "fix" the sibling's wrong indent in the same commit — that's a separate concern, and mixing it with the new article's commit pollutes the article's diff.
 
+**Image-filename sanity check before referencing in news/index.html (verified 2026-07-06):** when writing the `news/index.html` card for a new article, always run `ls images/ | grep KEYWORD` BEFORE referencing any image filename. The article page itself rarely references an image (it lives inline as content), but the index card almost always does. The 2026-07-06 run initially wrote `images/tcm-herbal-medicine.jpg` as the index card's image source — a name I generated from the article's topic that doesn't actually exist on the repo (the repo has `wellness-spa.jpg`, `china-hospital.jpg`, etc., but no `tcm-*` images). The fix was a follow-up patch to swap to `wellness-spa.jpg` (a real file that fits the AI-TCM wellness angle and was already used by the 07-03 bathhouse article). The broader lesson: **image filenames are a curated list on the repo, not a topic-derivable string**. Default to grepping for an existing filename that fits the article's visual angle, and only commit to a new image path if you've actually placed the file. Quick recipe:
+
+```bash
+# Find a fitting image by topic keyword
+ls images/ | grep -iE "wellness|tcm|china|hospital|medical"
+# If a fit exists, use it. If none fit, fall back to the most generic available:
+# wellness-spa.jpg, china-hospital.jpg, medical-tourism.jpg, global-medical.jpg
+```
+
+The fallback list (verified 2026-07-06): `wellness-spa.jpg` (TCM/wellness/traditional therapy), `china-hospital.jpg` / `china-hospital-building.jpg` (hospital/clinical), `medical-tourism.jpg` (general medical tourism), `global-medical.jpg` (general international medical). One of these will fit almost any medical article. Don't invent a new image path on the fly.
+
+**news/index.html canonical-pattern insertion despite sibling-agent artifact messiness (verified 2026-07-06):** the news/index.html file on multi-agent-cron repos often ends up with interleaved `<article class="news-item">` and `<article class="news-card">` blocks from sibling agents' earlier patches. When inserting a new article card, match the **canonical pattern** (`<article class="news-item">` on chinahospitalsguide) — not whatever the immediately-prior entry uses. Do NOT attempt to clean up the sibling's artifacts in the same patch — that's a separate concern that should ship in its own commit. The 2026-07-06 run inserted cleanly into the canonical pattern even though lines 270-300 of the index showed visible sibling-style interleaving (news-item + news-card mixed). The canonical-pattern anchor (`<article class="news-item">` followed by `<img src="../images/...">`) was uniquely identifiable in the file even with the sibling mess around it. Don't "fix" the sibling's wrong style in the same commit — that pollutes the article's diff and adds review surface for the article itself.
+
 ### Don't use wrong date format
 
 The filename pattern is `fate-YYYY-MM-DD.html` (ISO 8601). The `datePublished` JSON-LD field uses the same format. The visible "Published" line uses a long-form format ("Published June 25, 2026 · 9 min read"). The reading time is a rough estimate based on word count (~200 words/min).
@@ -329,10 +403,11 @@ The filename pattern is `fate-YYYY-MM-DD.html` (ISO 8601). The `datePublished` J
 2. **Template fingerprint** (3 min): read yesterday's article, extract CSS/structure
 3. **Topic selection** (2 min): read research notes, pick topic that ladders from yesterday
 4. **Draft** (15-20 min): write 3,500-4,500 word article in matching template
-5. **De-AI audit** (3 min): programmatic scan + manual humanizer pass
-6. **Sitemap update** (1 min): add new entry at top
-7. **Commit and push** (1 min): `git add . && git commit && git push origin <branch>`
-8. **Verify** (90s): sleep, then curl to confirm 200 + correct title
+5. **Keyword template check** (1 min): confirm `<title>` / `<h1>` / `og:title` / schema.org headline all match the `[X Feng Shui/BaZi/Destiny]: [Long-tail Hook]` template and match the cluster's head term — see "Primary keyword and headline template" above
+6. **De-AI audit** (3 min): programmatic scan + manual humanizer pass
+7. **Sitemap update** (1 min): add new entry at top
+8. **Commit and push** (1 min): `git add . && git commit && git push origin <branch>`
+9. **Verify** (90s): sleep, then curl to confirm 200 + correct title
 
 Total: ~30 minutes. Buffer: 5-10 minutes for fixes if any step goes wrong.
 

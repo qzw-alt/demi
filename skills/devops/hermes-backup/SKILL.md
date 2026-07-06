@@ -305,6 +305,8 @@ done
 echo "Secret scan complete"
 ```
 
+> **Verification tip:** A scan hit doesn't tell you whether the matched string is a real key or an already-truncated placeholder — both look identical on the terminal. Always confirm with `xxd` or a Python byte-length check before declaring clean. See `references/secret-redaction-verification.md` for the recipe.
+
 ### 6. Commit and push
 ```bash
 TIMESTAMP=$(date '+%Y-%m-%d_%H:%M')
@@ -359,7 +361,9 @@ rm -rf /tmp/hermes-backup/
 - **Terminal display truncation trap** — The terminal (read_file / print / repr) truncates long strings in the 
   middle with `...`. A key displayed as `sk-8bc...87d2` is NOT necessarily truncated in the file — it may be the full
   35-char key `sk-8bc...87d2` with only the middle hidden. Always verify with Python hex (`val.hex()`) or `xxd`
-  when checking whether keys are safe for GitHub.
+  when checking whether keys are safe for GitHub. For byte-level disambiguation recipes (xxd worked example,
+  Python byte-loop check, truncation script that handles both cases), see
+  `references/secret-redaction-verification.md`.
 - **API keys may contain `-` and `_` characters** — DeepSeek keys are hex-only (`a-zA-Z0-9`), but MinMax,
   Anthropic, and other providers use `-` and `_` in their keys (e.g. `sk-cp-lL-JHWT...`). The regex for scanning
   and truncation must use `[a-zA-Z0-9_-]` not just `[a-zA-Z0-9]` to catch all keys.

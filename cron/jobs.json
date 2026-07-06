@@ -3,7 +3,7 @@
     {
       "id": "c2aefdf3bada",
       "name": "daily-oriental-destiny-article",
-      "prompt": "\u6bcf\u5929\u4e3a oriental-destiny.com \u98ce\u6c34\u547d\u7406\u7f51\u7ad9\u53d1\u5e03\u4e00\u7bc7\u82f1\u6587 SEO \u79d1\u666e\u6587\u7ae0\u3002\n\n## \u4ed3\u5e93\n- GitHub: https://github.com/qzw-alt/oriental-destiny\n- \u5206\u652f: master\n- GitHub Pages \u76f4\u63a5\u4ece master \u90e8\u7f72\n\n## \u5de5\u4f5c\u6d41\u7a0b\uff086\u6b65\uff09\n1. **\u7814\u7a76**\uff1a\u4ece\u8bb0\u5fc6\u4e2d\u8bfb\u53d6\u7ade\u54c1\u516c\u53f8\u8d44\u6599\uff08memories/layer3/research/competitor-research.md\uff09\uff0c\u627e\u98ce\u6c34/\u516b\u5b57/\u547d\u7406\u76f8\u5173\u4e3b\u9898\n2. **SEO\u5199\u4f5c**\uff1a\u6309 skills/programmatic-seo/SKILL.md \u6d41\u7a0b\u5199\u82f1\u6587\u6587\u7ae0\uff08\u82f1\u6587\u8f93\u51fa\uff09\n3. **\u53bbAI\u5316**\uff1a\u7528 skills/humanizer/SKILL.md \u5904\u7406\uff0c\u8bc4\u5206>60\u5fc5\u987b\u4fee\u6539\u540e\u518d\u53d1\u5e03\n4. **\u53d1\u5e03**\uff1a\u6587\u7ae0\u4fdd\u5b58\u5230 oriental-destiny \u6839\u76ee\u5f55\uff0c\u547d\u540d\u683c\u5f0f `fate-YYYY-MM-DD.html`\n5. **\u66f4\u65b0sitemap**\uff1a\u5728 sitemap.xml \u4e2d\u6dfb\u52a0\u65b0\u6587\u7ae0\u6761\u76ee\n6. **\u63a8\u9001**\uff1agit add . && git commit -m \"article: $(date +%Y-%m-%d)\" && git push origin master\n\n## \u8d28\u91cf\u6807\u51c6\n- \u4e3b\u9898\u57fa\u4e8e\u7ade\u54c1\u516c\u53f8\u8d44\u6599\uff08feng shui / bazi / destiny / \u547d\u7406\u76f8\u5173\uff09\n- \u82f1\u6587\u8f93\u51fa\uff0c\u9762\u5411\u82f1\u6587\u8bfb\u8005\n- \u53bbAI\u5316\u8bc4\u5206\u5fc5\u987b >60 \u624d\u53d1\u5e03\n- \u6587\u7ae0\u5185\u5bb9\u9700\u539f\u521b\uff0c\u4e0d\u662f\u7b80\u5355\u590d\u8ff0\n\n## \u90e8\u7f72\u540e\u9a8c\u8bc1\n\u7b49 2-3 \u5206\u949f\u540e\u68c0\u67e5\u7f51\u7ad9\u662f\u5426\u6b63\u5e38\u8bbf\u95ee\u65b0\u6587\u7ae0\u3002\n\n## \u8f93\u51fa\u683c\u5f0f\n\u5b8c\u6210\u540e\u62a5\u544a\uff1a\n- \u6587\u7ae0\u6807\u9898\n- \u5b57\u6570\n- \u53bbAI\u5316\u8bc4\u5206\n- \u53d1\u5e03\u7684 URL",
+      "prompt": "\u6bcf\u5929\u4e3a oriental-destiny.com \u98ce\u6c34\u547d\u7406\u7f51\u7ad9\u53d1\u5e03\u4e00\u7bc7\u82f1\u6587 SEO \u79d1\u666e\u6587\u7ae0\u3002\n\n## \u4ed3\u5e93\n- GitHub: https://github.com/qzw-alt/oriental-destiny\n- \u5206\u652f: **main**(\u6ce8\u610f:GitHub \u9ed8\u8ba4\u5206\u652f\u5df2\u6539\u4e3a main,\u4e0d\u662f master)\n- GitHub Pages \u76f4\u63a5\u4ece main \u90e8\u7f72\n\n## \u5173\u952e\u8bcd\u6a21\u677f\uff08HARD RULE,\u8fdd\u53cd\u5fc5\u987b\u91cd\u5199\uff09\n\n\u6bcf\u7bc7\u6587\u7ae0\u7684 **<title>\u3001<h1>\u3001og:title\u3001schema.org headline** \u5fc5\u987b\u6309\u4ee5\u4e0b\u6a21\u677f:\n\n`[Primary Keyword]: [Long-tail Hook] | Oriental Destiny`\n\n\u5176\u4e2d:\n- **Primary Keyword** \u5fc5\u987b\u662f\"X Feng Shui\"\u6216\"X BaZi\"\u6216\"X Destiny\" \u5f62\u6001,\u4e3b\u8bcd(Feng Shui/BaZi/Destiny)\u4e0d\u80fd\u4e22\n- X = \u4e3b\u9898\u5bf9\u8c61(Front Garden / Back Garden / Balcony / Rooftop / Li Qiu / Door / Bedroom / Kitchen / \u7b49\u5177\u4f53\u4e8b\u7269\u6216\u8282\u6c14),\u4e0d\u80fd\u662f\"Li Qiu Eve\"\u8fd9\u79cd\u7eaf\u65f6\u95f4\u526f\u8bcd\n- **Long-tail Hook** = \u573a\u666f\u5316\u957f\u5c3e,\u5982 \"What to Do on the Eve Before the Fire-to-Earth Handoff\"\n- \u6a21\u677f\u793a\u4f8b:\n  - \u2705 `Front Garden Feng Shui for July: What to Do in the Fire-to-Earth Transition`\n  - \u2705 `Li Qiu Feng Shui: What to Do on the Eve Before the Fire-to-Earth Handoff`\n  - \u274c `Li Qiu Eve: The Night Before the Fire-to-Earth Handoff` (\u4e3b\u8bcd Feng Shui \u7f3a\u5931)\n  - \u274c `July Outdoor Reading` (\u4e3b\u8bcd\u7f3a\u5931\u4e14\u65e0\u5bf9\u8c61 X)\n\n\u6bcf\u4e2a **<meta name=\"description\">** \u4e5f\u5fc5\u987b\u5728\u7b2c\u4e00\u53e5\u5c31\u51fa\u73b0 Primary Keyword(\u5982\"Li Qiu Feng Shui for...\"\u3001\"Front Garden Feng Shui...\"),\u4e0d\u8981\u7b49\u7b2c\u4e09\u53e5\u624d\u51fa\u73b0\u3002\n\n\u53c2\u8003\u8fd1 30 \u5929\u6587\u7ae0\u7684\u5173\u952e\u8bcd\u7ed3\u6784\u4fdd\u6301\u4e3b\u9898\u96c6\u7fa4\u8fde\u8d2f\u3002\n\n## \u5de5\u4f5c\u6d41\u7a0b(6\u6b65)\n1. **\u7814\u7a76**:\u4ece\u8bb0\u5fc6\u4e2d\u8bfb\u53d6\u7ade\u54c1\u516c\u53f8\u8d44\u6599(memories/layer3/research/competitor-research.md),\u627e\u98ce\u6c34/\u516b\u5b57/\u547d\u7406\u76f8\u5173\u4e3b\u9898\n2. **SEO\u5199\u4f5c**:\u6309 skills/programmatic-seo/SKILL.md \u6d41\u7a0b\u5199\u82f1\u6587\u6587\u7ae0(\u82f1\u6587\u8f93\u51fa)\u3002**\u5199\u5b8c\u540e\u5fc5\u987b\u5148\u81ea\u67e5\u5173\u952e\u8bcd\u6a21\u677f,H1/title/og:title/schema headline \u662f\u5426\u90fd\u7b26\u5408,\u4e0d\u7b26\u5408\u5148\u91cd\u5199\u518d\u8fdb\u5165\u6b65\u9aa4 3\u3002**\n3. **\u53bbAI\u5316**:\u7528 skills/humanizer/SKILL.md \u5904\u7406,\u8bc4\u5206>60\u5fc5\u987b\u4fee\u6539\u540e\u518d\u53d1\u5e03\n4. **\u53d1\u5e03**:\u6587\u7ae0\u4fdd\u5b58\u5230 oriental-destiny \u6839\u76ee\u5f55,\u547d\u540d\u683c\u5f0f `fate-YYYY-MM-DD.html`\n5. **\u66f4\u65b0sitemap**:\u5728 sitemap.xml \u4e2d\u6dfb\u52a0\u65b0\u6587\u7ae0\u6761\u76ee\n6. **\u63a8\u9001**:**`git add . && git commit -m \"article: $(date +%Y-%m-%d)\" && git push origin main`**(\u63a8 main,\u4e0d\u662f master)\n\n## \u8d28\u91cf\u6807\u51c6\n- \u4e3b\u9898\u57fa\u4e8e\u7ade\u54c1\u516c\u53f8\u8d44\u6599(feng shui / bazi / destiny / \u547d\u7406\u76f8\u5173)\n- \u82f1\u6587\u8f93\u51fa,\u9762\u5411\u82f1\u6587\u8bfb\u8005\n- \u53bbAI\u5316\u8bc4\u5206\u5fc5\u987b >60 \u624d\u53d1\u5e03\n- \u6587\u7ae0\u5185\u5bb9\u9700\u539f\u521b,\u4e0d\u662f\u7b80\u5355\u590d\u8ff0\n- **\u5173\u952e\u8bcd\u6a21\u677f\u5fc5\u987b\u4e25\u683c\u6267\u884c**(\u89c1\u9876\u90e8 HARD RULE)\n\n## \u90e8\u7f72\u540e\u9a8c\u8bc1\n\u7b49 2-3 \u5206\u949f\u540e\u68c0\u67e5\u7f51\u7ad9\u662f\u5426\u6b63\u5e38\u8bbf\u95ee\u65b0\u6587\u7ae0\u3002\n\n## \u8f93\u51fa\u683c\u5f0f\n\u5b8c\u6210\u540e\u62a5\u544a:\n- \u6587\u7ae0\u6807\u9898\n- Primary Keyword (\u6309\u6a21\u677f\u62c6\u51fa\u6765\u7684)\n- \u5b57\u6570\n- \u53bbAI\u5316\u8bc4\u5206\n- \u53d1\u5e03\u7684 URL",
       "skills": [
         "programmatic-seo",
         "humanizer"
@@ -23,15 +23,15 @@
       "schedule_display": "0 8 * * *",
       "repeat": {
         "times": null,
-        "completed": 40
+        "completed": 41
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T14:45:42.377747+08:00",
-      "next_run_at": "2026-07-06T08:00:00+08:00",
-      "last_run_at": "2026-07-05T08:05:01.310505+08:00",
+      "next_run_at": "2026-07-07T08:00:00+08:00",
+      "last_run_at": "2026-07-06T08:06:06.931869+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -66,15 +66,15 @@
       "schedule_display": "0 9 * * *",
       "repeat": {
         "times": null,
-        "completed": 35
+        "completed": 36
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T17:20:53.016111+08:00",
-      "next_run_at": "2026-07-06T09:00:00+08:00",
-      "last_run_at": "2026-07-05T09:01:06.955637+08:00",
+      "next_run_at": "2026-07-07T09:00:00+08:00",
+      "last_run_at": "2026-07-06T09:06:21.385307+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -109,15 +109,15 @@
       "schedule_display": "0 22 * * *",
       "repeat": {
         "times": null,
-        "completed": 37
+        "completed": 38
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T17:22:43.447182+08:00",
-      "next_run_at": "2026-07-06T22:00:00+08:00",
-      "last_run_at": "2026-07-04T22:04:54.722425+08:00",
+      "next_run_at": "2026-07-07T22:00:00+08:00",
+      "last_run_at": "2026-07-05T22:04:41.111345+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -156,17 +156,17 @@
       "schedule_display": "0 9 * * *",
       "repeat": {
         "times": null,
-        "completed": 41
+        "completed": 42
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-02T08:16:41.523255+08:00",
-      "next_run_at": "2026-07-06T09:00:00+08:00",
-      "last_run_at": "2026-07-05T09:09:45.401007+08:00",
-      "last_status": "error",
-      "last_error": "RuntimeError: ## Cron run for 2026-07-04 \u2014 mid-pipeline cap-hit, article written but not committed\n\n### What was accomplished\n\n**Research (Step 1):** Fresh Chinese-medical hot-topic identified via Bing News + CrossRef API. The story is the **Yue et al. meta-analysis published in Frontiers in Neurology on 12 January 2026** (DOI 10.3389/fneur.2025.1673716) pooling 30 RCTs and 2,290 stroke patients \u2014 electroacupuncture combined with swallowing training produced a 29% relative increase in effective rate for post-stroke dysphagia (RR = 1.29, 95% CI 1.23\u20131.34, p < 0.0001), cut aspiration pneumonia risk by more than half (RR = 0.41), and identified dense-sparse wave (Ds-W) as the highest-yield electrical waveform. 22 of 30 trials are Chinese \u2014 a textbook TCM-Western integration story.\n\n**De-dup check (Step 2):** Zero matches against the existing 70-article news library on anchor strings `(Yue.*Mengqi|Yue Mengqi|2,290.*patients|30.*RCT.*PSD|RR = 1\\.29|Frontiers.*dysphagia)`. Shippable.\n\n**Article written (Step 3):** `news/2026-07-04-electroacupuncture-post-stroke-dysphagia-china-frontiers-meta-analysis-2026.html`\n- **~4,377 words** (long-form, archetype: clinical-research meta-analysis)\n- 6 H2 sections: What the meta-analysis found / What electroacupuncture for dysphagia looks like at a Chinese rehabilitation department / Why the Chinese evidence base is so large / How an international patient can access the Chinese protocol / What an international patient should ask before booking / What the next 12 to 18 months are likely to bring\n- Pullquote from the Frontiers paper's conclusions section\n- Data-box with 6 key data points (RR, CI, p-values, cost comparison, WHO endorsement)\n- 8 internal links in the related-reading section (acupuncture-treatment-china-2026, tcm-traditional-chinese-medicine-guide, integrated-chinese-western-medicine-china, deep-brain-stimulation-china-2026, neurosurgery-cost-china, 2026-07-02-acupuncture-ivf, 2026-07-01-cuhk-medicine, 2026-06-11-bloomberg)\n- Two JSON-LD blocks (Article schema + BreadcrumbList), GA4 tag, canonical URL\n\n**Humanize score (Step 4):** **73/100** (threshold 60) on first pass via `humanize_score.py`. Zero body-prose AI-vocab hits (`actually`, `leverage`, `pivotal`, `navigate`, `landscape`, `delve`, `underscore`, `showcase`, `tapestry`). The 2 flagged `enhance` / `furthermore` hits are inside the Frontiers paper's verbatim conclusions pullquote \u2014 per the verified 2026-06-25 \"banned-vocab inside source-quote attributions are FALSE POSITIVES\" rule, left untouched. Em-dash density ~12/1200, within the long-article (4,000+ word) tolerance band per the 06-14 finding.\n\n**Steps NOT completed (Steps 5\u20136):** sitemap.xml patch, news/index.html patch, git commit, git push, HTTP 200 verify. The cron iteration cap fired during the humanize-density-tuning phase.\n\n### State on disk \u2014 recovery recipe for next cron run\n\nThis is the **tenth documented mid-pipeline cap-hit** for chinahospitalsguide. Detection signal at next run's Step 0:\n\n```bash\nls news/$(date +%Y-%m-%d)-*.html 2>/dev/null\n# expected: news/2026-07-04-electroacupuncture-post-stroke-dysphagia-china-frontiers-meta-analysis-2026.html\ngit status\n# expected: that file as untracked, no ahead-of-origin state\n```\n\n**Recovery sequence (~5 tool calls):**\n\n1. `terminal` \u2014 verify article state: `head -50 news/2026-07-04-*.html` + `python3 /home/ubuntu/.hermes/skills/creative/programmatic-seo/scripts/humanize_score.py news/2026-07-04-*.html --site chinahospitalsguide --sitemap sitemap.xml` \u2014 confirm 73+/100 still holds\n2. `patch` \u2014 `sitemap.xml` \u2014 insert news entry at top with priority 0.6 (per the 06-27 origin convention)\n3. `patch` \u2014 `news/index.html` \u2014 insert card at top of article list\n4. `terminal` \u2014 `git config user.email \"hermes@chinahospitalsguide.com\" && git config user.name \"Hermes Agent\" && git add news/2026-07-04-*.html sitemap.xml news/index.html && git commit -m \"article: 2026-07-04 electroacupuncture post-stroke dysphagia frontiers meta-analysis\" && git push origin master`\n5. If push rejected (origin advanced): `git fetch origin master && git pull --rebase origin master && git push origin master`\n6. `terminal` \u2014 `sleep 180 && curl --max-time 25 -s -o /dev/null -w \"HTTP %{http_code}\\n\" https://chinahospitalsguide.com/news/2026-07-04-electroacupuncture-post-stroke-dysphagia-china-frontiers-meta-analysis-2026.html`\n\n### Pending-file write\n\nI did not complete writing the `references/pending-2026-07-04-...md` recovery note before the cap fired. The article file on disk IS the durable recovery signal (verified 2026-06-19 pattern: untracked file + `git status` clean is sufficient detection without a pending note).\n\n### Theme alignment\n\nThe article fits the week's **TCM / \u4e2d\u897f\u533b\u7ed3\u5408 priority** \u2014 electroacupuncture for post-stroke dysphagia is one of the more credentialed TCM-Western integrations available, with a 22-RCT Chinese evidence base, a clear technical answer on waveform selection (Ds-W), and a cost differential (US$25\u201360/session in China vs US$120\u2013250 in U.S./EU integrative clinics) that makes it directly relevant to the medical-tourism audience.",
+      "next_run_at": "2026-07-07T09:00:00+08:00",
+      "last_run_at": "2026-07-06T09:08:09.546403+08:00",
+      "last_status": "ok",
+      "last_error": null,
       "last_delivery_error": null,
       "deliver": "feishu",
       "origin": {
@@ -199,16 +199,16 @@
       "schedule_display": "0 7 * * 1",
       "repeat": {
         "times": null,
-        "completed": 0
+        "completed": 1
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-07-01T21:00:11.425129+08:00",
-      "next_run_at": "2026-07-06T07:00:00+08:00",
-      "last_run_at": null,
-      "last_status": null,
+      "next_run_at": "2026-07-13T07:00:00+08:00",
+      "last_run_at": "2026-07-06T07:00:09.330692+08:00",
+      "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
       "deliver": "feishu",
@@ -219,8 +219,9 @@
         "thread_id": null
       },
       "enabled_toolsets": null,
-      "workdir": null
+      "workdir": null,
+      "fire_claim": null
     }
   ],
-  "updated_at": "2026-07-05T22:00:05.983862+08:00"
+  "updated_at": "2026-07-06T22:00:10.237532+08:00"
 }

@@ -1,21 +1,22 @@
 ---
 name: terminal-web-research
-description: "Gather real-time web data (news, trends, stats) via terminal + curl to free APIs, when no web_search/browser toolset is available. Covers HN Algolia, NYT RSS, and other zero-auth endpoints."
-version: 1.0.0
+description: "Gather real-time web data (news, trends, stats) via terminal + curl to free APIs, when no web_search/browser toolset is available. Covers HN Algolia, NYT RSS, DuckDuckGo/Bing HTML scraping fallback chain, and source-verification discipline for daily briefings."
+version: 1.1.0
 metadata:
   hermes:
-    tags: [web, research, news, curl, api, rss, terminal]
+    tags: [web, research, news, curl, api, rss, terminal, daily-briefing, source-verification]
 ---
 
 # Terminal Web Research
 
-When `web_search` or `web` toolset is unavailable, use `terminal` + `curl` to hit free public APIs and RSS feeds. This skill covers reliable, zero-auth endpoints and how to parse their output.
+When `web_search` or `web` toolset is unavailable, use `terminal` + `curl` to hit free public APIs and RSS feeds. This skill covers reliable, zero-auth endpoints, the search-engine fallback chain when HN+NYT aren't enough, and how to verify what you actually scraped.
 
 ## When to Use
 
 - You need real-time news, trends, or data but lack the `web_search` tool
 - The `delegate_task` with `toolsets=["web"]` returns fabricated-looking results (empty tool_trace) — always verify subagent claims by fetching the source URL yourself
 - You need structured data (JSON/XML) that's faster to parse than browsing
+- You're writing a daily/weekly briefing and need news across multiple topics/languages
 
 ## Reliable Free Endpoints
 
@@ -95,6 +96,61 @@ A proven sequence for generating a news briefing:
 3. **Cross-reference**: HN tends to be more technical/developer-focused; NYT covers business/regulation/policy angles
 4. **Verify**: Always check that the subagent actually made tool calls (tool_trace non-empty). If tool_trace is empty, results may be fabricated — re-verify by fetching the source URL
 
+## Search Engine Fallback Chain
+
+When HN + NYT alone aren't enough (e.g. Chinese-language news, niche topics, specific company news), use this ordered chain. Each engine has a different failure mode — know when to switch.
+
+| # | Engine | URL pattern | Watch out for |
+|---|--------|-------------|---------------|
+| 1 | HN Algolia | `https://hn.algolia.com/api/v1/search_by_date?query=...` | English-only, dev-heavy |
+| 2 | NYT RSS | `https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml` | US-centric, Tech section only |
+| 3 | DuckDuckGo HTML | `https://html.duckduckgo.com/html/?q=ENCODED` | **Rate-limits hard after ~5 queries from same IP** — switch engine after that |
+| 4 | Bing | `https://www.bing.com/search?q=ENCODED&setlang=zh-CN&mkt=zh-CN` | Returns noisy SEO content farms; strip `<script>`, `<style>`, all tags, search for keyword proximity |
+| 5 | Brave Search | `https://search.brave.com/search?q=ENCODED` | JS-heavy SPA; raw curl returns shell without results — needs a real browser |
+| 6 | SearX instances | `https://searx.be/search?q=...&format=json` | Most public instances are behind bot-checks (Anubis/Cloudflare); rarely useful from curl |
+
+**DuckDuckGo HTML parsing pattern** — works only if you stay under rate limit:
+```python
+import re, urllib.parse, subprocess
+q = urllib.parse.quote("AI融资 2026年7月")
+html = subprocess.run(
+    ["curl", "-sL", "-A", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 Version/17.0 Safari/605.1.15",
+     f"https://html.duckduckgo.com/html/?q={q}"],
+    capture_output=True, text=True, timeout=30).stdout
+snippets = re.findall(r'class="result__snippet"[^>]*>(.*?)</a>', html, flags=re.DOTALL)
+for s in snippets[:10]:
+    print(re.sub(r'<[^>]+>', '', s).strip()[:300])
+```
+
+**Bing parsing pattern** — Bing wraps results differently than DDG:
+```python
+clean = re.sub(r'<script[^>]*>.*?</script>', '', html, flags=re.DOTALL)
+clean = re.sub(r'<style[^>]*>.*?</style>', '', clean, flags=re.DOTALL)
+clean = re.sub(r'</p>|</div>|</li>', ' ', clean)
+clean = re.sub(r'<[^>]+>', ' ', clean)
+clean = re.sub(r'&nbsp;|&amp;|&#0183;|&ensp;', ' ', clean)
+clean = re.sub(r'\s+', ' ', clean)
+# Then grep around keywords for 80–400 char chunks
+```
+
+**Rotation discipline**: After each successful DDG response, add `time.sleep(2)` before the next query. If you get 0 snippets on a query that should return results, **switch to Bing immediately** — don't retry DDG, you'll be throttled for hours.
+
+## Source Verification Discipline (CRITICAL)
+
+**The trap**: When scraping Bing/DDG for "AI融资 2026年7月" or similar hot-topic Chinese queries, the top results are **SEO content farms and AI mirror sites** (e.g. `gemini-cnblog.com`, `top10.com`, `aimadetools.com`). They confidently state specific dollar amounts, dates, and company actions — but cite no primary source.
+
+**Symptoms you've been fooled**:
+- Result domain is `*.blogspot.com`, `gemini-cnblog.com`, `*.icu`, or generic listicle sites
+- The same dollar amount (e.g. "$965 billion") appears verbatim across 5+ different sites
+- No link to Reuters/Bloomberg/官方公告/SEC filing
+- Date in snippet uses future-tense framing ("expected to", "预计")
+
+**Required behavior**:
+1. **Never quote a specific number, date, or acquisition from search snippets alone.** Strip the number, keep only the directional claim.
+2. Add a `> ⚠️ 重要提示` block at the top of any briefing that uses these engines, stating which items are unverified.
+3. If the user asks for "本日数据" or "数字要具体" while you're stuck with only SEO-source data, **explicitly downgrade**: use ranges ("十亿美元级"), directions ("继续上行"), or omit the number entirely.
+4. Cross-checking via HN/NYT is the minimum bar. If HN/NYT don't carry the story, it's almost certainly not newsworthy enough to quote specific numbers.
+
 ## Pitfalls
 
 - **search_by_date does NOT return points** — use `search` endpoint when you need popularity scores
@@ -103,3 +159,12 @@ A proven sequence for generating a news briefing:
 - **RSS items have no `points`/score** — all articles are equally weighted
 - **No JS rendering** — these are static JSON/XML APIs; they won't help with SPAs or client-rendered pages
 - **Subagent fabrication risk**: When delegating research to subagents, their summaries are self-reports. If the tool_trace is empty, the results may be LLM-generated fabrications. Always re-fetch source URLs yourself.
+- **DDG rate limit is silent**: First query returns 10 snippets, second returns 0-2, by the fifth query you're locked out for the session. Don't debug — switch engine.
+- **Bing in zh-CN returns gov-blocked rebrand pages**: If you see "国内版 / 国际版" toggle and "增值电信业务经营许可证" footer, you're being served the China-compliant Bing shell with censored results. Switch to `setlang=en-US&mkt=en-US` for tech/AI news.
+- **SearX public instances are mostly dead**: As of 2026, Anubis bot-checks have killed most public instances for unauthenticated curl. Don't waste time trying more than one.
+- **The "$X billion" in snippet ≠ verified fact**: SEO farms recycle the same number with no sourcing. If only SEO sites have the number, the number doesn't exist.
+
+## Linked References
+
+- `references/hn-nyt-api-snippets.md` — copy-paste Python pipelines for HN Algolia and NYT RSS (no scraping needed)
+- `references/search-engine-fallback.md` — extended scraping recipes for DuckDuckGo HTML, Bing, Brave, SearX with rotation/anti-throttle discipline

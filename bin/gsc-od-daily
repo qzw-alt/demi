@@ -1,0 +1,75 @@
+#!/usr/bin/env python3
+"""
+GSC Daily Monitor for oriental-destiny.com
+- Compare yesterday vs 7-day-ago 
+- 标记异常下降
+- 输出简短报告
+"""
+import os
+import json
+from datetime import datetime, timedelta
+from google.oauth2.credentials import Credentials
+from googleapiclient.discovery import build
+
+TOK = os.path.expanduser("~/.hermes/gsc/token.json")
+SCOPES = ["https://www.googleapis.com/auth/webmasters.readonly"]
+creds = Credentials.from_authorized_user_file(TOK, scopes=SCOPES)
+service = build("searchconsole", "v1", credentials=creds, cache_discovery=False)
+
+SITE = "https://oriental-destiny.com/"
+
+def get_range(start, end):
+    body = {"startDate": start, "endDate": end, "dimensions": ["date"]}
+    rows = service.searchanalytics().query(siteUrl=SITE, body=body).execute().get("rows", [])
+    return rows
+
+now = datetime.now() - timedelta(days=3)  # GSC 3-day lag
+yesterday = (now - timedelta(days=1)).strftime("%Y-%m-%d")
+seven_ago = (now - timedelta(days=7)).strftime("%Y-%m-%d")
+today = now.strftime("%Y-%m-%d")
+
+# YESTERDAY vs 7-day baseline
+body = {"startDate": seven_ago, "endDate": yesterday, "dimensions": ["date"]}
+rows = service.searchanalytics().query(siteUrl=SITE, body=body).execute().get("rows", [])
+
+if not rows:
+    print("⚠ 无 GSC 数据 (site 在沙盒期)")
+    exit()
+
+# 7-day summary
+clicks = sum(r["clicks"] for r in rows)
+impr = sum(r["impressions"] for r in rows)
+ctr = (clicks / impr * 100) if impr else 0
+avg_pos = sum(r["position"] for r in rows) / len(rows)
+
+# Yesterday
+y_rows = [r for r in rows if r["keys"][0] == yesterday]
+y_clicks = y_rows[0]["clicks"] if y_rows else 0
+y_impr = y_rows[0]["impressions"] if y_rows else 0
+
+# 7-day avg per day
+avg_clicks = clicks / len(rows)
+avg_impr = impr / len(rows)
+
+# top 10 queries past 7d
+qbody = {"startDate": seven_ago, "endDate": yesterday, "dimensions": ["query"], "rowLimit": 10}
+qrows = service.searchanalytics().query(siteUrl=SITE, body=qbody).execute().get("rows", [])
+
+# top 5 pages
+pbody = {"startDate": seven_ago, "endDate": yesterday, "dimensions": ["page"], "rowLimit": 5}
+prows = service.searchanalytics().query(siteUrl=SITE, body=pbody).execute().get("rows", [])
+
+print(f"📊 oriental-destiny.com · 7天 ({seven_ago} → {yesterday})")
+print(f"   Total: {clicks} clicks · {impr} impr · CTR {ctr:.2f}% · pos {avg_pos:.1f}")
+print()
+print(f"   Yesterday: {y_clicks} clicks · {y_impr} impr")
+print(f"   7天平均: {avg_clicks:.1f} clicks/day · {avg_impr:.0f} impr/day")
+print()
+print(f"   Top 10 queries:")
+for r in qrows:
+    print(f"     {r['clicks']:>2}c · {r['impressions']:>4}i · pos {r['position']:5.1f}  {r['keys'][0]}")
+print()
+print(f"   Top 5 pages:")
+for r in prows:
+    url = r["keys"][0].replace("https://oriental-destiny.com/", "")
+    print(f"     {r['clicks']:>2}c · {r['impressions']:>4}i · pos {r['position']:5.1f}  /{url}")

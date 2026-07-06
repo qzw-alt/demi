@@ -1,0 +1,185 @@
+#!/usr/bin/env python3
+"""
+GSC 命令 — oriental-destiny.com 专用
+用法:
+    gsc summary [days]      # 总览
+    gsc top queries [n]     # 搜索词
+    gsc top pages [n]       # 页面
+    gsc opportunities       # 高曝光低 CTR (金矿)
+    gsc trends [days]       # 按天趋势
+    gsc countries           # 国家分布
+    gsc devices             # 设备分布
+    gsc compare B1 B2       # 两个时期对比
+"""
+import sys
+import json
+from datetime import datetime, timedelta
+from pathlib import Path
+from google.oauth2.credentials import Credentials
+from googleapiclient.discovery import build
+
+TOKEN = "/home/ubuntu/.hermes/gsc/token.json"
+SITE = "https://oriental-destiny.com/"
+SCOPES = ["https://www.googleapis.com/auth/webmasters.readonly"]
+
+
+def get_service():
+    creds = Credentials.from_authorized_user_file(TOKEN, scopes=SCOPES)
+    return build("searchconsole", "v1", credentials=creds, cache_discovery=False)
+
+
+def date_range(days):
+    end = datetime.now() - timedelta(days=3)  # GSC 3 天延迟
+    start = end - timedelta(days=days)
+    return start.strftime("%Y-%m-%d"), end.strftime("%Y-%m-%d")
+
+
+def query(service, body):
+    return service.searchanalytics().query(siteUrl=SITE, body=body).execute()
+
+
+def cmd_summary(days=7):
+    service = get_service()
+    start, end = date_range(days)
+    body = {"startDate": start, "endDate": end, "dimensions": ["date"]}
+    rows = query(service, body).get("rows", [])
+    if not rows:
+        print(f"📊 {start} → {end} 无数据")
+        return
+    clicks = sum(r["clicks"] for r in rows)
+    impr = sum(r["impressions"] for r in rows)
+    avg_pos = sum(r["position"] for r in rows) / len(rows)
+    ctr = clicks / impr * 100 if impr else 0
+    print(f"📊 GSC 周报 ({start} → {end}, {days}天)")
+    print(f"   总点击:   {clicks}")
+    print(f"   总展示:   {impr}")
+    print(f"   平均 CTR: {ctr:.2f}%")
+    print(f"   平均位置: {avg_pos:.1f}")
+    print()
+    print("   按天:")
+    for r in rows:
+        print(f"      {r['keys'][0]}: clicks={r['clicks']:>3} impr={r['impressions']:>5} pos={r['position']:.1f}")
+
+
+def cmd_top_queries(n=20):
+    service = get_service()
+    start, end = date_range(7)
+    body = {"startDate": start, "endDate": end, "dimensions": ["query"], "rowLimit": n}
+    rows = query(service, body).get("rows", [])
+    print(f"🔍 过去 7 天 Top {n} 搜索词")
+    print(f"   {'搜索词':<55} {'点击':>4} {'展示':>5} {'位置':>5} {'CTR':>6}")
+    for r in rows:
+        print(f"   {r['keys'][0][:55]:<55} {r['clicks']:>4} {r['impressions']:>5} {r['position']:>5.1f} {r['ctr']*100:>5.2f}%")
+
+
+def cmd_top_pages(n=20):
+    service = get_service()
+    start, end = date_range(7)
+    body = {"startDate": start, "endDate": end, "dimensions": ["page"], "rowLimit": n}
+    rows = query(service, body).get("rows", [])
+    print(f"📄 过去 7 天 Top {n} 页面")
+    print(f"   {'页面':<70} {'点击':>4} {'展示':>5} {'位置':>5} {'CTR':>6}")
+    for r in rows:
+        url = r["keys"][0].replace("https://oriental-destiny.com", "").replace("http://oriental-destiny.com", "")
+        print(f"   {url[:70]:<70} {r['clicks']:>4} {r['impressions']:>5} {r['position']:>5.1f} {r['ctr']*100:>5.2f}%")
+
+
+def cmd_opportunities():
+    """高展示 + 低 CTR + 位置 ≤ 20 = Featured Snippet 金矿"""
+    service = get_service()
+    start, end = date_range(28)  # 用 28 天数据更稳
+    body = {
+        "startDate": start, "endDate": end,
+        "dimensions": ["query", "page"],
+        "rowLimit": 500,
+    }
+    rows = query(service, body).get("rows", [])
+    # 筛: 位置 ≤ 20 (有上榜潜力) + CTR < 5% (点击差) + 展示 ≥ 5
+    opps = [r for r in rows if r["position"] <= 20 and r["ctr"] * 100 < 5 and r["impressions"] >= 5]
+    opps.sort(key=lambda r: r["impressions"], reverse=True)
+    print(f"💎 改版金矿 (位置 ≤ 20, CTR < 5%, 展示 ≥ 5, 过去 28 天)")
+    print(f"   共发现 {len(opps)} 个机会")
+    print()
+    print(f"   {'搜索词':<50} {'页面':<40} {'展示':>5} {'位置':>5} {'CTR':>6}")
+    for r in opps[:20]:
+        q = r["keys"][0][:50]
+        p = r["keys"][1].replace("https://oriental-destiny.com", "").replace("http://oriental-destiny.com","")[:40][:40]
+        print(f"   {q:<50} {p:<40} {r['impressions']:>5} {r['position']:>5.1f} {r['ctr']*100:>5.2f}%")
+    print()
+    print("💡 行动: 这些词/页改 title+description 应该立刻有 CTR 提升")
+
+
+def cmd_trends(days=28):
+    service = get_service()
+    start, end = date_range(days)
+    body = {"startDate": start, "endDate": end, "dimensions": ["date"]}
+    rows = query(service, body).get("rows", [])
+    if not rows:
+        print("无数据")
+        return
+    print(f"📈 过去 {days} 天趋势:")
+    max_impr = max(r["impressions"] for r in rows)
+    for r in rows:
+        bar = "█" * int(r["impressions"] / max_impr * 30)
+        print(f"   {r['keys'][0]}: {r['clicks']:>3} clicks | {bar} {r['impressions']}")
+
+
+def cmd_compare(before_days=30, after_days=7):
+    """改版前 vs 改版后对比"""
+    service = get_service()
+    now = datetime.now() - timedelta(days=3)
+    before_start = (now - timedelta(days=before_days)).strftime("%Y-%m-%d")
+    before_end = (now - timedelta(days=after_days + 1)).strftime("%Y-%m-%d")
+    after_start = (now - timedelta(days=after_days)).strftime("%Y-%m-%d")
+    after_end = now.strftime("%Y-%m-%d")
+    print(f"🔄 改版效果对比")
+    print(f"   改版前: {before_start} → {before_end} ({before_days}天)")
+    print(f"   改版后: {after_start} → {after_end} ({after_days}天)")
+    print()
+
+    def agg(start, end):
+        body = {"startDate": start, "endDate": end, "dimensions": ["date"]}
+        rows = query(service, body).get("rows", [])
+        c = sum(r["clicks"] for r in rows)
+        i = sum(r["impressions"] for r in rows)
+        p = sum(r["position"] for r in rows) / len(rows) if rows else 0
+        return c, i, p
+
+    b_c, b_i, b_p = agg(before_start, before_end)
+    a_c, a_i, a_p = agg(after_start, after_end)
+    print(f"   {'指标':<15} {'改版前':>10} {'改版后':>10} {'变化':>15}")
+    def delta(a, b, fmt="{:+.1%}"):
+        if b == 0: return "N/A"
+        return fmt.format((a - b) / b)
+    print(f"   {'点击':<15} {b_c:>10} {a_c:>10} {delta(a_c, b_c):>15}")
+    print(f"   {'展示':<15} {b_i:>10} {a_i:>10} {delta(a_i, b_i):>15}")
+    print(f"   {'平均位置':<15} {b_p:>10.1f} {a_p:>10.1f} {a_p - b_p:>+15.1f}")
+
+
+def main():
+    if len(sys.argv) < 2:
+        print(__doc__)
+        return
+    cmd = sys.argv[1]
+    args = sys.argv[2:]
+    if cmd == "summary":
+        cmd_summary(int(args[0]) if args else 7)
+    elif cmd == "top" and args and args[0] in ("queries", "q"):
+        cmd_top_queries(int(args[1]) if len(args) > 1 else 20)
+    elif cmd == "top" and args and args[0] in ("pages", "p"):
+        cmd_top_pages(int(args[1]) if len(args) > 1 else 20)
+    elif cmd == "opportunities" or cmd == "opps":
+        cmd_opportunities()
+    elif cmd == "trends":
+        cmd_trends(int(args[0]) if args else 28)
+    elif cmd == "compare":
+        b = int(args[0]) if args else 30
+        a = int(args[1]) if len(args) > 1 else 7
+        cmd_compare(b, a)
+    else:
+        print(f"未知命令: {cmd}")
+        print(__doc__)
+
+
+if __name__ == "__main__":
+    main()
