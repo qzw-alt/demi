@@ -167,5 +167,5 @@ If you prefer another language, let us know — we can arrange translation suppo
 ## App Language Settings
 
 - App interface language: separate from business profile language. Set under `Settings → App Language`.
-- For serving international clients (e.g. Spanish-speaking like Maria Rios), recommend keeping app in English for speed, OR switching to client's language for case-by-case reading.
+- For serving international clients (e.g. Spanish-speaking clients like Maria G., or Dutch clients like Maria Rios), recommend keeping app in English for speed, OR switching to client's language for case-by-case reading.
 - Multi-language business profile: WhatsApp Business supports one description per language. Add English + Spanish + Chinese versions for our client base (Colombian/Latin American + general English + Chinese coordination).

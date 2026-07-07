@@ -188,15 +188,22 @@ Recommend purchasing before we contact the hospital on your behalf. Once you pur
 Please let me know if you have any questions — I'm happy to clarify anything.
 
 Warm regards,
-Team at China Hospitals Guide
+**Weiye**
+China Hospitals Guide
 https://chinahospitalsguide.com
+Email: 434338480@qq.com
+WhatsApp / WeChat: +86 157 6310 7083
 ```
 
 ## 通用规则
 
 - 保持邮件线程（Re: 原主题），不要新建
 - 第一次回复永远先说要资料，不要提钱（用户商业规则）
-- 署名统一：Team at China Hospitals Guide
+- **署名统一（2026-07-07 改）**：对外统一使用 `**Weiye**` + QQ 邮箱 `434338480@qq.com` + 手号 `+86 157 6310 7083`，不再用 `Team at China Hospitals Guide`。伟烨个人身份对外（更亲切、个人化、能直接收到回复）。在网站内部运营层面（博客文章、官方通告、品牌文案）才用品牌名
 - 邮件结尾带网站链接
 - 对患者保持专业但有同理心的语气
 - 提到患者提及的研究论文/具体治疗时，表示理解和认可
+
+### QQ 邮箱 vs 企业邮箱
+
+详见 SKILL.md "⚠️ 对外发件邮箱选择"。**所有模板里的 `contact@chinahospitalsguide.com` 都已经替换为 `434338480@qq.com`**——但下次新建草稿时也要记得替换。

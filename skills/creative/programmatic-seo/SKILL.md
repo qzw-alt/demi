@@ -418,6 +418,8 @@ General lesson: when multiple cron jobs can touch the same file (sitemap.xml, ne
 content-research-writer-cn → (hot topic) → programmatic-seo → (draft) → humanizer → (humanized) → publish → sitemap → git push
 ```
 
+**Thread-arc decision support:** see `references/oriental-destiny-thread-arcs-2026-07.md` for the verified seasonal thread inventory, the pivot-day recipe (channel-room article on the day a solar-term lands), and the decision tree for "which article to write today" when no cron-prompt topic is specified.
+
 ## Failure-mode reference
 
 For operational pitfalls hit during daily cron runs (CSS-stripped-during-write_file, missing repo on fresh VM, tirith `python3 -c` block, `git clone` URL parse trap, cron-budget burnout patterns, weekly topic threading), see `references/cron-run-pitfalls.md` — verified across the2026-06-04 →2026-06-10 runs on oriental-destiny.com.
