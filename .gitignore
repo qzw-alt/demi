@@ -4,7 +4,6 @@
 cache/
 audio_cache/
 image_cache/
-models_dev_cache.json
 
 # Runtime state
 gateway.lock
@@ -40,5 +39,12 @@ hermes-agent/**/__pycache__/
 **/__pycache__/
 **/*.pyc
 
-# Kanban state
+# Heavy non-user directories
+hermes-agent/venv/
+hermes-agent/website/
+hermes-agent/tests/
+hermes-agent/ui-tui/
+
+# Kanban runtime lock + model registry cache (regenerated on every gateway tick)
 kanban.db.init.lock
+models_dev_cache.json

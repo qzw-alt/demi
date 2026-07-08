@@ -88,6 +88,8 @@ rsync -a --delete \
   --exclude='.hermes_history' \
   --exclude='gsc/client_secret.json' \
   --exclude='gsc/token.json' \
+  --exclude='kanban.db.init.lock' \
+  --exclude='models_dev_cache.json' \
   /home/ubuntu/.hermes/ /tmp/hermes-backup/
 ```
 
@@ -101,7 +103,6 @@ done
 rm -f gateway.lock gateway.pid auth.lock kanban.db.init.lock
 # Remove auth.json from tracking if it was committed in older backups
 git rm --cached auth.json 2>/dev/null && echo "auth.json removed from tracking" || true
-
 # If .gitignore was wiped by rsync --delete, restore it from the canonical template below.
 # Otherwise just ensure every rsync --exclude is also listed (defense in depth).
 GITIGNORE_NEEDED=0
@@ -148,6 +149,10 @@ hermes-agent/__pycache__/
 hermes-agent/**/__pycache__/
 **/__pycache__/
 **/*.pyc
+
+# Kanban runtime lock + model registry cache (regenerated on every gateway tick)
+kanban.db.init.lock
+models_dev_cache.json
 EOF
 fi
 for entry in auth.json .env .hermes_history gsc/client_secret.json gsc/token.json; do
@@ -378,6 +383,8 @@ rm -rf /tmp/hermes-backup/
 | `cron/output/` | Cron output logs may contain API key traces |
 | `gsc/client_secret.json` | Google OAuth client secret |
 | `gsc/token.json` | Google OAuth refresh token |
+| `kanban.db.init.lock` | Kanban SQLite init lock (runtime state, like auth.lock) |
+| `models_dev_cache.json` | ~3MB model registry cache regenerated on every gateway tick |
 | `hermes-agent/node_modules/` | Node dependencies, huge (100k+ files) |
 | `lsp/node_modules/` | LSP server deps (typescript-language-server, pyright) |
 | `**/node_modules/` | Catch-all for any other node_modules |
@@ -415,7 +422,11 @@ rm -rf /tmp/hermes-backup/
   PAT will be exposed in the commit history (one commit before the block). The fix is the
   broad `grep -rl 'github_pat_' --include=...` sweep in step 4, which catches it regardless
   of which file holds the prompt. **Tell the user the PAT is compromised** if it was ever
-  embedded in a committed prompt — assume it's leaked.
+  embedded in a committed prompt — assume it's leaked, even if the redaction succeeded.
+  The PAT was visible in plaintext in the rsync source BEFORE redaction (which only writes
+  to the working tree copy); the rsync source itself (`~/.hermes/cron/jobs.json`) is never
+  modified, so the PAT there is still functional and must be rotated at
+  https://github.com/settings/tokens?type=beta. **Action: tell the user to revoke + regenerate.**
 - **__pycache__ lives outside hermes-agent/ too** — Plugins under `plugins/*/src/` and
   `plugins/*/socket/` generate `__pycache__/*.pyc` files. The skill's original exclusion
   only covered `hermes-agent/__pycache__/`, so plugin bytecode got committed in past
@@ -440,3 +451,7 @@ rm -rf /tmp/hermes-backup/
 - **grep output floods with `hermes-agent/venv/`, `hermes-agent/website/`, `hermes-agent/node_modules/` noise** — These directories contain library code, test fixtures, and Docusaurus docs that all have `sk-`, `github_pat_`, `gho_`, `ghp_` patterns as documentation/format descriptors. Always pipe secret-scan grep output through a `grep -v 'hermes-agent/venv\\|hermes-agent/website\\|hermes-agent/node_modules\\|hermes-agent/tests\\|hermes-agent/ui-tui'` filter (the step 5 scan does this). Note: filtering with `grep -v` only works if you use the right escape syntax — the `\|` alternation is GNU grep specific; on BSD/macOS use `grep -vE 'hermes-agent/(venv|website|node_modules|tests|ui-tui)'`.
 - **Cron job prompt becomes the source of the next backup's PAT leak** — The recurring failure mode: user creates cron job with prompt like "use PAT github_pat_xxx to push". That prompt is stored verbatim in `~/.hermes/cron/jobs.json`. On every backup, `cron/jobs.json` is rsynced (not in the exclude list) and the full PAT lands in the working tree. Mitigation in the skill: step 4's Python PAT_RE.subn with a 40+ char gate catches and redacts this. Mitigation at the source: when writing a cron job prompt, never embed a PAT — use `ssh -T git@github.com` style auth, or read the PAT from a credential helper.
 - **`.curator_backups/` directories accumulate with embedded PATs** — When the skills curator runs, it snapshots `cron/jobs.json` to `skills/.curator_backups/<timestamp>/cron-jobs.json`. If the cron prompt ever contained a PAT, every backup snapshot also contains it. These directories are *not* in the default rsync exclude list. Step 4's Python redaction script scans them (the `NOISE_DIRS` filter only excludes `hermes-agent/venv/`, `hermes-agent/website/`, `hermes-agent/node_modules/`, `hermes-agent/tests/`, `hermes-agent/ui-tui/`, and `.git/` — *not* `.curator_backups/`). The new commits will have redacted working-tree versions, even though the old commits in git history still contain the unredacted PATs (untouchable without force-push history rewrite).
+- **`models_dev_cache.json` is a 3MB gateway cache, not user data** — Lives at `~/.hermes/models_dev_cache.json` and is regenerated on every gateway tick (model registry refresh). Rsyncing it commits a giant diff with no semantic value. Exclude it from rsync (`--exclude='models_dev_cache.json'`) and from .gitignore. Old backups may have committed it — `git rm --cached models_dev_cache.json` once to drop tracking.
+- **`kanban.db.init.lock` is a runtime lock, not the kanban DB itself** — Pairs with `kanban.db` the way `auth.lock` pairs with `auth.json`. It's a 0-byte file written when the kanban SQLite is initialized, and shows up on every backup regardless of whether the kanban is in use. The kanban DB itself (`kanban.db`, ~114KB SQLite) IS tracked content — do NOT exclude it. But the `.init.lock` lockfile should be excluded via rsync and .gitignore.
+- **Walker hits `hermes-agent/venv/` and `hermes-agent/tests/`** — The skill's NOISE_DIRS list excludes these from the *walker* (so redaction isn't attempted on third-party code), but **rsync does NOT exclude them** by default. They live in the working tree, get added with `git add -A` if .gitignore misses them, and inflate commits by hundreds of MB of test fixtures / venv site-packages. The canonical .gitignore template above includes `**/node_modules/`, `**/__pycache__/`, and `**/*.pyc` which covers the worst of it, but a strict repository should also exclude `hermes-agent/venv/`, `hermes-agent/tests/`, `hermes-agent/website/`, `hermes-agent/ui-tui/` outright if they're not needed for backup. Verify with `git status --short | wc -l` before commit — if it's in the thousands, .gitignore isn't catching something.
+- **Default git clone over SSH may take >60s** — The first clone of a populated `qzw-alt/demi` repo (1.2GB working tree, hundreds of commits) routinely exceeds the 60s foreground timeout in `terminal()`. Use `timeout 240 git clone ...` or run in background. After the first clone, subsequent updates via `git pull` are fast.
