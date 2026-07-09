@@ -36,6 +36,15 @@ curl -sL "https://hn.algolia.com/api/v1/search?query=KEYWORD&tags=story&hitsPerP
 - `search_by_date` — sorted by `created_at` descending. Use for "what happened in the past 24h."
 - `search` — sorted by relevance (points-weighted). Use for "what's the most important on this topic."
 
+**Filtering by date with `numericFilters`** — critical for "last 24h / 7 days" briefings:
+```bash
+# Unix timestamp for "N days ago" — compute in Python first
+TS=$(python3 -c "import datetime; print(int((datetime.datetime.utcnow() - datetime.timedelta(days=7)).timestamp()))")
+curl -sL "https://hn.algolia.com/api/v1/search?query=AI&tags=story&numericFilters=created_at_i%3E${TS}&hitsPerPage=30"
+```
+
+**Pitfall — timestamp URL-encoding**: the `>` MUST be URL-encoded as `%3E` inside `numericFilters`, not `&gt;` or raw `>`. Use `%3E` (works in curl) or the equivalent `&numericFilters=created_at_i>${TS}` (works in browsers). Verify by checking the response has any hits; if 0, your filter is wrong (or your timestamp math is off — always sanity-check `int(datetime.datetime(Y,M,D).timestamp())` for the date you want).
+
 **Pagination**: Use `&page=N` (0-indexed).
 
 **Rate limit**: Generous — no API key needed. Up to ~10 req/s without issues.
@@ -51,6 +60,8 @@ for h in data.get('hits', []):
     u = h.get('url','') or h.get('story_url','') or ''
     print(f'{d} | {t} [{p}pts]')
 ```
+
+**Tip for daily briefings**: Run a parallel batch of narrow queries (`AI model`, `AI funding`, `AI regulation`, `Anthropic`, `OpenAI`) with the same date filter — HN Algolia is fast enough that 5 parallel curls take <3s and give you much better category coverage than one broad `query=AI`. Combine with `search` (relevance/points-weighted) + `search_by_date` (chronological) for both "what's hot" and "what just dropped".
 
 ### 2. NYT Technology RSS Feed (XML)
 
@@ -104,10 +115,15 @@ When HN + NYT alone aren't enough (e.g. Chinese-language news, niche topics, spe
 |---|--------|-------------|---------------|
 | 1 | HN Algolia | `https://hn.algolia.com/api/v1/search_by_date?query=...` | English-only, dev-heavy |
 | 2 | NYT RSS | `https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml` | US-centric, Tech section only |
-| 3 | DuckDuckGo HTML | `https://html.duckduckgo.com/html/?q=ENCODED` | **Rate-limits hard after ~5 queries from same IP** — switch engine after that |
+| 3 | DuckDuckGo HTML | `https://html.duckduckgo.com/html/?q=ENCODED` | **Effectively dead from curl as of 2026** — returns 0 results on most queries even with realistic User-Agent. Don't waste turns retrying; skip straight to Bing. |
 | 4 | Bing | `https://www.bing.com/search?q=ENCODED&setlang=zh-CN&mkt=zh-CN` | Returns noisy SEO content farms; strip `<script>`, `<style>`, all tags, search for keyword proximity |
 | 5 | Brave Search | `https://search.brave.com/search?q=ENCODED` | JS-heavy SPA; raw curl returns shell without results — needs a real browser |
 | 6 | SearX instances | `https://searx.be/search?q=...&format=json` | Most public instances are behind bot-checks (Anubis/Cloudflare); rarely useful from curl |
+| 7 | TechCrunch / TheVerge / Wired | `https://techcrunch.com/category/artificial-intelligence/` etc. | **JS-rendered SPAs** — `curl -A "Mozilla/5.0"` returns only nav/footer HTML, no article titles or content. Use their RSS feeds instead (`/feed/`, `/rss`) where available. |
+
+**DuckDuckGo HTML reality check (2026)**: DDG HTML returned **0 snippets on every query** in a recent briefing session, even with `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 Version/17.0 Safari/605.1.15` User-Agent and a 30s timeout. The earlier "rate-limits hard after ~5 queries" advice is now outdated — the endpoint appears fully JS-gated or IP-blocked from curl. Don't retry, don't sleep-then-retry, just **skip to Bing immediately** for the same query.
+
+**Rotation discipline**: When switching engines, change the query string format too (not just the URL host). DDG and Bing both have separate rate-limit buckets per (host, query). After each successful Bing response, add `time.sleep(2)` before the next query. If Bing returns 0 relevant results on a query that should yield hits, **try a tighter query** (more specific keywords, quoted phrases) before giving up — Bing loves to return generic SEO pages for broad queries.
 
 **DuckDuckGo HTML parsing pattern** — works only if you stay under rate limit:
 ```python
@@ -154,13 +170,16 @@ clean = re.sub(r'\s+', ' ', clean)
 ## Pitfalls
 
 - **search_by_date does NOT return points** — use `search` endpoint when you need popularity scores
-- **HN API returns old stories** mixed with new ones in `search` mode; always prefer `search_by_date` for timeliness
+- **HN API returns old stories** mixed with new ones in `search` mode; always prefer `search_by_date` for timeliness, OR combine `search` + `numericFilters=created_at_i>{TS}` to get recent + relevance-ranked
+- **`numericFilters=created_at_i>{TS}` gotcha**: TS is **Unix seconds** (not ms), must be **URL-encoded `%3E`** not raw `>`, and must be the **UTC** timestamp. Easy off-by-one mistakes: using `datetime.datetime.now()` instead of `datetime.datetime.utcnow()` adds hours; using `.timestamp()` on a naive local datetime silently uses local TZ. Always sanity-check the result count: 0 hits on a broad query means your filter is wrong, not that there's no news.
 - **NYT RSS only covers Tech section** — won't include AI stories filed under Business, Science, or Politics
 - **RSS items have no `points`/score** — all articles are equally weighted
 - **No JS rendering** — these are static JSON/XML APIs; they won't help with SPAs or client-rendered pages
+- **TechCrunch / TheVerge / Wired article pages are JS-rendered** — `curl` returns nav/footer HTML only. Don't burn 3 turns trying to parse them; go straight to their RSS feeds (`/feed`, `/rss`) or fall back to HN Algolia for the same stories.
 - **Subagent fabrication risk**: When delegating research to subagents, their summaries are self-reports. If the tool_trace is empty, the results may be LLM-generated fabrications. Always re-fetch source URLs yourself.
-- **DDG rate limit is silent**: First query returns 10 snippets, second returns 0-2, by the fifth query you're locked out for the session. Don't debug — switch engine.
+- **DDG HTML is effectively dead from curl (2026)**: the endpoint returns 0 snippets even with realistic User-Agents. The "rate-limits after 5 queries" advice is stale. Don't waste turns; skip to Bing.
 - **Bing in zh-CN returns gov-blocked rebrand pages**: If you see "国内版 / 国际版" toggle and "增值电信业务经营许可证" footer, you're being served the China-compliant Bing shell with censored results. Switch to `setlang=en-US&mkt=en-US` for tech/AI news.
+- **Bing returns the same SEO farms as DDG for hot queries**: "AI funding July 2026" → top 5 results are listicle sites recycling the same dollar amounts. Cross-check via HN before quoting any specific number.
 - **SearX public instances are mostly dead**: As of 2026, Anubis bot-checks have killed most public instances for unauthenticated curl. Don't waste time trying more than one.
 - **The "$X billion" in snippet ≠ verified fact**: SEO farms recycle the same number with no sourcing. If only SEO sites have the number, the number doesn't exist.
 
@@ -168,3 +187,4 @@ clean = re.sub(r'\s+', ' ', clean)
 
 - `references/hn-nyt-api-snippets.md` — copy-paste Python pipelines for HN Algolia and NYT RSS (no scraping needed)
 - `references/search-engine-fallback.md` — extended scraping recipes for DuckDuckGo HTML, Bing, Brave, SearX with rotation/anti-throttle discipline
+- `references/daily-ai-briefing-pipeline.md` — turnkey recipe for the "AI行业每日简报" pattern: 5 parallel HN queries by category, date-filter timestamp math, points-threshold ranking, NYT cross-coverage, and a worked example with verified 2026-07-09 output

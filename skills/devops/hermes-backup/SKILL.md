@@ -93,6 +93,25 @@ rsync -a --delete \
   /home/ubuntu/.hermes/ /tmp/hermes-backup/
 ```
 
+**After rsync — verify exclusions actually took effect** (rsync can silently leak root-level files; don't trust the exclude to have worked):
+
+```bash
+cd /tmp/hermes-backup/
+# Verify each user-specified exclude is absent
+for p in sessions/ memories/ cache/ logs/ sandboxes/ audio_cache/ image_cache/ \
+         auth.json auth.lock .env .hermes_history \
+         gsc/client_secret.json gsc/token.json kanban.db.init.lock \
+         models_dev_cache.json gateway.lock gateway.pid cron/output/; do
+  [ -e "$p" ] && echo "LEAK: $p"
+done
+# Heavy dirs that may have leaked if user excluded list is smaller than the canonical one
+for d in hermes-agent/venv hermes-agent/website hermes-agent/tests hermes-agent/ui-tui; do
+  [ -d "$d" ] && du -sh "$d"
+done
+# If any LEAK appeared, rm -f it (or rm -rf for dirs) and git rm --cached
+# If heavy dirs appeared, add them to .gitignore in step 3 BEFORE running git add -A
+```
+
 ### 3. Remove old sensitive artifacts from previous backups
 ```bash
 cd /tmp/hermes-backup
@@ -174,124 +193,33 @@ git rm --cached gsc/token.json 2>/dev/null && rm -f gsc/token.json
 `read_file` and `print(repr(line))` can SHOW `sk-8bc...87d2` while the ACTUAL FILE contains the full
 key `sk-8bc...87d2`. Always verify with `xxd` / Python hex if in doubt.
 
-**Use ACTIVE key truncation** (not just scan-and-warn) — in cron context there is no user to respond to warnings:
+**Use the bundled script** `scripts/redact_secrets.py` — it handles the walker + single-file fallback
+in one place. **Don't use inline `python3 -c "..."` for redaction** — f-strings with nested braces
+break in `terminal()` shell quoting. See `references/secret-redaction-verification.md` for
+byte-level recipes for double-checking the script's output.
 
 ```bash
-cd /tmp/hermes-backup
+cd /tmp/demi-backup  # or /tmp/hermes-backup/ — any backup dir
 
-# Truncate all full API keys in config.yaml automatically.
-# Regex handles keys with -, _, and alphanumeric chars (covers DeepSeek, MinMax, Anthropic, etc.)
-# IMPORTANT: skip tokens containing '...' (already truncated) — otherwise the regex
-# matches across the truncation marker and mangles the output. Verify with xxd on the first match.
-python3 << 'PYEOF'
-import re
+# 4a. Truncate config.yaml + walk the entire tree for PAT/sk- tokens
+python3 <skill_dir>/scripts/redact_secrets.py /tmp/demi-backup
 
-with open('config.yaml', 'r', encoding='utf-8') as f:
-    content = f.read()
+# 4b. If the length-gated scan in step 5 finds a hit the walker missed
+#     (typical case: CJK / non-ASCII directory paths), redact that one file directly:
+python3 <skill_dir>/scripts/redact_secrets.py /tmp/demi-backup "workspace/website/中文目录/文件.md"
 
-def truncate_key(match):
-    full_key = match.group(1)
-    if '...' in full_key:
-        return match.group(0)  # already truncated, don't re-touch
-    if len(full_key) <= 15:
-        return match.group(0)  # already short / already truncated
-    prefix = full_key[3:9]   # first 6 after sk-
-    suffix = full_key[-4:]   # last 4
-    return f"api_key: sk-{prefix}...{suffix}"
-
-content_new = re.sub(
-    r'api_key:\s*(sk-[a-zA-Z0-9_-]+)',
-    truncate_key,
-    content
-)
-
-with open('config.yaml', 'w', encoding='utf-8') as f:
-    f.write(content_new)
-
-# Verify: hex-dump any remaining sk- lines to be sure they're truncated
-with open('config.yaml', 'rb') as f:
-    for i, line in enumerate(f, 1):
-        if b'api_key:' in line and b'sk-' in line:
-            val = line.split(b':', 1)[1].strip()
-            truncated = b'...' in val
-            print(f"  Line {i}: {val[:20]} (len={len(val)}, truncated={truncated})")
-            if not truncated and len(val) > 14:
-                print(f"    WARNING: FULL KEY — hex: {val.hex()}")
-PYEOF
-
-# auth.json is excluded from rsync entirely (--exclude='auth.json' in step 2),
-# so no stripping needed. If it was previously committed, remove it in step 3.
-# (.env, .hermes_history, gsc/* are also removed in step 3.)
-
-# Check providers/ for literal keys (env var refs like env:DEEPSEEK_API_KEY are safe)
-for f in providers/*.json; do
-  [ -f "$f" ] && grep -q '"api_key": "[a-zA-Z0-9_-]\{16,\}"' "$f" && \
-    echo "WARNING: literal API key in $f — strip manually!"
-done
-
-# Unified redaction walker: handles BOTH github_pat_ AND sk- tokens in a single pass.
-# Critical: this script must print which files it touched, so any silent skip is obvious
-# when cross-referenced with the step 5 scan. If a file contains a real key and is NOT
-# in the printed list, that means the walker silently skipped it — re-run on that path
-# directly (see the pitfall "Step 4 success message is not proof of completion").
-python3 << 'PYEOF'
-import re, os
-
-NOISE_DIRS = ('venv/', 'website/', 'node_modules/', 'ui-tui/', 'tests/',
-              '.curator_backups/', '.git/')
-INCLUDE = ('.json', '.yaml', '.yml', '.md', '.txt', '.py', '.sh',
-           '.toml', '.conf', '.ini', '.env')
-
-PAT_RE = re.compile(r'github_pat_[a-zA-Z0-9_-]{40,}')
-PAT_REPLACEMENT = "github...REMOVED_LEAKED_TOKEN"
-SK_RE = re.compile(r'sk-[a-zA-Z0-9_-]+')
-
-def truncate_sk(match):
-    full = match.group(0)
-    if '...' in full:
-        return full
-    if len(full) <= 15:
-        return full
-    body = full[3:]
-    return f"sk-{body[:6]}...{body[-4:]}"
-
-n_pat = n_sk = n_files_touched = 0
-files_touched = []
-for root, dirs, files in os.walk('.'):
-    dirs[:] = [d for d in dirs if not any(n in f"{root}/{d}" for n in NOISE_DIRS)]
-    for f in files:
-        if not f.endswith(INCLUDE):
-            continue
-        path = os.path.join(root, f)
-        try:
-            with open(path, 'r', encoding='utf-8', errors='ignore') as fh:
-                content = fh.read()
-            new_content = content
-            np = 0
-            ns = 0
-            new_content, np = PAT_RE.subn(PAT_REPLACEMENT, new_content)
-            new_content, ns = SK_RE.subn(truncate_sk, new_content)
-            if (np or ns) and new_content != content:
-                with open(path, 'w', encoding='utf-8') as fh:
-                    fh.write(new_content)
-                files_touched.append((path, np, ns))
-                n_pat += np
-                n_sk += ns
-                n_files_touched += 1
-        except (OSError, UnicodeError) as e:
-            # Was being silently swallowed — now visible.
-            print(f"  WALKER SKIPPED {path}: {type(e).__name__}: {e}")
-
-print(f"Total PAT redactions: {n_pat}")
-print(f"Total sk- redactions: {n_sk}")
-print(f"Files modified: {n_files_touched}")
-for p, np, ns in files_touched:
-    parts = []
-    if np: parts.append(f"{np} PAT")
-    if ns: parts.append(f"{ns} sk-")
-    print(f"  {', '.join(parts):20s}  {p}")
-PYEOF
+# <skill_dir> = /home/ubuntu/.hermes/skills/devops/hermes-backup/  (or wherever the skill is installed)
 ```
+
+The script handles:
+- `config.yaml` — regex-truncates every `api_key: sk-...` to `api_key: sk-PREFIX...SUFFIX`
+- Batch walker — recursively redacts PATs and sk- keys in all `.json/.yaml/.md/.txt/.py/.sh/.toml/.conf/.ini/.env` files,
+  skipping `venv/`, `node_modules/`, `__pycache__/`, `website/`, `tests/`, `ui-tui/`, `.curator_backups/`, `.git/`
+- Single-file mode — redaction on a specific path (the CJK recovery path)
+
+**The script's print output ("Redacted N total") is NOT proof of completion.**
+The step 5 length-gated grep scan is the only reliable verification. If it finds a hit,
+re-run the script in single-file mode on that exact path, then re-scan. Loop until clean.
 
 ### 5. Check for remaining secrets — and LOOP if step 4 missed anything
 
@@ -455,3 +383,8 @@ rm -rf /tmp/hermes-backup/
 - **`kanban.db.init.lock` is a runtime lock, not the kanban DB itself** — Pairs with `kanban.db` the way `auth.lock` pairs with `auth.json`. It's a 0-byte file written when the kanban SQLite is initialized, and shows up on every backup regardless of whether the kanban is in use. The kanban DB itself (`kanban.db`, ~114KB SQLite) IS tracked content — do NOT exclude it. But the `.init.lock` lockfile should be excluded via rsync and .gitignore.
 - **Walker hits `hermes-agent/venv/` and `hermes-agent/tests/`** — The skill's NOISE_DIRS list excludes these from the *walker* (so redaction isn't attempted on third-party code), but **rsync does NOT exclude them** by default. They live in the working tree, get added with `git add -A` if .gitignore misses them, and inflate commits by hundreds of MB of test fixtures / venv site-packages. The canonical .gitignore template above includes `**/node_modules/`, `**/__pycache__/`, and `**/*.pyc` which covers the worst of it, but a strict repository should also exclude `hermes-agent/venv/`, `hermes-agent/tests/`, `hermes-agent/website/`, `hermes-agent/ui-tui/` outright if they're not needed for backup. Verify with `git status --short | wc -l` before commit — if it's in the thousands, .gitignore isn't catching something.
 - **Default git clone over SSH may take >60s** — The first clone of a populated `qzw-alt/demi` repo (1.2GB working tree, hundreds of commits) routinely exceeds the 60s foreground timeout in `terminal()`. Use `timeout 240 git clone ...` or run in background. After the first clone, subsequent updates via `git pull` are fast.
+- **rsync `--exclude='models_dev_cache.json'` does NOT always exclude a root-level file** — In one session the file was rsynced into the working tree despite the exclude pattern being set. Rsync's exclude rules can be confused by file-vs-component matching at the source root. **Always verify the file is absent after rsync** (`test -e path && echo PRESENT`); if it leaked through, manually `rm -f` it AND `git rm --cached` it. Don't trust the exclude to have caught it. Same risk applies to any other root-level dotfile/lockfile the user lists as a bare filename (e.g. `auth.json` in some rsync versions).
+- **User-supplied exclude lists are often smaller than the canonical one — verify heavy dirs aren't in the working tree** — When a user gives a short exclude list (e.g. only the ~10 paths from a cron prompt), the skill's canonical heavy-directory excludes (`hermes-agent/venv/`, `hermes-agent/website/`, `hermes-agent/tests/`, `hermes-agent/ui-tui/`) may NOT be in the user's list. After rsync, ALWAYS check: `for d in hermes-agent/venv hermes-agent/website hermes-agent/tests hermes-agent/ui-tui; do test -e "$d" && echo "HEAVY: $d"; done`. If any are present, add them to .gitignore (the skill's template includes them) and confirm `git ls-files` shows 0 tracked files in those dirs before commit. If gitignore is missing or incomplete, `git add -A` will commit hundreds of MB of venv/test fixtures.
+- **CJK-path files (Chinese / Japanese / Korean directory names) silently bypass the os.walk walker** — Reproduced in 2026-07-08 session: walker reported "13 files modified, 30 sk- redactions", but step 5 length-gated scan still found 1 real key in `./workspace/website/德米知识库/01-记忆系统/MEMORY.md`. The CJK-encoded path was skipped by `os.walk` for an unknown reason (possibly a stale `dirs[:]` filter, possibly a UnicodeDecodeError swallowed by `except (OSError, UnicodeError)`). **The fix is the step 5 length-gated grep scan — it is the only reliable verification.** When it finds a hit, re-run redaction DIRECTLY on the specific file path with a one-shot script (`python3 redact_one.py 'CJK/路径/文件.md'`), NOT the batch walker. Loop until step 5 reports zero hits.
+- **Inline Python via `terminal()` breaks on f-strings with `{` `}` in shell quoting** — `terminal("python3 -c \"...f-string...\"")` consistently mangles nested f-strings because the shell and Python both interpret braces. The first redaction attempt in 2026-07-08 session failed with `NameError: name 'm' is not defined` from a broken f-string. **Fix:** always write the redaction script to a file (e.g. `/tmp/redact_one.py` or `/tmp/redact_keys.py`) using `write_file`, then `terminal("python3 /tmp/redact_one.py <path>")`. The script file is also reusable across re-runs without re-typing.
+- **PAT leak in cron prompt is the most common secret exposure path — treat it as expected, not surprising** — In the 2026-07-08 session the user's own cron prompt embedded a `github_pat_...` token, which the walker caught (1 PAT redaction in `cron/jobs.json`). The skill already documents this in pitfalls, but the user-facing **delivery response** should make the revocation warning prominent, not buried: "The PAT in this cron prompt has been redacted in this commit, but the source file `~/.hermes/cron/jobs.json` still contains the live token. Revoke + regenerate at https://github.com/settings/tokens?type=beta." The PAT was visible to the rsync source on every prior backup attempt; the only thing that changes is whether it's now visible in the working tree, which is fixable. The source itself is the leak.
