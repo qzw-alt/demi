@@ -130,8 +130,8 @@
       5285
     ],
     "devops/hermes-backup/SKILL.md": [
-      1783519516432793254,
-      34430
+      1783605911694156141,
+      35392
     ],
     "devops/hermes-cron-troubleshooting/SKILL.md": [
       1782951829382518639,
@@ -264,6 +264,10 @@
     "note-taking/obsidian/SKILL.md": [
       1778925537000000000,
       2919
+    ],
+    "patient-cases-public-outreach/SKILL.md": [
+      1783642229269760143,
+      8473
     ],
     "pending-2026-06-27-cms-silevimig-shipped/SKILL.md": [
       1782522731800947367,
@@ -1586,6 +1590,21 @@
         "linux",
         "macos",
         "windows"
+      ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "patient-cases-public-outreach",
+      "category": "patient-cases-public-outreach",
+      "frontmatter_name": "patient-cases-public-outreach",
+      "description": "Generate public-facing promotional/posting assets for ind...",
+      "platforms": [
+        "linux"
       ],
       "conditions": {
         "fallback_for_toolsets": [],

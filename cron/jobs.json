@@ -23,15 +23,15 @@
       "schedule_display": "0 8 * * *",
       "repeat": {
         "times": null,
-        "completed": 44
+        "completed": 45
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T14:45:42.377747+08:00",
-      "next_run_at": "2026-07-10T08:00:00+08:00",
-      "last_run_at": "2026-07-09T08:05:07.390505+08:00",
+      "next_run_at": "2026-07-11T08:00:00+08:00",
+      "last_run_at": "2026-07-10T08:06:19.078868+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -66,15 +66,15 @@
       "schedule_display": "0 9 * * *",
       "repeat": {
         "times": null,
-        "completed": 39
+        "completed": 40
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T17:20:53.016111+08:00",
-      "next_run_at": "2026-07-10T09:00:00+08:00",
-      "last_run_at": "2026-07-09T09:02:15.229591+08:00",
+      "next_run_at": "2026-07-11T09:00:00+08:00",
+      "last_run_at": "2026-07-10T09:01:27.322008+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -109,15 +109,15 @@
       "schedule_display": "0 22 * * *",
       "repeat": {
         "times": null,
-        "completed": 41
+        "completed": 42
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T17:22:43.447182+08:00",
-      "next_run_at": "2026-07-10T22:00:00+08:00",
-      "last_run_at": "2026-07-08T22:03:42.217354+08:00",
+      "next_run_at": "2026-07-11T22:00:00+08:00",
+      "last_run_at": "2026-07-09T22:04:06.554342+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -156,17 +156,17 @@
       "schedule_display": "0 9 * * *",
       "repeat": {
         "times": null,
-        "completed": 45
+        "completed": 46
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-02T08:16:41.523255+08:00",
-      "next_run_at": "2026-07-10T09:00:00+08:00",
-      "last_run_at": "2026-07-09T09:04:06.613915+08:00",
-      "last_status": "error",
-      "last_error": "RuntimeError: ## 2026-07-09 chinahospitalsguide.com cron \u2014 \u65e0\u53ef\u7528\u70ed\u70b9\uff0c\u8df3\u8fc7\u4eca\u65e5\u53d1\u5e03\n\n### \u6267\u884c\u72b6\u6001\n- **Step 0 Recovery check**: clean \u2014 \u65e0\u672a\u63d0\u4ea4 article\uff0c\u65e0 pending-*.md\uff0cmaster \u4e0e origin \u540c\u6b65\n- **Step 1 Research**: \u8bd5\u4e86 12+ \u4e2a Bing News \u67e5\u8be2\uff0c\u6db5\u76d6\u9488\u7078/TCM/\u4e2d\u897f\u533b\u7ed3\u5408/\u6d77\u5357\u4e50\u57ce/ASCO \u6574\u5408\u80bf\u7624\u5b66/\u516b\u6bb5\u9526/\u592a\u6781/\u4e2d\u836f FDA \u7b49\u6240\u6709\u4e3b\u9898\u8f74\u7ebf\n- **Step 2-7**: **\u672a\u6267\u884c** \u2014 \u7814\u7a76\u9636\u6bb5\u8017\u5c3d 35-call \u9884\u7b97\uff0c\u672a\u627e\u5230 shippable \u70ed\u70b9\n\n### \u8c03\u7814\u8986\u76d6\u7684\u8f74\u7ebf\uff08\u5168\u90e8\u7a7a\u624b\uff09\n| \u89d2\u5ea6 | \u7ed3\u679c |\n|---|---|\n| Acupuncture clinical trial 2026 China (general) | \u8fd4\u56de Straits Times\u3001The Hindu \u7b49\u65e7\u6587\uff0c\u65e0\u65b0 RCT |\n| TCM NEJM/Lancet 2026 | 0 matches |\n| Tai chi Parkinson fall prevention 2026 | 0 matches |\n| Baduanjin COPD lung function 2026 | 0 matches |\n| Tuina stroke rehab 2026 | 0 matches |\n| Moxibustion breech/gestational 2026 | 0 matches |\n| Hainan Boao Lecheng TCM 2026 | 0 matches |\n| ASCO 2026 integrative oncology China TCM | ASCO \u6458\u8981\u94fe\u63a5\u4f46\u88ab Cloudflare \u963b\u65ad |\n| Acupuncture IVF infertility 2026 | 1 hit (HK fertility clinic \u2014 \u975e TCM) |\n| Acupuncture chemo nausea RCT 2026 | Olanzapine study (Indian Council of Medical Research, \u975e China) |\n| Hainan Boao TCM real-world 2026 | lelezard.com Cloudflare \u963b\u65ad |\n| ChinaDaily.com.cn 2026-07 \u5065\u5eb7\u677f\u5757 | \u65e0 2026-07 \u6587\u7ae0\uff0c\u4ec5\u6709 5/2025\u20136/2026 \u65e7\u6587 |\n\n### \u5e93\u5185\u8986\u76d6\u73b0\u72b6\uff08\u5df2\u9971\u548c\uff09\n2026-07 \u6708\u5df2\u53d1 5 \u7bc7 TCM \u6587\u7ae0\uff0c\u4e3b\u9898\u5206\u5e03\u7d27\u5bc6\uff1a\n- 07-02: Acupuncture IVF add-on (Lancet vs Longhua) \u2014 Template A\n- 07-04: Electroacupuncture post-stroke dysphagia (Frontiers meta-analysis) \u2014 Template A\n- 07-06: China AI-TCM Zhang Boli Tianjin Darentang \u2014 Template C\n- 07-07: TCM AI diagnostic device Global Digital Economy Conference \u2014 Template C\n- 07-08: Acupuncture post-stroke motor recovery (Shenzhen Luohu CNS Wiley) \u2014 Template A\n\n\u6a21\u677f A/B \u5728\u9488\u7078\u5352\u4e2d\u3001IVF\u3001\u541e\u54bd\u3001\u5316\u7597\u8f85\u52a9\u7b49\u9ad8\u9891\u9002\u5e94\u75c7\u4e0a 5 \u5929\u5185\u5df2\u8986\u76d6 3 \u4e2a\uff1b\u7ee7\u7eed\u786c\u53d1\u4f1a\u6709\u91cd\u590d\u98ce\u9669\u3002\n\n### \u51b3\u5b9a\n\u6309 skill \u8d28\u91cf\u95e8\u69db\uff08\u5b81\u7f3a\u6bcb\u6ee5\uff09\uff0c**\u4eca\u65e5\u4e0d\u53d1\u5e03**\u3002\u672c\u65e5\u65e0\u53ef\u7528 shippable \u70ed\u70b9\u662f\u771f\u5b9e\u72b6\u6001\uff0c\u4e0d\u662f research budget \u8c03\u5ea6\u95ee\u9898\u2014\u2014Bing News \u5728 2026-07-09 \u5bf9 TCM/\u9488\u7078 2026 \u6700\u65b0\u7814\u7a76\u5173\u952e\u8bcd\u666e\u904d\u8fd4\u56de 0 \u6709\u6548\u7ed3\u679c\uff0c\u662f search engine \u7aef\u51b7\u542f\u52a8\u800c\u975e fetch \u7aef\u5931\u8d25\u3002\n\n### \u5efa\u8bae\u4e0b\u4e00 cron run (2026-07-10) \u8d77\u70b9\n1. **\u4f18\u5148\u6d4b\u8bd5 CNKI / Wanfang / \u4e07\u65b9** \u2014 \u4e2d\u56fd\u5b66\u672f\u6570\u636e\u5e93\u7684 2026-07 \u8bba\u6587\u66f4\u65b0\uff08fetch \u53d7\u9650\uff0c\u4f46\u53ef\u8bd5 OpenAlex API \u4f5c\u4e3a\u4ee3\u7406\uff09\n2. **\u8bd5 Frontiers / MDPI / Wiley `early view` \u5217\u8868** \u2014 \u8fd9\u4e09\u5bb6 OA \u671f\u520a 7-9 \u6708\u65b0\u53d1\u8868\u7684 TCM RCT/meta\n3. **\u7ee7\u7eed\u8bd5 ASCO Daily News (`dailynews.ascopubs.org`)** \u2014 \u5df2\u786e\u8ba4 direct fetch \u5931\u8d25\uff0c\u4f46 PubMed \u7d22\u5f15\u53ef\u80fd\u53ef\u8bfb\n4. **\u5907\u9009\uff1a\u6a21\u677f C** \u2014 \u6d77\u5357\u535a\u9ccc\u4e50\u57ce 2026-07 \u65b0\u589e\u53ef\u8fdb\u53e3\u836f\u54c1\u6e05\u5355\uff08\u6bcf\u5e74 7 \u6708\u6709\u66f4\u65b0\u7a97\u53e3\uff0cnews release \u901a\u5e38 7 \u6708\u4e2d\u65ec\uff09\n\n### \u9759\u9ed8\u58f0\u660e\n\u6309 cron \u63d0\u793a \u2014 \u4eca\u65e5\u65e0\u53d1\u5e03\uff0c\u6545 [SILENT] \u4e0d\u9002\u7528\u3002\u660e\u786e\u62a5\u544a\uff1a\u65e0\u53ef\u7528\u70ed\u70b9\uff0c\u8df3\u8fc7\u4eca\u65e5\u53d1\u5e03\u3002\u4e0b\u6b21 cron run \u987b\u91cd\u7f6e\u7814\u7a76\u8d77\u70b9\uff08\u4e0d\u8981\u57fa\u4e8e\u672c run \u7684 research \u7b14\u8bb0\u7ee7\u7eed\uff09\u3002",
+      "next_run_at": "2026-07-11T09:00:00+08:00",
+      "last_run_at": "2026-07-10T09:08:07.341979+08:00",
+      "last_status": "ok",
+      "last_error": null,
       "last_delivery_error": null,
       "deliver": "feishu",
       "origin": {
@@ -223,5 +223,5 @@
       "fire_claim": null
     }
   ],
-  "updated_at": "2026-07-09T22:00:21.220835+08:00"
+  "updated_at": "2026-07-10T22:00:24.867225+08:00"
 }

@@ -16,14 +16,14 @@
     "archived_at": null,
     "created_at": "2026-05-31T07:13:43.821219+00:00",
     "created_by": "agent",
-    "last_patched_at": "2026-07-09T01:05:00.915829+00:00",
-    "last_used_at": "2026-07-09T01:05:16.573167+00:00",
-    "last_viewed_at": "2026-07-09T01:05:16.568638+00:00",
-    "patch_count": 110,
+    "last_patched_at": "2026-07-10T01:09:21.212293+00:00",
+    "last_used_at": "2026-07-10T01:09:46.959339+00:00",
+    "last_viewed_at": "2026-07-10T01:09:46.954902+00:00",
+    "patch_count": 111,
     "pinned": false,
     "state": "active",
-    "use_count": 115,
-    "view_count": 68
+    "use_count": 119,
+    "view_count": 71
   },
   "creative/programmatic-seo": {
     "archived_at": null,
@@ -56,13 +56,13 @@
     "created_at": "2026-07-09T14:00:32.755821+00:00",
     "created_by": null,
     "last_patched_at": null,
-    "last_used_at": "2026-07-09T14:00:32.778815+00:00",
-    "last_viewed_at": "2026-07-09T14:00:32.755845+00:00",
+    "last_used_at": "2026-07-09T14:04:14.918607+00:00",
+    "last_viewed_at": "2026-07-09T14:04:14.913083+00:00",
     "patch_count": 0,
     "pinned": false,
     "state": "active",
-    "use_count": 1,
-    "view_count": 1
+    "use_count": 2,
+    "view_count": 2
   },
   "github-auth": {
     "archived_at": null,
@@ -107,14 +107,14 @@
     "archived_at": null,
     "created_at": "2026-06-19T14:03:22.069363+00:00",
     "created_by": null,
-    "last_patched_at": "2026-07-08T14:05:16.434928+00:00",
-    "last_used_at": "2026-07-09T14:00:29.688618+00:00",
-    "last_viewed_at": "2026-07-09T14:00:29.684677+00:00",
-    "patch_count": 62,
+    "last_patched_at": "2026-07-09T14:05:11.697610+00:00",
+    "last_used_at": "2026-07-10T14:00:29.358551+00:00",
+    "last_viewed_at": "2026-07-10T14:00:29.352166+00:00",
+    "patch_count": 65,
     "pinned": false,
     "state": "active",
-    "use_count": 45,
-    "view_count": 45
+    "use_count": 46,
+    "view_count": 46
   },
   "hermes-cron-troubleshooting": {
     "archived_at": null,
@@ -173,12 +173,12 @@
     "created_at": "2026-06-19T00:00:13.200678+00:00",
     "created_by": null,
     "last_patched_at": null,
-    "last_used_at": "2026-07-09T01:00:19.522857+00:00",
+    "last_used_at": "2026-07-10T01:00:23.144254+00:00",
     "last_viewed_at": "2026-07-02T00:01:01.217735+00:00",
     "patch_count": 0,
     "pinned": false,
     "state": "active",
-    "use_count": 45,
+    "use_count": 47,
     "view_count": 2
   },
   "linux-desktop-setup": {
@@ -259,6 +259,19 @@
     "use_count": 1,
     "view_count": 1
   },
+  "patient-cases-public-outreach": {
+    "archived_at": null,
+    "created_at": "2026-07-10T00:10:29.273582+00:00",
+    "created_by": "agent",
+    "last_patched_at": "2026-07-10T00:11:44.352771+00:00",
+    "last_used_at": null,
+    "last_viewed_at": null,
+    "patch_count": 4,
+    "pinned": false,
+    "state": "active",
+    "use_count": 0,
+    "view_count": 0
+  },
   "pending-2026-06-27-cms-silevimig-shipped": {
     "archived_at": null,
     "created_at": "2026-06-27T01:12:11.804280+00:00",
@@ -277,12 +290,12 @@
     "created_at": "2026-05-31T07:13:52.921096+00:00",
     "created_by": "agent",
     "last_patched_at": "2026-07-09T00:06:36.560744+00:00",
-    "last_used_at": "2026-07-09T01:05:12.227411+00:00",
+    "last_used_at": "2026-07-10T01:00:23.104565+00:00",
     "last_viewed_at": "2026-07-09T01:05:12.222827+00:00",
     "patch_count": 189,
     "pinned": false,
     "state": "active",
-    "use_count": 238,
+    "use_count": 240,
     "view_count": 183
   },
   "seo-article-publish-cron": {

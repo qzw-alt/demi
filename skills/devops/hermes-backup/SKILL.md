@@ -93,7 +93,7 @@ rsync -a --delete \
   /home/ubuntu/.hermes/ /tmp/hermes-backup/
 ```
 
-**After rsync — verify exclusions actually took effect** (rsync can silently leak root-level files; don't trust the exclude to have worked):
+**After rsync — verify exclusions actually took effect** (rsync can silently leak root-level files; don't trust the exclude to have worked). This step is **mandatory** — a smaller user-supplied exclude list (typical in cron prompts) will not block heavy dirs like `hermes-agent/venv/` (~456M), `lsp/node_modules/` (~64M), `hermes-agent/website/` (~27M), or `hermes-agent/tests/` (~26M). They will land in the working tree and inflate the next commit by hundreds of MB unless .gitignore catches them in step 3.
 
 ```bash
 cd /tmp/hermes-backup/
@@ -104,12 +104,16 @@ for p in sessions/ memories/ cache/ logs/ sandboxes/ audio_cache/ image_cache/ \
          models_dev_cache.json gateway.lock gateway.pid cron/output/; do
   [ -e "$p" ] && echo "LEAK: $p"
 done
-# Heavy dirs that may have leaked if user excluded list is smaller than the canonical one
-for d in hermes-agent/venv hermes-agent/website hermes-agent/tests hermes-agent/ui-tui; do
-  [ -d "$d" ] && du -sh "$d"
+# Heavy dirs that will almost always leak when the user supplies a short exclude list
+# (real-world numbers from 2026-07-09 backup: venv 456M, lsp 64M, website 27M, tests 26M, ui-tui 3.5M)
+for d in hermes-agent/venv hermes-agent/website hermes-agent/tests hermes-agent/ui-tui lsp/node_modules; do
+  if [ -d "$d" ]; then
+    echo "HEAVY: $d - $(du -sh "$d" 2>/dev/null | cut -f1)"
+  fi
 done
 # If any LEAK appeared, rm -f it (or rm -rf for dirs) and git rm --cached
-# If heavy dirs appeared, add them to .gitignore in step 3 BEFORE running git add -A
+# If heavy dirs appeared, they MUST be added to .gitignore in step 3 BEFORE running git add -A
+# (step 3's canonical .gitignore template already covers them; this is just the visibility check)
 ```
 
 ### 3. Remove old sensitive artifacts from previous backups
@@ -383,6 +387,7 @@ rm -rf /tmp/hermes-backup/
 - **`kanban.db.init.lock` is a runtime lock, not the kanban DB itself** — Pairs with `kanban.db` the way `auth.lock` pairs with `auth.json`. It's a 0-byte file written when the kanban SQLite is initialized, and shows up on every backup regardless of whether the kanban is in use. The kanban DB itself (`kanban.db`, ~114KB SQLite) IS tracked content — do NOT exclude it. But the `.init.lock` lockfile should be excluded via rsync and .gitignore.
 - **Walker hits `hermes-agent/venv/` and `hermes-agent/tests/`** — The skill's NOISE_DIRS list excludes these from the *walker* (so redaction isn't attempted on third-party code), but **rsync does NOT exclude them** by default. They live in the working tree, get added with `git add -A` if .gitignore misses them, and inflate commits by hundreds of MB of test fixtures / venv site-packages. The canonical .gitignore template above includes `**/node_modules/`, `**/__pycache__/`, and `**/*.pyc` which covers the worst of it, but a strict repository should also exclude `hermes-agent/venv/`, `hermes-agent/tests/`, `hermes-agent/website/`, `hermes-agent/ui-tui/` outright if they're not needed for backup. Verify with `git status --short | wc -l` before commit — if it's in the thousands, .gitignore isn't catching something.
 - **Default git clone over SSH may take >60s** — The first clone of a populated `qzw-alt/demi` repo (1.2GB working tree, hundreds of commits) routinely exceeds the 60s foreground timeout in `terminal()`. Use `timeout 240 git clone ...` or run in background. After the first clone, subsequent updates via `git pull` are fast.
+- **Heavy dirs will leak through short user exclude lists — see `references/heavy-dir-leak-scenarios.md`** for the 2026-07-09 numbers (venv 456M, lsp 64M, website 27M, tests 26M, ui-tui 3.5M that all leaked through a typical 11-path user exclude list and were saved only by step 3's canonical .gitignore).
 - **rsync `--exclude='models_dev_cache.json'` does NOT always exclude a root-level file** — In one session the file was rsynced into the working tree despite the exclude pattern being set. Rsync's exclude rules can be confused by file-vs-component matching at the source root. **Always verify the file is absent after rsync** (`test -e path && echo PRESENT`); if it leaked through, manually `rm -f` it AND `git rm --cached` it. Don't trust the exclude to have caught it. Same risk applies to any other root-level dotfile/lockfile the user lists as a bare filename (e.g. `auth.json` in some rsync versions).
 - **User-supplied exclude lists are often smaller than the canonical one — verify heavy dirs aren't in the working tree** — When a user gives a short exclude list (e.g. only the ~10 paths from a cron prompt), the skill's canonical heavy-directory excludes (`hermes-agent/venv/`, `hermes-agent/website/`, `hermes-agent/tests/`, `hermes-agent/ui-tui/`) may NOT be in the user's list. After rsync, ALWAYS check: `for d in hermes-agent/venv hermes-agent/website hermes-agent/tests hermes-agent/ui-tui; do test -e "$d" && echo "HEAVY: $d"; done`. If any are present, add them to .gitignore (the skill's template includes them) and confirm `git ls-files` shows 0 tracked files in those dirs before commit. If gitignore is missing or incomplete, `git add -A` will commit hundreds of MB of venv/test fixtures.
 - **CJK-path files (Chinese / Japanese / Korean directory names) silently bypass the os.walk walker** — Reproduced in 2026-07-08 session: walker reported "13 files modified, 30 sk- redactions", but step 5 length-gated scan still found 1 real key in `./workspace/website/德米知识库/01-记忆系统/MEMORY.md`. The CJK-encoded path was skipped by `os.walk` for an unknown reason (possibly a stale `dirs[:]` filter, possibly a UnicodeDecodeError swallowed by `except (OSError, UnicodeError)`). **The fix is the step 5 length-gated grep scan — it is the only reliable verification.** When it finds a hit, re-run redaction DIRECTLY on the specific file path with a one-shot script (`python3 redact_one.py 'CJK/路径/文件.md'`), NOT the batch walker. Loop until step 5 reports zero hits.
