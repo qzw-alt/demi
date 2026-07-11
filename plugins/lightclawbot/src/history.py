@@ -15,6 +15,7 @@ tiers (see ``read_session_history``):
      when SessionDB is unavailable / returns nothing).
 """
 
+import hashlib
 import json
 import logging
 import mimetypes
@@ -371,6 +372,16 @@ def normalize_message(msg: dict) -> Optional[dict]:
     }
     if timestamp is not None:
         result["timestamp"] = timestamp
+
+    # 透传消息 ID：跨 Reset 历史合并（read_session_histories_by_ids）需要用
+    # 这些 ID 做去重键。缺少它们会退回到「timestamp+role+content_hash」的
+    # 弱去重，同一条消息若被父/子 session 各写一次会展示重复。
+    message_id = msg.get("message_id") or msg.get("messageId") or msg.get("id")
+    if message_id:
+        result["messageId"] = message_id
+    platform_message_id = msg.get("platform_message_id") or msg.get("platformMessageId")
+    if platform_message_id:
+        result["platformMessageId"] = platform_message_id
 
     # File-attachment recovery (mirrors TS history/message-parser.ts):
     # User messages → "用户发送了文件" + [media attached] markers
@@ -893,6 +904,139 @@ def _normalize_db_messages(
 
     return messages[-limit:] if len(messages) > limit else messages
 
+# 跨 Reset 历史合并查询
+
+MAX_MERGE_SESSIONS = 100
+
+
+def _history_dedup_key(message: dict) -> tuple:
+    """构建跨 session 合并时的去重键（与具体 session_id 无关）。
+
+    采用「消息自身身份」而非「迭代到的 session_id」作为去重维度，原因：
+    当 ``sessionIdHistory`` 因会话中途压缩同时记录父、子 session 时，配合
+    ``include_ancestors=True`` 读取，父 session 的消息会在父、子两次迭代中
+    被分别读出。若去重键带 session_id，则同一条消息会被判为不同，导致重复。
+
+    优先用平台消息 ID（全局唯一）；缺失时退回 ``(timestamp, role, content_hash)``。
+    """
+    platform_message_id = (
+        message.get("platformMessageId")
+        or message.get("platform_message_id")
+        or message.get("messageId")
+        or message.get("message_id")
+    )
+    if platform_message_id:
+        return ("pmid", platform_message_id)
+
+    content = str(message.get("content") or "")
+    content_hash = hashlib.sha1(content.encode("utf-8")).hexdigest()[:16]
+    return (
+        "legacy",
+        message.get("timestamp"),
+        message.get("role", ""),
+        content_hash,
+    )
+
+
+def read_session_histories_by_ids(
+    session_ids: List[str],
+    sessions_dir: Optional[str] = None,
+    *,
+    limit: int = 200,
+    chat_only: bool = True,
+) -> List[dict]:
+    """合并多个 sessionId 的消息，按 timestamp 升序排序后截取最近 limit 条。
+
+    用于跨 Reset 历史完整性：同一 chatId 的 ``sessionIdHistory`` 记录了所有历史
+    sessionId，本函数将它们逐个查询、合并、排序，返回完整历史流。
+
+    完整性保证：每个 session 使用 ``include_ancestors=True`` 走 parent_session_id
+    链，确保会话中途压缩（session_id 轮转 parent→child）之前的消息不丢失，与单
+    session 读取行为对齐。
+    """
+    if not session_ids:
+        return []
+
+    deduped_session_ids = [sid for sid in session_ids if sid]
+    if len(deduped_session_ids) > MAX_MERGE_SESSIONS:
+        logger.warning(
+            "[history] session_ids truncated to last %d for performance",
+            MAX_MERGE_SESSIONS,
+        )
+        deduped_session_ids = deduped_session_ids[-MAX_MERGE_SESSIONS:]
+
+    all_messages: List[dict] = []
+    seen_keys: set = set()
+
+    db = _get_session_db()
+
+    for sid in deduped_session_ids:
+        msgs: List[dict] = []
+
+        # Tier 1: SQLite（include_ancestors=True 保证压缩前历史完整）
+        if db is not None:
+            try:
+                raw = db.get_messages_as_conversation(sid, include_ancestors=True)
+            except Exception as exc:
+                logger.warning(
+                    "[history] read_session_histories_by_ids: SQLite error for sid=%s: %s",
+                    sid, exc,
+                )
+                raw = None
+            if raw:
+                msgs = _normalize_db_messages(raw, limit=100000, chat_only=chat_only)
+
+        # Tier 2: JSONL fallback
+        if not msgs:
+            d = sessions_dir or _default_sessions_dir()
+            path = os.path.join(d, f"{sid}.jsonl")
+            if os.path.isfile(path):
+                try:
+                    with open(path, "r", encoding="utf-8") as f:
+                        raw_text = f.read()
+                    msgs = _parse_transcript(raw_text, limit=100000, chat_only=chat_only)
+                except OSError as exc:
+                    logger.warning(
+                        "[history] read_session_histories_by_ids: JSONL read error sid=%s: %s",
+                        sid, exc,
+                    )
+
+        for message in msgs:
+            dedup_key = _history_dedup_key(message)
+            if dedup_key in seen_keys:
+                continue
+            seen_keys.add(dedup_key)
+            all_messages.append(message)
+
+    all_messages.sort(key=lambda message: message.get("timestamp") or float("inf"))
+
+    # 合并历史中按 sessionId 维护的每轮 usage sidecar，复用 ``_attach_usage_to_messages``
+    # 的"绝对时间锚定 + 序数兜底"算法挂回 turn-end assistant。
+    # 不读 sidecar 时合并路径会丢失全部 token 数据（实时帧仅在 WS 内推送，
+    # 刷新历史时只能依赖 sidecar）。Best-effort：任一 session 的 sidecar 读取失败
+    # 都不应阻塞历史响应——只是丢掉那部分 usage。
+    try:
+        d = sessions_dir or _default_sessions_dir()
+        merged_usage_entries: List[Dict[str, Any]] = []
+        for sid in deduped_session_ids:
+            usage_path = os.path.join(d, f"{sid}.usage.jsonl")
+            entries = _read_usage_log(usage_path)
+            if entries:
+                merged_usage_entries.extend(entries)
+        if merged_usage_entries:
+            # 跨 session 合并后，必须按时间戳重排——append-only 写入顺序仅在单
+            # session 内成立。``_attach_usage_to_messages`` 的时间锚定算法
+            # 要求 entries 与 turn-end 双方都已按时间升序。
+            merged_usage_entries.sort(key=lambda e: e.get("timestamp") or 0)
+            _attach_usage_to_messages(all_messages, merged_usage_entries)
+    except Exception as exc:  # pylint: disable=broad-except
+        logger.warning(
+            "[history] read_session_histories_by_ids: usage attach failed: %s",
+            exc,
+        )
+
+    return all_messages[-limit:] if len(all_messages) > limit else all_messages
+
 
 # ---------------------------------------------------------------------------
 # Session list (mirrors session-reader.ts: listSessions)
@@ -903,28 +1047,38 @@ def list_sessions(
     *,
     owner_uin: Optional[str] = None,
     channel_key: Optional[str] = None,
+    agent_id: Optional[str] = None,
 ) -> List[dict]:
     """List sessions from the sessions.json index.
 
     Multi-tenant filtering (D2):
         ``sessions.json`` is shared by the whole Hermes instance — every
         tenant's conversations live in the same dict.  In LightClaw, sessionKey
-        format is ``agent:main:<channel_key>:dm:<peer_uin>[:<agent_id>]`` where
-        ``peer_uin`` is the user side of the DM.
+        format is ``agent:{agentId}:<channel_key>:dm:<peer_uin>[:<chatId>]``
+        where ``agentId`` occupies the namespace segment (defaults to ``"main"``
+        via DEFAULT_AGENT_ID) and ``chatId`` is the optional business-session
+        suffix appended for physical per-chat isolation (method A).
 
         When ``owner_uin`` is set, we only return entries whose sessionKey's
         ``peer_uin`` segment matches ``owner_uin`` — i.e. "the sessions
         belonging to user X", filtering out other tenants' sessions.
 
         ``channel_key`` further narrows results to a specific platform
-        prefix (``agent:main:<channel_key>:``); set it to LightClaw's
+        prefix (``agent:<agent_id>:<channel_key>:``); set it to LightClaw's
         ``CHANNEL_KEY`` to avoid leaking sessions from other adapters that
         share the same Hermes instance.
+
+        ``agent_id`` scopes results to a specific agent (defaults to
+        ``"main"`` when omitted).  Pass the resolved agentId from the
+        inbound message for multi-agent isolation.
 
         With neither set, behaviour matches the pre-D2 build (return all
         entries).  This keeps the function safe to use in single-tenant
         deployments and in hosts that have no concept of "owner".
     """
+    from .config import DEFAULT_AGENT_ID as _DEFAULT_AGENT_ID
+    effective_agent_id = agent_id or _DEFAULT_AGENT_ID
+
     store = load_session_store(sessions_dir)
     result: list[dict] = []
 
@@ -932,7 +1086,7 @@ def list_sessions(
     # are ":"-delimited and the per-tenant dm chunk we care about always
     # appears at the same depth, so a substring check is sufficient and
     # avoids a full split per row.
-    channel_prefix = f"agent:main:{channel_key}:" if channel_key else None
+    channel_prefix = f"agent:{effective_agent_id}:{channel_key}:" if channel_key else None
     dm_marker = f":dm:{owner_uin}" if owner_uin else None
 
     for key, entry in store.items():

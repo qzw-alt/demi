@@ -58,9 +58,13 @@ def _load_platform_hint() -> str:
         "4. One MEDIA: line per file when multiple files were written.\n"
         "The framework converts each MEDIA: line into a download link for the "
         "user; without it the user gets NO download link.\n\n"
-        "For cron jobs / reminders / scheduled tasks, always set "
-        "deliver='lightclawbot:<chat_id>' so results reach the user instead of "
-        "being saved locally."
+        "For cron jobs / reminders / scheduled tasks, always target the user "
+        "who is talking to you right now: set "
+        "deliver='lightclawbot:<chat_id>' (the current user's chat_id) so the "
+        "result is delivered back to that same user. If you cannot determine "
+        "the chat_id, use deliver='origin' — the framework will route the "
+        "result to whoever created the task. Never omit deliver (results would "
+        "be saved locally and the user would never see them)."
     )
 
 
@@ -103,6 +107,28 @@ def _is_connected(config) -> bool:
     return False
 
 
+def _env_enablement_fn():
+    """Read LIGHTCLAWBOT_HOME_CHANNEL from env and return seed dict.
+
+    Called by the gateway config loader during _apply_env_overrides to wire
+    up the home channel (and any future env-driven config) without requiring
+    core code changes.
+    """
+    home_chat_id = os.getenv("LIGHTCLAWBOT_HOME_CHANNEL", "").strip()
+    thread_id = os.getenv("LIGHTCLAWBOT_HOME_CHANNEL_THREAD_ID", "").strip()
+    if not home_chat_id:
+        return None
+    result = {
+        "home_channel": {
+            "chat_id": home_chat_id,
+            "name": "Home",
+        }
+    }
+    if thread_id:
+        result["home_channel"]["thread_id"] = thread_id
+    return result
+
+
 def register(ctx):
     """Called by the Hermes plugin discovery system.
 
@@ -129,6 +155,8 @@ def register(ctx):
         max_message_length=4096,
         emoji="⚡",
         platform_hint=_load_platform_hint(),
+        env_enablement_fn=_env_enablement_fn,
+        cron_deliver_env_var="LIGHTCLAWBOT_HOME_CHANNEL",
     )
 
 

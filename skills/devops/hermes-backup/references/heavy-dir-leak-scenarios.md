@@ -6,7 +6,39 @@ working tree. The protection comes from `.gitignore` (step 3), not from rsync
 excludes. This file documents real-world numbers from past backups so future
 runs can verify the protection is actually working.
 
-## 2026-07-09 run
+## 2026-07-11 run — clean baseline (no leaks)
+
+User-supplied exclude list (~12 paths from a cron prompt):
+```
+.git, cache/, audio_cache/, image_cache/, gateway.lock, gateway.pid,
+state.db*, sandboxes/, logs/, sessions/, memories/, plus the cron prompt's
+"防止 secret scanning 拦截" framing
+```
+
+SSH auth verified (`Hi qzw-alt!`), so the PAT embedded in the cron prompt
+was NOT used — but it was still rsynced from `~/.hermes/cron/jobs.json` and
+had to be redacted.
+
+| Protection layer                                  | Fired? | Result |
+|---------------------------------------------------|--------|--------|
+| `rsync --exclude` for user's 12 paths             | ✅     | All 12 verified absent post-rsync |
+| Heavy-dir visibility check (`for d in venv/...`)  | ✅     | 0 HEAVY flags — clean |
+| Canonical `.gitignore` restore (rsync wiped it)   | ✅     | 27 entries written |
+| `git rm --cached` of legacy tracked artifacts    | ✅     | auth.json, .env, gsc/*, models_dev_cache.json, kanban.db.init.lock untracked |
+| Walker redaction (config.yaml + tree walk)        | ✅     | 110 files modified, 3 PAT + 262 sk- redactions |
+| CJK-path single-file recovery                     | ✅     | 1 hit in `workspace/website/德米知识库/01-...` — fixed with single-file redact |
+| Length-gated grep scan (40+ chars)                | ✅     | 0 hits after recovery |
+| Commit + push (SSH)                               | ✅     | `91e0099e1` on origin/master, 19 files / +933 / −2335 |
+
+**Outcome:** 556M rsync source → working tree of untracked-only-heavy-dirs,
+then a 1.4KB diff commit. Zero leaks to GitHub.
+
+**Key takeaway:** the multi-layer defense (rsync excludes + post-rsync
+visibility check + .gitignore restore + walker redaction + length-gated
+scan) is robust when ALL steps run. The CJK recovery is the only step that
+required a re-run — that's expected behavior, not a bug.
+
+## 2026-07-09 run — user-supplied exclude list too short
 
 User-supplied exclude list (11 paths):
 ```
@@ -85,3 +117,5 @@ thousands, .gitignore is still missing entries.
 - "rsync `--delete` can wipe the working tree's `.gitignore` if the source
   doesn't have one"
 - "Default git clone over SSH may take >60s" (related: heavy repos = slow clones)
+- "Cron job prompt becomes the source of the next backup's PAT leak" +
+  "PAT-in-cron-prompt delivery advisory must be prominent, not buried"

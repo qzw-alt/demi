@@ -1,43 +1,48 @@
+.git/
 
-audio_cache/
-auth.json
-auth.lock
-cache/
 # Caches
-cron/output/
-.env
+cache/
+audio_cache/
+image_cache/
+
+# Runtime state
 gateway.lock
 gateway.pid
-.git/
-gsc/client_secret.json
-gsc/token.json
-# Heavy dirs that should never be tracked
-hermes-agent/**/node_modules/
-hermes-agent/node_modules/
-hermes-agent/**/__pycache__/
-hermes-agent/__pycache__/
-hermes-agent/tests/
-hermes-agent/ui-tui/
-hermes-agent/venv/
-hermes-agent/website/
-.hermes_history
-image_cache/
+state.db*
+auth.lock
+auth.json
 kanban.db.init.lock
-# Kanban runtime lock + model registry cache (regenerated on every gateway tick)
-logs/
-lsp/node_modules/
+
+# Sensitive content
+sessions/
 memories/
 memory/
 memory_backup_*/
 migration/
-models_dev_cache.json
-**/node_modules/
-# Node / Python deps
-**/*.pyc
-**/__pycache__/
-# Runtime state
-sandboxes/
+.env
+.hermes_history
+
 # Sandboxes, logs, OAuth tokens
-# Sensitive content
-sessions/
-state.db*
+sandboxes/
+logs/
+cron/output/
+gsc/client_secret.json
+gsc/token.json
+
+# Node / Python deps + heavy directories
+**/node_modules/
+hermes-agent/node_modules/
+hermes-agent/**/node_modules/
+lsp/node_modules/
+hermes-agent/venv/
+hermes-agent/website/
+hermes-agent/tests/
+hermes-agent/ui-tui/
+hermes-agent/__pycache__/
+hermes-agent/**/__pycache__/
+**/__pycache__/
+**/*.pyc
+
+# Kanban runtime lock + model registry cache (regenerated on every gateway tick)
+kanban.db.init.lock
+models_dev_cache.json

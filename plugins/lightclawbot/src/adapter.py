@@ -16,7 +16,8 @@ import asyncio
 import json
 import logging
 import os
-from typing import Dict, List, Optional
+from collections import OrderedDict
+from typing import Dict, List, Optional, Tuple
 
 from gateway.platforms.base import BasePlatformAdapter
 from gateway.config import PlatformConfig
@@ -30,6 +31,8 @@ from .config import (
     EVENT_MESSAGE_ACK,
     EVENT_MESSAGE_PRIVATE,
     EVENT_SESSIONS_REQUEST,
+    EVENT_CHAT_REQUEST,
+    EVENT_AGENTS_REQUEST,
     FileDownloadStatus,
     KIND_FILE_DOWNLOAD,
     generate_msg_id,
@@ -42,6 +45,105 @@ from .tenancy import resolve_effective_api_key, set_api_key_map
 from .usage_tracker import SessionUsageTracker
 
 logger = logging.getLogger(__name__)
+
+
+# ---------------------------------------------------------------------------
+# HTTP response body 截断工具（用于 /cgi/ticket 等接口的错误诊断）
+# ---------------------------------------------------------------------------
+# 上游返回非预期 Content-Type（如网关拦截页 / HTML 错误页）时，我们需要
+# 把响应体落到日志里排查——但 HTML 页动辄数 KB，全量打印会打爆日志盘。
+# 采用「头部 + 尾部」双段截断：头部通常含 HTTP 错误标题，尾部通常含堆栈
+# 或时间戳，中段用省略号占位。
+_BODY_HEAD_LEN = 400
+_BODY_TAIL_LEN = 200
+
+
+def _truncate_body(text: str) -> str:
+    """将响应体压缩到日志友好长度。
+
+    * 全空/None → ``"<empty>"``
+    * 长度 ≤ HEAD+TAIL+相关标识 → 原样返回（去除首尾空白）
+    * 否则：头 400 字符 + " ...[truncated N chars]... " + 尾 200 字符
+
+    换行 / 制表符替换为可见转义，避免日志被多行 HTML 撑开影响可读性。
+    """
+    if not text:
+        return "<empty>"
+    stripped = text.strip()
+    if not stripped:
+        return "<whitespace-only>"
+    # 短内容直接返回，只做换行转义。
+    max_inline = _BODY_HEAD_LEN + _BODY_TAIL_LEN + 32
+    if len(stripped) <= max_inline:
+        return stripped.replace("\n", "\\n").replace("\t", "\\t")
+    head = stripped[:_BODY_HEAD_LEN].replace("\n", "\\n").replace("\t", "\\t")
+    tail = stripped[-_BODY_TAIL_LEN:].replace("\n", "\\n").replace("\t", "\\t")
+    return (
+        f"{head} ...[truncated {len(stripped) - _BODY_HEAD_LEN - _BODY_TAIL_LEN} "
+        f"chars]... {tail}"
+    )
+
+
+async def _read_body_snippet(resp) -> str:
+    """从 aiohttp 响应对象中安全提取截断后的响应体片段。
+
+    读取本身失败时返回 ``"<read-failed: ...>"``——诊断日志不能因读体失败
+    而丢失原始 status/headers 上下文。
+    """
+    try:
+        raw = await resp.text(errors="replace")
+    except Exception as exc:  # pylint: disable=broad-except
+        return f"<read-failed: {type(exc).__name__}: {exc}>"
+    return _truncate_body(raw)
+
+
+# ---------------------------------------------------------------------------
+# Bounded round-chat context (LRU)
+# ---------------------------------------------------------------------------
+# ``_round_chat_ctx`` 记录每个 sender 当前轮次的 (business_chat_id, agent_id)
+# 上下文。stop_typing 阶段不主动清理（attachment 等 post-stop_typing 链路
+# 仍可能读取），只由下一次 inbound 覆盖写入。多租户 Hermes 实例长期运行时，
+# 长期不活跃的 sender 条目会缓慢积压——虽然每条只是两个短字符串组成的 tuple，
+# 但没有上限意味着理论上无界。用 OrderedDict + 写入淘汰做 O(1) LRU 上限。
+#
+# 上限选择：多租户实例并发活跃用户数通常远小于 1000；给足 4096 作为安全余量
+# 既覆盖极端峰值，又把内存占用锁定在 KB 级（每条 tuple ~200 字节）。
+_ROUND_CHAT_CTX_MAX = 4096
+
+
+class _BoundedRoundChatCtx(OrderedDict):
+    """有上限的 sender → (business_chat_id, agent_id) 映射。
+
+    行为：
+      * 写入自动追加到尾部（``move_to_end``），已存在的 key 更新值时同样刷新
+        位置——保证「最近写入 = 最新活跃」。
+      * 超过 ``max_size`` 时从头部弹出最老条目（``popitem(last=False)``）。
+      * 读操作 (``get``/``__getitem__``) **不** 刷新 LRU 顺序。因为业务
+        时序上「先 inbound 写、后 outbound 读」，读时该 sender 必然刚
+        被写为最新，无需再刷新；避免读路径承担 O(1) 额外开销。
+
+    这里刻意继承自 ``OrderedDict`` 而非包装组合，让下游代码可以像普通
+    dict 一样使用（``.get()`` / ``.pop()`` / ``in`` 等 API 保持不变）。
+    """
+
+    def __init__(self, max_size: int = _ROUND_CHAT_CTX_MAX) -> None:
+        super().__init__()
+        self._max_size = max_size
+
+    def __setitem__(self, key, value) -> None:
+        # 覆盖写：先移到尾部再赋值，保证「最近写 = 最新」。
+        if key in self:
+            self.move_to_end(key, last=True)
+        super().__setitem__(key, value)
+        # 超上限时从头部（最老）淘汰。使用 while 是为了理论上处理
+        # ``max_size`` 被动态调小的场景；正常运行只会执行 0 或 1 次。
+        while len(self) > self._max_size:
+            evicted_key, _ = self.popitem(last=False)
+            logger.debug(
+                "[lightclaw] _round_chat_ctx evicted oldest entry: sender=%s "
+                "(size=%d, max=%d)",
+                evicted_key, len(self), self._max_size,
+            )
 
 
 class LightClawAdapter(
@@ -122,8 +224,17 @@ class LightClawAdapter(
         # edit_message() delta computation in streaming mode.
         self._edit_snapshot: Dict[str, str] = {}
 
-        # Per-chat agentId received from inbound messages (used by outbound to echo back)
-        self._incoming_agent_ids: Dict[str, str] = {}
+        # (multi-agent _incoming_agent_ids removed: only one agent "main" is supported)
+
+        # Per-chat 业务会话上下文：sender → (business_chat_id, agent_id)
+        # 由 inbound 在每轮开始时写入，outbound 在 _persist_turn_usage /
+        # _resolve_session_id_for_chat 中读出以还原与 inbound 完全一致的 sessionKey
+        # （`agent:{agent_id}:{CHANNEL_KEY}:dm:{sender}[:{chat_id}]`）。
+        # 没有该上下文时回退到 legacy 无 chatId 后缀的形式，兼容旧前端。
+        # stop_typing 不清理（attachment 等 post-stop_typing 链路仍可能需要解析），
+        # 由下一次 inbound 覆盖写入。使用 ``_BoundedRoundChatCtx`` LRU 上限，
+        # 防止长期不活跃的 sender 条目在多租户长运行实例上无界积压。
+        self._round_chat_ctx: Dict[str, Tuple[str, str]] = _BoundedRoundChatCtx()
 
         # ── Token usage (per-turn delta over session-cumulative counters) ──
         # Snapshots Hermes' cumulative SQLite counters at turn start and
@@ -156,6 +267,25 @@ class LightClawAdapter(
         # to avoid duplicate links.
         self._delivered_paths: Dict[str, set] = {}
 
+        # ── Thinking step state (per-chat, per-turn) ──
+        # 用于在 tool_progress 文本旁路并发一帧 thinking_step（kind='thinking_step'）
+        # 给前端做"思考过程时间线"渲染。本期只发 running 帧。
+        # 由 inbound 在新一轮开始时清理（与其他 per-turn 状态同步）。
+        #
+        # _step_seq:        chat_id → 本轮已分配的最大 seq（从 0 自增，前端用于排序）
+        # _step_count:      chat_id → 本轮已生成 stepId 的编号（用于 step-{N}-{tool}）
+        # _last_tool_step:  chat_id → 最近一次 running 帧的元信息（stepId/seq/toolName/type）。
+        #                   阶段一暂不发 done，仅为阶段二预留 done 帧合并锚点。
+        self._step_seq: Dict[str, int] = {}
+        self._step_count: Dict[str, int] = {}
+        self._last_tool_step: Dict[str, dict] = {}
+
+        # _emitted_tool_lines: chat_id → 本轮已发过 thinking_step 的工具行
+        #   文本集合（line_stripped），用于跨 send() / edit_message() 路径
+        #   去重，避免同一工具行被重复渲染为时间线行。
+        #   inbound 在新一轮开始时清空。
+        self._emitted_tool_lines: Dict[str, set] = {}
+
         # Sessions directory for history reading
         hermes_home = os.environ.get("HERMES_HOME") or os.path.expanduser("~/.hermes")
         self._sessions_dir: str = (
@@ -171,9 +301,7 @@ class LightClawAdapter(
             sessions_dir=self._sessions_dir,
         )
 
-        # Per-agent system prompts (multi-agent support)
-        # Configured in config.yaml → platforms.lightclaw.extra.agent_prompts
-        self._agent_prompts: Dict[str, str] = extra.get("agent_prompts") or {}
+        # (multi-agent _agent_prompts removed: only one agent "main" is supported)
 
         # ── 多 UIN 会话管理（D1 改造） ─────────────────────────────
         # _sessions       : uin → _PerUinSession（每 UIN 一条独立 WS 连接）
@@ -358,6 +486,15 @@ class LightClawAdapter(
 
         And pushes the result into :mod:`.tenancy` so tool handlers and the
         download signal handler can resolve the correct apiKey per session.
+
+        错误诊断：
+            当上游返回非预期内容（如 HTML 错误页 / 网关拦截页）时，直接
+            ``resp.json()`` 会抛 ``ContentTypeError`` 且不带响应体信息，让线上
+            排障非常困难。这里改为先 ``resp.text()`` 读原文，再手动
+            ``json.loads``：解析失败时把 Content-Type 与截断后的响应体
+            落到 WARNING 日志，同时用头 400 字符 + 尾 200 字符的方式截断
+            以兼顾"看得到关键错误页文案"和"日志体积可控"（HTML 页动辄
+            数 KB，不截断会打爆日志盘）。
         """
         import aiohttp
 
@@ -377,16 +514,53 @@ class LightClawAdapter(
                         timeout=aiohttp.ClientTimeout(total=15),
                     ) as resp:
                         if resp.status != 200:
+                            # HTTP 层异常：连响应体一起打印（同样截断），
+                            # 便于发现"401 未授权 / 502 网关错误"等场景下
+                            # 上游返回的 error message。
+                            body_snippet = await _read_body_snippet(resp)
                             logger.warning(
-                                "[lightclaw] %s HTTP %d for key ***%s",
+                                "[lightclaw] %s HTTP %d for key ***%s "
+                                "content_type=%s body=%s",
                                 API_PATH_TICKET, resp.status, key[-4:],
+                                resp.headers.get("Content-Type", "?"),
+                                body_snippet,
                             )
                             continue
-                        data = await resp.json()
+                        # 手动读文本 + JSON 解析：避免 resp.json() 在
+                        # 上游返回 text/html 时直接抛 ContentTypeError
+                        # 却不带响应体信息。
+                        raw_text = await resp.text(errors="replace")
+                        try:
+                            data = json.loads(raw_text)
+                        except (json.JSONDecodeError, ValueError) as parse_exc:
+                            content_type = resp.headers.get(
+                                "Content-Type", "?",
+                            )
+                            logger.warning(
+                                "[lightclaw] %s non-JSON response for key "
+                                "***%s: content_type=%s parse_error=%s "
+                                "body=%s",
+                                API_PATH_TICKET, key[-4:], content_type,
+                                parse_exc, _truncate_body(raw_text),
+                            )
+                            continue
+
+                        if not isinstance(data, dict):
+                            logger.warning(
+                                "[lightclaw] %s unexpected payload type for "
+                                "key ***%s: type=%s body=%s",
+                                API_PATH_TICKET, key[-4:],
+                                type(data).__name__,
+                                _truncate_body(raw_text),
+                            )
+                            continue
+
                         if data.get("code") != 0:
                             logger.warning(
-                                "[lightclaw] %s error for key ***%s: %s",
-                                API_PATH_TICKET, key[-4:], data.get("message"),
+                                "[lightclaw] %s error for key ***%s: "
+                                "code=%s message=%s",
+                                API_PATH_TICKET, key[-4:],
+                                data.get("code"), data.get("message"),
                             )
                             continue
 
@@ -424,8 +598,9 @@ class LightClawAdapter(
                             )
                 except Exception as exc:
                     logger.warning(
-                        "[lightclaw] Identity resolve failed for key ***%s: %s",
-                        key[-4:], exc,
+                        "[lightclaw] Identity resolve failed for key ***%s: "
+                        "%s: %s",
+                        key[-4:], type(exc).__name__, exc,
                     )
 
         if not bot_client_id:
@@ -449,6 +624,44 @@ class LightClawAdapter(
             if uin and uin not in self._chat_to_uin:
                 self._chat_to_uin[uin] = uin
 
+        # ── 自动认领 home channel ──────
+        # 单租户：唯一的 uin 就是归属者本人，chat_id == uin，天然是 home。
+        # 仅在用户未显式配置时填充，尊重 env / config.yaml 的显式设置：
+        #   * 单租户（恰好 1 个 uin）    → 自动设，安全等价于个人微信私聊。
+        #   * 多租户（多个 uin）         → 不自动设，否则会把 A 的定时任务投递给 B。
+        #   * 已显式配置（home_channel）→ 守卫跳过，绝不覆盖用户设置。
+        # 把结果持久化到 LIGHTCLAWBOT_HOME_CHANNEL，保证 cron /
+        # send_message 无论从哪个 config 副本读都稳定命中。
+        real_uins = [u for u in api_key_map if u and u not in self._api_keys]
+        if len(real_uins) == 1 and not getattr(self.config, "home_channel", None):
+            sole_uin = real_uins[0]
+            try:
+                from gateway.config import HomeChannel, Platform
+
+                self.config.home_channel = HomeChannel(
+                    platform=Platform("lightclawbot"),
+                    chat_id=sole_uin,
+                    name="Home",
+                )
+                if not os.getenv("LIGHTCLAWBOT_HOME_CHANNEL"):
+                    try:
+                        from hermes_cli.config import save_env_value
+
+                        save_env_value("LIGHTCLAWBOT_HOME_CHANNEL", sole_uin)
+                    except Exception as exc:
+                        logger.warning(
+                            "[lightclaw] persist home channel failed: %s: %s",
+                            type(exc).__name__, exc,
+                        )
+                logger.info(
+                    "[lightclaw] Auto home channel = %s (single-tenant)", sole_uin,
+                )
+            except Exception as exc:
+                logger.warning(
+                    "[lightclaw] auto home channel failed: %s: %s",
+                    type(exc).__name__, exc,
+                )
+
         logger.info(
             "[lightclaw] Bot clientId: %s, %d key(s) mapped",
             bot_client_id, len(api_key_map),
@@ -458,7 +671,7 @@ class LightClawAdapter(
     # Lifecycle
     # ------------------------------------------------------------------
 
-    async def connect(self) -> bool:
+    async def connect(self, *, is_reconnect: bool = False) -> bool:
         if not self._api_keys:
             logger.error("[lightclaw] No API keys configured")
             self._set_fatal_error("no_api_keys", "No API keys configured", retryable=False)
@@ -708,6 +921,15 @@ class LightClawAdapter(
 
         if event == EVENT_SESSIONS_REQUEST:
             await self._handle_sessions_request(data)
+            return
+
+        if event == EVENT_CHAT_REQUEST:
+            asyncio.create_task(self._handle_chat_request(data))
+            return
+
+        # agents:request — Agent 列表查询（只读，已在 IMEventType 中）
+        if event == EVENT_AGENTS_REQUEST:
+            await self._handle_agents_request(data)
             return
 
     # ------------------------------------------------------------------
