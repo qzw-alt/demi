@@ -1,7 +1,7 @@
 ---
 name: hermes-cron-troubleshooting
 description: "Diagnose and repair failing Hermes cron jobs. Load whenever a cron reports an error (HTTP 500, skill not found, last_status=error) or when a job's output file shows a 'RuntimeError' / 'Error' block. Covers reading failure logs from ~/.hermes/cron/output/, identifying the failure signature (skill-not-found, missing file, model error, delivery error), repairing jobs.json, and verifying the fix."
-version: 1.1.0
+version: 1.2.0
 author: Hermes Agent
 license: MIT
 platforms: [linux]
@@ -148,6 +148,47 @@ cronjob list   # confirm skill + skills reflect the fix
 **Signature:** no output file for the expected run, no error reported.
 
 **Fix:** check `cronjob list` for `enabled: true` and `state: scheduled`. If `paused_at` is set, use `cronjob action=resume job_id=<id>`. If the schedule expression looks wrong, verify it parses (`python3 -c "from croniter import croniter; croniter('0 8 * * *')"`).
+
+### 8. Cap-hit false positive (NEW 2026-07-11 — the silent-shipment pattern)
+
+**Signature:** `last_status: error` in `cronjob list`, but the article is actually live on the public URL.
+
+**Why it happens:** The cron uses cap-safe ordering (commit + push BEFORE humanize loop). The agent successfully runs:
+1. Article written to disk
+2. Committed + pushed to origin
+3. Sitemap + index updated, committed + pushed
+4. HTTP 200 verified
+5. **THEN** the iteration cap fires on a post-publish polish step (humanize retry, summary print, log write)
+6. Agent loop throws final `RuntimeError`
+7. Cron framework sees any RuntimeError → marks `last_status=error` → fires "⚠️ Cron failed" notification
+
+The article shipped. The notification is wrong.
+
+**Detection (fast, 1 command):**
+
+```bash
+bash ~/.hermes/skills/cron-content-pipeline-cap-safe/scripts/verify-daily-articles.sh
+# exit 0 → article live, false positive, no action needed
+# exit 1 → article NOT live, real failure, manual recovery required
+```
+
+**Detection (in output file, when you can't run the watchdog):**
+
+```bash
+F=$(ls -t ~/.hermes/cron/output/$JOB_ID/ | head -1)
+grep -E "^\[SHIPPED_OK\]" ~/.hermes/cron/output/$JOB_ID/$F
+# Token present → cap-hit false positive, article shipped, ignore the error
+# Token absent AND article commit exists in git log → still likely false positive, run watchdog to confirm
+# Token absent AND no article commit → real failure
+```
+
+**Fix:** None needed for the cron itself. The `last_status=error` is by-design (any RuntimeError = error in the framework). The right mitigations are:
+
+1. **Inject `[SHIPPED_OK]` token** into the cron prompt (see `cron-content-pipeline-cap-safe` skill, `[SHIPPED_OK]` section). After the change, future output files have a definitive signal.
+2. **Run the watchdog** when any cron reports error, before opening recovery sessions.
+3. **Train the user** to send the watchdog output as their first reply when they paste a "⚠️ Cron failed" notification, so the recovery path is: confirm-live → either no-op or true-recovery.
+
+**Do NOT** trigger a recovery session without first running the watchdog. The 2026-07-11 Betta ELEVATE incident burned ~10 minutes of unnecessary triage before the live-URL check.
 
 ## Verifying the fix
 

@@ -19,6 +19,11 @@ Usage:
 The single-file mode is what the length-gated scan in SKILL.md step 5 calls
 when the walker missed a file. It always runs against the literal path,
 no os.walk.
+
+ARG-ORDER GOTCHA: single-file mode REQUIRES the backup directory as argv[1].
+Passing only the file path will be misread as BATCH mode (1 positional arg
+triggers `len(sys.argv) == 2`) and crash at `os.chdir(BACKUP_DIR)` with
+`NotADirectoryError`. The script now validates this up front.
 """
 
 import os
@@ -32,10 +37,18 @@ BATCH = len(sys.argv) == 2
 SINGLE = len(sys.argv) == 3
 
 if not (BATCH or SINGLE):
-    print("Usage: redact_secrets.py <backup_dir> [<file>]")
+    print("Usage: redact_secrets.py <backup_dir> [<file>]", file=sys.stderr)
+    print("  batch:    redact_secrets.py /tmp/<backup_dir>", file=sys.stderr)
+    print("  single:   redact_secrets.py /tmp/<backup_dir> <relative_or_abs_file_path>", file=sys.stderr)
     sys.exit(1)
 
 BACKUP_DIR = sys.argv[1]
+# Validate BACKUP_DIR is actually a directory — guards against single-mode invocation
+# that mistakenly passes the file path as argv[1] (would otherwise trigger batch
+# mode and `os.chdir(file)` would crash with NotADirectoryError).
+if not os.path.isdir(BACKUP_DIR):
+    print(f"ERROR: backup_dir is not a directory: {BACKUP_DIR}", file=sys.stderr)
+    sys.exit(2)
 
 # === SKILL STEP 4: TRUNCATE config.yaml ===
 # Run in both modes — config.yaml is always a single file at the root.
@@ -142,7 +155,12 @@ if BATCH:
 
 # === SINGLE-FILE MODE: REDACT ONE PATH (CJK / missed files) ===
 elif SINGLE:
-    target = os.path.join(BACKUP_DIR, sys.argv[2]) if not os.path.isabs(sys.argv[2]) else sys.argv[2]
+    # os.path.join with an absolute second arg returns that absolute arg unchanged,
+    # so this works for both relative ('./path/to/file') and absolute paths.
+    target = os.path.join(BACKUP_DIR, sys.argv[2])
+    if not os.path.isfile(target):
+        print(f"ERROR: target file does not exist: {target}", file=sys.stderr)
+        sys.exit(2)
     np, ns = redact_file(target)
     if np or ns:
         print(f"REDACTED: {target} ({np} PAT, {ns} sk-)")

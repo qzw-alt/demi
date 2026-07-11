@@ -1,7 +1,7 @@
 ---
 name: cron-content-pipeline-cap-safe
 description: "Reference pattern for cron-driven content publishing (news/blog/articles) when the cron agent hits a tool-call iteration cap mid-pipeline. Covers commit-before-humanize ordering, recovery-via-script separation, and the failure mode where the skill's own recovery recipe loops forever."
-version: 1.0.0
+version: 1.1.0
 author: Hermes Agent
 platforms: [linux]
 metadata:
@@ -119,6 +119,52 @@ DO NOT:
 - Wait for humanize score ≥X before pushing
 - "Polish to perfection then publish"
 ```
+
+## The `[SHIPPED_OK]` token convention (NEW 2026-07-11)
+
+The cap-safe ordering above solves the *frequency* problem (most cap-hits no longer lose the publish), but it does not solve the *false-positive notification* problem: when the agent commits + pushes + verifies HTTP 200, then the cron iteration cap fires on a final post-publish step (humanize polish, summary print, log write), the agent loop throws a final `RuntimeError`. The cron framework sees any RuntimeError and marks `last_status=error`. The notification system fires "⚠️ Cron failed." The user panics and opens a recovery session. But the article is already live.
+
+This was the 2026-07-11 morning's exact scenario: `fa7a29b3464e` (chinahospitalsguide) ran the cap-safe Betta ensartinib ELEVATE article to completion (`46f623b` commit + `b7c3e57` sitemap/index), then the agent threw RuntimeError during the post-hoc humanize polish → cron → `last_status=error` → "⚠️ Cron failed" notification → false alarm.
+
+**The fix is a one-line token contract** added to every cron prompt:
+
+```
+## 部署后成功信号约定（HARD RULE）
+
+成功完成所有步骤后，在最终回复的**最后一行**输出以下 token，**单独成行**：
+
+`[SHIPPED_OK] <URL> <字数> <去AI化分>`
+
+示例：
+- ✅ `[SHIPPED_OK] https://example.com/news/2026-07-11-foo.html 1540 words 75`
+- ❌ 不输出 token（完成 commit+push+HTTP 200 后必须输出）
+
+**为什么要这个 token：** commit+push+HTTP 200 成功后，agent 循环在最后一步
+iteration cap 抛出 RuntimeError 是 cap-safe 设计预期内的 false positive。看到
+token 就说明文章已上线，无需 manual recovery。如果失败不要输出 token。
+```
+
+### Why this works
+
+The cron notification system fires on `last_status=error`. The agent's final response is captured into `~/.hermes/cron/output/<job_id>/<run_id>.md` regardless of whether RuntimeError was thrown. A second-stage reader (a watchdog, or the human reading the output file on receiving the notification) can grep the output for `[SHIPPED_OK]` and override the cron framework's verdict.
+
+This is not a complete silent-success mechanism (the cron tool itself still shows `last_status=error`), but it gives any downstream reader a definitive answer in 1 second without having to reconstruct what happened from the agent's prose.
+
+### Where to put the rule
+
+In the cron prompt, immediately after the workflow steps. The token must be the LAST line of the agent's final response — not buried in the middle of a paragraph, not in a code block (the framework's output-file writer may strip or escape code-block tokens). **Single line, plain text, no surrounding markdown.**
+
+### Compatible watchdog pattern
+
+Pair the `[SHIPPED_OK]` token with a one-shot bash verifier (`scripts/verify-daily-articles.sh` in this skill) that curl-HEADs yesterday's expected URL on each site and exits 0 if live. When a cron failure notification arrives, the human's first action is one command, not reading a 240KB output file:
+
+```bash
+bash ~/.hermes/skills/cron-content-pipeline-cap-safe/scripts/verify-daily-articles.sh
+# exit 0 → article live, false positive, no action needed
+# exit 1 → article NOT live, real failure, manual recovery required
+```
+
+The watchdog is independent of `[SHIPPED_OK]` — it works whether the token is in the prompt or not. But the two together give you (a) an automatic signal in the output file, (b) a one-command live-check.
 
 ## What to capture when a cap-hit happens anyway
 

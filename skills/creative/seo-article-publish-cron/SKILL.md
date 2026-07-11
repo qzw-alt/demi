@@ -1,7 +1,7 @@
 ---
 name: seo-article-publish-cron
 description: "Run a daily SEO article publishing cron job — verify repo state, match existing article template, write English article, de-AI pass, update sitemap, commit and push to the deployed branch. Use when a cron task says 'publish daily SEO article to <site>' with a GitHub Pages deployment from a repo."
-version: "1.3.0"
+version: "1.4.0"
 author: Hermes Agent
 license: MIT
 platforms: [linux]
@@ -9,7 +9,7 @@ metadata:
   hermes:
     tags: [seo, publishing, cron, github-pages, articles]
     category: creative
-    related_skills: [programmatic-seo, humanizer]
+    related_skills: [programmatic-seo, humanizer, chinahospitalsguide-content]
 ---
 
 # SEO Article Publishing Cron Job
@@ -364,6 +364,63 @@ The seasonal threading pitfall above covers month-long themes (June = Fire Month
 ### Don't ship before verifying de-AI
 
 If the spec says "score > 60 required," treat it as a hard gate. A humanizer audit that finds 12 instances of `delve`/`tapestry`/`testament`/`underscore` should be rewritten, not shipped. Programmatic scan catches most of these in seconds.
+
+### Don't write JSON-LD as two adjacent objects (Eleventy + Nunjucks frontmatter — verified 2026-07-10)
+
+When articles are authored as `.md` files with Nunjucks frontmatter, the
+`schema:` field is rendered as a single literal block. If you write two
+`{...}{...}` objects back-to-back in YAML, Nunjucks concatenates them as
+`{...} {...}` — **invalid JSON, Google rejects it**. Always wrap in a JSON
+array `[..., ...]`.
+
+```yaml
+# ✅ VALID — Google accepts both schemas
+schema: |
+  [
+    { "@context": "https://schema.org", "@type": "Article", ... },
+    { "@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [...] }
+  ]
+
+# ❌ INVALID — produces {"@type":"Article"...} { "@type":"FAQPage"...}
+schema: |
+  { "@context": "...", "@type": "Article", ... }
+  { "@context": "...", "@type": "FAQPage", ... }
+```
+
+Verify after build:
+```bash
+python3 -c "import re,json; html=open('_site/blog/<slug>/index.html').read(); \
+  m=re.search(r'<script type=\"application/ld\\+json\">(.+?)</script>', html, re.DOTALL); \
+  print([o['@type'] for o in json.loads(m.group(1))])"
+```
+
+Expected: `['Article', 'FAQPage']`. If the regex returns a single object instead of a list, you wrote adjacent objects — fix the frontmatter.
+
+### Don't use the `.html` URL in schema when 11ty renders pretty URLs
+
+11ty default behavior renders `.md` source files to `_site/blog/<slug>/index.html`
+(trailing slash, directory URL). The `mainEntityOfPage.@id` and `<link rel="canonical">`
+must use the **pretty URL** `/blog/<slug>/`, NOT `/blog/<slug>.html`. A schema that
+points at `.html` 404s because no such file exists after build.
+
+```yaml
+mainEntityOfPage:
+  "@type": "WebPage"
+  "@id": "https://chinahospitalsguide.com/blog/<slug>/"   # trailing slash
+```
+
+### Eleventy + Nunjucks article-system variant
+
+`chinahospitalsguide.com` (2026-07-10 onward) uses **Eleventy 2.x + Nunjucks frontmatter
++ .md source files** instead of the hand-written .html approach used by
+`oriental-destiny.com`. The template layout is `_layouts/blog-post.njk` and
+required frontmatter fields include `title`, `description`, `kicker`, `subtitle`,
+`date`, and `schema` (Article + FAQPage JSON array).
+
+If the cron job says "publish article to chinahospitalsguide," load the
+`chinahospitalsguide-content` skill before drafting — it has the Eleventy-specific
+checklist, the JSON-LD-array pitfall above, and the pricing-tier schema that
+Weiye's CONTENT_GUIDE.md requires.
 
 ### Don't repeat the same parallel structure across listicle cards
 

@@ -12,7 +12,7 @@ metadata:
 
 # Programmatic SEO: Article Writing for Content Sites
 
-Write and publish daily SEO articles for oriental-destiny.com (feng shui / BaZi / destiny) and chinahospitalsguide.com (Chinese medical tourism).
+Currently serving oriental-destiny.com and chinahospitalsguide.com. See `references/chinahospitalsguide-content-guide.md`.
 
 ## Workflow (6 Steps)
 
