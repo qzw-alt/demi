@@ -61,12 +61,12 @@ tag: [medical-tourism, client-intake, hospital-coordination, email, whatsapp, pa
 
 #### ⚠️ 国籍判定 — 不要从影像语言推国籍（2026-07-07 教训）
 
-Maria Rios 案的翻车点：她的影像报告是"original Spanish + English translation"形式，结果被默认填成了 Spain/Spanish，发了 3 封邮件后才被伟烨纠正——她实际是 **荷兰人（Dutch / Netherlands）**。
+Maria Rios 案的翻车点：她的影像报告是"original Spanish + English translation"形式，最早被默认填成 Spain/Spanish，后来又被改成 Netherlands/Dutch —— **两个都错**。她实际是 **🇨🇴 哥伦比亚籍、居住荷兰 (Colombian citizen, Netherlands residence)**。影像有西语版只是因为她在拉美/西班牙做的检查，**报告语言 ≠ 国籍**。
 
 **规则：**
 - **永远以伟烨明示的国籍为准**。患者邮件里没有明示 → 在飞书对话里问伟烨确认，不要自己推
 - **不要凭"报告里有 X 语言"就推断她是 X 国人**。在跨境医疗里：
-  - 荷兰人可能因旅游/工作/历史原因在西班牙做过检查
+  - 哥伦比亚籍患者可能因旅游/工作/历史原因在西班牙做过检查
   - 拉美裔美国人/欧洲华人可能英语+母语双报告
   - 同一份报告可能由翻译机构处理过
 - **报告语言≠国籍**。报告语言只能写"original language"或具体语种，不能改写成"国籍语言"
@@ -158,12 +158,14 @@ Maria Rios 案的翻车点：她的影像报告是"original Spanish + English tr
 5. **分块用 `---`** — 多个段落之间用三横线分隔，不是大段空白
 6. **结尾必须有"可以直接复制到邮箱里了"** — 提醒用户这是终稿
 7. **触发器**：用户说「直接发我 / 我直接转发 / 内容发我 / 复制用」时 — 邮件正文**只能包含邮件本身**，**严禁**在邮件前后添加任何"⚠️ 伟烨号是不是打多了""要不要我调整""这个数字你确认下"之类的客服/审稿附注。这类附注应在**飞书对话里**作为独立消息发出，不混入邮件正文
-8. **飞书消息体长度限制 + 长文强制拆段（2026-07-08 伟烨拍板强化）** — 伟烨原话："反正这种长文的话，你就拆分两段就可以了"。**对策**：起草任何长邮件/长文档时，**默认拆成 part 1 / 2 两段**分别贴出来：
+8. **飞书消息体长度限制 + 长文强制拆段（2026-07-08 伟烨拍板强化，2026-07-11 再次强化）** — 伟烨原话："反正这种长文的话，你就拆分两段就可以了"。**这是默认行为，不是询问选项**。**对策**：起草任何长邮件/长文档时，**默认拆成 part 1 / 2 两段**分别贴出来：
    - 第一段顶部：`--- Part 1 / 2 ---`
    - 第二段顶部：`--- Part 2 / 2 ---`
    - 两段之间用 `---` 分隔符让伟烨一眼区分
    - 拆段点选在邮件自然段落的中间（列表结束、问候语之前），不要从句子中间切
+   - **默认动作，不是询问项**：不要在飞书对话里问"拆不拆段？"，直接拆好贴出来。伟烨说"OK 发"或"按你建议"时直接采纳默认
    - 触发场景：任何给伟烨复制转发的纯文本（不只是邮件——抖音文案、给医院咨询稿、患者随访问卷等都算"长文"）
+   - **2026-07-11 强化（"按你建议" 信号）**：伟烨多次用"按你建议 / 你写好发我 / 我现在就发"表明偏好 **agent 给默认推荐 + 拆段**，而不是列 1️⃣2️⃣3️⃣4️⃣ 让用户拍。起草邮件前若有不确定项，**先列 1-2 个推荐方案 + 默认值 + "不告诉我即默认采用"**，让伟烨一次性拍 yes/no，而不是列 5 个问题让伟烨挨个答。**违反这个规则就是违反 2026-07-11 偏好**。
 9. **患者云盘链接时效** — DICOM 通常通过 Google Drive / WeTransfer / Sinosend / Dropbox 发送，链接普遍 7-30 天失效，但 Sinosend 等部分云盘可能更短。**收到链接当天**就在飞书对话里提醒伟烨"链接有时效，建议 24-48h 内下载"；如果是关键影像（DICOM、CT/MRI），优先当天下载到本地 `/home/ubuntu/chinahospitalsguide/patients/<name>/<date>/`
 
 **❌ 反例（不要这样做）：**
@@ -331,7 +333,7 @@ scoreboard.sort(reverse=True)  # 命中越多家排越前
 |------|------------------|------|
 | Nutcracker + May Thurner 同时 | **仅 1 家** — Tangdu | `trust.notes` 里写明 |
 | Beijing 内能做血管介入 + 接海外资料 | **0 家** | 主库里无匹配 |
-| 只接外籍 + 强血管外科 | 几乎都是军事医院（北京 301、西安唐都），**军事医院对外籍有政策限制** | Maria Rios 案已踩雷 |
+| 只接外籍 + 强血管外科 | 几乎都是军事医院（北京 301、西安唐都），**军事医院体制上不直接接诊外籍患者**，但**专家可以作 MDT 远程协诊方**参与。Maria Rios 案确立：主诊医院必须选非军队背景，唐都可作跨院 MDT 协诊备选 | Maria Rios 案已踩雷 |
 
 **这套筛选得到的结论直接喂给伟烨做决策**。**不要瞎推荐医院**，尤其是"看起来在 Beijing 又在主库"的就推——主库筛选是唯一可信源。
 
@@ -417,6 +419,95 @@ scoreboard.sort(reverse=True)  # 命中越多家排越前
 - ❌ "X 医院 APP 描述里写'在线问诊'，所以能做"——**错**，可能是医护端
 
 完整诊断档案落 `internal-research-notes/<医院>-internet-hospital-<日期>.md`。
+
+## 复杂并发病情协调：单家医院 + 跨院专家 MDT 模式（2026-07-11 新增 — Maria Rios 案确立）
+
+**触发场景**：患者有 **2-3 个并发/罕见病种**，单个医院（或任何单一医院）单独覆盖所有病种的能力不足。常见案例：
+
+- 血管 + 泌尿 + 胃肠 多系统并发（如 Maria Rios: Nutcracker + May Thurner + 疑似 SMAS）
+- 骨科 + 整形 + 神经外科 多学科交叉（如复杂脊柱侧弯 + 神经损伤）
+- 罕见病并发（如神经纤维瘤 + 血管畸形）
+
+**问题**：患者单一医院看不全，跑 3 家医院风险高（国际患者语言、体能、签证、机票都是负担）
+
+**解法（伟烨 2026-07-11 明示）**：**单家窗口医院 + 跨院专家 MDT 远程协诊网络**
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  Maria Rios                                                  │
+│       │                                                      │
+│       ▼                                                      │
+│  上海第九人民医院（窗口医院 — 收诊/排号/MDT召集/会诊主持）       │
+│       │                                                      │
+│       ▼                                                      │
+│  MDT 远程协诊（医院有同行资源池）                                │
+│  ├─ 泌尿科 (Nutcracker)  ← 也许有其他医院的专家                  │
+│  ├─ 血管外科 (May-Thurner)                                  │
+│  └─ 胃肠外科 (SMAS 评估)                                      │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**这套解法对应业务定位**：我们是 **跨院 MDT 协调者**，不是医院。这是 chinahospitalsguide 跟其他中介的差异化卖点。
+
+**邮件叙事结构**（给患者的英文邮件）：
+
+1. **进展好消息** —— 不需要跑 3 家医院
+2. **机构能力** —— 我们找到了**有同行资源**的医院，能调外部专家协诊
+3. **病情分别处理**（每条 1 句）：
+   - 谁负责（科室）
+   - 方向（达芬奇/介入/开放手术 —— **不替医生下结论**）
+   - 由谁解释（"details to be explained to you directly by the operating surgeon"）
+4. **下一步**：医生主动联系患者（不要让她跑）
+5. **影像/病历**：说明是否已转过去
+6. **案例合作**：简短一段，无 deadline
+
+**关键措辞模板（不替医生下结论）**：
+
+> "The direction currently under consideration is a minimally-invasive [approach] using [technique], with details to be explained to you directly by the operating surgeon during the upcoming video discussion. I am intentionally not specifying step-by-step what the surgical technique will be in writing, because the right technique depends on findings your imaging will show the team, and the surgeon should explain it to you face-to-face rather than through me."
+
+**诚实处理"外院专家邀请是否答应"**（不能打包票）：
+
+> "They will be inviting certain outside specialists into the MDT based on your imaging. Whether each invited specialist accepts is not something any hospital can promise in advance — that is a normal part of how these consultations work in China, and it is one of the reasons we wanted the hospital with the right peer connections rather than the closest one."
+
+**避免做的事**：
+
+- ❌ 不要承诺"具体哪个外院专家一定参加" —— 邀请和答应是两件事
+- ❌ 不要承诺"3 个病一定都能治" —— 让医院评估
+- ❌ 不要承诺"达芬奇/某种技术的具体步骤" —— 让医生视频说
+- ❌ 不要让患者自己跑 3 家医院 —— 单家窗口 + 跨院 MDT 才是解法
+
+完整案例档案见 `references/maria-rios-cross-hospital-mdt-case.md`（模板化写作参考）。
+
+## 军队背景三甲对外籍接诊的限制（2026-07-11 新增 — Maria Rios 案确立）
+
+**触发**：伟烨 2026-07-11 明示 — "唐都是军队医院不对外国人治疗，但有可能让唐都的专家一起会诊"。
+
+**核心规则**：
+
+- **军队背景三甲**（中国人民解放军 / 武警 / 军校附属医院 — 唐都、西京、301、304 等）**体制上不直接接诊外籍患者**
+- **军队专家可以**作 MDT **远程协诊方**参与（作为会诊专家，不是主诊）
+- **主诊医院必须是非军队背景的三甲**（如上海九院、北大第一、华西、协和等）
+
+**业务判断流程**：
+
+```
+新患者病情 → 主诊医院候选筛选
+            ↓
+       候选包含军队医院？
+            ├─ YES → 调整：选非军队背景做主诊，军队医院专家作 MDT 远程协诊
+            └─ NO  → 正常对接
+```
+
+**对邮件叙事的实际含义**：
+
+- 不告诉患者"军队医院对外籍有政策限制"这种体制内部细节
+- 改用 positive 措辞："the hospital has direct working relationships with the specific specialist groups elsewhere in China"
+- 如果唐都专家被邀请进 MDT，写 "the specific specialist groups" 模糊措辞，**不点名唐都**（避免揭"为什么没去成"的旧伤）
+
+**对 pricing.html / 套餐宣传的影响**：
+
+- 不能写"我们能让你去唐都" —— 主诊层面进不去
+- 可以写"对罕见/复杂病例协调跨院专家 MDT 会诊" —— 这是新卖点
 
 ## 注意事项
 

@@ -545,7 +545,7 @@ If 401 → token invalid. Do NOT proceed. Report to user.
 - `github_pat_` → Fine-Grained PAT (valid but must validate)
 - `ghp_` → Classic PAT (valid, standard format)
 
-**Known-failed token — qzw-alt/demi repo:** PAT `github_pat_11B67EO2...MbQ5` returned 401 from `GET /user` (backup session 2026-06-15). Token is invalid or revoked — regenerate before next backup attempt.
+**Known-failed token — qzw-alt/demi repo:** PAT `github...OKEN` returned 401 from `GET /user` (backup session 2026-06-15). Token is invalid or revoked — regenerate before next backup attempt.
 
 ### Step-by-Step
 

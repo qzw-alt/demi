@@ -12,6 +12,7 @@ state.db*
 auth.lock
 auth.json
 kanban.db.init.lock
+kanban.db.dispatch.lock
 
 # Sensitive content
 sessions/
@@ -29,20 +30,28 @@ cron/output/
 gsc/client_secret.json
 gsc/token.json
 
-# Node / Python deps + heavy directories
+# Node / Python deps
 **/node_modules/
 hermes-agent/node_modules/
 hermes-agent/**/node_modules/
 lsp/node_modules/
-hermes-agent/venv/
-hermes-agent/website/
-hermes-agent/tests/
-hermes-agent/ui-tui/
 hermes-agent/__pycache__/
 hermes-agent/**/__pycache__/
 **/__pycache__/
 **/*.pyc
 
-# Kanban runtime lock + model registry cache (regenerated on every gateway tick)
-kanban.db.init.lock
+# Heavy dirs (not source-relevant for backup)
+hermes-agent/venv/
+hermes-agent/website/
+hermes-agent/tests/
+hermes-agent/ui-tui/
+
+# Kanban runtime lock + model registry cache
 models_dev_cache.json
+
+# Channel / runtime state that shouldn't ship
+feishu_seen_message_ids.json
+gateway_state.json
+channel_directory.json
+interrupt_debug.log
+.install_method

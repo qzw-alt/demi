@@ -1,16 +1,14 @@
 model:
   api_mode: anthropic_messages
   provider: custom:minimax_coding
-  api_key: 
-    sk-cp-Zyu9C...rWDo
+  api_key: sk-cp-Zyu...rWDo
   base_url: https://api.minimaxi.com/anthropic
   default: MiniMax-M3
 providers:
   minimax_coding:
     base_url: https://api.minimaxi.com/anthropic
     protocol: ''
-    api_key: 
-      sk-cp-Zyu9C...rWDo
+    api_key: sk-cp-Zyu...rWDo
     api_mode: anthropic_messages
     model: MiniMax-M3
     model_display_name: MiniMax-M3

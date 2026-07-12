@@ -1,7 +1,7 @@
 ---
 name: medical-tourism-site-ops
 description: "Operations workflow for English-language medical tourism websites covering China (chinahospitalsguide archetype) — content matrix strategy, SEO technical patterns, duplicate-content defense, static site deployment to Cloudflare via GitHub, conversion blocks (trust + newsletter + featured-pillar + ranking-page decision-tree), GA4/MS-Clarity event tracking, and how the user wants this class of work run (iterative, single-step verified, no grand roadmaps)."
-version: 0.5.0
+version: 0.6.0
 author: Hermes Agent
 platforms: [linux]
 metadata:
@@ -686,6 +686,8 @@ git show HEAD:blog/<file>.html > blog/<file>.html
 - `templates/gsc-authorize.py` — copy-and-run OAuth authorization script for GSC. Handles the three remote-container quirks: `http://localhost` redirect (no local server), PKCE code_verifier file persistence between `authorization_url()` and `fetch_token()`, and `sys.stdin.isatty()` early-exit so heredoc invocations don't crash on `EOFError`.
 - `templates/gsc-command-wrapper.py` — copy-and-run `gsc` CLI wrapper. Subcommands: `summary`, `top queries`, `top pages`, `opportunities`, `trends`, `compare`. Used by `gsc-weekly-report.sh` cron.
 - `templates/gsc-weekly-report.sh` — copy-and-run weekly report generator. Pipe stdout directly to Feishu. No LLM involvement.
+- `references/multi-language-audit-checklist.md` — **NEW 2026-07-11** — 7 executable checks for auditing the 4-language (EN/RU/AR/ID) site. Pre-flight, all 7 audit commands with expected outputs, and the report format. Use every time the user says "再帮我审查一下".
+- `references/session-2026-07-11-lessons.md` — **NEW 2026-07-11** — transcript + reasoning from a 3-round iterative audit session where the user drove an external Claude Code agent between rounds. Documents 4 new pitfall classes (agent self-report verification, "改好了" 3-state trap, schema URL corruption by sed, source-vs-build coexistence) plus the fix script for the `***` schema corruption. Parent SKILL.md carries the concise pitfall sections; this file is the worked transcript + working fix script.
 
 ## User / task profile
 
@@ -725,6 +727,159 @@ Every change to chinahospitalsguide.com (or similar) should produce:
 5. ✅ A `_redirects` update if pages were deleted or renamed.
 6. ✅ A short final report to the user naming the commit hash and the live URL(s).
 7. ⚠️ **End-to-end verification before declaring success** — if the change claims "X% coverage" or "all pages updated", audit ALL relevant subdirectories (blog/, news/, treatments/, root, docs/) and at least one GitHub-side `curl` of the live URL. Memory-contaminated "I deployed it" reports without verification = waste of user time.
+
+## Multi-language audit + incremental review workflow (NEW 2026-07-11 — VERIFIED PATTERN)
+
+The site has accumulated 4 languages (EN / RU / AR / ID) over time, with each new language adding files as **standalone static HTML** (not Nunjucks templates). This created a recurring audit workload.
+
+### User's verified workflow (do NOT skip steps)
+
+1. **User edits in their own time.** You do not know when they finish. They ping with "你再帮我审查一下" / "再改等下你再帮我审查".
+2. **You sync.** `git fetch --all --prune` + check `rev-list --left-right --count HEAD...origin/master`. If behind, `git pull --ff-only origin master`. **Always check stash first** — user may have left WIP from a prior session (e.g. `stash@{0}` = Maria Rios case work that got abandoned). Don't drop stash without confirmation.
+3. **You read the diffs.** `git log --oneline -5 origin/master` + `git show --stat` per commit. Look at the commit messages — they often self-tag the issue number (e.g. "fix: P0-3 — schema array").
+4. **You audit.** Verify the commit's claimed fix actually worked (`curl` the live URL + `grep`). Look for things the commit DID NOT fix that the message implies were fixed.
+5. **You list problems.** Priority buckets P0 / P1 / P2. **No proactive fixes.** User drives the next round.
+6. **Loop.** User says "I made more changes, audit again".
+
+### While user is editing: what you may do, what you may NOT
+
+**MAY do (light reconnaissance only)**:
+- `cat _data/site.json` to know what central config exists
+- `ls -la *.html | head` to know file count / staleness
+- `grep -n "lang-flag\|nav-lang" *.html` to understand current selector state
+- Read existing `_includes/nav.njk` to know template vs inline split
+
+**MAY NOT do (without explicit user confirmation)**:
+- Open a new branch
+- Modify any file
+- Drop / pop stash
+- Create a progress note file
+- Modify `site.json`
+- Push anything
+
+The user will say "改完了" / "审查一下" / "再改完" when ready. Until then, **you have nothing to commit**.
+
+### The 7 multi-language audit findings (2026-07-11 baseline)
+
+When auditing ANY multilingual extension of this site, run these 7 checks. They cover the recurring pain points across 3 rounds of audit:
+
+| # | Check | Command | Severity if failed |
+|---|---|---|---|
+| 1 | **Schema is JSON array, not two adjacent objects** | `grep -A 2 "application/ld+json" index.html \| head -20` — first non-blank char after `<script>` should be `[` | P0 (Google Rich Results Test fails silently) |
+| 2 | **Inline `style="background:rgba(255,255,255,0.X)"` as active state** — users can't see current language | `grep -E 'class="lang-flag".*style=".*background:rgba\(255,255,255,0\.[0-9]+\)' *.html` — should return 0 hits | P0 (UX bug, user can't tell which lang) |
+| 3 | **hreflang completeness** — every multilingual page must declare en + its-own-lang + x-default + every other lang's equivalent | `curl -s URL \| grep hreflang` — count should be ≥ 4 for any ML page | P1 (SEO penalty for incomplete hreflang) |
+| 4 | **Hardcoded config in HTML** — PayPal client-id, WhatsApp number, GA ID should be in `_data/site.json` + referenced via `{{ site.X }}` template | `grep -rE 'BAAuE\|G-RVYZENK472\|+86.157.6310.7083' *.html \| wc -l` — should match `_data/site.json` count | P1 (rotation nightmare + key leaks into git history) |
+| 5 | **"Added field, forgot to wire it up"** — `_data/site.json` field exists but no template consumer | `grep -rE "site\.(paypalClientId\|whatsapp\|paypalButtons)" *.njk _includes/` — should match expected usages | P0 (silent failure — config looks central but isn't) |
+| 6 | **Arabic nav uses inline `style="direction:ltr"`** hack instead of CSS class | `grep -E 'nav-container.*direction:ltr' ar*.html` — should be 0 hits after fix | P1 (RTL rendering bug in some browsers) |
+| 7 | **ML pages missing schema** — non-index ML pages (pricing, contact) often don't get the JSON-LD block | `grep -l "application/ld+json" id-pricing.html ru-pricing.html ar-pricing.html` — all should match | P1 (SEO — ML schema missing) |
+
+**Detail + the exact "what changed in which commit" mapping** in `references/multi-language-audit-checklist.md`.
+
+### Pitfall: the agent that reported 20+ commits and only 1 was real
+
+In 2026-07-11 first audit, the other agent (Claude Code running on Windows) told Weiye "I made 20+ commits, please pull master." Weiye asked me to audit. `git fetch` showed `behind 1`. The other agent's commit list was either cached / hallucinated. **Lesson**: never trust an agent's self-reported commit count without `git rev-list --left-right --count` verification.
+
+### ⚠️ Verify EVERY claim from the other agent (VERIFIED 2026-07-11)
+
+The 20+ commits pitfall generalizes: **any time another agent (Claude Code, Codex, OpenCode) reports work was done, the report itself must be verified before I cite it back to the user.**
+
+In the 2026-07-11 3rd audit round, the agent gave me a 5-row "audit status" table claiming 5 specific things were done. I cited the table in my response. **Then I ran the 7-check audit myself** and found:
+
+| Agent claim | Reality |
+|---|---|
+| README exists in `scripts/_oneoff/` | ❌ Did NOT exist (`os.path.exists` returned False) |
+| WhatsApp hardcoded is cosmetic | ✅ True — all 187 wa.me links use pure-digit format |
+| AR `direction:ltr` is cosmetic | ✅ True — inline hack doesn't break rendering |
+| pricing.html client-id is fallback | ✅ True — pricing.njk uses template ref |
+| 6 pages schema bug fixed | ✅ True — all 6 files have valid JSON |
+
+**1 out of 5 claims was false**. The agent had reported it with high confidence ("已在 50f3e15 提交中"). The actual file wasn't created until the user's next commit (`dc0b127`, hours later).
+
+**The rule**: every claim from another agent must be **independently verified** before I cite it. The verification commands are short (`os.path.exists`, `grep -c`, `curl -I`) — there's no excuse to skip them.
+
+```python
+# Pattern: when another agent reports state X about files, verify X
+import os, re, subprocess
+def verify_agent_claim(claim):
+    """Run the verification command implied by the claim.
+    Returns True if claim holds, False if not."""
+    # e.g. README exists: os.path.exists(...)
+    # e.g. count matches: subprocess.check_output(["grep", "-c", ...])
+    pass
+```
+
+### ⚠️ "我改好了 你看看" can mean 3 different things (VERIFIED 2026-07-11)
+
+When the user says "我改好了" / "好了 你看看" after a round of edits, **3 distinct states are possible** and the right action differs for each:
+
+| State | Detection | Correct response |
+|---|---|---|
+| **A. Pushed a new commit** | `git fetch` shows `behind 1+`, then `git pull` works | Read commits, run audit checks, report |
+| **B. Edited locally, not committed** | `git fetch` shows `behind 0`, `git log` unchanged, `git status` shows modified files | Show user the diff of local changes, ask if they want them committed |
+| **C. Edited somewhere else entirely (cloud editor, different machine)** | `git fetch` shows `behind 0`, no local diff, no new commits visible | Ask where they made the changes — you literally cannot see them |
+
+**The trap**: I default to assuming state A. In state B or C, I waste time hunting for the changes that don't exist in this repo.
+
+**The fix**: every time the user says "改好了", run the pre-flight (fetch + status + log) BEFORE doing anything else. If state is B or C, surface that immediately and ask.
+
+### ⚠️ Sed/regex corruption of `schema.org` URLs (NEW 2026-07-11 — VERIFIED BUG)
+
+When batch-rewriting JSON-LD schemas across multiple files, sed/regex can corrupt the `"@context": "https://schema.org"` value into something like `"@context": "https://***"` if the regex pattern is too loose. **This bug appeared in commits that added schema to 6 new multilingual pages** — all 6 had `"https://***@type"` instead of `"https://schema.org","@type"`.
+
+**Symptom**: Google Rich Results Test 100% rejects the page. HTML technically still parses (browsers ignore the garbage URL), but JSON-LD is functionally zero — worse than no schema at all because it looks like schema to humans scanning the source.
+
+**Detection**:
+```python
+# Check every JSON-LD block across all *.html for broken @context
+import re, json
+for f in Path('.').glob('*.html'):
+    for schema in re.findall(r'<script type="application/ld\+json">(.+?)</script>',
+                              f.read_text(), re.DOTALL):
+        if '***' in schema or 'schema.org' not in schema:
+            print(f'BROKEN: {f}')
+            # also: json.loads(schema) should raise or return broken data
+```
+
+**Why it happens**: the agent (or sed pattern) likely matched `https://schema.org","@type":` as a single token to replace, and replaced only the part before the `"`, leaving `***@type` behind. Classic regex-too-eager pattern.
+
+**The fix when caught**: targeted Python script with literal string replace (not regex) — see `references/session-2026-07-11-lessons.md` for the exact replacement script.
+
+**Preventive rule**: when adding the SAME schema block to multiple files, use a Python loop with a template literal, not sed. sed is for known-bounded text patterns; multi-file JSON-LD rewrites are templates.
+
+### ⚠️ Source vs build coexistence for `.njk` → `.html` (NEW 2026-07-11)
+
+After the site's 2026-07-10 migration from static `.html` to Eleventy `.njk` templates, both files coexist in git:
+
+- `pricing.njk` is the **source** — gets edited, has frontmatter, references `{{ site.paypalClientId }}`
+- `pricing.html` is the **build artifact** — committed to git but should be overwritten by `npm run build`
+- `_site/pricing.html` is the actual deployed file (GitHub Actions output)
+
+**The trap**: when `pricing.njk` gets a fix (e.g. wire PayPal to `{{ site.paypalClientId }}`), the user runs `npm run build` → `pricing.html` is regenerated → git diff shows `pricing.html` changed. If the user pushes both, the build artifact now matches the source. **Good.**
+
+**The bug**: if the user only commits `pricing.njk` and forgets to rebuild, the deployed `_site/pricing.html` is stale. Even worse, `pricing.html` at the repo root is also stale — `grep BAAuE pricing.html` returns 1 hit, looking like the fix didn't take.
+
+**The audit pitfall**: when I see hardcoded `BAAuE` in `pricing.html` after a fix, **the right question is not "why is this hardcoded?" but "did `npm run build` run after the .njk edit?"**. The hardcoded string in the source `.html` file at repo root is **expected** if it hasn't been rebuilt yet.
+
+**The right pattern**: `pricing.html` at repo root should be **gitignored** after the migration is complete (or renamed to `pricing.html.tmpl`). Until then, document that it's a build artifact and audits should look at `pricing.njk` for source-of-truth.
+
+See `references/session-2026-07-11-lessons.md` for the full 3-round audit transcript including the schema `@context` corruption fix script.
+
+### Pitfall: "centralize the config" is only step 1
+
+When adding `_data/site.json` keys (PayPal, WhatsApp, etc.), the JSON file update is **not** the completion. The follow-up step is to update every consumer to use `{{ site.X }}` template syntax and delete the hardcoded strings. Always verify both halves of the wiring in the SAME commit or document the follow-up commit explicitly.
+
+### Known un-wired fields as of 2026-07-11 (audit baseline)
+
+`_data/site.json` currently has `paypalClientId` defined but:
+- `pricing.njk` line 8 still hardcodes `BAAuEJ4aj4Glmel3a35W5yg1QY9idTSZt5LkxbWG-...` in extraHead
+- `pricing.html` line 24 still hardcodes the same string
+- `pricing.html` line 330/334/337/363/367/370 hardcodes PayPal button IDs (`K4HNCDD7GDS5C`, `ZBY36JV2X5A3U`) instead of `{{ site.paypalButtons.match }}` / `{{ site.paypalButtons.coordination }}`
+
+`whatsapp` field exists in `site.json` as `+86-157-6310-7083` but:
+- `id-pricing.html` line 23 hardcodes `+86 157-6310-7083` (format mismatch — space vs dash)
+- `id-contact.html` line 30 hardcodes `+86 157-6310-7083`
+
+**Suggested single-commit fix**: add a 5-line patch to `pricing.njk` switching extraHead to `{{ site.paypalClientId }}` template ref, then `npx @11ty/eleventy` rebuild. Verifies centralization works end-to-end.
 
 ## When the user pushes back — what to do
 

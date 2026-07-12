@@ -8,7 +8,7 @@ The terminal truncates long strings in the middle with `...`. Both of these look
 
 | Source on disk                     | What terminal displays           |
 |------------------------------------|----------------------------------|
-| `sk-kimi-iGu...NGGW` (75 chars, real key) | `sk-kimi-iGu...NGGW` |
+| `sk-kimi-i...NGGW` (75 chars, real key) | `sk-kimi-iGu...NGGW` |
 | `sk-kimi-iGu...NGGW` (18 chars, already truncated) | `sk-kimi-iGu...NGGW` |
 
 Both contain `sk-`, both have `...` in the middle, both have a `NGGW` tail. The terminal cannot distinguish them. GitHub's secret scanner distinguishes them by full-string match — the first one triggers push protection, the second one doesn't.

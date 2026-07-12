@@ -125,6 +125,19 @@ if BATCH:
     INCLUDE_EXT = (
         ".json", ".yaml", ".yml", ".md", ".txt", ".py", ".sh",
         ".toml", ".conf", ".ini", ".env",
+        # Widened in 2026-07-11: the original 11-extension list missed these
+        # file types in `.hermes/`-typical backups. Real sk- tokens appeared in:
+        #   - `bin/uv` (compiled binary — strings(1) yields sk- fragments)
+        #   - `bin/tirith` (Python with embedded secrets)
+        #   - `hermes-agent/hermes_cli/web_dist/assets/index-*.js` (compiled Vue/React
+        #     bundles, 97+ redactions in one .js file alone)
+        #   - `workspace/website/blog/*.html` (3-10 per file of inline sk- literals
+        #     in <script> blocks)
+        #   - `hermes-agent/apps/desktop/src/components/onboarding/*.tsx` etc.
+        #   - `hermes-agent/hermes_cli/web_dist/assets/index-*.css`
+        ".js", ".mjs", ".cjs", ".jsx", ".ts", ".tsx",
+        ".html", ".htm", ".css", ".less", ".scss",
+        ".svg", ".xml",
     )
     n_pat = n_sk = n_files = 0
     files_touched = []

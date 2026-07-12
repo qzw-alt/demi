@@ -6,7 +6,7 @@ working tree. The protection comes from `.gitignore` (step 3), not from rsync
 excludes. This file documents real-world numbers from past backups so future
 runs can verify the protection is actually working.
 
-## 2026-07-11 run — clean baseline (no leaks)
+## 2026-07-11_22:02 run — clean baseline (no leaks), with walker AND scan fixes
 
 User-supplied exclude list (~12 paths from a cron prompt):
 ```
@@ -15,28 +15,47 @@ state.db*, sandboxes/, logs/, sessions/, memories/, plus the cron prompt's
 "防止 secret scanning 拦截" framing
 ```
 
-SSH auth verified (`Hi qzw-alt!`), so the PAT embedded in the cron prompt
-was NOT used — but it was still rsynced from `~/.hermes/cron/jobs.json` and
-had to be redacted.
+SSH auth verified (`Hi qzw-alt!`). The cron prompt also embedded a literal
+`github_pat_11B67EO2Y0...` token; that PAT was NEVER used for auth (SSH only)
+but was rsynced from `~/.hermes/cron/jobs.json` and had to be redacted.
 
 | Protection layer                                  | Fired? | Result |
 |---------------------------------------------------|--------|--------|
 | `rsync --exclude` for user's 12 paths             | ✅     | All 12 verified absent post-rsync |
 | Heavy-dir visibility check (`for d in venv/...`)  | ✅     | 0 HEAVY flags — clean |
-| Canonical `.gitignore` restore (rsync wiped it)   | ✅     | 27 entries written |
-| `git rm --cached` of legacy tracked artifacts    | ✅     | auth.json, .env, gsc/*, models_dev_cache.json, kanban.db.init.lock untracked |
-| Walker redaction (config.yaml + tree walk)        | ✅     | 110 files modified, 3 PAT + 262 sk- redactions |
-| CJK-path single-file recovery                     | ✅     | 1 hit in `workspace/website/德米知识库/01-...` — fixed with single-file redact |
-| Length-gated grep scan (40+ chars)                | ✅     | 0 hits after recovery |
-| Commit + push (SSH)                               | ✅     | `91e0099e1` on origin/master, 19 files / +933 / −2335 |
+| Skill canonical rsync heavy-dir excludes (venv/website/tests/ui-tui/lsp/node_modules) | ✅     | 382M working tree (vs 3.2G source) |
+| Canonical `.gitignore` restore (rsync wiped it)   | ✅     | 48 entries written — critical, see pitfall |
+| `git rm --cached` of legacy tracked artifacts    | ✅     | 0 needed — previous run had cleaned already |
+| Walker redaction (config.yaml + tree walk) — **widened INCLUDE_EXT to .js/.tsx/.html/.css etc.** | ✅ | 137 files modified, **19 PATs + several hundred sk- redactions** (incl. 97 in one compiled JS bundle) |
+| CJK-path single-file recovery                     | n/a    | Walker handled CJK paths fine once INCLUDE_EXT was widened; no single-file recovery needed |
+| Length-gated grep scan (40+ chars) — **widened `--include` same 22 extensions** | ✅ | 0 hits — clean |
+| Commit + push (SSH)                               | ✅     | `d2ab340` on origin/master, +593 / −2335 |
+| Push protection                                   | ✅     | 0 blocks — all secrets stripped |
 
-**Outcome:** 556M rsync source → working tree of untracked-only-heavy-dirs,
-then a 1.4KB diff commit. Zero leaks to GitHub.
+**Outcome:** 3.2G rsync source → 382M working tree of untracked-only-heavy-dirs
++ tracked config/skills/plugins, then a clean diff commit. Zero leaks to GitHub.
 
 **Key takeaway:** the multi-layer defense (rsync excludes + post-rsync
 visibility check + .gitignore restore + walker redaction + length-gated
-scan) is robust when ALL steps run. The CJK recovery is the only step that
-required a re-run — that's expected behavior, not a bug.
+scan with **matched extension coverage**) is robust when ALL steps run. The
+critical 2026-07-11 fix was extending both the walker's `INCLUDE_EXT` tuple AND
+the step-5 grep `--include` list from 11 → 22 file types — `.js`, `.mjs`,
+`.cjs`, `.jsx`, `.ts`, `.tsx`, `.html`, `.htm`, `.css`, `.less`, `.scss`,
+`.svg`, `.xml`. The previous narrower list silently missed an entire class of
+real sk- tokens embedded in compiled JS/CSS bundles and blog HTML.
+
+**Files with the heaviest leaks captured** (representative):
+- `hermes-agent/hermes_cli/web_dist/assets/index-CBTV-n-R.js` — 97 sk- redactions
+- `hermes-agent/hermes_cli/web_dist/assets/index-BVrUoMGI.css` — 21 redactions
+- `cron/jobs.json` — 1 PAT (the cron prompt's embedded token)
+- `bin/uv` (99MB compiled binary) — 7 sk- redactions via `strings(1)`
+- `config.yaml` — 2 sk- redactions
+- 4 SKILL.md files in `skills/.curator_backups/` snapshots — each with 0-1 PAT
+
+**Operational change for next run:** the skill's bundled
+`scripts/redact_secrets.py` was patched in this commit. Future cron agents
+loading the skill via `skill_view` will get the widened INCLUDE_EXT
+automatically.
 
 ## 2026-07-09 run — user-supplied exclude list too short
 

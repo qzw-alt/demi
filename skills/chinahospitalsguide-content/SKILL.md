@@ -89,6 +89,52 @@ points at a URL that 404s.
 First build attempt failed with "Cannot find module 'glob'". Run
 `npm install --silent --no-audit --no-fund` before `npx @11ty/eleventy`.
 
+### Pitfall 4: 任何"已做 / 已修"汇报必须自己 grep 验证（2026-07-11 新增 — agent 失实报告翻车案）
+
+**触发场景**：另一个 agent（Claude Code / Cursor / 子代理）或人跟你说"我做了 X / 修好了 Y"。**不要直接信，自己 grep 验证一次再汇报**。
+
+**真实翻车案例（2026-07-11）**：另一个 agent 在远程 master 推了 commit `50f3e15`，commit message 说"feat: complete P0-1 + 4 high-value P1/P2 fixes"。我接受 agent 的回报说"README 已在 50f3e15 提交中推送到 scripts/_oneoff/README.md"。
+
+实际 `os.path.exists('scripts/_oneoff/README.md')` = **False** —— 文件根本不在。
+
+更糟的 schema bug：那个 commit 给 6 个多语言页面加 JSON-LD schema 数组，但 **schema 里的 `"@context":"https://schema.org"` 被误替换成 `"https://***"`**（sed/正则替换太宽）。curl 线上页面看到的是 `"@context":"https://***@type":"MedicalBusiness"` —— **SEO 完全无效，HTML 不合法**。
+
+**对策（审查类工作默认行为）**：
+
+1. **每次收到 agent 回报"已修"时，跑 1-2 个针对性 grep 验证**
+2. **不要复述 commit message 当成事实** —— commit message 是 agent 的嘴，**线上行为才是真**
+3. **失实报告风险点优先级**：
+   - 批量修改（容易正则误吃）—— schema / URL / 邮箱号
+   - "已加 README / 文档"（最低成本，但常忘 push）
+   - "已删除 X 文件"（git rm --cached ≠ git rm，可能残留在 index 里）
+4. **审查类工作的标准自检脚本**（把以下放进 `scripts/audit-claims.sh`）：
+
+```bash
+#!/bin/bash
+# 用法：把 agent 报的"已做"项列成 claim 列表，每条对应一个 grep 检查
+# 例：agent 说"README 已建" → CLAIMS+=("scripts/_oneoff/README.md should exist")
+CLAIMS=("$@")
+for c in "${CLAIMS[@]}"; do
+    field=$(echo "$c" | awk '{print $1}')
+    expectation=$(echo "$c" | grep -oE 'should (exist|contain|equal|match).*')
+    if [ -f "$field" ]; then
+        echo "✅ $field EXISTS"
+    else
+        echo "❌ $field MISSING (claim: $expectation)"
+    fi
+done
+```
+
+5. **给伟烨的汇报格式**：每条 claim 给 ✅/❌ + 实测证据（grep 结果或文件大小），不要说"agent 报告说做了"
+
+**不要做的事**：
+
+- ❌ "agent 推了 commit X，commit message 说做了" —— 没验证前别下结论
+- ❌ 复制 agent 的话给伟烨（"agent 说 README 已建"）—— 你被 agent 骗，伟烨被你骗
+- ❌ 报"全绿"但只跑了 git log / git show（commit message 是嘴不是事实）
+
+**例外**：如果 agent 给的是具体代码 diff + 测试通过输出 + 实测数据，**这些比 commit message 可靠**，但仍建议自己跑一遍验证脚本。
+
 ## CAR-T Pricing Tiers (CONTENT_GUIDE.md baseline)
 
 | Route | China | US | Notes |
