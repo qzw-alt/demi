@@ -89,6 +89,7 @@ rsync -a --delete \
   --exclude='gsc/client_secret.json' \
   --exclude='gsc/token.json' \
   --exclude='kanban.db.init.lock' \
+  --exclude='kanban.db.dispatch.lock' \
   --exclude='models_dev_cache.json' \
   /home/ubuntu/.hermes/ /tmp/hermes-backup/
 ```
@@ -100,7 +101,7 @@ cd /tmp/hermes-backup/
 # Verify each user-specified exclude is absent
 for p in sessions/ memories/ cache/ logs/ sandboxes/ audio_cache/ image_cache/ \
          auth.json auth.lock .env .hermes_history \
-         gsc/client_secret.json gsc/token.json kanban.db.init.lock \
+         gsc/client_secret.json gsc/token.json kanban.db.init.lock kanban.db.dispatch.lock \
          models_dev_cache.json gateway.lock gateway.pid cron/output/; do
   [ -e "$p" ] && echo "LEAK: $p"
 done
@@ -123,7 +124,7 @@ cd /tmp/hermes-backup
 for dir in sessions memories memory memory_backup_* migration cache logs sandboxes cron/output; do
   [ -d "$dir" ] && { git rm -r --cached "$dir" 2>/dev/null; rm -rf "$dir"; }
 done
-rm -f gateway.lock gateway.pid auth.lock kanban.db.init.lock
+rm -f gateway.lock gateway.pid auth.lock kanban.db.init.lock kanban.db.dispatch.lock
 # Remove auth.json from tracking if it was committed in older backups
 git rm --cached auth.json 2>/dev/null && echo "auth.json removed from tracking" || true
 # If .gitignore was wiped by rsync --delete, restore it from the canonical template below.
@@ -146,6 +147,7 @@ state.db*
 auth.lock
 auth.json
 kanban.db.init.lock
+kanban.db.dispatch.lock
 
 # Sensitive content
 sessions/
@@ -175,10 +177,11 @@ hermes-agent/**/__pycache__/
 
 # Kanban runtime lock + model registry cache (regenerated on every gateway tick)
 kanban.db.init.lock
+kanban.db.dispatch.lock
 models_dev_cache.json
 EOF
 fi
-for entry in auth.json .env .hermes_history gsc/client_secret.json gsc/token.json; do
+for entry in auth.json .env .hermes_history gsc/client_secret.json gsc/token.json kanban.db.dispatch.lock; do
   if ! grep -qxF "$entry" .gitignore 2>/dev/null; then
     echo "$entry" >> .gitignore
   fi
@@ -189,6 +192,7 @@ git rm --cached .env 2>/dev/null && rm -f .env
 git rm --cached .hermes_history 2>/dev/null && rm -f .hermes_history
 git rm --cached gsc/client_secret.json 2>/dev/null && rm -f gsc/client_secret.json
 git rm --cached gsc/token.json 2>/dev/null && rm -f gsc/token.json
+git rm --cached kanban.db.dispatch.lock 2>/dev/null && rm -f kanban.db.dispatch.lock
 ```
 
 ### 4. Strip API keys from tracked files
@@ -237,6 +241,14 @@ re-run the script in single-file mode on that exact path, then re-scan. Loop unt
 **The simple `grep "sk-..."` scan in old revisions of this skill returns huge noise from `hermes-agent/venv/`, `hermes-agent/website/`, `hermes-agent/node_modules/`, and `hermes-agent/tests/`** (which all contain documentation/test fixtures and library code with `sk-` prefixes that aren't real keys). The reliable check is **length-gated regex with explicit denylist directories** — a `sk-...` placeholder has 5-10 chars total, a real fine-grained PAT has 100+ chars. Use the 40+ char threshold to filter out placeholders.
 
 **This step is the ONLY reliable verification — step 4's print output can lie.** If step 5 flags any file, re-run step 4's redaction DIRECTLY on that path (do not re-run the full batch walker). Loop until step 5 reports zero hits.
+
+For the PAT-specific 40+ char scan, prefer the dedicated `scripts/check_pats.py` helper over inline grep — it groups hits by `(prefix, last4, length)` so you can verify they're truncated placeholder form at a glance instead of drowning in `.curator_backups/*/cron-jobs.json` and skill-docs noise:
+
+```bash
+python3 <skill_dir>/scripts/check_pats.py /tmp/demi-backup
+# → "OK No full PAT tokens found" if clean
+# → "<prefix>...<last4> len=<N>  (M files)" with file list if not
+```
 
 ```bash
 cd /tmp/demi-backup
@@ -327,11 +339,14 @@ rm -rf /tmp/hermes-backup/
 | `gsc/client_secret.json` | Google OAuth client secret |
 | `gsc/token.json` | Google OAuth refresh token |
 | `kanban.db.init.lock` | Kanban SQLite init lock (runtime state, like auth.lock) |
+| `kanban.db.dispatch.lock` | Kanban dispatcher runtime lock (pairs with `kanban.db.init.lock` — both excluded together) |
 | `models_dev_cache.json` | ~3MB model registry cache regenerated on every gateway tick |
 | `hermes-agent/node_modules/` | Node dependencies, huge (100k+ files) |
 | `lsp/node_modules/` | LSP server deps (typescript-language-server, pyright) |
 | `**/node_modules/` | Catch-all for any other node_modules |
 | `**/__pycache__/` | Python bytecode cache (covers hermes-agent + plugins) |
+
+> **Note on runtime JSON files that are NOT excluded:** Several non-sensitive state files leak into every backup commit: `feishu_seen_message_ids.json`, `gateway_state.json`, `channel_directory.json`, `interrupt_debug.log`, `.install_method`, `.skills_prompt_snapshot.json`, `cron/ticker_heartbeat`, `cron/ticker_last_success`, `skills/.curator_state`, `skills/.usage.json`, `verification_evidence.db`. None contain secrets, but they churn every commit (~40 modified files per run). Adding them to the exclude list is optional — leave them tracked if you want a historical record of gateway/changelog activity, exclude them if you want minimal diffs. **Do not exclude `bin/` binaries (`uv`, `tirith`, `gsc-od-daily`) — they contain literal sk- API keys that the walker truncates, and excluding them loses the tool.**
 
 ## Pitfalls
 - **Terminal display truncation trap** — The terminal (read_file / print / repr) truncates long strings in the 
@@ -400,12 +415,15 @@ rm -rf /tmp/hermes-backup/
 - **`.curator_backups/` directories accumulate with embedded PATs** — When the skills curator runs, it snapshots `cron/jobs.json` to `skills/.curator_backups/<timestamp>/cron-jobs.json`. If the cron prompt ever contained a PAT, every backup snapshot also contains it. These directories are *not* in the default rsync exclude list. Step 4's Python redaction script scans them (the `NOISE_DIRS` filter only excludes `hermes-agent/venv/`, `hermes-agent/website/`, `hermes-agent/node_modules/`, `hermes-agent/tests/`, `hermes-agent/ui-tui/`, and `.git/` — *not* `.curator_backups/`). The new commits will have redacted working-tree versions, even though the old commits in git history still contain the unredacted PATs (untouchable without force-push history rewrite).
 - **`models_dev_cache.json` is a 3MB gateway cache, not user data** — Lives at `~/.hermes/models_dev_cache.json` and is regenerated on every gateway tick (model registry refresh). Rsyncing it commits a giant diff with no semantic value. Exclude it from rsync (`--exclude='models_dev_cache.json'`) and from .gitignore. Old backups may have committed it — `git rm --cached models_dev_cache.json` once to drop tracking.
 - **`kanban.db.init.lock` is a runtime lock, not the kanban DB itself** — Pairs with `kanban.db` the way `auth.lock` pairs with `auth.json`. It's a 0-byte file written when the kanban SQLite is initialized, and shows up on every backup regardless of whether the kanban is in use. The kanban DB itself (`kanban.db`, ~114KB SQLite) IS tracked content — do NOT exclude it. But the `.init.lock` lockfile should be excluded via rsync and .gitignore.
+- **`kanban.db.dispatch.lock` is a SIBLING runtime lock (added 2026-07-12)** — Pairs with `kanban.db.init.lock`. It surfaces alongside `.init.lock` in the gateway runtime state. Discovered when rsync's `--exclude='kanban.db.init.lock'` was set but `kanban.db.dispatch.lock` still leaked into the working tree — `rsync` root-level filename matching is brittle, and a sibling lock with a similar name is easy to miss when adding excludes. **Fix:** always exclude BOTH, add BOTH to .gitignore, and add BOTH to the post-rsync LEAK checklist. When you find one missing lockfile via `LEAK:` output, audit related filenames (`*.lock`, `*.pid`) for siblings — the same gateway subsystem typically emits them in pairs.
 - **Walker hits `hermes-agent/venv/` and `hermes-agent/tests/`** — The skill's NOISE_DIRS list excludes these from the *walker* (so redaction isn't attempted on third-party code), but **rsync does NOT exclude them** by default. They live in the working tree, get added with `git add -A` if .gitignore misses them, and inflate commits by hundreds of MB of test fixtures / venv site-packages. The canonical .gitignore template above includes `**/node_modules/`, `**/__pycache__/`, and `**/*.pyc` which covers the worst of it, but a strict repository should also exclude `hermes-agent/venv/`, `hermes-agent/tests/`, `hermes-agent/website/`, `hermes-agent/ui-tui/` outright if they're not needed for backup. Verify with `git status --short | wc -l` before commit — if it's in the thousands, .gitignore isn't catching something.
 - **Default git clone over SSH may take >60s** — The first clone of a populated `qzw-alt/demi` repo (1.2GB working tree, hundreds of commits) routinely exceeds the 60s foreground timeout in `terminal()`. Use `timeout 240 git clone ...` or run in background. After the first clone, subsequent updates via `git pull` are fast.
 - **Heavy dirs will leak through short user exclude lists — see `references/heavy-dir-leak-scenarios.md`** for the 2026-07-09 numbers (venv 456M, lsp 64M, website 27M, tests 26M, ui-tui 3.5M that all leaked through a typical 11-path user exclude list and were saved only by step 3's canonical .gitignore).
-- **rsync `--exclude='models_dev_cache.json'` does NOT always exclude a root-level file** — In one session the file was rsynced into the working tree despite the exclude pattern being set. Rsync's exclude rules can be confused by file-vs-component matching at the source root. **Always verify the file is absent after rsync** (`test -e path && echo PRESENT`); if it leaked through, manually `rm -f` it AND `git rm --cached` it. Don't trust the exclude to have caught it. Same risk applies to any other root-level dotfile/lockfile the user lists as a bare filename (e.g. `auth.json` in some rsync versions).
+- **rsync `--exclude='models_dev_cache.json'` does NOT always exclude a root-level file** — In one session the file was rsynced into the working tree despite the exclude pattern being set. Rsync's exclude rules can be confused by file-vs-component matching at the source root. **Always verify the file is absent after rsync** (`test -e path && echo PRESENT`); if it leaked through, manually `rm -f` it AND `git rm --cached` it. Don't trust the exclude to have caught it. Same risk applies to any other root-level dotfile/lockfile the user lists as a bare filename (e.g. `auth.json` in some rsync versions). **This bites `kanban.db.dispatch.lock` too** — when adding excludes for sibling lockfiles, always verify with `[ -e "$file" ] && echo LEAK: $file` in the post-rsync check, even if you trust rsync's pattern matching.
 - **User-supplied exclude lists are often smaller than the canonical one — verify heavy dirs aren't in the working tree** — When a user gives a short exclude list (e.g. only the ~10 paths from a cron prompt), the skill's canonical heavy-directory excludes (`hermes-agent/venv/`, `hermes-agent/website/`, `hermes-agent/tests/`, `hermes-agent/ui-tui/`) may NOT be in the user's list. After rsync, ALWAYS check: `for d in hermes-agent/venv hermes-agent/website hermes-agent/tests hermes-agent/ui-tui; do test -e "$d" && echo "HEAVY: $d"; done`. If any are present, add them to .gitignore (the skill's template includes them) and confirm `git ls-files` shows 0 tracked files in those dirs before commit. If gitignore is missing or incomplete, `git add -A` will commit hundreds of MB of venv/test fixtures.
 - **CJK-path files (Chinese / Japanese / Korean directory names) silently bypass the os.walk walker** — Reproduced in 2026-07-08 session: walker reported "13 files modified, 30 sk- redactions", but step 5 length-gated scan still found 1 real key in `./workspace/website/德米知识库/01-记忆系统/MEMORY.md`. The CJK-encoded path was skipped by `os.walk` for an unknown reason (possibly a stale `dirs[:]` filter, possibly a UnicodeDecodeError swallowed by `except (OSError, UnicodeError)`). **The fix is the step 5 length-gated grep scan — it is the only reliable verification.** When it finds a hit, re-run redaction DIRECTLY on the specific file path with a one-shot script (`python3 redact_one.py 'CJK/路径/文件.md'`), NOT the batch walker. Loop until step 5 reports zero hits.
 - **`redact_secrets.py` single-file mode arg order trap** — The script requires `<backup_dir> <file>` for single-file mode (NOT just `<file>`). If you accidentally invoke `python3 redact_secrets.py "/path/to/cjk/file.md"` (one positional arg), it interprets that as BATCH mode, then crashes at `os.chdir(BACKUP_DIR)` with `NotADirectoryError: [Errno 20] Not a directory: '/path/to/cjk/file.md'`. The error is misleading because it points at the FILE path, not the script's argument parsing. **Fix:** always pass the backup directory as `argv[1]` and the file as `argv[2]`. The script now validates `os.path.isdir(BACKUP_DIR)` up front and exits with a clear usage message instead of a cryptic chdir error. Reproduction in 2026-07-10 session: first single-file redact attempt failed with the misleading traceback; recovery was to write `/tmp/redact_one.py` and run that instead. Now patched, but the lesson generalizes: when an error message points at a path, check whether the script is using the wrong argument as a directory.
 - **Inline Python via `terminal()` breaks on f-strings with `{` `}` in shell quoting** — `terminal("python3 -c \"...f-string...\"")` consistently mangles nested f-strings because the shell and Python both interpret braces. The first redaction attempt in 2026-07-08 session failed with `NameError: name 'm' is not defined` from a broken f-string. **Fix:** always write the redaction script to a file (e.g. `/tmp/redact_one.py` or `/tmp/redact_keys.py`) using `write_file`, then `terminal("python3 /tmp/redact_one.py <path>")`. The script file is also reusable across re-runs without re-typing.
 - **PAT leak in cron prompt is the most common secret exposure path — treat it as expected, not surprising** — In the 2026-07-08 session the user's own cron prompt embedded a `github_pat_...` token, which the walker caught (1 PAT redaction in `cron/jobs.json`). The skill already documents this in pitfalls, but the user-facing **delivery response** should make the revocation warning prominent, not buried: "The PAT in this cron prompt has been redacted in this commit, but the source file `~/.hermes/cron/jobs.json` still contains the live token. Revoke + regenerate at https://github.com/settings/tokens?type=beta." The PAT was visible to the rsync source on every prior backup attempt; the only thing that changes is whether it's now visible in the working tree, which is fixable. The source itself is the leak.
+- **PAT placeholder vs full-token disambiguation takes a dedicated helper (added 2026-07-12)** — When step 5's `grep -rln` lists many `.md` files containing `github_pat_` (typically all `skills/*/SKILL.md` plus `.curator_backups/*/cron-jobs.json` snapshots), the assistant can't tell from grep alone whether each match is a real 100-char token or an already-truncated `github...XXXX` placeholder — both render identically in terminal output. **Fix:** use `scripts/check_pats.py` (bundled) which extracts `(prefix, last4, length)` from each hit and reports per-signature counts. If every hit has `length < 40`, the placeholder form is already safe; if any hit has `length >= 40`, treat it as a live PAT and run single-file redaction on the exact path. The script also filters out the standard noise dirs and skips binary blobs (files with `\x00` in the first 8KB), so it produces a clean yes/no answer that doesn't require manually eyeballing dozens of `.curator_backups` snapshots.
+- **Runtime state files leak by design but cause commit churn** — Discovered 2026-07-12: even with a fully populated .gitignore, ~40 files show up as `M` (modified) in every backup because they're runtime state that changes every cron tick. The ones observed: `feishu_seen_message_ids.json`, `gateway_state.json`, `channel_directory.json`, `interrupt_debug.log`, `.install_method` (small, harmless), `.skills_prompt_snapshot.json`, `cron/ticker_heartbeat`, `cron/ticker_last_success`, `skills/.curator_state`, `skills/.usage.json`, `verification_evidence.db`. They contain no secrets but pollute the commit history. **Decision:** leave them tracked (they serve as a coarse uptime/activity log); only exclude them if the user asks for "minimal diffs" backups. Don't try to whitelist — the list grows whenever a new gateway subsystem is added, and a missed one is harmless because none are sensitive.

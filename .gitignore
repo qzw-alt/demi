@@ -40,18 +40,13 @@ hermes-agent/**/__pycache__/
 **/__pycache__/
 **/*.pyc
 
-# Heavy dirs (not source-relevant for backup)
+# Heavy dirs (leak risk on short user exclude lists)
 hermes-agent/venv/
 hermes-agent/website/
 hermes-agent/tests/
 hermes-agent/ui-tui/
 
 # Kanban runtime lock + model registry cache
+kanban.db.init.lock
+kanban.db.dispatch.lock
 models_dev_cache.json
-
-# Channel / runtime state that shouldn't ship
-feishu_seen_message_ids.json
-gateway_state.json
-channel_directory.json
-interrupt_debug.log
-.install_method
