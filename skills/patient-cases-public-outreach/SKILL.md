@@ -1,12 +1,12 @@
 ---
 name: patient-cases-public-outreach
-description: Generate public-facing promotional/posting assets for individual overseas patients — Douyin vertical-image carousels, Xiaohongshu post images, WeChat Moments posters — when we cannot find the right Chinese hospital and need to reach doctors/hospitals through short-video social channels. Triggers include "帮我生成像上次一样的抖音图", "做个海报发小红书", "用患者案例拍短视频文案", "抖音求医求助", "patient social-media post". Output is always (a) 1080×1920 vertical PNG(s) via Pillow, and (b) copy-pasteable plain-text caption with no extra notes. This skill owns the reusable Pillow pipeline, the text-generation rules, and the privacy/safety baseline.
-version: 1.0.0
+description: Generate public-facing promotional/posting assets for individual overseas patients — Douyin vertical-image carousels, Xiaohongshu post images, WeChat Moments posters, LinkedIn image posts, peer-network celebration posts. Triggers include "帮我生成像上次一样的抖音图", "做个海报发小红书", "用患者案例拍短视频文案", "抖音求医求助", "patient social-media post", "发个朋友圈", "做个海报", "case completed 配图", "celebrate 这个 case". Two output paths — Pillow 1080×1920 PNG for 抖音 / 小红书 vertical carousels, and HTML 1080×1080 / 1080×1350 that Weiye screenshots himself for 朋友圈 / LinkedIn / Twitter image posts. HTML path is for case-completed celebration posts where the audience is hospital-side or peer-network, NOT for 求医求助. Output is always files plus a copy-pasteable plain-text caption with no extra notes. Owns the reusable Pillow pipeline, the HTML screenshot pipeline, the text-generation rules, and the privacy/safety baseline.
+version: 1.1.0
 author: Hermes Agent
 platforms: [linux]
 metadata:
   hermes:
-    tags: [medical-tourism, social-media, douyin, xiaohongshu, wechat, image-generation, patient-cases]
+    tags: [medical-tourism, social-media, douyin, xiaohongshu, wechat, image-generation, patient-cases, html-screenshot, friends-circle, linkedin]
     category: medical-tourism
 ---
 
@@ -28,6 +28,46 @@ metadata:
 - 写医院目录 → 用 `hospital-directory`
 
 ## 工作流（6 步）
+
+### ⚠️ 选哪条工作流：Pillow 求助图 vs HTML 朋友圈图（2026-07-11 新增）
+
+**触发器分流**：
+
+| 伟烨说 | 用哪条 | 输出形态 | 受众 |
+|---|---|---|---|
+| "抖音求医" / "小红书" / "医生找过来" / "找不到医院" | **Pillow 路径（Step 4A）** | 1080×1920 PNG × 4-6 张 | 大众 / 短视频算法 |
+| "发个朋友圈" / "做个海报" / "庆祝这个 case" / "对国内医院端资源" / "对同行人脉" | **HTML 路径（Step 4B）** | 1080×1080 / 1080×1350 HTML × 6-9 张，伟烨自己截图 | 同行 / 医生 / 医院资源方 |
+
+**关键差异**：
+
+- **Pillow 路径**面向"找不到医院想被看见"，叙事重情绪 + 求助腔
+- **HTML 路径**面向"已经成功接诊想被认知"，叙事重方法论 + 业务能力
+- **绝对不能互换**：求医帖用 HTML 风格显得冷冰冰，朋友圈庆祝帖用 Pillow 风格显得像求助（劝退医院决策者）
+
+### ⚠️ HTML 路径的"国内医院端资源对接"叙事角度（2026-07-11 新增）
+
+**触发器**：伟烨明示朋友圈面向"国内医院资源 / 同行人脉"，**不**面向国内患者。
+
+**为什么这个角度重要**：在国内，99% 的病人直接挂号九院就行，**不需要中介**。朋友圈文案如果说"我们帮你挂号九院"，会被同行笑死。真正稀缺的是 **跨境患者通道的协调能力**——也就是能调跨院专家 MDT、能做多语言病例整理、能做海外 SEO。
+
+**叙事重心**：
+
+1. **不写"接了多少病人"**——写"完成了一个 3 病并发的复杂 case"
+2. **不写"价格便宜"**——写"我们不是医院中介，是跨境患者通道共建方"
+3. **不写"医院推荐"**——写"我们帮医院补跨境这一段"
+4. **CTA 不能是"联系我挂号"**——CTA 是"如果你们科室有国际化患者承接需求，私信聊"
+
+**化名策略**（与 Pillow 求助图不同）：
+
+- 求助帖：M 女士 / 一位拉美患者（重情绪）
+- 朋友圈庆祝帖：M 女士（Maria 首字母）/ "国际患者" / 隐医院名 / 病种可以模糊化为"罕见血管并发"（重方法论）
+
+**两套都遵守**：
+
+- ❌ 不写真名
+- ❌ 不写具体联系方式 / 微信号 / 邮箱 / WeChat ID
+- ❌ 不写承诺（"100% 治好""保证"）
+- ✅ Maria 真实给过的 +86 157 6310 7083 / 434338480@qq.com 在伟烨工作号层面 OK，不算"患者隐私"
 
 ### Step 1：拿到上次素材做参考（如有）
 
@@ -88,7 +128,9 @@ ls -t /home/ubuntu/chinahospitalsguide/internal-research-notes/ | grep douyin-he
 
 **必备 emoji 控制**：每屏 2-3 个；竖屏封面 ≤ 30 字。
 
-### Step 4：Pillow 竖屏图生成
+### Step 4：图片生成（按工作流分流）
+
+#### Step 4A：Pillow 竖屏图生成（抖音/小红书 求助图）
 
 **技术约束**（伟烨环境实测）：
 
@@ -108,6 +150,51 @@ ls -t /home/ubuntu/chinahospitalsguide/internal-research-notes/ | grep douyin-he
 **图标**：手绘线条（圆角矩形 + 数字徽章 + 圆形 ❌），**不要试图渲染 emoji**。
 
 直接复用 `scripts/douyin_vertical_carousel.py`（见下）。
+
+#### Step 4B：HTML 朋友圈/LinkedIn 配图（HTML 截图路径，2026-07-11 新增）
+
+**触发**：伟烨明示"朋友圈面向国内医院端资源 / 同行人脉" → 走这条。
+
+**与 Pillow 路径的核心差异**：
+
+- Pillow 是 agent 直接产出 PNG；HTML 是 agent 产出 HTML 文件 + 伟烨在 Chrome 自己截图
+- HTML 路径适合"信息密度高、需要排版漂亮、需要微信/LinkedIn 这种社媒适配"的场景
+- HTML 路径**视觉一致性由 agent 控**，截图清晰度由伟烨屏幕分辨率决定（一般 1080×1080 OK）
+
+**技术约束**：
+
+- **尺寸**：方图 1080×1080（朋友圈 9 图模板适配）、竖图 1080×1350（4:5 推荐，信息密度高时用）
+- **字体**：HTML 里写 `-apple-system, "PingFang SC", "Microsoft YaHei", sans-serif` —— **不依赖网络字体**，伟烨截图前打开 HTML 不需要联网
+- **品牌色**（已用 Maria Rios case 验证，深蓝系）：`#1e3c72` / `#0c1830` / `#17345f` / `#2a5298`，强调色 `#ff6b6b`
+- **6-9 张叙事顺序**（Maria Rios 案标准模板，可复用）：
+  - **图 1（封面）**：伟烨自己截图你的 hero / 品牌图
+  - **图 2（病种复杂度）**：3 病并发等关键数字
+  - **图 3（受众画像）**：跨境患者 4 大来源地占比
+  - **图 4（合作模式）**：3 档机构合作（轻 / 中 / 重）
+  - **图 5（医院端价值）**：5 项医院端不做的我们做
+  - **图 6（MDT 案例脱敏）**：伟烨自己截图真实邮件 + 脱敏
+  - **图 7（复盘洞见）**：3 条方法论
+  - **图 8（CTA）**：合作邀请 + 私信引导
+- **每张图底部固定 footer**：`CHINA HOSPITALS GUIDE · 跨境患者通道共建`（品牌锚）
+- **存放路径**：`chinahospitalsguide/figma-friends-circle/`（untracked，跟其他 draft 同惯例）
+- **伟烨的截图动作**：浏览器打开 HTML → 全屏 (F11 / Cmd+Ctrl+F) → Cmd+Shift+4 空格 / Win+Shift+S 选窗口 → 保存到 ~/Downloads/
+
+**给伟烨的交付形式**（重要：触发"复制用"模式规则）：
+
+- ❌ **不**在飞书对话里附 ⚠️ 截图注意事项、要不要改、配色建议
+- ✅ **直接**给"打开 HTML → 截图"的 3 步说明 + 文件路径清单
+- ✅ **等伟烨反馈"风格 OK / 某张不行"才调整**
+
+**配套朋友圈文案（同时产出）**：
+
+- 长度 5-8 行（不算拆分，纯文本，不拆段）
+- 4 种叙事角度，**默认甲+乙混合**（案例叙事 + 行业洞察）：
+  - **甲. 案例叙事型**：上周完成 X case（信息密度高）
+  - **乙. 行业洞察型**：为什么这一单难做（业务复盘）
+  - **丙. 品牌定位型**：我们做的不是医院中介，是 MDT 协调
+  - **丁. 团队能力型**：这单是怎么拼出来的（过程 + 团队）
+- 医院端朋友圈 vs 中介朋友圈**叙事重心不一样**（见上方"⚠️ 国内医院端资源对接"那段）
+- **CTA 必须清晰**：私信 / 微信直接联系，不是"欢迎咨询"
 
 ### Step 5：emoji 豆腐块自检（必须做）
 

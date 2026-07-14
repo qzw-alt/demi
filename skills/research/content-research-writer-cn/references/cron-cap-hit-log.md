@@ -29,6 +29,7 @@ Phase C and D are the most common failures (10 of 12 documented hits). Phase C i
 | 2026-07-02 | D | n/a | Manual intervention | Acupuncture IVF article. |
 | **2026-07-04** | **D** | **~85/100** (estimated) | **Manual intervention 2026-07-05** | **Electroacupuncture post-stroke dysphagia. Pushed by Hermes (not cron recovery).** |
 | 2026-07-05 | A | n/a (no article) | No recovery — day lost | Bing News ran but never reached writing. |
+| **2026-07-14** | **A2** (NEW sub-variant) | n/a (no article) | Pending file handoff `references/pending-2026-07-14-sanfu-paste-tcm-asthma-rhinitis-2026-research-handoff.md` | Bing + primary source fetch + CrossRef DOI + pypdf PDF extract all succeeded; candidate chosen and de-dup confirmed; cap fired before write_file. **A2 sub-variant = multi-source research exhausted budget** (distinct from A0 = Bing broken, A1 = Bing ran but no source fetched). The fix is a budget-allocation decision, not a Bing-recipe fix: for cron runs where the research phase requires CrossRef + pypdf or similar heavy-source work, the article write should be done first (with whatever research is on hand) and the additional source fetching moved to post-publish reference verification. **Generic rule: if you've burned 8+ tool calls in research and haven't called write_file yet, write the article NOW from whatever sources you have.** A 2,500-word article from 1 source + 1 CrossRef abstract shipped at 60/100 beats a "perfect" article with 4 sources that never gets written. |
 
 ## Trigger rule
 

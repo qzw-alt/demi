@@ -1,52 +1,6 @@
-.git/
 
-# Caches
-cache/
-audio_cache/
-image_cache/
-
-# Runtime state
-gateway.lock
-gateway.pid
-state.db*
-auth.lock
-auth.json
-kanban.db.init.lock
-kanban.db.dispatch.lock
-
-# Sensitive content
-sessions/
-memories/
-memory/
-memory_backup_*/
-migration/
-.env
-.hermes_history
-
-# Sandboxes, logs, OAuth tokens
-sandboxes/
-logs/
-cron/output/
-gsc/client_secret.json
-gsc/token.json
-
-# Node / Python deps
-**/node_modules/
-hermes-agent/node_modules/
-hermes-agent/**/node_modules/
-lsp/node_modules/
-hermes-agent/__pycache__/
-hermes-agent/**/__pycache__/
-**/__pycache__/
-**/*.pyc
-
-# Heavy dirs (leak risk on short user exclude lists)
-hermes-agent/venv/
-hermes-agent/website/
+# Heavy dirs not needed for backup
 hermes-agent/tests/
 hermes-agent/ui-tui/
-
-# Kanban runtime lock + model registry cache
-kanban.db.init.lock
-kanban.db.dispatch.lock
-models_dev_cache.json
+hermes-agent/venv/
+hermes-agent/website/

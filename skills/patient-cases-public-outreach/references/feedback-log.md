@@ -1,5 +1,39 @@
 # 反馈日志（每个 case 的迭代史）
 
+## 2026-07-11 · 朋友圈 HTML 配图路径（首次尝试）
+
+**用户触发原文**：
+> "我们这一单业务是成功的。我想发一下微信朋友圈，6-9副图 文案帮我写写。不用太长。配什么样的图 你跟我说，我截图配上就好"
+
+**关键信号**：
+1. 触发器是 "**发微信朋友圈**" + "**截图配上**" —— 不是抖音求医触发器，是 case-completed 庆祝 / 业务曝光触发器
+2. 伟烨明示 "**截图配上**" → 接受 HTML 输出 + 自己截图的工作流
+3. **本 skill 当时没被 load**，Hermes 走了 `creative/claude-design` 思路起手，**路径分叉**了 —— 这是 trigger 加载优先级 bug
+4. 用户后续追加 "在国内，我想面对的是医院对接我们的资源，我在国内不不对接任何病患" → 朋友圈受众明确为**国内医院端资源 / 同行人脉**，**不是国内患者**
+
+**改动方向**：
+
+- **HTML 路径**（Step 4B）已加入 SKILL.md：1080×1080 / 1080×1350 尺寸、6-9 张叙事模板、品牌色 `#1e3c72` 深蓝系、存放到 `chinahospitalsguide/figma-friends-circle/`（untracked）
+- **国内医院端叙事角度**（新章节）：CTA 不写"挂号"，写"私信聊合作"；不写"接了多少病人"，写"完成了一个 3 病并发的复杂 case"；不写"价格便宜"，写"我们帮医院补跨境这一段"
+- **trigger 描述扩展**："发个朋友圈 / 做个海报 / case completed 配图 / celebrate 这个 case" 都进 trigger 列表
+- **trigger 加载优先级规则**（待 SKILL.md 加）：伟烨说"发朋友圈"或"做个海报" → **优先 load 本 skill**，而不是 `creative/claude-design`
+
+**已知问题**：
+- 伟烨在朋友圈文案角度上"国内不接任何病患"是新增的硬约束 —— 未来同类朋友圈必须遵守
+- HTML 截图清晰度依赖伟烨屏幕分辨率（实测 Mac Retina OK，Windows 普通屏可能模糊）
+- HTML 路径没有"emoji 豆腐块自检"环节（HTML 不依赖系统字体，Pillow 才需要）
+
+**产出文件**（Maria Rios 案实操留下的 6 个 HTML，可作模板）：
+```
+chinahospitalsguide/figma-friends-circle/
+├── fig2-case-complexity.html          # 病种复杂度
+├── fig3-crossborder-patient-profile.html  # 跨境患者画像 4 大来源地
+├── fig4-cooperation-modes.html        # 合作模式 3 档
+├── fig5-hospital-value.html           # 医院端价值 5 项
+├── fig7-retro-insights.html           # 复盘洞见 3 条
+└── fig8-cta.html                      # CTA 收尾
+```
+
 ## 2026-07-10 · Maria Rios（胡桃夹 + May-Thurner）· 第 2 版
 
 **用户反馈原文**：
