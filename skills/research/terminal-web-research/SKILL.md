@@ -1,7 +1,7 @@
 ---
 name: terminal-web-research
 description: "Gather real-time web data (news, trends, stats) via terminal + curl to free APIs, when no web_search/browser toolset is available. Covers HN Algolia, NYT RSS, DuckDuckGo/Bing HTML scraping fallback chain, and source-verification discipline for daily briefings."
-version: 1.1.0
+version: 1.2.0
 metadata:
   hermes:
     tags: [web, research, news, curl, api, rss, terminal, daily-briefing, source-verification]
@@ -92,7 +92,12 @@ for item in root.findall('.//item'):
 
 | Source | URL Pattern | Format | Notes |
 |--------|-------------|--------|-------|
-| HN Front Page (unofficial) | `https://hacker-news.firebaseio.com/v0/topstories.json` | JSON array of IDs | Then fetch each item: `https://hacker-news.firebaseio.com/v0/item/{ID}.json` |
+| **HN Front Page HTML** | `https://news.ycombinator.com/` | HTML | **Cheapest "what's hot" signal** — one curl returns ~30 story titles. Parse with `grep -oP 'class="titleline"[^>]*>.*?</a>'`. The Algolia API needs query construction; the front page is pre-filtered. |
+| **HN Comment Pages** | `https://news.ycombinator.com/item?id={ID}` | HTML | Returns full comment threads — useful for extracting community context/discussion of a trending item. Title appears in `<a>` near the top. |
+| **HuggingFace Blog RSS** | `https://huggingface.co/blog/feed.xml` | XML/RSS | Returns clean `<title>` + `<pubDate>` for all HF posts. Best signal for "what shipped in open-source AI this week." |
+| **Primary-source company blogs** | `https://www.anthropic.com/news/{slug}`, `https://huggingface.co/blog/{slug}`, `https://www.cerebras.net/blog/`, `https://blog.google/technology/ai/`, `https://openai.com/news/`, `https://mistral.ai/news/` | SSR HTML | **Go here FIRST for any "Anthropic / OpenAI / Google / HF / Cerebras" story.** Full article body via `curl -A "Mozilla/5.0"`. Faster AND more accurate than scraping Bing. See `references/primary-source-blogs.md` for the full list and parsing pattern. |
+| **TechCrunch article pages** | `https://techcrunch.com/{YYYY}/{MM}/{DD}/{slug}/` | SSR HTML | **Returns full body via curl as of 2026** — article text in `<p>` tags inside `<div class="entry-content">`. Earlier "JS-rendered" advice was outdated. |
+| HN Front Page (unofficial API) | `https://hacker-news.firebaseio.com/v0/topstories.json` | JSON array of IDs | Then fetch each item: `https://hacker-news.firebaseio.com/v0/item/{ID}.json` |
 | GitHub Trending | `curl -sL https://api.github.com/search/repositories?q=KEYWORD+created:>YYYY-MM-DD&sort=stars` | JSON | Needs `Accept: application/vnd.github.v3+json` header |
 | Wikipedia | `https://en.wikipedia.org/api/rest_v1/page/summary/TITLE` | JSON | No auth needed |
 | Reddit (JSON) | `https://www.reddit.com/r/KEYWORD/hot.json` | JSON | Append `?limit=25` |
@@ -109,17 +114,19 @@ A proven sequence for generating a news briefing:
 
 ## Search Engine Fallback Chain
 
-When HN + NYT alone aren't enough (e.g. Chinese-language news, niche topics, specific company news), use this ordered chain. Each engine has a different failure mode — know when to switch.
+When HN + NYT + direct-source company blogs alone aren't enough (e.g. Chinese-language news, niche topics, specific company news you can't find on the company's own site), use this ordered chain. Each engine has a different failure mode — know when to switch.
 
 | # | Engine | URL pattern | Watch out for |
 |---|--------|-------------|---------------|
+| 0 | **Primary-source company blog** | `https://www.anthropic.com/news/{slug}` etc. | **Check this first** before any search engine. For AI labs, model announcements, and product launches, the company blog has the verified numbers, dates, and pricing. See `references/primary-source-blogs.md`. |
 | 1 | HN Algolia | `https://hn.algolia.com/api/v1/search_by_date?query=...` | English-only, dev-heavy |
-| 2 | NYT RSS | `https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml` | US-centric, Tech section only |
-| 3 | DuckDuckGo HTML | `https://html.duckduckgo.com/html/?q=ENCODED` | **Effectively dead from curl as of 2026** — returns 0 results on most queries even with realistic User-Agent. Don't waste turns retrying; skip straight to Bing. |
-| 4 | Bing | `https://www.bing.com/search?q=ENCODED&setlang=zh-CN&mkt=zh-CN` | Returns noisy SEO content farms; strip `<script>`, `<style>`, all tags, search for keyword proximity |
-| 5 | Brave Search | `https://search.brave.com/search?q=ENCODED` | JS-heavy SPA; raw curl returns shell without results — needs a real browser |
-| 6 | SearX instances | `https://searx.be/search?q=...&format=json` | Most public instances are behind bot-checks (Anubis/Cloudflare); rarely useful from curl |
-| 7 | TechCrunch / TheVerge / Wired | `https://techcrunch.com/category/artificial-intelligence/` etc. | **JS-rendered SPAs** — `curl -A "Mozilla/5.0"` returns only nav/footer HTML, no article titles or content. Use their RSS feeds instead (`/feed/`, `/rss`) where available. |
+| 2 | HN Front Page HTML | `https://news.ycombinator.com/` | One curl, no query construction, ~30 trending titles |
+| 3 | NYT RSS | `https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml` | US-centric, Tech section only |
+| 4 | DuckDuckGo HTML | `https://html.duckduckgo.com/html/?q=ENCODED` | **Effectively dead from curl as of 2026** — returns 0 results on most queries even with realistic User-Agent. Don't waste turns retrying; skip straight to Bing. |
+| 5 | Bing | `https://www.bing.com/search?q=ENCODED&setlang=zh-CN&mkt=zh-CN` | Returns noisy SEO content farms; strip `<script>`, `<style>`, all tags, search for keyword proximity |
+| 6 | Brave Search | `https://search.brave.com/search?q=ENCODED` | JS-heavy SPA; raw curl returns shell without results — needs a real browser |
+| 7 | SearX instances | `https://searx.be/search?q=...&format=json` | Most public instances are behind bot-checks (Anubis/Cloudflare); rarely useful from curl |
+| 8 | TheVerge / Wired | `https://www.theverge.com/` etc. | **JS-rendered SPAs** — `curl -A "Mozilla/5.0"` returns only nav/footer HTML. Use their RSS feeds (`/rss/index.xml`) where available. TechCrunch is the exception — its article pages DO return full body via curl. |
 
 **DuckDuckGo HTML reality check (2026)**: DDG HTML returned **0 snippets on every query** in a recent briefing session, even with `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 Version/17.0 Safari/605.1.15` User-Agent and a 30s timeout. The earlier "rate-limits hard after ~5 queries" advice is now outdated — the endpoint appears fully JS-gated or IP-blocked from curl. Don't retry, don't sleep-then-retry, just **skip to Bing immediately** for the same query.
 
@@ -175,16 +182,20 @@ clean = re.sub(r'\s+', ' ', clean)
 - **NYT RSS only covers Tech section** — won't include AI stories filed under Business, Science, or Politics
 - **RSS items have no `points`/score** — all articles are equally weighted
 - **No JS rendering** — these are static JSON/XML APIs; they won't help with SPAs or client-rendered pages
-- **TechCrunch / TheVerge / Wired article pages are JS-rendered** — `curl` returns nav/footer HTML only. Don't burn 3 turns trying to parse them; go straight to their RSS feeds (`/feed`, `/rss`) or fall back to HN Algolia for the same stories.
+- **TechCrunch article pages DO return full body via curl** (as of 2026) — earlier "JS-rendered" advice was outdated. The article text is in `<p>` tags inside `<div class="entry-content">`. TheVerge and Wired are still JS-only; use their RSS feeds.
+- **TheVerge / Wired pages are JS-rendered** — `curl` returns nav/footer HTML only. Don't burn 3 turns trying to parse them; go to their RSS feeds (`/rss/index.xml`).
 - **Subagent fabrication risk**: When delegating research to subagents, their summaries are self-reports. If the tool_trace is empty, the results may be LLM-generated fabrications. Always re-fetch source URLs yourself.
 - **DDG HTML is effectively dead from curl (2026)**: the endpoint returns 0 snippets even with realistic User-Agents. The "rate-limits after 5 queries" advice is stale. Don't waste turns; skip to Bing.
 - **Bing in zh-CN returns gov-blocked rebrand pages**: If you see "国内版 / 国际版" toggle and "增值电信业务经营许可证" footer, you're being served the China-compliant Bing shell with censored results. Switch to `setlang=en-US&mkt=en-US` for tech/AI news.
 - **Bing returns the same SEO farms as DDG for hot queries**: "AI funding July 2026" → top 5 results are listicle sites recycling the same dollar amounts. Cross-check via HN before quoting any specific number.
 - **SearX public instances are mostly dead**: As of 2026, Anubis bot-checks have killed most public instances for unauthenticated curl. Don't waste time trying more than one.
 - **The "$X billion" in snippet ≠ verified fact**: SEO farms recycle the same number with no sourcing. If only SEO sites have the number, the number doesn't exist.
+- **Company blogs are SSR but spin positive** — use them for specific numbers/dates/model names, but cross-check the "why it matters" framing against independent sources (HN comments, NYT, Reuters).
+- **Pricing pages change without notice** — Anthropic's "introductory pricing until 8/31" is exactly the kind of time-bound detail that gets stale fast; re-fetch pricing at briefing time.
 
 ## Linked References
 
 - `references/hn-nyt-api-snippets.md` — copy-paste Python pipelines for HN Algolia and NYT RSS (no scraping needed)
 - `references/search-engine-fallback.md` — extended scraping recipes for DuckDuckGo HTML, Bing, Brave, SearX with rotation/anti-throttle discipline
 - `references/daily-ai-briefing-pipeline.md` — turnkey recipe for the "AI行业每日简报" pattern: 5 parallel HN queries by category, date-filter timestamp math, points-threshold ranking, NYT cross-coverage, and a worked example with verified 2026-07-09 output
+- `references/primary-source-blogs.md` — **start here for any "Anthropic / OpenAI / Google / HF / Cerebras / Mistral" story**: SSR blog endpoints that return full article body via `curl -A "Mozilla/5.0"`, with a Python parsing pattern and a "fetch the primary source to verify the number" workflow. Promoted to step 0 of the fallback chain.
