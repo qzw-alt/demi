@@ -23,15 +23,15 @@
       "schedule_display": "0 8 * * *",
       "repeat": {
         "times": null,
-        "completed": 50
+        "completed": 51
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T14:45:42.377747+08:00",
-      "next_run_at": "2026-07-16T08:00:00+08:00",
-      "last_run_at": "2026-07-15T08:05:59.916316+08:00",
+      "next_run_at": "2026-07-17T08:00:00+08:00",
+      "last_run_at": "2026-07-16T08:06:53.192011+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -66,15 +66,15 @@
       "schedule_display": "0 9 * * *",
       "repeat": {
         "times": null,
-        "completed": 45
+        "completed": 46
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T17:20:53.016111+08:00",
-      "next_run_at": "2026-07-16T09:00:00+08:00",
-      "last_run_at": "2026-07-15T09:04:00.906800+08:00",
+      "next_run_at": "2026-07-17T09:00:00+08:00",
+      "last_run_at": "2026-07-16T09:03:32.530574+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -109,15 +109,15 @@
       "schedule_display": "0 22 * * *",
       "repeat": {
         "times": null,
-        "completed": 48
+        "completed": 49
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T17:22:43.447182+08:00",
-      "next_run_at": "2026-07-16T22:00:00+08:00",
-      "last_run_at": "2026-07-14T22:06:00.333180+08:00",
+      "next_run_at": "2026-07-17T22:00:00+08:00",
+      "last_run_at": "2026-07-15T22:10:30.897784+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -156,17 +156,17 @@
       "schedule_display": "0 9 * * *",
       "repeat": {
         "times": null,
-        "completed": 52
+        "completed": 53
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-02T08:16:41.523255+08:00",
-      "next_run_at": "2026-07-16T09:00:00+08:00",
-      "last_run_at": "2026-07-15T09:07:34.298288+08:00",
-      "last_status": "ok",
-      "last_error": null,
+      "next_run_at": "2026-07-17T09:00:00+08:00",
+      "last_run_at": "2026-07-16T09:09:44.500364+08:00",
+      "last_status": "error",
+      "last_error": "RuntimeError: brotli: decoder process called with data when 'can_accept_more_data()' is False",
       "last_delivery_error": null,
       "deliver": "feishu",
       "origin": {
@@ -223,5 +223,5 @@
       "fire_claim": null
     }
   ],
-  "updated_at": "2026-07-15T22:00:03.533350+08:00"
+  "updated_at": "2026-07-16T22:00:18.575530+08:00"
 }

@@ -1,7 +1,7 @@
 ---
 name: terminal-web-research
 description: "Gather real-time web data (news, trends, stats) via terminal + curl to free APIs, when no web_search/browser toolset is available. Covers HN Algolia, NYT RSS, DuckDuckGo/Bing HTML scraping fallback chain, and source-verification discipline for daily briefings."
-version: 1.2.0
+version: 1.3.0
 metadata:
   hermes:
     tags: [web, research, news, curl, api, rss, terminal, daily-briefing, source-verification]
@@ -62,6 +62,8 @@ for h in data.get('hits', []):
 ```
 
 **Tip for daily briefings**: Run a parallel batch of narrow queries (`AI model`, `AI funding`, `AI regulation`, `Anthropic`, `OpenAI`) with the same date filter — HN Algolia is fast enough that 5 parallel curls take <3s and give you much better category coverage than one broad `query=AI`. Combine with `search` (relevance/points-weighted) + `search_by_date` (chronological) for both "what's hot" and "what just dropped".
+
+**Pitfall — `query=A+OR+B+OR+C` returns 0–1 hits (validated 2026-07-16)**: Multi-OR queries in the Algolia `query` parameter are unreliable. `query=GPT+OR+Claude+OR+Gemini+OR+Llama+OR+DeepSeek&tags=story&numericFilters=created_at_i%3E{TS}` returned exactly 1 hit while the same query without `numericFilters` returned 25+. The combination of the OR operator with a date filter seems to defeat relevance scoring. **Fix**: split into separate single-keyword queries per topic/company (`query=Anthropic`, `query=OpenAI`, `query=DeepSeek`, `query=Meta+AI`, `query=Mistral`, `query=China+AI`) and dedupe hits by `objectID` in Python. This is slower but reliable, and per-company queries give much better category coverage for briefings anyway.
 
 ### 2. NYT Technology RSS Feed (XML)
 
@@ -191,7 +193,11 @@ clean = re.sub(r'\s+', ' ', clean)
 - **SearX public instances are mostly dead**: As of 2026, Anubis bot-checks have killed most public instances for unauthenticated curl. Don't waste time trying more than one.
 - **The "$X billion" in snippet ≠ verified fact**: SEO farms recycle the same number with no sourcing. If only SEO sites have the number, the number doesn't exist.
 - **Company blogs are SSR but spin positive** — use them for specific numbers/dates/model names, but cross-check the "why it matters" framing against independent sources (HN comments, NYT, Reuters).
+- **The "AI行业每日简报" format spec (validated 2026-07-16)**: When the user requests this exact product, deliver with title `# AI行业每日简报 · {weekday}` (compute weekday from `datetime.now().strftime('%A')` translated to Chinese: 周一/二/三/四/五/六/日). Six sections in order: 大模型动态 (2–3 items), 行业融资 (1–2), 产品发布 (1–2), 政策监管 (1), 本周关注 (2–3 trends), 本周数据 (1–2 numbers). Each item is **one sentence** with emoji prefix. Specific numbers must be HN-verified (≥10 pts OR primary-source URL) — never quote SEO-farm numbers. Keep total under 500 Chinese characters of prose. See `references/ai-briefing-format.md` for the worked template.
+
 - **Pricing pages change without notice** — Anthropic's "introductory pricing until 8/31" is exactly the kind of time-bound detail that gets stale fast; re-fetch pricing at briefing time.
+
+- **Cron-running this skill end-to-end**: The worked example's `cd /tmp/briefing && cmd & cmd & cmd & wait` pattern **breaks in the Hermes foreground-only terminal** — `&` backgrounding is rejected. Use either `terminal(background=true)` for the long-running curl batch OR run curls sequentially in one `terminal()` call (5–6 curls take ~10s total, well under the 60s timeout). Also: `mkdir -p /tmp/x && cd /tmp/x` fails silently if `/tmp/x` doesn't exist (separate command, separate session) — run them in the same command line OR `write_file` a marker first. Always check `pwd` before assuming `ls` will find your output.
 
 ## Linked References
 
@@ -199,3 +205,4 @@ clean = re.sub(r'\s+', ' ', clean)
 - `references/search-engine-fallback.md` — extended scraping recipes for DuckDuckGo HTML, Bing, Brave, SearX with rotation/anti-throttle discipline
 - `references/daily-ai-briefing-pipeline.md` — turnkey recipe for the "AI行业每日简报" pattern: 5 parallel HN queries by category, date-filter timestamp math, points-threshold ranking, NYT cross-coverage, and a worked example with verified 2026-07-09 output
 - `references/primary-source-blogs.md` — **start here for any "Anthropic / OpenAI / Google / HF / Cerebras / Mistral" story**: SSR blog endpoints that return full article body via `curl -A "Mozilla/5.0"`, with a Python parsing pattern and a "fetch the primary source to verify the number" workflow. Promoted to step 0 of the fallback chain.
+- `references/ai-briefing-format.md` — the exact "AI行业每日简报" format spec (6 sections, one-sentence-per-item, emoji, ≤500 chars, HN-verified numbers only), with a worked template and the 2026-07-16 example. Load when the user asks for a daily AI briefing.

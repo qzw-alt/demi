@@ -84,6 +84,7 @@ rsync -a --delete \
   --exclude='auth.json' \
   --exclude='auth.lock' \
   --exclude='cron/output/' \
+  --exclude='**/.curator_backups/' \
   --exclude='hermes-agent/node_modules/' \
   --exclude='hermes-agent/**/node_modules/' \
   --exclude='lsp/node_modules/' \
