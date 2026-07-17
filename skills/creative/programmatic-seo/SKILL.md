@@ -67,6 +67,8 @@ Based on research findings, write article following these rules:
 - 800-1500 words (note: the daily news feature style on chinahospitalsguide actually runs 3,000-3,800 words as of 2026-06 — see Site-specific humanizer baselines below; the 800-1500 figure is the nominal SEO target, not the actual published length)
 - Readability: Chinese Flesch score target (use simple sentences, short paragraphs)
 
+Keyword template rule — see `references/oriental-destiny-keyword-template.md`.
+
 **Tone:** Professional but accessible; factual; no sensationalism
 
 **Seven verified article archetypes (the article structure depends on the news type):** the Step 2 "3-5 sections with H2/H3" guidance is generic; the actual published length and structure depend on what kind of news is being reported. Seven archetypes are verified as of 2026-07-13, each with its own section count and word count target:

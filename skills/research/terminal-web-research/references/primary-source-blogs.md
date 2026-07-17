@@ -12,11 +12,13 @@ All return full article body via `curl -sL -A "Mozilla/5.0"`. Verified July 2026
 
 | Source | URL pattern | Notes |
 |--------|-------------|-------|
-| Anthropic News | `https://www.anthropic.com/news` + `/news/{slug}` | Per-article page has the full announcement, pricing tables, and system card references |
-| OpenAI News | `https://openai.com/news/` | Index lists recent; individual pages have full body |
-| Google AI Blog | `https://blog.google/technology/ai/` | Index sometimes JS, but individual `/technology/ai/{slug}/` works |
+| Anthropic News | `https://www.anthropic.com/news` + `/news/{slug}` | Per-article page has the full announcement, pricing tables, and system card references. Verified 2026-07-17 ✓ |
+| OpenAI News | `https://openai.com/news/` | Index lists recent; individual pages return body for some slugs but `openai.com/index/previewing-gpt-5-6-sol/` returned "Enable JS" shell 2026-07-17 — JS-gated for some model-preview pages |
+| Google AI Blog | `https://blog.google/technology/ai/` | Index sometimes JS, but individual `/technology/ai/{slug}/` works. **Watch for 404s**: `blog.google/products/google-ai/notebooklm-is-now-gemini-notebook/` was 404 on 2026-07-17 — slugs rot. Try `blog.google/` search or rely on HN title only. |
+| Moonshot Kimi | `https://www.kimi.com/blog/{slug}` | Verified 2026-07-17 ✓ — full body for Kimi K3 announcement including architecture, MoE specs, benchmarks, pricing notes |
 | Hugging Face Blog | `https://huggingface.co/blog` + `/blog/{slug}` | Plus RSS: `https://huggingface.co/blog/feed.xml` (returns clean `<title>` + `<pubDate>` for July 2026 posts) |
 | Cerebras Blog | `https://www.cerebras.net/blog/` | Per-post page has full text |
+| LM Studio Blog | `https://lmstudio.ai/blog/{slug}` | Verified 2026-07-17 ✓ — full body for Bionic announcement |
 | Meta AI Blog | `https://ai.meta.com/blog/` | Server-rendered |
 | Microsoft AI Blog | `https://blogs.microsoft.com/ai/` | |
 | Mistral News | `https://mistral.ai/news/` | |
@@ -24,7 +26,9 @@ All return full article body via `curl -sL -A "Mozilla/5.0"`. Verified July 2026
 | DeepSeek | `https://api-docs.deepseek.com/news` or blog | Smaller site, full body usually returned |
 | Cohere Blog | `https://cohere.com/blog` | |
 | Stability AI | `https://stability.ai/news` | |
+| Fireworks AI | `https://fireworks.ai/` (homepage) | **Note (2026-07-17)**: `fireworks.ai/blog/{slug}` returns 404 — the "Series D + $1B ARR" announcement lives on the homepage hero banner, not a dedicated blog post. Fetch the homepage and grep for the announcement text. |
 | TechCrunch (article) | `https://techcrunch.com/{YYYY}/{MM}/{DD}/{slug}/` | **Yes — full body returned via curl.** Counter to the old "JS-rendered" rule. The article text sits in `<p>` tags inside a `<div class="entry-content">` |
+| BBC News (article) | `https://www.bbc.com/news/articles/{slug}` | Verified 2026-07-17 ✓ — full body for TSMC story; better curl-citizen than NYT/Reuters/Axios |
 | BIS (central bank pubs) | `https://www.bis.org/publ/bisbull{N}.pdf` | PDF; first 500 chars of header give title/date/authors |
 | Federal Register | `https://www.federalregister.gov/` | Full text of proposed/final rules |
 | SEC EDGAR | `https://www.sec.gov/cgi-bin/browse-edgar` | Filings list, full text via `/Archives/...` |

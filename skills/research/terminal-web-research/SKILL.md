@@ -1,7 +1,7 @@
 ---
 name: terminal-web-research
 description: "Gather real-time web data (news, trends, stats) via terminal + curl to free APIs, when no web_search/browser toolset is available. Covers HN Algolia, NYT RSS, DuckDuckGo/Bing HTML scraping fallback chain, and source-verification discipline for daily briefings."
-version: 1.3.0
+version: 1.4.0
 metadata:
   hermes:
     tags: [web, research, news, curl, api, rss, terminal, daily-briefing, source-verification]
@@ -94,7 +94,7 @@ for item in root.findall('.//item'):
 
 | Source | URL Pattern | Format | Notes |
 |--------|-------------|--------|-------|
-| **HN Front Page HTML** | `https://news.ycombinator.com/` | HTML | **Cheapest "what's hot" signal** — one curl returns ~30 story titles. Parse with `grep -oP 'class="titleline"[^>]*>.*?</a>'`. The Algolia API needs query construction; the front page is pre-filtered. |
+- **HN Front Page HTML** | `https://news.ycombinator.com/` | HTML | **Cheapest "what's hot" signal** — one curl returns ~30 story titles. **Story-line regex (validated 2026-07-17):** `class="athing submission" id="(\d+)">.*?class="titleline"><a href="([^"]+)">([^<]+)</a>` — must include the `submission` class. The simpler `class="athing"[^>]*id="(\d+)"` regex returns 0 hits because HN wraps every story in `<tr class="athing submission" id="X">`. Points live in a separate span: `id="score_{oid}">(\d+) points`. **Use the front page for "what's hot RIGHT now"** — it surfaces stories the Algolia relevance API misses (e.g. 2026-07-17 Kimi K3 was #1 at 1123pts but invisible to per-keyword `search` re-queries). |
 | **HN Comment Pages** | `https://news.ycombinator.com/item?id={ID}` | HTML | Returns full comment threads — useful for extracting community context/discussion of a trending item. Title appears in `<a>` near the top. |
 | **HuggingFace Blog RSS** | `https://huggingface.co/blog/feed.xml` | XML/RSS | Returns clean `<title>` + `<pubDate>` for all HF posts. Best signal for "what shipped in open-source AI this week." |
 | **Primary-source company blogs** | `https://www.anthropic.com/news/{slug}`, `https://huggingface.co/blog/{slug}`, `https://www.cerebras.net/blog/`, `https://blog.google/technology/ai/`, `https://openai.com/news/`, `https://mistral.ai/news/` | SSR HTML | **Go here FIRST for any "Anthropic / OpenAI / Google / HF / Cerebras" story.** Full article body via `curl -A "Mozilla/5.0"`. Faster AND more accurate than scraping Bing. See `references/primary-source-blogs.md` for the full list and parsing pattern. |
@@ -186,6 +186,8 @@ clean = re.sub(r'\s+', ' ', clean)
 - **No JS rendering** — these are static JSON/XML APIs; they won't help with SPAs or client-rendered pages
 - **TechCrunch article pages DO return full body via curl** (as of 2026) — earlier "JS-rendered" advice was outdated. The article text is in `<p>` tags inside `<div class="entry-content">`. TheVerge and Wired are still JS-only; use their RSS feeds.
 - **TheVerge / Wired pages are JS-rendered** — `curl` returns nav/footer HTML only. Don't burn 3 turns trying to parse them; go to their RSS feeds (`/rss/index.xml`).
+- **Major news article pages are JS-gated from curl in 2026** (validated 2026-07-17): NYT article URLs (e.g. `nytimes.com/2026/07/16/business/...`), Reuters article URLs, Axios article URLs, FT article URLs, TheVerge article URLs — all return either "Please enable JS and disable any ad blocker" or Cloudflare "Attention Required!" shells via `curl -A "Mozilla/5.0"`. Web Archive (`web.archive.org`) also returned `429 Too Many Requests` for these. **For these sources, the article URL is only usable as a *citation* — you cannot fetch the body.** Fall back to the HN title (already editorial-summary-grade), or use the publication's RSS / news listing page where headlines alone are enough for a briefing.
+- **Company blogs that DO return full body via curl** (verified 2026-07-17): `anthropic.com/news/{slug}`, `kimi.com/blog/{slug}` (Moonshot), `fireworks.ai/` homepage, `lmstudio.ai/blog/{slug}`, `blog.google/technology/ai/{slug}` (when slug is right — slugs rot). `fireworks.ai/blog/{slug}` 404s — announcements live on the homepage. **Always curl-test the specific URL before quoting a number from it.**
 - **Subagent fabrication risk**: When delegating research to subagents, their summaries are self-reports. If the tool_trace is empty, the results may be LLM-generated fabrications. Always re-fetch source URLs yourself.
 - **DDG HTML is effectively dead from curl (2026)**: the endpoint returns 0 snippets even with realistic User-Agents. The "rate-limits after 5 queries" advice is stale. Don't waste turns; skip to Bing.
 - **Bing in zh-CN returns gov-blocked rebrand pages**: If you see "国内版 / 国际版" toggle and "增值电信业务经营许可证" footer, you're being served the China-compliant Bing shell with censored results. Switch to `setlang=en-US&mkt=en-US` for tech/AI news.
