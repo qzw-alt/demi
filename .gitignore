@@ -1,0 +1,48 @@
+# Git metadata
+.git/
+
+# Caches
+cache/
+audio_cache/
+image_cache/
+models_dev_cache.json
+
+# Runtime state
+gateway.lock
+gateway.pid
+state.db*
+auth.lock
+kanban.db.init.lock
+kanban.db.dispatch.lock
+
+# Sensitive credentials and conversation data
+auth.json
+sessions/
+memories/
+memory/
+memory_backup_*/
+migration/
+.env
+.hermes_history
+
+# Logs, sandboxes, cron output, OAuth secrets
+sandboxes/
+logs/
+cron/output/
+gsc/client_secret.json
+gsc/token.json
+
+# Curator snapshots may contain old cron prompts and secrets
+**/.curator_backups/
+
+# Heavy generated dependencies and source-tree artifacts
+# Compiled helper binaries have contained token-shaped/embedded credentials.
+bin/uv
+bin/tirith
+**/node_modules/
+hermes-agent/venv/
+hermes-agent/website/
+hermes-agent/tests/
+hermes-agent/ui-tui/
+**/__pycache__/
+**/*.pyc
