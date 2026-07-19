@@ -46,3 +46,7 @@ hermes-agent/tests/
 hermes-agent/ui-tui/
 **/__pycache__/
 **/*.pyc
+
+# SQLite WAL / SHM runtime files
+verification_evidence.db-shm
+verification_evidence.db-wal

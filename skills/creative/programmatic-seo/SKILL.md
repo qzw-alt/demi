@@ -1,7 +1,7 @@
 ---
 name: programmatic-seo
 description: "Programmatic SEO article writing for content sites. Workflow: research → draft → humanize → publish → update sitemap. Currently serving oriental-destiny.com and chinahospitalsguide.com."
-version: 1.5.3
+version: 1.5.4
 author: Hermes Agent
 platforms: [linux]
 metadata:
@@ -215,7 +215,7 @@ Each em-dash should add a clinical aside, not break the sentence. Target: 17-23 
 
 **"Actually" is a false positive in clinical prose (verified 2026-06-08):** the script flags "actually" as banned vocab, but in clinical writing it appears in normal constructions like "would actually execute" or "had not actually been done" where it's just an emphasis word, not an AI tell. Don't strip it from body prose — only strip if it appears in a heading or in a sentence where "in fact" or "in practice" works equally well. The body text scan should tolerate 1-2 "actually" hits on a 4,000-word article.
 
-**"Actually" in H2/H1/H3 headings is NEVER a false positive (verified 2026-06-22):** the 2026-06-22 oriental-destiny "Sitting and Facing" article had 3 `actually` hits — one in the H2 ("What 'sitting and facing' actually means"), one in the hero `lead` paragraph ("Today's piece is what that ring is actually for"), and one flagged by the audit pass. The H2 hit alone dragged the score from 95 → 87 in one line; the lead hit was tolerated. Patching the H2 to `What "sitting and facing" means, in plain language` pushed the score back to 95/100 with zero pattern hits. **Rule update:** the previous "tolerate 1-2 actually hits in body" guidance is for body prose. **In headings (H1/H2/H3), strip every `actually` hit** — they read as AI tells because the heading is the first thing the human eye lands on, and a single "actually" there signals "LLM wrote this." Score impact is real (5-8 points per H2 hit). Always check headings separately from body when running the score, because the script's regex doesn't weight headings more heavily even though human readers do.
+**"Actually" in H2/H1/H3 headings is NEVER a false positive (verified 2026-06-22, RE-CONFIRMED 2026-06-24, RE-CONFIRMED 2026-06-25, RE-CONFIRMED 2026-07-19 — 4 consecutive runs, **8 points per H2 hit**):** see `references/banned-vocab-actually-h2-2026-07.md` for the full 4-run verification table and replacement options. The pre-humanize grep `grep -nE '<h[1-3][^>]*>[^<]*actually[^<]*</h[1-3]>'` is now mandatory before scoring. Body-prose tolerance of 1-2 hits per 4,000 words is unchanged from the 2026-06-08 rule.
 
 **"Landscape" flagged as banned vocab in body prose (verified 2026-06-22):** the 2026-06-22 article's only `landscape` hit was in body prose ("The direction is set by measurement, not by landscape"). The script flagged it (the humanizer skill's vocab list confirms `landscape` is a high-frequency AI word). Patched to `terrain` (1-line swap, score went from 82 → 87). Lesson: when picking body-prose synonyms for AI-flagged words, prefer concrete physical words over abstract ones — `terrain`, `ground`, `view`, `surroundings`, `setting` work better than softer swaps like `scene` or `vista` (which carry their own AI-tell risk in SEO copy).
 

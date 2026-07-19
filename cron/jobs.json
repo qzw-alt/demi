@@ -23,17 +23,17 @@
       "schedule_display": "0 8 * * *",
       "repeat": {
         "times": null,
-        "completed": 53
+        "completed": 54
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T14:45:42.377747+08:00",
-      "next_run_at": "2026-07-19T08:00:00+08:00",
-      "last_run_at": "2026-07-18T08:06:21.970439+08:00",
-      "last_status": "error",
-      "last_error": "RuntimeError: brotli: decoder process called with data when 'can_accept_more_data()' is False",
+      "next_run_at": "2026-07-20T08:00:00+08:00",
+      "last_run_at": "2026-07-19T08:05:42.992320+08:00",
+      "last_status": "ok",
+      "last_error": null,
       "last_delivery_error": null,
       "deliver": "feishu",
       "origin": {
@@ -66,15 +66,15 @@
       "schedule_display": "0 9 * * *",
       "repeat": {
         "times": null,
-        "completed": 48
+        "completed": 49
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T17:20:53.016111+08:00",
-      "next_run_at": "2026-07-19T09:00:00+08:00",
-      "last_run_at": "2026-07-18T09:05:26.434066+08:00",
+      "next_run_at": "2026-07-20T09:00:00+08:00",
+      "last_run_at": "2026-07-19T09:01:14.335127+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -92,9 +92,11 @@
     {
       "id": "d5ef67b81247",
       "name": "Hermes\u5907\u4efd\u5230demi",
-      "prompt": "\u5907\u4efd ~/.hermes/ \u76ee\u5f55\u5230 GitHub \u5907\u4efd\u4ed3\u5e93 qzw-alt/demi\u3002\n\n**\u6ce8\u610f\uff1aexclude \u5305\u542b\u654f\u611f\u4fe1\u606f\u7684\u76ee\u5f55\uff0c\u9632\u6b62 GitHub secret scanning \u62e6\u622a**\n\n\u6b65\u9aa4\uff1a\n1. Clone \u6216\u66f4\u65b0 qzw-alt/demi \u4ed3\u5e93\u5230\u4e34\u65f6\u76ee\u5f55 /tmp/demi-backup/\n2. \u4f7f\u7528 rsync \u540c\u6b65\uff0cexclude \u4ee5\u4e0b\u76ee\u5f55\uff1a\n   - .git\n   - cache/\n   - audio_cache/\n   - image_cache/\n   - gateway.lock\n   - gateway.pid\n   - state.db*\n   - sandboxes/\n   - logs/\n   - sessions/ \uff08\u53ef\u80fd\u5305\u542b API key \u5bf9\u8bdd\u5386\u53f2\uff09\n   - memories/ \uff08\u53ef\u80fd\u5305\u542b\u654f\u611f\u914d\u7f6e\uff09\n3. \u63d0\u4ea4\u6240\u6709\u53d8\u66f4\uff08add . && commit -m \"Backup: $(date +%Y-%m-%d_%H:%M)\"\uff09\n4. \u63a8\u9001\u5230 GitHub\n5. \u6e05\u7406\u4e34\u65f6\u76ee\u5f55 /tmp/demi-backup/\n\n\u4f7f\u7528 GitHub PAT \u8ba4\u8bc1\uff1a\ngithub...OKEN",
-      "skills": [],
-      "skill": null,
+      "prompt": "\u6bcf\u5929 22:00\uff08Asia/Shanghai\uff09\u5c06 /home/ubuntu/.hermes/ \u5907\u4efd\u5230 GitHub \u4ed3\u5e93 qzw-alt/demi\uff0c\u4fdd\u6301\u5f53\u524d job \u4e0d\u53d8\u5e76\u5728\u539f\u4f1a\u8bdd\u62a5\u544a\u7ed3\u679c\u3002\n\n\u3010\u8ba4\u8bc1\u786c\u6027\u89c4\u5219\u3011\n- \u53ea\u4f7f\u7528 SSH\uff1agit@github.com:qzw-alt/demi.git\u3002\n- \u7981\u6b62\u4f7f\u7528 HTTPS\u3001PAT\u3001credential URL\uff0c\u4e5f\u4e0d\u8981\u5411\u7528\u6237\u7d22\u53d6\u6216\u751f\u6210 PAT\u3002\n- \u5148\u7528 ssh -T -o StrictHostKeyChecking=no -o ConnectTimeout=10 git@github.com \u9a8c\u8bc1 SSH\uff1bGitHub \u6210\u529f\u8ba4\u8bc1\u65f6\u547d\u4ee4\u53ef\u80fd\u8fd4\u56de\u975e 0\uff0c\u5fc5\u987b\u68c0\u67e5\u8f93\u51fa\u4e2d\u7684 \u201csuccessfully authenticated\u201d\u3002SSH \u4e0d\u53ef\u7528\u65f6\u76f4\u63a5\u62a5\u544a\u5931\u8d25\uff0c\u4e0d\u8981\u6539\u7528 PAT\u3002\n\n\u3010\u6267\u884c\u3011\n1. \u5728 /tmp/demi-backup/ clone \u6216\u66f4\u65b0 SSH remote\uff1agit@github.com:qzw-alt/demi.git\u3002\n2. \u6309 hermes-backup skill \u7684\u5b8c\u6574\u6d41\u7a0b\u540c\u6b65 /home/ubuntu/.hermes/\uff1a\u4f7f\u7528\u89c4\u8303\u7684\u654f\u611f\u6587\u4ef6\u3001\u8fd0\u884c\u65f6\u6587\u4ef6\u3001node_modules\u3001__pycache__\u3001\u5927\u578b\u76ee\u5f55\u548c\u4e8c\u8fdb\u5236\u6392\u9664\u9879\u3002\n3. rsync \u540e\u786e\u8ba4\u6392\u9664\u9879\u6ca1\u6709\u6cc4\u6f0f\uff0c\u5e76\u786e\u4fdd\u5de5\u4f5c\u6811\u6709\u5b8c\u6574\u7684 canonical .gitignore\uff1b\u4e0d\u8981\u8ba9 rsync --delete \u5220\u9664 .gitignore \u6216 .gitattributes\u3002\n4. \u5728\u5907\u4efd\u526f\u672c\u4e2d\u81ea\u52a8\u8131\u654f\u6240\u6709 PAT/API key\uff0c\u5e76\u6267\u884c\u957f\u5ea6\u95e8\u69db\u626b\u63cf\u3001\u5168\u6587\u4ef6\u5b57\u8282\u626b\u63cf\u548c staged blob \u626b\u63cf\uff1b\u53d1\u73b0\u547d\u4e2d\u5c31\u9488\u5bf9\u6587\u4ef6\u8131\u654f\u5e76\u91cd\u590d\u626b\u63cf\uff0c\u76f4\u5230\u5e72\u51c0\u3002\u4e0d\u8981\u4fee\u6539 /home/ubuntu/.hermes/ \u6e90\u76ee\u5f55\u3002\n5. \u6709\u53d8\u66f4\u624d\u63d0\u4ea4\uff0c\u63d0\u4ea4\u4fe1\u606f\u4f7f\u7528 `Backup: YYYY-MM-DD_HH:MM`\uff0c\u63a8\u9001\u5230 master\uff1b\u65e0\u53d8\u66f4\u4e5f\u8981\u62a5\u544a clean\u3002\n6. \u63a8\u9001\u540e fetch origin master\uff0c\u6838\u5bf9\u8fdc\u7a0b\u6700\u65b0\u63d0\u4ea4\u54c8\u5e0c\uff1b\u6700\u540e\u5220\u9664 /tmp/demi-backup/\u3002\n7. \u8f93\u51fa\u4e2d\u6587\u7b80\u62a5\uff1a\u8ba4\u8bc1\u65b9\u5f0f\u3001\u7ed3\u679c\uff08\u6210\u529f/\u5931\u8d25/\u65e0\u53d8\u66f4\uff09\u3001\u8fdc\u7a0b\u63d0\u4ea4\u54c8\u5e0c\u3001\u654f\u611f\u626b\u63cf\u7ed3\u679c\uff1b\u5931\u8d25\u65f6\u7ed9\u51fa\u5b9e\u9645\u9519\u8bef\uff0c\u4e0d\u8981\u58f0\u79f0\u672a\u9a8c\u8bc1\u7684\u6210\u529f\u3002\n\n\u4e0d\u8981\u628a\u4efb\u4f55\u51ed\u636e\u5199\u5165 cron prompt\u3001\u63d0\u4ea4\u5185\u5bb9\u3001\u8f93\u51fa\u6216\u62a5\u544a\u3002",
+      "skills": [
+        "hermes-backup"
+      ],
+      "skill": "hermes-backup",
       "model": null,
       "provider": null,
       "base_url": null,
@@ -109,15 +111,15 @@
       "schedule_display": "0 22 * * *",
       "repeat": {
         "times": null,
-        "completed": 51
+        "completed": 52
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T17:22:43.447182+08:00",
-      "next_run_at": "2026-07-19T22:00:00+08:00",
-      "last_run_at": "2026-07-17T22:03:42.215061+08:00",
+      "next_run_at": "2026-07-20T22:00:00+08:00",
+      "last_run_at": "2026-07-18T22:11:25.668349+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -156,15 +158,15 @@
       "schedule_display": "0 9 * * *",
       "repeat": {
         "times": null,
-        "completed": 55
+        "completed": 56
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-02T08:16:41.523255+08:00",
-      "next_run_at": "2026-07-19T09:00:00+08:00",
-      "last_run_at": "2026-07-18T09:25:28.109519+08:00",
+      "next_run_at": "2026-07-20T09:00:00+08:00",
+      "last_run_at": "2026-07-19T09:05:52.476451+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -223,5 +225,5 @@
       "fire_claim": null
     }
   ],
-  "updated_at": "2026-07-18T22:00:47.554522+08:00"
+  "updated_at": "2026-07-19T22:00:02.558767+08:00"
 }

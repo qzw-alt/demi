@@ -150,7 +150,7 @@ git push origin master
 ## 🔑 API Keys
 
 - **Kimi API (2.5)**: sk-kimi-i...NGGW（新配置中）
-- **Tavily API**: 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
+- **Tavily API**: tvly-dev-sA...a7Si
 
 ---
 
