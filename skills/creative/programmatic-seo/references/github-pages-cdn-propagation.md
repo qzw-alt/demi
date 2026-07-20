@@ -82,6 +82,39 @@ origin + last-modified diagnostic → pending-note write
 State-matrix entries (see main SKILL.md cron iteration cap-hit section for the running matrix):
 - 07-03: article + sitemap + index ready, no commit, no push → recovered in 10 calls with clean rebase (no sitemap conflict despite remote commit `c66e65e` touching sitemap.xml — rebase-cherry-pick on top of remote worked cleanly because our patch inserted at top and the remote commit inserted later)
 
+### 2026-07-20, chinahospitalsguide.com (FOURTH CONFIRMATION — pattern confirmed-stable across 4 instances)
+- Article: `news/2026-07-20-auriculotherapy-migraine-evidence-china-hospitals-2026.html` (3,051 words, auriculotherapy for migraine — FENS Forum 2026 + Frontiers in Neurology 2023 evidence base)
+- Commits: `69603fb` (article) + `11a2134` (sitemap + news/index) on local master
+- Push: SUCCEEDED (`820ce78..69603fb → 11a2134 master -> master`)
+- Origin verification (raw.githubusercontent.com): article `<!DOCTYPE html>` returned HTTP 200 — **article IS on origin**
+- Sitemap.xml HTTP 200 (rebuild ran for the existing-file sitemap update) but did NOT yet contain the new article URL — Pages rebuilt incrementally for the modified file but the new file path takes longer to propagate
+- Live verify (chinahospitalsguide.com/news/2026-07-20-...html): HTTP 404 for the full verify window after push
+- Triage action: `git log` + origin-verification gave the diagnostic; reported `[SHIPPED_OK]` with the CDN-propagation-delayed note per the cron-week delivery signal contract from the main SKILL.md and the cron-job prompt
+
+**Cumulative 4-instance confirmation (2026-07-04 oriental-destiny + 2026-07-04 + 2026-07-19 + 2026-07-20 chinahospitalsguide):**
+- Push succeeds, origin has the file (verified via `curl raw.githubusercontent.com/...`)
+- Sitemap.xml typically rebuilds faster than the new article path (Pages incremental rebuild)
+- New article URL stays at HTTP 404 for 7-15+ minutes depending on deploy batch size
+- The `[SHIPPED_OK]` token rule from the cron-job prompt applies: "Reporting `[SHIPPED_OK]` is appropriate when file is on origin + push succeeded + sitemap returned 200, even if the article URL still 404s"
+
+**Future cron runs can rely on the origin + push + sitemap-200 diagnostic as the ship signal** and skip the polled-verify loop entirely. The next cron run's HTTP 200 verify is the natural re-check moment.
+
+### 2026-07-19, chinahospitalsguide.com (third confirmed instance)
+- Sitemap returned HTTP 200, new article URL 404'd for 10+ minutes. Pattern consistent with the 07-04 cases.
+
+## Canonical 2-call verify sequence on chinahospitalsguide (post-07-20)
+
+The 2-call split for `sleep + curl` is now canonical on chinahospitalsguide, not an optional fix. The 60-second foreground timeout reliably fires on either chained link:
+
+```bash
+# Call 1: sleep (will hit 60s cap, cron moves on, sleep accumulates in shell)
+sleep 120
+# Call 2: curl with bounded --max-time (gets a fresh 60s foreground budget)
+curl --max-time 25 -s -o /dev/null -w "HTTP %{http_code}\n" URL
+```
+
+If HTTP 404 + sitemap.xml returns 200 + raw.githubusercontent.com of the article returns 200 → article is shipped, CDN is propagating, report `[SHIPPED_OK]` and move on. **Do not poll.**
+
 ## Cross-reference
 
 - Sibling pitfall: "`sleep N && curl` 60-second foreground timeout" (covered in main SKILL.md)

@@ -113,7 +113,8 @@ cd /tmp/hermes-backup/
 for p in sessions/ memories/ cache/ logs/ sandboxes/ audio_cache/ image_cache/ \
          auth.json auth.lock .env .hermes_history \
          gsc/client_secret.json gsc/token.json kanban.db.init.lock kanban.db.dispatch.lock \
-         models_dev_cache.json gateway.lock gateway.pid cron/output/; do
+         models_dev_cache.json gateway.lock gateway.pid cron/output/ \
+         verification_evidence.db-shm verification_evidence.db-wal; do
   [ -e "$p" ] && echo "LEAK: $p"
 done
 # Heavy dirs that will almost always leak when the user supplies a short exclude list
@@ -198,6 +199,10 @@ hermes-agent/**/__pycache__/
 kanban.db.init.lock
 kanban.db.dispatch.lock
 models_dev_cache.json
+
+# SQLite WAL / SHM transient runtime files for verification_evidence.db
+verification_evidence.db-shm
+verification_evidence.db-wal
 EOF
 fi
 for entry in auth.json .env .hermes_history gsc/client_secret.json gsc/token.json kanban.db.dispatch.lock; do
@@ -282,6 +287,15 @@ HITS=$(grep -rln -E "github_pat_[a-zA-Z0-9_-]{40,}" \
   . 2>/dev/null | grep -v "$NOISE" | head -10)
 if [ -z "$HITS" ]; then echo "  OK No full PAT tokens found"; else echo "$HITS"; fi
 
+echo "=== Real gh[pousr]_ tokens (40+ chars) ==="
+HITS=$(grep -rln -E "gh[pousr]_[a-zA-Z0-9]{40,}" \
+  --include='*.json' --include='*.yaml' --include='*.yml' \
+  --include='*.md' --include='*.txt' --include='*.py' \
+  --include='*.sh' --include='*.toml' --include='*.conf' --include='*.ini' \
+  --include='*.js' --include='*.ts' --include='*.html' --include='*.css' \
+  . 2>/dev/null | grep -v "$NOISE" | head -10)
+if [ -z "$HITS" ]; then echo "  OK No full gh*_ tokens found"; else echo "$HITS"; fi
+
 echo "=== Real sk- API keys (40+ chars) ==="
 HITS=$(grep -rln -E "sk-[a-zA-Z0-9_-]{40,}" \
   --include='*.yaml' --include='*.yml' --include='*.json' \
@@ -293,6 +307,19 @@ HITS=$(grep -rln -E "sk-[a-zA-Z0-9_-]{40,}" \
   --include='*.svg' --include='*.xml' \
   . 2>/dev/null | grep -v "$NOISE" | head -10)
 if [ -z "$HITS" ]; then echo "  OK No full sk- API keys found"; else echo "$HITS"; fi
+
+echo "=== Real Tavily tokens (tvly- followed by 40+ chars) ==="
+# Added 2026-07-19: redact_secrets.py walker does NOT cover tvly-, and a
+# real Tavily key (tvly-dev-sAFTx-...a7Si, 58 chars) was found in three
+# MEMORY.md files. The walker redacted sk- and github_pat_ but left tvly-
+# untouched, even though tvly- keys are 50+ chars and easily length-gated.
+# Any time the walker reports a clean pass but the byte scan finds a
+# non-sk-/non-PAT key, the fix is the same: add a provider-specific
+# length-gated grep here. Future-proofing: include Cozy/SerpAPI/etc. prefixes
+# the moment you see them once — they're already in the wild.
+HITS=$(grep -rln -E "tvly-[a-zA-Z0-9_-]{40,}" \
+  . 2>/dev/null | grep -v "$NOISE" | head -10)
+if [ -z "$HITS" ]; then echo "  OK No full Tavily tokens found"; else echo "$HITS"; fi
 
 echo "=== providers/ literal keys ==="
 for f in providers/*.json; do
@@ -308,6 +335,28 @@ echo "Secret scan complete"
 #       lambda m: m.group(0) if '...' in m.group(0) or len(m.group(0))<=15 \
 #         else f'sk-{m.group(0)[3:9]}...{m.group(0)[-4:]}', c), end='')" "$f" > tmp && mv tmp "$f"
 # Re-run the scan above. Repeat until both HITS variables are empty.
+
+# Provider-prefix-aware inline redaction (NEW — added 2026-07-19):
+# When the byte scan flags a token whose prefix the walker doesn't cover
+# (e.g. tvly-, glpat-, AIza, xoxb-, AIzaSy), use this snippet INSTEAD of the
+# sk-/-only one above. Pass `<prefix>` as `tvly`, `glpat`, etc. It truncates
+# any `<prefix>-<base64-ish>` of length >= 30 to `<prefix>-AAAAAA...XXXX`.
+# Write the recipe to /tmp first to dodge f-string + terminal quoting issues:
+#   cat > /tmp/redact_prefix.py <<'PY'
+#   import re, sys
+#   prefix, p = sys.argv[1], sys.argv[2]
+#   c = open(p, encoding='utf-8').read()
+#   pat = re.compile(rf'{prefix}-[a-zA-Z0-9_-]+')
+#   def _trunc(m):
+#       s = m.group(0)
+#       if '...' in s or len(s) < 30: return s
+#       head = s[: 5 + len(prefix) + 6]   # "<prefix>-AAAAAA"
+#       return f'{head[:-2]}...{s[-4:]}'
+#   open(p, 'w', encoding='utf-8').write(pat.sub(_trunc, c))
+#   print(f'redacted {prefix} in {p}')
+#   PY
+#   python3 /tmp/redact_prefix.py tvly workspace/website/MEMORY.md
+# Re-run the relevant scan block. Loop until clean.
 ```
 
 > **Verification tip:** A scan hit doesn't tell you whether the matched string is a real key or an already-truncated placeholder — both look identical on the terminal. Always confirm with `xxd` or a Python byte-length check before declaring clean. See `references/secret-redaction-verification.md` for the recipe.
@@ -472,5 +521,7 @@ rm -rf /tmp/hermes-backup/
 - **PAT supplied in cron prompt is INVALID (401), not just leaked — fall back to SSH (reproduced 2026-07-13, 2026-07-14, 2026-07-16, 2026-07-17)** — A distinct case from the existing "PAT leak" pitfalls: the cron prompt embeds a PAT that is **dead on arrival** — `curl -H "Authorization: token <PAT>" https://api.github.com/user` returns HTTP 401 before any backup operation starts. This means: (a) the user thinks they're providing a working token but it has been rotated/revoked since they last used it; (b) the existing "PAT-in-cron-prompt delivery advisory" guidance about revoking a leaked PAT doesn't apply because there's no working PAT to revoke — the user just needs to know it's invalid and that the backup succeeded via SSH key instead. **Workflow adjustment:** at step 0 (auth verification), explicitly curl-test the user-supplied PAT (or any PAT found in `~/.config/git/credentials`) before relying on it. If 401, IMMEDIATELY fall back to SSH (`ssh -T git@github.com` check) and proceed with SSH for clone + push. The user-facing delivery response should clearly distinguish three PAT cases: **(A) PAT invalid/dead (401)** → tell user the embedded PAT is no longer valid, recommend rewriting the cron prompt to use SSH (which was working) and stop embedding PATs; **(B) PAT valid but leaked in commit history** → existing revoke+regenerate advisory; **(C) PAT redacted cleanly, no prior leak** → no advisory needed. Don't conflate (A) with (B) — case A means the rsync source `cron/jobs.json` contains an INVALID token, not a live one, so there's nothing to revoke. Just clean it up and migrate the cron to SSH. **Reproduction count: 4 confirmed runs (2026-07-13, 2026-07-14, 2026-07-16, 2026-07-17)** — this is now the expected case, not the rare one. If you see a PAT in a cron prompt, default-assume it's dead until curl-test proves otherwise, and lead the delivery response with the "rewrite the cron prompt to use SSH" advisory.
 - **Runtime state files leak by design but cause commit churn** — Discovered 2026-07-12: even with a fully populated .gitignore, ~40 files show up as `M` (modified) in every backup because they're runtime state that changes every cron tick. The ones observed: `feishu_seen_message_ids.json`, `gateway_state.json`, `channel_directory.json`, `interrupt_debug.log`, `.install_method` (small, harmless), `.skills_prompt_snapshot.json`, `cron/ticker_heartbeat`, `cron/ticker_last_success`, `skills/.curator_state`, `skills/.usage.json`, `verification_evidence.db`. They contain no secrets but pollute the commit history. **Decision:** leave them tracked (they serve as a coarse uptime/activity log); only exclude them if the user asks for "minimal diffs" backups. Don't try to whitelist — the list grows whenever a new gateway subsystem is added, and a missed one is harmless because none are sensitive.
 - **"Redacted-at-source" files preserve secrets in committed `***` form (2026-07-14)** — Some files in `~/.hermes/` are committed with secrets already stripped at the source, e.g. `workspace/oriental-destiny/config.real.js` contains `apiKey: ***` (not the real value), `workspace/oriental-destiny/config.real.example.js` contains `apiKey: "AIzaSy-your-real-api-key-here"` (29 chars, documentation placeholder). These files will appear "clean" in the length-gated scan but the **rsync source is the source of truth** — if the user ever un-redacts them on disk before a backup, the leak will land in the next commit. The walker doesn't need to touch these files (the literals are already short), but be aware: a redaction scanner that reports "all clean" can give false confidence when the *source* is what's broken. The redaction is one-directional (working-tree copy); the rsync source itself is never modified. This pairs with the "source itself is the leak" PAT-in-cron-prompt pattern.
+- **Git submodules are invisible to the parent repo's commit (2026-07-19)** — `workspace/oriental-destiny/` and `hermes-agent/` show up in `git ls-tree HEAD` as mode `160000` (submodule gitlinks). The parent's `git add -A` records ONLY the submodule commit SHA, not the submodule's internal files. Reproduced: rsync brought over `workspace/oriental-destiny/config.real.js` containing an `AIzaSy...` Google key, the step-5 byte scan flagged it, and only after a wasted round-trip did I realize `git ls-files` returned empty for that path and `git check-ignore` returned `fatal: Pathspec 'config.real.js' is in submodule 'workspace/oriental-destiny'`. **Implication for the byte scan:** any hit inside a submodule directory is NOT going to land in the parent's commit — `git show :<path>` will fail with the same `is in submodule` error. So they don't need redaction FOR THIS BACKUP. **However:** (a) don't waste cycles investigating them; treat submodule-internal hits as informational, not blockers; (b) the SUBMODULE'S OWN integrity is tracked by its own commit SHA in the parent, so corruption or secret re-injection inside the submodule is captured by the parent's gitlink (`git submodule status` would show a dirty SHA) — let `git status` flag submodule status changes rather than the byte scanner. **Workflow:** identify submodules FIRST via `git ls-files --stage | awk '$1=="160000"{print $4}'`, then add them to the noise filter: `for sm in $SUBMODULES; do NOISE="$NOISE|$(echo $sm | sed 's|/|\\/|g')"; done`. Use this expanded NOISE in the step-5 grep pipe so submodule paths produce zero false positives.
+- **Tavily keys (`tvly-`) bypass the walker entirely (2026-07-19)** — `redact_secrets.py` covers only `sk-` and `github_pat_`. A real Tavily key `tvly-dev-sAFTx-...` (58 chars) was found in three `MEMORY.md` files after a "clean" walker pass — the walker scanned 161 files and redacted 584 sk- keys but left tvly- untouched. Real Tavily keys are 50+ chars and trivially length-gate-able; the walker simply lacks the regex. **The walker is NOT a complete provider list** — it covers what Hermes itself uses; user notes (`MEMORY.md`, skill docs, scratch files) document any provider the user has ever touched. **Fix:** step 5's grep scan block now includes a dedicated `tvly-` (40+ chars) line. When a future non-handled provider prefix surfaces, add a new length-gated grep block for it AND use the `redact_prefix.py` snippet (added to the LOOP GUARD section above) to truncate without re-running the batch walker.
 - **`.gitignore` can be silently deleted by the step-3 cleanup loop and get COMMITTED as a deletion (reproduced 2026-07-16)** — A distinct failure mode from the existing "`~/.hermes/` has no `.gitignore` so rsync --delete wipes the working-tree one" pitfall: even when the working tree starts with a fully populated, tracked `.gitignore` (written by step 3 of the *previous* backup), the *current* backup's step-3 loop can lose it. Reproduction 2026-07-16: rsync ran (source had no `.gitignore`, so `--delete` did not affect the working-tree one — it survived). Then step 3's `for dir in sessions memories memory memory_backup_* migration cache logs sandboxes cron/output; do [ -d "$dir" ] && { git rm -r --cached "$dir" 2>/dev/null; rm -rf "$dir"; }; done` did NOT match `.gitignore` (good). But the loop's `git rm -r --cached` on tracked directories + the subsequent `git add -A` in step 6 staged `.gitignore` for *deletion* because by then the working tree's `.gitignore` had been overwritten by something (most likely: rsync's earlier pass brought in the source's missing `.gitignore` as an empty/non-existent file, or a prior step's redact script wrote 0-byte output that clobbered it). The commit succeeded with `delete mode 100644 .gitignore`. After the push I had to manually restore it: `git checkout HEAD~1 -- .gitignore`. **Fix (defense in depth, do all three):** (1) Immediately after `git clone` and BEFORE rsync, write the canonical `.gitignore` UNCONDITIONALLY (the existing pitfall already says this; now add a verification step at the END of step 3): `test -s .gitignore || { echo "ERROR: .gitignore lost during backup — restoring from prior commit"; git checkout HEAD~1 -- .gitignore 2>/dev/null; test -s .gitignore || cat > .gitignore <<'EOF' ... full canonical template ... EOF; }`. (2) In step 6 (after `git add -A` but before `git commit`), verify `.gitignore` is staged as an update or unchanged — NOT as a deletion: `git status --short .gitignore` should never show `D .gitignore`. If it does, `git checkout HEAD -- .gitignore && git add .gitignore` to restore the tracked version before committing. (3) Add `.gitignore` to the step-3 cleanup loop's explicit DO-NOT-DELETE list at the top: `for entry in .gitignore .gitattributes; do git checkout HEAD -- "$entry" 2>/dev/null; done` before the `git rm -r --cached` loop runs. This is the cheapest fix — it runs in <1s and prevents the silent deletion regardless of which earlier step wiped the file.
 - **PAT-in-cron-prompt Case A is now reproduced FOUR times (2026-07-13, 2026-07-14, 2026-07-16, 2026-07-17) — the user has not yet rewritten the cron job** — Across four consecutive daily backup runs the cron prompt has embedded the same dead `github_pat_11B67EO2Y0...Q5` token, returning HTTP 401 on every auth check, and the cron prompt is still being delivered unchanged. This is no longer an edge case worth re-explaining — it is the expected state. **Workflow consequence:** when a cron prompt contains a `github_pat_` token, skip the advisory about "use SSH instead" in the body of the delivery and put it as the **lead sentence** of the response. The user's action item (rewrite the cron job) has not been acted on across 4 runs; a buried advisory won't get seen. Suggested lead template: "**ACTION NEEDED: Your cron job still embeds a dead PAT (`github...Q5`, HTTP 401 on four consecutive runs). Rewrite the cron prompt to use SSH auth — `git clone git@github.com:qzw-alt/demi.git` works without a token.** Backup pushed via SSH: ..." Then continue with the rest of the report. The PAT itself is dead so there's nothing to revoke (Case A); the only fix is rewriting the cron job source.

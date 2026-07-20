@@ -43,13 +43,13 @@
     "created_at": "2026-05-31T07:13:43.821219+00:00",
     "created_by": "agent",
     "last_patched_at": "2026-07-19T01:06:36.642404+00:00",
-    "last_used_at": "2026-07-19T01:06:12.290063+00:00",
-    "last_viewed_at": "2026-07-19T01:06:12.284406+00:00",
+    "last_used_at": "2026-07-20T01:00:14.942459+00:00",
+    "last_viewed_at": "2026-07-20T01:00:14.937878+00:00",
     "patch_count": 117,
     "pinned": false,
     "state": "active",
-    "use_count": 138,
-    "view_count": 80
+    "use_count": 140,
+    "view_count": 81
   },
   "creative/programmatic-seo": {
     "archived_at": null,
@@ -133,14 +133,14 @@
     "archived_at": null,
     "created_at": "2026-06-19T14:03:22.069363+00:00",
     "created_by": null,
-    "last_patched_at": "2026-07-18T14:12:41.558656+00:00",
-    "last_used_at": "2026-07-19T14:00:02.652767+00:00",
-    "last_viewed_at": "2026-07-19T01:13:11.826518+00:00",
-    "patch_count": 99,
+    "last_patched_at": "2026-07-19T14:08:30.877823+00:00",
+    "last_used_at": "2026-07-20T14:00:17.623284+00:00",
+    "last_viewed_at": "2026-07-19T14:07:51.407175+00:00",
+    "patch_count": 105,
     "pinned": false,
     "state": "active",
-    "use_count": 78,
-    "view_count": 77
+    "use_count": 82,
+    "view_count": 80
   },
   "hermes-cron-troubleshooting": {
     "archived_at": null,
@@ -212,12 +212,12 @@
     "created_at": "2026-06-19T00:00:13.200678+00:00",
     "created_by": null,
     "last_patched_at": null,
-    "last_used_at": "2026-07-19T01:00:54.617656+00:00",
+    "last_used_at": "2026-07-20T01:00:10.032531+00:00",
     "last_viewed_at": "2026-07-02T00:01:01.217735+00:00",
     "patch_count": 0,
     "pinned": false,
     "state": "active",
-    "use_count": 66,
+    "use_count": 68,
     "view_count": 2
   },
   "linux-desktop-setup": {
@@ -328,14 +328,14 @@
     "archived_at": null,
     "created_at": "2026-05-31T07:13:52.921096+00:00",
     "created_by": "agent",
-    "last_patched_at": "2026-07-19T01:06:55.945249+00:00",
-    "last_used_at": "2026-07-19T01:06:38.376093+00:00",
-    "last_viewed_at": "2026-07-19T01:06:38.371743+00:00",
-    "patch_count": 221,
+    "last_patched_at": "2026-07-20T01:09:49.805953+00:00",
+    "last_used_at": "2026-07-20T01:09:11.041097+00:00",
+    "last_viewed_at": "2026-07-20T01:09:11.035554+00:00",
+    "patch_count": 223,
     "pinned": false,
     "state": "active",
-    "use_count": 288,
-    "view_count": 212
+    "use_count": 294,
+    "view_count": 216
   },
   "seo-article-publish-cron": {
     "archived_at": null,
