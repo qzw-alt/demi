@@ -1,22 +1,20 @@
-# Git metadata
 .git/
 
 # Caches
 cache/
 audio_cache/
 image_cache/
-models_dev_cache.json
 
 # Runtime state
 gateway.lock
 gateway.pid
 state.db*
 auth.lock
+auth.json
 kanban.db.init.lock
 kanban.db.dispatch.lock
 
-# Sensitive credentials and conversation data
-auth.json
+# Sensitive content
 sessions/
 memories/
 memory/
@@ -25,28 +23,38 @@ migration/
 .env
 .hermes_history
 
-# Logs, sandboxes, cron output, OAuth secrets
+# Sandboxes, logs, OAuth tokens
 sandboxes/
 logs/
 cron/output/
 gsc/client_secret.json
 gsc/token.json
 
-# Curator snapshots may contain old cron prompts and secrets
-**/.curator_backups/
-
-# Heavy generated dependencies and source-tree artifacts
-# Compiled helper binaries have contained token-shaped/embedded credentials.
-bin/uv
-bin/tirith
+# Node / Python deps
 **/node_modules/
+hermes-agent/node_modules/
+hermes-agent/**/node_modules/
+lsp/node_modules/
+hermes-agent/__pycache__/
+hermes-agent/**/__pycache__/
+**/__pycache__/
+**/*.pyc
+
+# Heavy dirs that often leak through short exclude lists
 hermes-agent/venv/
 hermes-agent/website/
 hermes-agent/tests/
 hermes-agent/ui-tui/
-**/__pycache__/
-**/*.pyc
 
-# SQLite WAL / SHM runtime files
+# Kanban runtime lock + model registry cache (regenerated on every gateway tick)
+kanban.db.init.lock
+kanban.db.dispatch.lock
+models_dev_cache.json
+
+# Compiled bundles (text walkers can't safely redact binaries)
+bin/uv
+bin/tirith
+
+# SQLite WAL / SHM transient runtime files for verification_evidence.db
 verification_evidence.db-shm
 verification_evidence.db-wal

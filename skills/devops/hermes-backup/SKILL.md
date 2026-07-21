@@ -322,9 +322,31 @@ HITS=$(grep -rln -E "tvly-[a-zA-Z0-9_-]{40,}" \
 if [ -z "$HITS" ]; then echo "  OK No full Tavily tokens found"; else echo "$HITS"; fi
 
 echo "=== providers/ literal keys ==="
+# JSON-walk for actual string values of length >= 40 (safer than regex on raw text,
+# which can false-positive on field NAMES like "api_mode" or empty string values).
+# 2026-07-20: the prior regex `'"[a-zA-Z0-9_-]*key": "[a-zA-Z0-9_-]{40,}"'` matched
+# `providers/minimax_coding.json` because the file structure created a partial match;
+# actual JSON-parse + value-length check produces zero false positives.
 for f in providers/*.json; do
-  [ -f "$f" ] && grep -q -E '"[a-zA-Z0-9_-]*key": "[a-zA-Z0-9_-]{40,}"' "$f" 2>/dev/null && \
-    echo "POTENTIAL KEY: $f — review and strip"
+  [ -f "$f" ] && python3 -c "
+import json, sys
+p = sys.argv[1]
+try:
+    d = json.load(open(p))
+except Exception as e:
+    print(f'  PARSE FAIL {p}: {e}')
+    sys.exit(0)
+def walk(o, path=''):
+    if isinstance(o, dict):
+        for k,v in o.items():
+            walk(v, f'{path}.{k}' if path else k)
+    elif isinstance(o, list):
+        for i,v in enumerate(o):
+            walk(v, f'{path}[{i}]')
+    elif isinstance(o, str) and len(o) >= 40:
+        print(f'  POTENTIAL KEY: {p} :: {path} = len={len(o)} preview={o[:6]}...{o[-4:]}')
+walk(d)
+" "$f"
 done
 echo "Secret scan complete"
 
@@ -395,6 +417,17 @@ git log --oneline -1
 ```bash
 rm -rf /tmp/hermes-backup/
 ```
+
+## References
+- `references/cjk-walker-miss-recipes.md` — CJK-path walker miss: reproduction, three root-cause candidates, inline fallback scripts, byte-level verification
+- `references/secret-redaction-verification.md` — xxd byte-level disambiguation recipes for the terminal-display-truncation trap
+- `references/heavy-dir-leak-scenarios.md` — 2026-07-09 heavy-dir leak numbers (venv 456M, lsp 64M, website 27M, tests 26M, ui-tui 3.5M)
+- `references/2026-07-20-session-notes.md` — today's three refinements: submodule `.gitmodules` missing, providers JSON false-positive fix, end-of-step-3 .gitignore re-verification
+
+## Scripts
+- `scripts/redact_secrets.py` — unified batch walker + single-file mode (handles sk-, github_pat_, ghp_, gho_, etc.)
+- `scripts/redact_inprocess.py` — same redaction logic, runnable from `execute_code()` without shell quoting
+- `scripts/check_pats.py` — PAT placeholder vs full-token disambiguation helper (groups hits by `(prefix, last4, length)`)
 
 ## Exclusions (sensitive files/dirs)
 
@@ -525,3 +558,6 @@ rm -rf /tmp/hermes-backup/
 - **Tavily keys (`tvly-`) bypass the walker entirely (2026-07-19)** — `redact_secrets.py` covers only `sk-` and `github_pat_`. A real Tavily key `tvly-dev-sAFTx-...` (58 chars) was found in three `MEMORY.md` files after a "clean" walker pass — the walker scanned 161 files and redacted 584 sk- keys but left tvly- untouched. Real Tavily keys are 50+ chars and trivially length-gate-able; the walker simply lacks the regex. **The walker is NOT a complete provider list** — it covers what Hermes itself uses; user notes (`MEMORY.md`, skill docs, scratch files) document any provider the user has ever touched. **Fix:** step 5's grep scan block now includes a dedicated `tvly-` (40+ chars) line. When a future non-handled provider prefix surfaces, add a new length-gated grep block for it AND use the `redact_prefix.py` snippet (added to the LOOP GUARD section above) to truncate without re-running the batch walker.
 - **`.gitignore` can be silently deleted by the step-3 cleanup loop and get COMMITTED as a deletion (reproduced 2026-07-16)** — A distinct failure mode from the existing "`~/.hermes/` has no `.gitignore` so rsync --delete wipes the working-tree one" pitfall: even when the working tree starts with a fully populated, tracked `.gitignore` (written by step 3 of the *previous* backup), the *current* backup's step-3 loop can lose it. Reproduction 2026-07-16: rsync ran (source had no `.gitignore`, so `--delete` did not affect the working-tree one — it survived). Then step 3's `for dir in sessions memories memory memory_backup_* migration cache logs sandboxes cron/output; do [ -d "$dir" ] && { git rm -r --cached "$dir" 2>/dev/null; rm -rf "$dir"; }; done` did NOT match `.gitignore` (good). But the loop's `git rm -r --cached` on tracked directories + the subsequent `git add -A` in step 6 staged `.gitignore` for *deletion* because by then the working tree's `.gitignore` had been overwritten by something (most likely: rsync's earlier pass brought in the source's missing `.gitignore` as an empty/non-existent file, or a prior step's redact script wrote 0-byte output that clobbered it). The commit succeeded with `delete mode 100644 .gitignore`. After the push I had to manually restore it: `git checkout HEAD~1 -- .gitignore`. **Fix (defense in depth, do all three):** (1) Immediately after `git clone` and BEFORE rsync, write the canonical `.gitignore` UNCONDITIONALLY (the existing pitfall already says this; now add a verification step at the END of step 3): `test -s .gitignore || { echo "ERROR: .gitignore lost during backup — restoring from prior commit"; git checkout HEAD~1 -- .gitignore 2>/dev/null; test -s .gitignore || cat > .gitignore <<'EOF' ... full canonical template ... EOF; }`. (2) In step 6 (after `git add -A` but before `git commit`), verify `.gitignore` is staged as an update or unchanged — NOT as a deletion: `git status --short .gitignore` should never show `D .gitignore`. If it does, `git checkout HEAD -- .gitignore && git add .gitignore` to restore the tracked version before committing. (3) Add `.gitignore` to the step-3 cleanup loop's explicit DO-NOT-DELETE list at the top: `for entry in .gitignore .gitattributes; do git checkout HEAD -- "$entry" 2>/dev/null; done` before the `git rm -r --cached` loop runs. This is the cheapest fix — it runs in <1s and prevents the silent deletion regardless of which earlier step wiped the file.
 - **PAT-in-cron-prompt Case A is now reproduced FOUR times (2026-07-13, 2026-07-14, 2026-07-16, 2026-07-17) — the user has not yet rewritten the cron job** — Across four consecutive daily backup runs the cron prompt has embedded the same dead `github_pat_11B67EO2Y0...Q5` token, returning HTTP 401 on every auth check, and the cron prompt is still being delivered unchanged. This is no longer an edge case worth re-explaining — it is the expected state. **Workflow consequence:** when a cron prompt contains a `github_pat_` token, skip the advisory about "use SSH instead" in the body of the delivery and put it as the **lead sentence** of the response. The user's action item (rewrite the cron job) has not been acted on across 4 runs; a buried advisory won't get seen. Suggested lead template: "**ACTION NEEDED: Your cron job still embeds a dead PAT (`github...Q5`, HTTP 401 on four consecutive runs). Rewrite the cron prompt to use SSH auth — `git clone git@github.com:qzw-alt/demi.git` works without a token.** Backup pushed via SSH: ..." Then continue with the rest of the report. The PAT itself is dead so there's nothing to revoke (Case A); the only fix is rewriting the cron job source.
+- **Submodule `.gitmodules` may be missing in cloned backup repo — `git submodule status` errors, do NOT treat as fatal (2026-07-20)** — Confirmed reproduction today: `git ls-files --stage | awk '$1=="160000"'` listed `hermes-agent` and `workspace/oriental-destiny` as gitlinks, but `git submodule status` returned `fatal: no submodule mapping found in .gitmodules for path 'hermes-agent'`. This is NOT a backup-breaking error — the parent repo's `git add -A` will still record the gitlink (SHA) update for any submodule whose working tree changed, even with no `.gitmodules` present. **Implications:** (a) `git check-ignore` on a path inside a submodule will return `fatal: Pathspec ... is in submodule 'hermes-agent'` (not "ignored"), so use `git ls-files` to confirm a path is untracked instead of `git check-ignore`; (b) `git show :<path>` for a submodule-internal path also returns "is in submodule" — the staged-blob scan must skip submodule paths entirely; (c) when adding submodules to the step-5 NOISE filter, get the list via `git ls-files --stage | awk '$1=="160000"{print $4}'` BEFORE running grep, so a missing `.gitmodules` doesn't break the filter expansion. The 2026-07-19 submodule pitfall covers (a) and (b) but doesn't mention (c); without the pre-step-5 submodule discovery, today's run would have flagged submodule paths as noise-source positives when they aren't actually staged.
+- **End-of-step-3 `.gitignore` re-verification is mandatory, not optional (2026-07-20 reproduction)** — Today's run: rsync ran, `for entry in .gitignore .gitattributes; do git checkout HEAD -- "$entry"; done` was NOT in the cloned repo's working tree at step-3 entry (it had run earlier, in a custom `git checkout HEAD -- .gitignore .gitattributes` I added between steps 1 and 2 — but the skill's documented step-3 guard ran the same command, so it should have been safe). Then `ls .gitignore` reported "No such file or directory" — meaning the rsync --delete had wiped it despite the early guard. The skill's 2026-07-16 pitfall fix-3 (run `git checkout HEAD -- .gitignore` before the cleanup loop) is necessary AND sufficient, but **only if step-2's rsync didn't wipe the file BEFORE step-3 ran**. Confirmed today: the issue was that the skill's step-2 verification script ran AFTER rsync, then `git checkout HEAD -- .gitignore` was called at the top of step-3, then `ls .gitignore` STILL failed — meaning rsync --delete ran AGAIN somewhere, OR a parallel rsync was running. The robust fix: after step-3's cleanup loop, verify `.gitignore` is non-empty AND matches the prior commit's blob: `test -s .gitignore && git diff --quiet HEAD -- .gitignore || { echo "ERROR: .gitignore mismatch — restoring"; git checkout HEAD -- .gitignore; }`. Run this verification AFTER the `for dir in sessions memories ...` cleanup loop AND BEFORE step-4 redaction (which doesn't touch .gitignore but doesn't fail if it's missing). **Add this line at the END of step 3, not the beginning** — at the beginning, rsync may still wipe the file; at the end, all subsequent steps assume .gitignore is present and correct.
+- **`providers/*.json` literal-key regex false-positives on JSON structure, not just values (2026-07-20)** — The canonical step-5 line `grep -q -E '"[a-zA-Z0-9_-]*key": "[a-zA-Z0-9_-]{40,}"' providers/*.json` matched `providers/minimax_coding.json` despite the file containing zero actual key values — the field-name pattern matched part of `"api_mode"` because `_mode` matched `[a-zA-Z0-9_-]*` and `:` matched `:`. JSON-walking for string values of length ≥ 40 produces zero false positives and is more reliable. The fix above (replace the grep with the python walker) is now in step 5. **Generalization:** any regex-based "is this a secret" check on JSON files should JSON-parse first, then walk for string values; don't trust surface regex on serialized JSON.

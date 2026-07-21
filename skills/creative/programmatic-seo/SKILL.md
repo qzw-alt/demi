@@ -404,7 +404,7 @@ General lesson: when multiple cron jobs can touch the same file (sitemap.xml, ne
 content-research-writer-cn → (hot topic) → programmatic-seo → (draft) → humanizer → (humanized) → publish → sitemap → git push
 ```
 
-**Thread-arc decision support:** see `references/oriental-destiny-thread-arcs-2026-07.md` for the verified seasonal thread inventory, the pivot-day recipe (channel-room article on the day a solar-term lands), and the decision tree for "which article to write today" when no cron-prompt topic is specified.
+**Thread-arc decision support:** see `references/oriental-destiny-thread-arcs-2026-07.md` for the verified seasonal thread inventory, the pivot-day recipe (channel-room article on the day a solar-term lands), the 5-gate outdoor property scan (Stairway + Balcony + Courtyard + Side Yard + horizontal gates, verified 07-17 → 07-21), the wide-vs-narrow outdoor companion pattern, skip-day handling when a prior cron day produced no article, and the decision tree for "which article to write today" when no cron-prompt topic is specified.
 
 ## Failure-mode reference
 
@@ -417,9 +417,7 @@ Each skill feeds into the next. Always run in sequence.
 - No good 热点 → no publish (宁缺毋滥)
 - After push, verify at https://chinahospitalsguide.com/news/ (wait 2-3 min)
 
-## Site-specific humanizer baselines
-
-The humanizer skill's "max 4 em dashes" rule is a default; some sites run hotter stylistically. **Always measure the last 3 published articles on the target site before scoring — do not trust the table below for a brand-new site you haven't seen before.** Em-dash baselines below were last verified by sampling the most recent articles on each site:
+**Site-specific humanizer baselines** — see `references/site-specific-humanizer-baselines.md` for the verified em-dash density per site (oriental-destiny 10-18, chinahospitalsguide 17-23).
 
 | Site | Em dashes per ~1200 words (verified) | Voice notes |
 |------|---------------------------------------|-------------|

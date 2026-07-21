@@ -217,6 +217,32 @@ The 07-18 article's closing section named the next read as "the roof or the cour
 
 The roof and the courtyard are the last two outdoor in-between gates the property line articles have not yet covered; either one completes the property-type scan.
 
+### Sub-arc completion (verified 2026-07-19 + 2026-07-21): the 5-gate outdoor property scan
+
+The forward-arc note branched; the courtyard was chosen for 07-19. That choice completed the 5-gate outdoor property scan when combined with 07-21 (side yard). The verified sequence:
+
+- **07-17 Stairway** — vertical gate between floors (dragon's vertical climb)
+- **07-18 Balcony** — in-between outdoor gate (dragon's pause between interior and exterior)
+- **07-19 Courtyard** — *wide* outdoor gate (dragon's hour-long settle)
+- **07-21 Side Yard** — *narrow* outdoor gate (dragon's daily connector — the line crossed a hundred times per week)
+
+Note 07-20 had no article (prior cron missed that day; Step 0 detection returned clean, no recovery needed). The 5-gate sequence (vertical / in-between / wide outdoor / narrow outdoor / horizontal-from-property-type) is now complete — a property owner who reads all five has the full outdoor scan the foundation articles were building toward.
+
+**Why "side yard" is the *narrow* companion to the courtyard's *wide* read (verified 2026-07-21):** the courtyard is measured by volume (the dragon settles into it); the side yard is measured by frequency (the dragon crosses it daily). Two distinct read metrics — volume vs. frequency — and the 4 typologies (driveway / planted strip / gap-between-houses / shared alley) + 4-defect walk (sharp corner / drain / stored items / back-gate outflow) + wood-path-water linear position rule mirror the courtyard's structure but for a connector rather than a destination. Use the wide-vs-narrow pairing whenever a property has both a destination outdoor space and a connector outdoor space — the article structure mirrors cleanly.
+
+**Skip-day handling (verified 2026-07-21):** when a prior cron day has no article in the repo, the next cron run's Step 0 pre-flight returns empty (`ls fate-$(date +%Y-%m-%d)-*.html` is empty because the date is today, not yesterday; `ls fate-2026-07-20*.html` is also empty because no article was ever written). Treat as a clean fresh run — do NOT try to "backfill" the missing day. The thread continuity bridge in the new article's lead paragraph should reference the most recent published article (07-19 courtyard in this case), not a phantom 07-20. Thread arcs tolerate gaps; the lead's "X read from two days ago walked Y" pattern handles day-skip gracefully.
+
+### Property-line thread completion marker (verified 2026-07-21)
+
+After the 5-gate outdoor scan is complete (Stairway + Balcony + Courtyard + Side Yard + the original three horizontal gates from 07-11), the next article should pivot away from outdoor gates. Candidate pivots:
+
+- A new sub-thread on **Day Master × chart element × gate** (BaZi overlay applied across the five gates — a 5-day recap that uses the now-complete gate inventory to test each Day Master's lean-into read)
+- A **referenced-but-never-covered pivot** (the in-between outdoor read mentions "the dragon settles into a courtyard" — write the standalone courtyard piece if not yet covered, or a companion foundational concept like the 28 lunar mansions)
+- A **narrow-window eve piece** for the next solar term (Chu Shu on 2026-08-22 or Bai Lu on 2026-09-07) — these pivot points arrive in 4-8 weeks and can be planned ahead
+- A **room-walk completion close-out** — applies the 5 gates back to a specific property type as a checklist (similar to the 06-30 Fire-Month close-out, but for the outdoor scan)
+
+The outdoor property-line thread is now a verified, complete arc; future articles should treat it as the foundation that next-pivots build on.
+
 ### Verified article counts (updated 07-18)
 
 - Indoor rooms covered: Bedroom, Bathroom, Kitchen, Home Office, Living Room, Dining Room, Entryway/Ming Tang, Hallway, Stairway (9 of ~12 standard rooms)
