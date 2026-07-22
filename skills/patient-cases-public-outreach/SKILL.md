@@ -185,6 +185,92 @@ ls -t /home/ubuntu/chinahospitalsguide/internal-research-notes/ | grep douyin-he
 - ✅ **直接**给"打开 HTML → 截图"的 3 步说明 + 文件路径清单
 - ✅ **等伟烨反馈"风格 OK / 某张不行"才调整**
 
+#### Step 4B-Plus：Playwright headless 自动化 HTML→PNG（2026-07-11 跑通）
+
+**触发**：伟烨说"你直接发图给我" / "配图你做出来我直接用" → 跳过浏览器手动截图，用 Playwright headless 自动化出 PNG。
+
+**为什么这条存在**：HTML 路径原本要伟烨自己 Chrome 截图 → 但伟烨可能没空 / 不方便 / 嫌麻烦。**让 agent 直接出 PNG**，伟烨在飞书 `MEDIA:` 一键转发到朋友圈。
+
+**环境前置**（一次性安装，venv 已经有 pip）：
+
+```bash
+# 在 Hermes venv 里装 playwright（PEP 668 不会拦 venv）
+~/.hermes/hermes-agent/venv/bin/python -m pip install playwright
+
+# 下载 Chromium headless shell（114MB，pyppeteer 同级，但更稳）
+~/.hermes/hermes-agent/venv/bin/python -m playwright install chromium --with-deps
+```
+
+**渲染脚本**（存到 `figma-friends-circle/render-to-png.py`，每次复用）：
+
+```python
+"""
+Batch render *.html to PNG using Playwright (headless Chromium).
+Detects .card element dimensions, sets viewport, screenshots full-page.
+"""
+import asyncio, os, glob
+from pathlib import Path
+from playwright.async_api import async_playwright
+
+ROOT = Path("/path/to/figma-friends-circle")
+OUT = ROOT / "png"; OUT.mkdir(exist_ok=True)
+HTML_FILES = sorted(glob.glob(str(ROOT / "*.html")))
+
+async def render_one(browser, html_path):
+    page = await browser.new_page(viewport={"width": 1080, "height": 1350})
+    await page.goto(f"file://{html_path}", wait_until="networkidle")
+    width, height = await page.evaluate("""() => {
+        const card = document.querySelector('.card') || document.body;
+        const r = card.getBoundingClientRect();
+        return [Math.ceil(r.width), Math.ceil(r.height)];
+    }""")
+    await page.set_viewport_size({"width": width, "height": height})
+    await page.wait_for_timeout(150)  # 让布局稳定
+    out_path = OUT / f"{html_path.stem}.png"
+    await page.screenshot(path=str(out_path), full_page=False)
+    await page.close()
+    return out_path, width, height
+
+async def main():
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(headless=True)
+        for f in HTML_FILES:
+            out, w, h = await render_one(browser, Path(f))
+            print(f"  ✓ {Path(f).name}  {w}x{h}  {os.path.getsize(out)/1024:.1f} KB")
+        await browser.close()
+
+asyncio.run(main())
+```
+
+**跑法**：
+
+```bash
+~/.hermes/hermes-agent/venv/bin/python ~/chinahospitalsguide/figma-friends-circle/render-to-png.py
+```
+
+**输出位置**：`figma-friends-circle/png/*.png`
+
+**飞书交付**：每张图用 `MEDIA:/绝对/路径/xxx.png` 行内发，伟烨一键转发。
+
+**坑 + 经验**（Maria Rios case 实测）：
+
+- **render-to-png.py 不要写进 git**——它是 untracked 脚本，跟 HTML 同目录
+- **HTML 文件里的 viewport meta 不要设置**（如 `<meta name="viewport" content="...">`），Playwright 默认按 `set_viewport_size` 来
+- **`wait_until="networkidle"` 在带 Google Fonts 的 HTML 会卡 30 秒**——HTML 里只用系统字体（`-apple-system, "PingFang SC"`），不用 `@import url(...)`，渲染快且不依赖网络
+- **`networkidle` 超时如果发生**，改成 `wait_until="domcontentloaded"` + `wait_for_timeout(500)` 也行
+- **多张图批量渲染**：每张独立 `new_page`，关闭前 `await page.close()` —— 不要图省事复用 page
+
+**HTML 路径 vs Playwright 自动化的取舍**：
+
+| 维度 | HTML 路径（伟烨手动截图） | Playwright 自动化 |
+|---|---|---|
+| 适用 | 伟烨有空 / 想本地控制截图质量 | 伟烨直接要图 / 朋友圈发布前批量出 |
+| 风险 | 浏览器兼容性问题（不同 Chrome 字号不同） | Playwright 默认无头，渲染稳定 |
+| 时间 | 伟烨手动 5 分钟 | agent 自动 30 秒 |
+| 优先 | 第一次出图（让伟烨看效果） | 后续批量化（定了风格后批量出） |
+
+**默认路径**：第一次出图走 HTML（让伟烨看效果 + 拍板风格）→ 风格定下来后用 Playwright 自动化出最终 PNG（伟烨直接用）。
+
 **配套朋友圈文案（同时产出）**：
 
 - 长度 5-8 行（不算拆分，纯文本，不拆段）

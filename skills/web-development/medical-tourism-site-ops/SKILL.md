@@ -327,6 +327,134 @@ gsc opportunities
 
 **Rule of thumb**: when `gsc opportunities` shows 10+ impressions for a city×procedure query, build the dedicated page. After 3-7 days, re-run `gsc opportunities` and check if the new page is ranking + the bounce page's CTR improved.
 
+## Content cadence: realistic pace for a pre-revenue site (NEW 2026-07-21)
+
+**The single biggest misjudgment when scaling content is mistaking cron output for content shipped.** The site runs `daily-chg-medical-news` once a day, but a cron "publishes 1 article per day" does NOT mean "we ship 1 article per day". Reality:
+
+**Per-article actual work** (the gated pipeline that should always be the default, not the exception):
+
+```
+1. 选题 + 资料收集 (cost data / hospital data / clinical / regulations)   30-45 min
+2. 写大纲 (H2 结构 + FAQ 设计 + 内部链接设计)                              15-20 min
+3. 写正文 (1000-1500 词，遵守 6 条规则)                                     45-60 min
+4. Schema + 费用表 + 元数据                                                15-20 min
+5. agent 审 (事实正确 / 模板对齐 / Schema 验证 / 内部链接)                  15-20 min
+6. 拍板 + 发布 + sitemap 更新                                              5-10 min
+                                          ──────────────────
+                                          单篇总耗时 2-3 小时
+```
+
+**Weekly throughput ceiling** (with agent審 + 你点头质量门):
+
+- 1-2 篇/天是 agent "深度审"稳定输出上限
+- 1 篇/天是**你**审阅稳定上限
+- 实际一周 5-6 篇是上限（按工作日 5 天）
+
+**Why 9 topics + 1 week cleanup = 14 weeks**（伟烨问"为什么每天一篇还需要这么长的时间"时的答案）：
+
+```
+Week 1     : Cleanup unindexed 87 pages (Q4)              → 0 内容
+Week 2-3   : Maria case + SG 心脏 + CAR-T 淋巴瘤         → 3 篇
+Week 4-5   : 膝关节 / MY 专区 / 拉美着陆页                → 3 篇
+Week 6-8   : 印尼 / 巴基斯坦 / 肺癌 专题                  → 3 篇
+Week 9-14  : 复盘优化 + 填补 × 第二轮选题                 → 3-6 篇
+                                        ──────────────
+                                        总 12-15 篇
+                                        耗时 14 周
+```
+
+**Speed-up options** (only with explicit user buy-in):
+
+| Option | 每周产能 | 风险 | 适用 |
+|---|---|---|---|
+| 现有计划 1 篇/周 + agent审 + 你点头 | 1 | 低 | 默认推荐 |
+| agent 审完直接发布 + 你仅周回顾 + 抽审 | 3-5 | 中 | 你能稳定 24h 信任审核 |
+| cron 自动发布 | 7 | 高（YMYL） | 不推荐 (医疗内容) |
+
+**Preferred**: run 1 篇/week for first 6 weeks, watch SEO results + 你的审阅节奏, then scale up if you can sustainably review 2 篇/day.
+
+## Site-wide unindexed page audit + cleanup (NEW 2026-07-21 — VERIFIED PATTERN)
+
+**Trigger**: GSC reports "X pages not indexed" or Weiye says "网站好多页没被收录" / "做一轮清理".
+
+**Why this matters**: 100 unindexed pages means Google has 100 URLs in crawl queue that aren't returning value. Each one eats crawl budget that could go to content you'd actually want ranked. Cleanup is high-ROI mechanical work.
+
+**Step 1: Run `audit.py` to inventory all URLs** (worked example: 236 URLs scanned in 2 min):
+
+```python
+# /home/ubuntu/.hermes/tmp/audit/audit.py
+import urllib.request, re
+from collections import defaultdict
+
+SITEMAP_URL = "https://chinahospitalsguide.com/sitemap.xml"
+sitemap_xml = urllib.request.urlopen(SITEMAP_URL).read().decode()
+urls = list(set(re.findall(r'<loc>([^<]+)</loc>', sitemap_xml)))
+# Then fetch each URL, measure title / desc / word_count / schema_count / robots
+
+# Categorize:
+def categorize(m):
+    if m.get('status') != 200: return 'BROKEN'
+    if m.get('word_count', 0) < 150: return 'TOO_SHORT'
+    if m.get('word_count', 0) < 400: return 'THIN'
+    if m.get('schema_count', 0) == 0: return 'NO_SCHEMA'
+    return 'HEALTHY'
+```
+
+**Step 2: Get GSC "Why pages aren't indexed" via web UI** (the CLI can't expose this):
+
+- Go to GSC → Pages → filter "Why pages aren't indexed"
+- Export CSV with: URL / reason / last crawl
+- Cross-reference with `audit.py` output for ground truth
+
+**Step 3: Disposition table** (typical chinahospitalsguide.com finding 2026-07-21):
+
+| 类别 | 数量 | 处置 |
+|---|---|---|
+| HEALTHY | 212 | 保留 |
+| NO_SCHEMA | 6 | 加 Schema JSON-LD（每页 6 行 copy-paste） |
+| THIN | 4 | 合并到相关完整页面 |
+| TOO_SHORT | 8 | 强删（< 150 字无 SEO 价值） |
+| BROKEN | 6 | 检查为啥 broken（404/500/empty）→ 修或删 |
+| 重复组（同 title prefix） | 8 组 | 每组保留 1 个 + 301 重定向 |
+
+**Cleanup is NOT without risk** — 5 gotchas:
+
+1. **Google 的 "为什么不索引" 我看不到**（无 GSC API 访问），只能基于内容体检 + 你 web UI 截图交叉对比
+2. **删 URL 会导致流量下降 4-6 周**（Google 重新评估站点），然后才回升 —— 不是立竿见影
+3. **合并必须配 301** —— 没 301 流量直接归零
+4. **加 Schema 必须逐页加 + 不破坏其他 Schema** —— 用 `inject_schemas_safe()` 防止破坏
+5. **删 25-30 页 ≠ 解决 crawl budget 问题** —— 如果根本原因是 Google 对站点的信任分，删页只是治标
+
+**Recommended sequencing** for a 1-week cleanup:
+
+```
+Day 1: audit.py + 等伟烨 GSC "Why not indexed" 截图
+Day 2: 决策表（每页 ACTION: 删/合/改/留）→ 伟烨签字
+Day 3-4: 实施：删 TOO_SHORT + BROKEN + 重复组合并（每条 301 + sitemap 更新）
+Day 5: 加 NO_SCHEMA 的 6 个 JSON-LD 块（脚本 batch 注入）
+Day 6: 测试 + 验产 (curl 200 + Google URL Inspection 抽查)
+Day 7: 报告 + 评估接下来怎么走
+```
+
+**Pre-flight checklist** before deleting any URL:
+
+```bash
+# 1. Verify no other pages link to the deleted slug
+grep -rE "deleted-slug" /home/ubuntu/chinahospitalsguide --include="*.html" -l
+
+# 2. Verify no sitemap entry exists
+grep -E "deleted-slug" /home/ubuntu/chinahospitalsguide/sitemap.xml
+
+# 3. If both empty → safe to delete + add 301 in _redirects
+
+# 4. Commit message must explain:
+#    - What was deleted
+#    - What 301 was added
+#    - What category (TOO_SHORT/BROKEN/THIN/dup) for the audit trail
+```
+
+**Audit baseline** (chinahospitalsguide.com 2026-07-21): 236 URLs, 25-30 to dispose (10-13% of total). Sufficient to free up crawl budget for new content production.
+
 ## Full-site schema coverage batch (NEW 2026-07-02 — RECIPE)
 
 **When to run**: schema coverage audit shows <90% on content pages. Mechanical batch job, ~10 minutes for 150 files.
