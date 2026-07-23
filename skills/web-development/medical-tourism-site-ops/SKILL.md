@@ -1,7 +1,7 @@
 ---
 name: medical-tourism-site-ops
 description: "Operations workflow for English-language medical tourism websites covering China (chinahospitalsguide archetype) — content matrix strategy, SEO technical patterns, duplicate-content defense, static site deployment to Cloudflare via GitHub, conversion blocks (trust + newsletter + featured-pillar + ranking-page decision-tree), GA4/MS-Clarity event tracking, and how the user wants this class of work run (iterative, single-step verified, no grand roadmaps)."
-version: 0.6.0
+version: 0.6.1
 author: Hermes Agent
 platforms: [linux]
 metadata:
@@ -400,11 +400,13 @@ def categorize(m):
     return 'HEALTHY'
 ```
 
-**Step 2: Get GSC "Why pages aren't indexed" via web UI** (the CLI can't expose this):
+**Step 2: Get GSC "Why pages aren't indexed" via web UI** (the CLI can't expose this — verified 2026-07-21/22 by running `~/.hermes/bin/gsc --help` and finding only 8 subcommands: `summary / top queries / top pages / opportunities / trends / countries / devices / compare` — no `excluded` / `why-not-indexed` / `pages-indexed`):
 
 - Go to GSC → Pages → filter "Why pages aren't indexed"
 - Export CSV with: URL / reason / last crawl
 - Cross-reference with `audit.py` output for ground truth
+
+**Pitfall — never assume GSC CLI coverage for audit queries** (VERIFIED 2026-07-22): the `~/.hermes/bin/gsc` wrapper is a rank-and-impressions tool. When any "what did Google choose not to index" or "what's the canonical status of page X" question comes up, the data lives in GSC web UI only and the user must export it manually. Don't promise a "fully automated cross-check" against GSC exclusion data until you have re-run `gsc --help` against the live binary and confirmed the relevant subcommand exists for that specific question.
 
 **Step 3: Disposition table** (typical chinahospitalsguide.com finding 2026-07-21):
 
@@ -505,6 +507,113 @@ print(f"Done: {len(targets)} files")
 **Verification**: re-run inventory, expect 100% Article + 100% BreadcrumbList on all non-skipped content pages. Then spot-check prod with `curl` after deploy — `grep -c "BreadcrumbList" file.html` should return ≥1 (the schema itself).
 
 **Why this matters**: schema coverage going from 64% to 100% is the highest-leverage mechanical SEO win available. ~10 minutes of Python work for ~188 pages × future Google rich-snippet eligibility.
+
+### ⚠️ `audit.py` `NO_SCHEMA` 判定盲区 — HEALTHY ≠ has-schema (NEW 2026-07-22 — VERIFIED)
+
+The default `categorize()` in `references/session-2026-07-21-lessons.md` §B classifies pages as HEALTHY when `word_count >= 400`, **regardless of whether the page actually contains a schema JSON-LD block**. A 500-word FAQ-lite page with zero `application/ld+json` will be marked HEALTHY but won't be eligible for rich snippets.
+
+**Verified failure on chinahospitalsguide.com 2026-07-22**: the 4 language-portal pages (`sg.html` 978 words, `id.html` 588 words, `ru.html` 573 words, `ar.html` 564 words) were all classified `HEALTHY` but had **zero** schema blocks. The audit ALSO missed that 5 carlos-mendoza programmatic report pages needed `noindex` instead of schema.
+
+**Improved `categorize_v2()` — use this instead**:
+
+```python
+def categorize_v2(m):
+    if m.get('status') != 200: return 'BROKEN'
+    if m.get('word_count', 0) < 150: return 'TOO_SHORT'
+    if m.get('word_count', 0) < 400: return 'THIN'
+    if m.get('schema_count', 0) == 0: return 'NO_SCHEMA'
+    return 'HEALTHY'
+# AND add a second-pass query for "HEALTHY but no schema" pages:
+# (these exist in YOUR report but categorize() returns 'HEALTHY')
+healthies_no_schema = [p for p in catalog if p['status'] == 200
+                       and p['word_count'] >= 400
+                       and p['schema_count'] == 0]
+# Always surface them separately — they're the highest-ROI targets.
+```
+
+**Conversion-page `noindex` cohort** (NEW 2026-07-22): the following 4 page types should ALWAYS get `<meta name="robots" content="noindex,follow">` because Google scraping them helps competitors more than it helps you:
+
+| Type | Examples on this site | Why noindex |
+|---|---|---|
+| Pricing pages | `pricing.html`, `id-pricing.html`, `ru-pricing.html`, `ar-pricing.html` | Pricing scraped → competitors undercut |
+| Contact forms | `contact-new.html`, `id-contact.html`, `ru-contact.html`, `ar-contact.html` | Form pages aren't useful to searchers |
+| Thank-you / post-conversion | `thank-you.html` | Post-payment, useless to rank |
+| Programmatic personal reports | `report-carlos-mendoza-*.html` | 1-off artifacts for one named recipient, not SEO targets |
+
+**For carlos-mendoza style files**: add `<meta name="robots" content="noindex,follow">` to the `<head>` rather than JSON-LD schema. These pages have 975 words of useful content for the named recipient but **0 SEO value to the public**.
+
+### ⚠️ HTML `patch` tool nesting trap — duplicate closing tags (NEW 2026-07-22 — VERIFIED)
+
+When using the `patch` tool with `mode="replace"` to insert content before a closing tag like `</html>` or `</main>`, **`old_string` and `new_string` indentation MUST match exactly**. If the surrounding HTML uses 4-space indent and your `new_string` carries 8-space (or vice versa), the patch can leave a stray closing tag from the unreplaced region.
+
+**Verified failure**: when adding FAQ + JSON-LD to `id.html` and `ru.html` on 2026-07-22:
+1. Duplicate `</html>` tags appeared (`</body></html></html>` at end of file)
+2. Indentation drift on `<div class="lang-bar">` (`</div>` at 8 spaces instead of 4)
+
+**Why it happens**: the `old_string` anchored on the first occurrence of `</main>\n</body>\n</html>` in the file, but the `new_string` contained its own `</html>` (because the JSON-LD block I'm injecting must come AFTER `</body>`, not before). The patch matched both the literal closing-tag sequence in the source AND my injected closing, producing a doubled tag.
+
+**Mandatory post-patch verification** (30 seconds, prevents the bug from shipping):
+
+```bash
+# Step 1: count closing tags — every count must be exactly 1
+grep -c "</html>" file.html        # must be 1
+grep -c "</body>" file.html        # must be 1
+grep -c "</main>" file.html        # must be 1
+grep -c "</head>" file.html        # must be 1
+
+# Step 2: if any count is off, fix with execute_code (literal subtraction)
+python3 -c "
+from pathlib import Path; import re
+p = Path('file.html')
+c = p.read_text(encoding='utf-8')
+# Remove all-but-the-last </html>
+ms = list(re.finditer(r'</html>', c))
+for m in ms[:-1]: c = c[:m.start()] + c[m.end():]
+p.write_text(c, encoding='utf-8')
+print('Fixed' if c.count('</html>') == 1 else 'Still broken')
+"
+
+# Step 3: parse the JSON-LD to confirm schema is structurally valid
+python3 -c "
+from pathlib import Path; import re, json
+c = Path('file.html').read_text(encoding='utf-8')
+schemas = re.findall(r'<script type=\"application/ld\+json\">(.+?)</script>', c, re.DOTALL)
+for s in schemas:
+    parsed = json.loads(s)
+    print(f'OK: {parsed[0][\"@type\"]}')
+"
+```
+
+**Prevention**: prefer `execute_code` with `re.sub` or `Path.write_text(content.replace(...))` when touching closing tags. The `patch` tool's literal string match doesn't understand HTML structure — it's purely text-based, so "the closing tag" can appear both in your `old_string` anchor AND in your `new_string` content, doubling it.
+
+### ⚠️ Terminal display false positive — `https://schema.org` looks like `https://***@type` in grep output (NEW 2026-07-22 — VERIFIED, 3x in one session)
+
+When grep + sed return text containing `https://schema.org","@type":...`, **the `s c h e m a . o r g "," @ t y p e` portion can be visually misread as `***@type`** in narrow terminal output (especially inside multi-line sed -n output or when terminal width collapses whitespace into the `***` pattern). The issue is **purely visual** in the terminal — the underlying file is fine.
+
+I hit this **3 times in one session** on 2026-07-22 — each time grep showed `"https://***@type"` which I assumed was the recurring `***` corruption bug from `references/session-2026-07-11-lessons.md`. **All 3 were false alarms.** Re-reading the file as bytes with Python confirmed `https://schema.org` was present and untouched.
+
+**How to verify (don't trust your eyes, verify with code)**:
+
+```python
+from pathlib import Path
+p = Path('file.html')
+content = p.read_text(encoding='utf-8')
+
+# Use Python, NOT grep, to count
+star_count = content.count('https://***')   # legitimate 3-character literal
+schema_count = content.count('https://schema.org')
+
+print(f'  Real "***" corruption: {star_count}')  # should be 0
+print(f'  Real schema.org: {schema_count}')       # should be >= 1 per page
+```
+
+**Decision rule**:
+- If `star_count == 0` AND `schema_count >= 1` → file is fine. The terminal display lied. Do nothing.
+- If `star_count >= 1` (regardless of count) → real bug, follow the fix in `references/session-2026-07-11-lessons.md`.
+
+**Why this matters — second-order harm**: if you patch again thinking the bug is back, you'll likely **introduce a real bug** by accidentally clobbering the working schema with a second copy. I almost did this twice. Once I caught myself applying the schema corruption as an "executable command" against a file that didn't have it.
+
+**Anti-pattern**: trusting terminal output of long single-line JSON content. Always re-read the file as bytes for any decision involving `***` or any text that looks visually ambiguous.
 
 ## Subagent orchestration patterns (verified 2026-07-01)
 
@@ -816,6 +925,15 @@ git show HEAD:blog/<file>.html > blog/<file>.html
 - `templates/gsc-weekly-report.sh` — copy-and-run weekly report generator. Pipe stdout directly to Feishu. No LLM involvement.
 - `references/multi-language-audit-checklist.md` — **NEW 2026-07-11** — 7 executable checks for auditing the 4-language (EN/RU/AR/ID) site. Pre-flight, all 7 audit commands with expected outputs, and the report format. Use every time the user says "再帮我审查一下".
 - `references/session-2026-07-11-lessons.md` — **NEW 2026-07-11** — transcript + reasoning from a 3-round iterative audit session where the user drove an external Claude Code agent between rounds. Documents 4 new pitfall classes (agent self-report verification, "改好了" 3-state trap, schema URL corruption by sed, source-vs-build coexistence) plus the fix script for the `***` schema corruption. Parent SKILL.md carries the concise pitfall sections; this file is the worked transcript + working fix script.
+- `references/iterative-audit-and-report-upload.md` — **NEW 2026-07-22** — workflow for the 2nd+ SEO audit iteration: preserve previous baseline, compute delta + direction per category, attach root-cause hypothesis for regressions, upload dated report to `qzw-alt/demi` `reports/chinahospitalsguide/`, surface both old + new URLs in chat. Complements the one-shot recipe in `references/session-2026-07-21-lessons.md` §B.
+
+### 📦 Audit reports archive (NEW 2026-07-22)
+
+Cumulative audit reports uploaded to `qzw-alt/demi` `reports/chinahospitalsguide/`:
+- `audit-2026-07-21-unindexed-cleanup.md` — first baseline (236 URLs, 6 BROKEN / 8 TOO_SHORT / 4 THIN / 6 NO_SCHEMA / 212 HEALTHY)
+- `audit-2026-07-22-unindexed-cleanup.md` — follow-up (273 URLs, 0 BROKEN / 8 TOO_SHORT / 22 THIN / 17 NO_SCHEMA / 226 HEALTHY)
+
+**Next audit (>= 2026-07-29)**: when re-running, follow the iterative loop in `references/iterative-audit-and-report-upload.md`. Always preserve the previous baseline as `audit-report-YYYY-MM-DD-baseline.md` in `~/.hermes/tmp/audit/` BEFORE running `audit.py` again, then upload the new report to `qzw-alt/demi` with the delta in the commit message.
 
 ## User / task profile
 
