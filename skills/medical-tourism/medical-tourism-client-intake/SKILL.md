@@ -3,7 +3,7 @@ name: medical-tourism-client-intake
 description: "处理国际患者来华就医咨询的全流程：接收邮件 → 分析病情 → 确定服务方案 → 与医院初步沟通 → 回复客户。适用于 chinahospitalsguide.com 的客户咨询处理。"
 version: 1.4.0
 author: agent
-tag: [medical-tourism, client-intake, hospital-coordination, email, whatsapp, payment-flow, case-sharing, internet-hospital-probe]
+tag: [medical-tourism, client-intake, hospital-coordination, email, whatsapp, payment-flow, case-sharing, internet-hospital-probe, diagnostic-pivot, qq-mail-compat]
 ---
 
 # 医疗旅游客户咨询处理流程
@@ -508,6 +508,172 @@ scoreboard.sort(reverse=True)  # 命中越多家排越前
 
 - 不能写"我们能让你去唐都" —— 主诊层面进不去
 - 可以写"对罕见/复杂病例协调跨院专家 MDT 会诊" —— 这是新卖点
+
+## 诊断转折期的中立邮件 + 邮件节奏控制（2026-07-11 新增 — Maria Rios 第 2 阶段）
+
+**触发场景**：经过 7+ 天协调（病例评估 → 院方初步回应 → 临床资料对接 → 视频会诊），医院**给了诊断结论**，但**结论跟之前预期不同** —— 不是简单确认，而是**转向**：
+- 之前的预期是"3 个并发血管病，要分别处理"
+- 现在医院的判断是"首要问题不是血管，是另一个系统，先看那个"
+- 之前的预期是"建议手术"，现在是"建议保守治疗 / 建议先在本地评估"
+
+Maria Rios 案的第 2 阶段（2026-07-21）：九院 3 位教授共识 —— 之前判断的 Nutcracker + May-Thurner + SMAS 中，**首要诊断变成肠问题**，建议**先解决肠** —— 术后 Nutcracker 等可能**自然改善甚至不需要手术**。苏楷（九院联络人）甚至建议 Maria **在荷兰本地询问这个肠手术是否可行** —— 因为如果能在本地医保下做，Maria 根本不用来中国。
+
+### ⚠️ 诊断转折期邮件的 3 个判断点
+
+#### 1. 邮件基调：**中性务实**（不要 A 庆祝 / 也不要 C 谨慎过头）
+
+| 选项 | 风险 |
+|---|---|
+| A. 庆祝（"太好了有结果了！"） | 误导患者以为**她之前的方案还在**。如果主诊方向已变，庆祝 = 让她以为 Nutcracker 还要做 |
+| B. 中性务实（推荐默认） | 复述医院判断 + 提供"本地询问"路径 + 保留中立 |
+| C. 谨慎过头（"等医院更详细的报告再回你"） | 患者已经焦虑 4.5 年了，再压几天她情绪会崩 |
+
+**正例措辞**（Maria 第 2 阶段邮件的关键句）：
+
+> "The consensus among Prof. Yao and the other two professors is an important turning point: rather than starting with the complex vascular and urological work, the priority has been set on resolving the underlying intestinal issue first, with the expectation that this may significantly improve — or even resolve — the Nutcracker findings later. That is exactly the kind of clarity a good MDT should produce."
+
+**避免措辞**：
+- ❌ "Excellent news!" / "We're thrilled!" —— 患者看完以为她在做 Nutcracker 手术准备
+- ❌ "We need to discuss this further" —— 焦虑型患者会解读为"坏消息"
+- ❌ "Whatever you decide, we are not going anywhere" —— 太戏剧化、像告别式
+
+#### 2. 本地治疗 vs 来华治疗：**完全中立**（不要 B 拉客 / 不要 C 劝退）
+
+- **A. 完全中立**（推荐默认） —— "无论你在荷兰还是中国治疗，我们都支持。决定权在你。"
+- **B. 偏中国** —— "来中国有附加好处（家人陪同 / 资深医生面对面）"，微妙拉客
+- **C. 偏本地** —— "减少跨国奔波 + 本地医保覆盖"
+
+**为什么 A 是对的**：
+- case-sharing 客户是**长期人脉**，不是要立刻转化的高客单价
+- 维护关系 > 短期转化 —— 患者朋友 / 家人将来再来找你的概率远大于这一单
+- 而且她有 4.5 年病史，case-sharing 内容沉淀下来**比 ¥399 套餐重要得多**
+
+**邮件里如何表达中立**：
+- 提供"具体步骤 1/2/3" 给本地医院，让本地医院判断
+- 明确说"医院 open to 任何 path" —— 让医院侧也承担选择压力
+- 不提"来中国有什么好处" —— 即使是事实
+
+#### 3. "我们的服务一直都在"：**全程陪同**（不是 A "随时在" / 不是 B "帮你拿到的"）
+
+3 种解读伟烨的"我们的服务一直都在"：
+
+| 解读 | 风险 |
+|---|---|
+| A. "我们随时在" —— "你后续要回中国或再问询医院，我们随时响应" | 太模糊，患者不知道具体承诺 |
+| B. "我们帮你拿这个诊断" —— "这是我们协调的成果" | 把九院的诊断说成"我们功劳"，会让人觉得不专业 |
+| C. "我们跟进"（推荐默认） —— "我们会陪你做完本地询问的全过程 + 跟九院保持沟通" | 具体到行动，明确不丢下她 |
+
+**正例措辞**：
+
+> "We will remain on standby with the Shanghai team throughout your decision process. If your Dutch doctors raise technical questions about the diagnosis or treatment, we can route them back to Prof. Yao's team for clarification."
+
+### ⚠️ 节奏控制：第 1 封（叙事/进展类）跟第 2 封（动作确认类）至少 12 小时间隔
+
+Maria Rios 案反复踩的坑：用户当晚发完大叙事邮件后，**立刻就想发动作确认邮件**（"是否同意 + 联系方式授权 + 联系信息确认"），间隔 < 12 小时。
+
+**为什么这是节奏压迫**：
+- 焦虑型患者（Maria 4.5 年病史）一晚收到 2 封"重要更新"，会从"she is taking care of me"滑到"she is pressuring me"
+- 让她**消化 + 行动 + 回信**的时间被压缩，回复质量必然下降
+- 患者回信间隔太短可能错过一些关键问题（你问她"是否有其他联系方式"，她没想到要补 WeChat ID）
+
+**对策（2026-07-11 验证）**：
+- 第 1 封（叙事/进展类）和第 2 封（动作确认类）之间**至少 12 小时间隔**
+- 如果用户说"我现在就发"，**主动提醒一句**："建议明天白天发，给 Maria 一晚消化上一封"
+- 用户说"没事，现在发"就发，但**主动提醒了就是 audit pass**（用户后悔了不是 agent 的责任）
+- 如果时间隔不到 12 小时（比如凌晨 + 早上），邮件标题用"Re: ..." 而不是新建主题，**视觉上像延续不是新要求**
+
+### ⚠️ QQ Mail 网页版 + 飞书复制粘贴的兼容性坑（2026-07-11 验证 — user "复制到邮件 还是一堆"）
+
+伟烨用 QQ Mail 网页版发邮件，从飞书复制粘贴正文到 QQ Mail 编辑器时：
+
+- **`### 三级标题` Markdown 会被 QQ Mail 当字面文字渲染**（显示 `### Heading`），不变成粗体
+- **复制框里夹中文说明**（"⚠️ 这里是说明"）会粘到正文里
+- **复制框周围的 `--- Part 1 / 2 ---` 分隔符** 也会被粘进去
+- **`**bold**` 飞书渲染好看但 QQ Mail 也会被吃成 `**bold**` 字面文字**
+
+**对策（飞书对话侧 / 起草端）**：
+- 任何 QQ Mail / Outlook / 飞书邮件客户端之间复制粘贴的正文，**先假设接收端会按字面渲染**，**不要用任何依赖语法的标记**（不要 `###` 不要 `**bold**` 不要 `[link](url)`）
+- 飞书对话里的分隔符 `--- Part 1 / 2 ---` 是给伟烨看的**视觉提示**，**不是邮件正文的一部分** —— 复制框必须**显式标"不要复制分隔符"**
+- 复制框设计规则：
+  - **框外顶部**：3-5 行排版规则（哪些不复制、为什么）
+  - **框内**：**只有邮件正文**
+  - **框外底部**：1-2 行怎么用说明
+  - 任何"⚠️ 伟烨号是不是打多了 / 要不要我调整" 这种客服附注**不进框内**，留作飞书对话的独立消息
+
+**正例**（Maria 邮件复制框）：
+
+```markdown
+## ⚠️ 复制规则
+
+- ✅ 只复制下面两个虚线框之间的英文
+- ❌ 不要复制虚线框本身
+- ❌ 不要复制上方/下方的中文说明
+- ❌ 不要复制分隔符 "--- Part 1 / 2 ---"
+
+---
+
+[从这里开始复制 ↓]
+
+Hi Maria,
+
+...（邮件正文）...
+
+[复制到这里结束 ↑]
+
+---
+
+## 📎 怎么用这份稿
+（用 1-2 行告诉用户怎么操作）
+```
+
+**反例**（user "复制到邮件 还是一堆"那次的失败）：
+
+```markdown
+--- Part 1 / 2 ---          ← 用户粘进去了
+⚠️ 伟烨号是不是打多了？   ← 用户粘进去了
+
+Hi Maria,                  ← 这才是邮件开头
+
+...（正文）...
+
+--- Part 1 / 2 ---          ← 用户也粘进去了
+```
+
+**General rule for 复制框**：任何"我要提醒自己 / 我想问伟烨"的内容**永远不写进复制框内**，**只写飞书对话消息里**。
+
+### 诊断转折邮件的 narrative arc（4 步）
+
+```text
+1. 复述医院共识（中性、具体，不评价好坏）
+2. 提供"本地询问"路径（具体到 1/2/3 步骤，让本地医院决定）
+3. 全程陪同承诺（具体到"如果本地医院有技术问题，我们转回九院"）
+4. 案例合作轻提 + 留个轻 action（"如果你方便，回复里说下你跟本地医院的沟通窗口"）
+```
+
+### 案例合作模式在诊断转折期的处理
+
+之前 case-sharing 提的是"治疗过程笔记 / 照片 / 视频" —— 但**诊断转折期没有治疗过程**，**该提什么？**
+
+**正例**（Maria 第 2 阶段邮件里的措辞）：
+
+> "On the case-sharing side: please do not feel any obligation. The conversation so far has been useful in its own right, and what you decide locally — and how that goes — will be valuable for other patients in your situation regardless of where treatment ultimately happens."
+
+**关键词**：
+- **"in its own right"** —— 即使没成交，**对话过程本身就是 case-sharing 价值**
+- **"regardless of where treatment ultimately happens"** —— 解绑 case-sharing 与是否来中国的关联
+- **"valuable for other patients in your situation"** —— 锚定"沉淀故事"的真实价值
+
+**避免**：
+- ❌ "If you choose to come to China, we'd love to document..." —— 把 case-sharing 跟中国方案绑定
+- ❌ "We hope you'll consider sharing..." —— 任何"希望"语气都带压力
+
+### 诊断转折邮件应避免做的事
+
+- ❌ **不要承诺 "Shanghai team will see you"** —— 即使上海九院说"open to"，措辞也只能是 "open to seeing you if local treatment is not feasible or not preferred"
+- ❌ **不要替医生下结论** —— 医院说"first look at intestinal issue"，邮件里就照搬"intestinal issue"而不是我的转述
+- ❌ **不要给隐性优惠** —— 诊断转折期患者情绪脆弱，"打个折"会被解读为"在帮她做选择"
+- ❌ **不要 push 她现在决策** —— "Take your time" 必须明确写出来
+- ❌ **不要揭"为什么没去成唐都"的旧伤** —— 用"the specific specialist groups" 模糊措辞代替具体医院名（即使唐都专家已被邀请进 MDT）
 
 ## 邮件动作确认邮件的 3 个易错点（2026-07-11 Maria Rios 案新增）
 

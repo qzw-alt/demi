@@ -1,1 +1,22 @@
-[]
+[
+  {
+    "session_id": "proc_09a5345b4481",
+    "command": "cd /tmp/demi-backup/ && rsync -a --delete \\\n  --exclude='.git/' \\\n  --exclude='cache/' \\\n  --exclude='audio_cache/' \\\n  --exclude='image_cache/' \\\n  --exclude='gateway.lock' \\\n  --exclude='gateway.pid' \\\n  --exclude='state.db*' \\\n  --exclude='sandboxes/' \\\n  --exclude='logs/' \\\n  --exclude='sessions/' \\\n  --exclude='memories/' \\\n  --exclude='auth.json' \\\n  --exclude='auth.lock' \\\n  --exclude='cron/output/' \\\n  --exclude='**/.curator_backups/' \\\n  --exclude='hermes-agent/node_modules/' \\\n  --exclude='hermes-agent/**/node_modules/' \\\n  --exclude='lsp/node_modules/' \\\n  --exclude='**/node_modules/' \\\n  --exclude='hermes-agent/__pycache__/' \\\n  --exclude='hermes-agent/**/__pycache__/' \\\n  --exclude='**/__pycache__/' \\\n  --exclude='**/*.pyc' \\\n  --exclude='.env' \\\n  --exclude='.hermes_history' \\\n  --exclude='gsc/client_secret.json' \\\n  --exclude='gsc/token.json' \\\n  --exclude='kanban.db.init.lock' \\\n  --exclude='kanban.db.dispatch.lock' \\\n  --exclude='models_dev_cache.json' \\\n  --exclude='bin/uv' \\\n  --exclude='bin/tirith' \\\n  /home/ubuntu/.hermes/ /tmp/demi-backup/",
+    "pid": 1189827,
+    "pid_scope": "host",
+    "host_start_time": 469434553,
+    "cwd": "/tmp/demi-backup",
+    "started_at": 1784901716.3047876,
+    "task_id": "default",
+    "session_key": "6db96261-a9d1-4323-ab17-079338658638",
+    "watcher_platform": "",
+    "watcher_chat_id": "",
+    "watcher_user_id": "",
+    "watcher_user_name": "",
+    "watcher_thread_id": "",
+    "watcher_message_id": "",
+    "watcher_interval": 0,
+    "notify_on_complete": false,
+    "watch_patterns": []
+  }
+]

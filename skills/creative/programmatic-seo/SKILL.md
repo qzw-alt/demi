@@ -1,7 +1,7 @@
 ---
 name: programmatic-seo
 description: "Programmatic SEO article writing for content sites. Workflow: research → draft → humanize → publish → update sitemap. Currently serving oriental-destiny.com and chinahospitalsguide.com."
-version: 1.5.4
+version: 1.5.5
 author: Hermes Agent
 platforms: [linux]
 metadata:
@@ -417,7 +417,7 @@ Each skill feeds into the next. Always run in sequence.
 - No good 热点 → no publish (宁缺毋滥)
 - After push, verify at https://chinahospitalsguide.com/news/ (wait 2-3 min)
 
-**Site-specific humanizer baselines** — see `references/site-specific-humanizer-baselines.md` for the verified em-dash density per site (oriental-destiny 10-18, chinahospitalsguide 17-23).
+See `references/site-specific-humanizer-baselines.md` for the verified em-dash density per site (oriental-destiny 10-18, chinahospitalsguide 17-23). For indoor-thread articles (oriental-destiny), see `references/indoor-thread-room-walk-2026-07.md`.
 
 | Site | Em dashes per ~1200 words (verified) | Voice notes |
 |------|---------------------------------------|-------------|
