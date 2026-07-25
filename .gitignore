@@ -1,50 +1,55 @@
+.git/
 
-audio_cache/
-auth.json
-auth.lock
-bin/tirith
-bin/uv
-cache/
 # Caches
-# Compiled bundles (text walkers can't safely redact binaries)
-cron/output/
-.env
+cache/
+audio_cache/
+image_cache/
+
+# Runtime state
 gateway.lock
 gateway.pid
-.git/
-gsc/client_secret.json
-gsc/token.json
-# Heavy dirs that often leak through short exclude lists
-hermes-agent/**/node_modules/
-hermes-agent/node_modules/
-hermes-agent/**/__pycache__/
-hermes-agent/__pycache__/
-hermes-agent/tests/
-hermes-agent/ui-tui/
-hermes-agent/venv/
-hermes-agent/website/
-.hermes_history
-image_cache/
-kanban.db.dispatch.lock
+state.db*
+auth.lock
+auth.json
 kanban.db.init.lock
-# Kanban runtime lock + model registry cache (regenerated on every gateway tick)
-logs/
-lsp/node_modules/
+kanban.db.dispatch.lock
+models_dev_cache.json
+verification_evidence.db-shm
+verification_evidence.db-wal
+
+# Sensitive content
+sessions/
 memories/
 memory/
 memory_backup_*/
 migration/
-models_dev_cache.json
-**/node_modules/
-# Node / Python deps
-**/*.pyc
-**/__pycache__/
-# Runtime state
-sandboxes/
+.env
+.hermes_history
+
 # Sandboxes, logs, OAuth tokens
-# Sensitive content
-sessions/
-# SQLite WAL / SHM transient runtime files for verification_evidence.db
-state.db*
-verification_evidence.db-shm
-verification_evidence.db-wal
+sandboxes/
+logs/
+cron/output/
+gsc/client_secret.json
+gsc/token.json
+**/.curator_backups/
+
+# Node / Python deps
+**/node_modules/
+hermes-agent/node_modules/
+hermes-agent/**/node_modules/
+lsp/node_modules/
+hermes-agent/__pycache__/
+hermes-agent/**/__pycache__/
+**/__pycache__/
+**/*.pyc
+
+# Heavy dirs that often leak through short exclude lists
+hermes-agent/venv/
+hermes-agent/website/
+hermes-agent/tests/
+hermes-agent/ui-tui/
+
+# Compiled bundles (text walkers cannot safely redact binaries)
+bin/uv
+bin/tirith

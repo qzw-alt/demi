@@ -248,6 +248,37 @@ Key metrics to watch (GSC):
   hospital descriptions (no remote pre-review for top 3A, except few
   international departments)
 
+## Audit & Quick Commands
+
+### Audit exposed secrets (Pitfall 5)
+
+Before any deployment / commit / merge, run:
+
+```bash
+bash scripts/audit-exposed-secrets.sh /home/ubuntu/oriental-destiny
+```
+
+Detects hardcoded `sk-*` keys, the `https://***` schema-corruption bug,
+public demo pages with leaked keys, and robots.txt coverage.
+
+### Other quick commands
+
+```bash
+# Sync latest from master before writing
+cd /home/ubuntu/chinahospitalsguide && git pull --rebase origin master
+
+# Build & validate
+npm install --silent --no-audit --no-fund
+npx @11ty/eleventy --quiet
+ls _site/blog/<new-slug>/index.html   # confirm pretty URL output
+
+# Verify schema is valid JSON
+python3 -c "import re,json; t=open('_site/blog/<slug>/index.html').read(); \
+  m=re.search(r'<script type=\"application/ld\\+json\">(.+?)</script>', t, re.DOTALL); \
+  parsed=json.loads(m.group(1)); \
+  print([o['@type'] for o in parsed])"
+```
+
 ## Quick Commands
 
 ```bash
