@@ -50,9 +50,36 @@ Validated against the user's recurring request pattern. When they ask for "AI行
 - 💸 **{number}** — ...
 ```
 
-## Worked example (validated 2026-07-16)
+## Worked examples
 
-Real briefing produced under this spec: `/home/ubuntu/chinahospitalsguide/news/2026-07-16-ai-briefing.md` (1,248 total chars including markers, ~480 Chinese prose chars).
+### 2026-07-26 (most recent — preferred reference)
+
+Latest briefing produced under this spec: `/tmp/briefing/2026-07-26-ai-briefing.md` (498 Chinese prose chars, within budget).
+
+**Tier 1 items (primary source confirmed):**
+- **Claude Opus 5** (1736pts, anthropic.com/news/claude-opus-5 — full body verified via curl, half-price vs Fable 5) ✓
+- **Gemini 3.6 Flash / 3.5 Flash-Lite / 3.5 Flash Cyber** (753pts, blog.google primary) ✓
+- **AMD → Anthropic up to $5B + 2GW MI450** (24pts on HN, but Reuters article + ir.amd.com press release confirm) ✓
+- **Microsoft ↔ Mistral multibillion-dollar deal** (45pts, France24 + Microsoft News source) ✓
+- **OpenAI models "accidentally attack" Hugging Face during eval** (1623pts, NYT RSS primary) ✓
+- **Anthropic $1.5B copyright settlement approved** (565pts, US court ruling — multiple HN items concur) ✓
+
+**Tier 2 items included with explicit hedge language:**
+- **Moonshot AI / Kimi → $50B HK IPO** (5pts only on HN, single source — included as `据传` / "据 HN/RTB 报道" rather than as a confirmed fact)
+
+**Items dropped:**
+- "Five US tech giants' hidden debts soar to $1.65T on opaque AI funding" (381pts) — investigative-journalism territory, would require full-article fetch to verify specifics
+- "US administration considering ban on Chinese open source AI models" (11pts) — included in 政策监管 section as "据报酝酿" (reported planning, not enacted policy)
+
+**NYT RSS filled gaps HN left:**
+- "Silicon Valley Splits Over Closing the Borders to Chinese A.I." (7/25) → fed 本周关注 trend
+- "Alphabet Quadruples Profit to $112 Billion, Fueled by A.I. Investments" (7/22) → absorbed into trend synthesis
+
+**Hedge-language pattern (Tier 2/3 with specific numbers)**: prefix the number with one of `据传` / `据报` / `据 HN/RTB 报道` / `据 France24/Microsoft News 报道` so the reader knows it's not Anthropic-blog-confirmed. This lets you include borderline items (5–10pts HN coverage of a major event) without misleading the audience about confidence level.
+
+### 2026-07-16 (earlier reference)
+
+Real briefing produced under that run: `/home/ubuntu/chinahospitalsguide/news/2026-07-16-ai-briefing.md` (1,248 total chars including markers, ~480 Chinese prose chars).
 
 Items survived the HN verification gate:
 - Apple 诉 OpenAI (1651pts) — primary URLs: NYT, WSJ, Reuters, AP, Bloomberg, CNN, CNBC ✓
@@ -74,7 +101,7 @@ Items considered and dropped (insufficient signal):
 - **Emoji overuse** — one emoji per bullet, not per clause
 - **Reusing last briefing's items** — for cron runs, always re-fetch; HN stories from 7 days ago are stale
 
-## Verification tier rubric (refined 2026-07-24)
+## Verification tier rubric (refined 2026-07-26)
 
 When picking which HN items to include, score each against this tier table — only Tier 1–2 go into the 6 main sections; Tier 3–4 go in the trailing 备选 section or get cut entirely.
 
@@ -82,7 +109,7 @@ When picking which HN items to include, score each against this tier table — o
 |------|--------|--------|
 | **1 — citable** | HN ≥100pts **OR** primary-source URL on company blog / 一级媒体 with body text verified via curl | Main section, full specifics OK |
 | **2 — citable with hedge** | HN 10–99pts **OR** primary-source URL fetched but body JS-gated; multiple secondary outlets corroborate | Main section, hedge numbers ("数十亿美元级") |
-| **3 — direction only** | HN 1–9pts, single source, no primary URL | 备选 section only; no specific numbers |
+| **3 — direction only** | HN 1–9pts, single source, no primary URL | 备选 section only; if included in main, **prefix any number with `据传` / `据报`** (validated 2026-07-26 with Moonshot $50B HK IPO at 5pts) |
 | **4 — drop** | Only SEO-listicle sites / `.blogspot.com` / `.icu` / gemini mirror sites carry it; no HN or primary URL | Drop entirely |
 
 When in doubt about a number (especially 融资金额, 估值, 估值倍数), default to Tier 2 hedge. **Never write a specific dollar/funding figure without at least Tier 2 evidence.**
@@ -102,7 +129,7 @@ for s in sections[1:]:
     print(f'{name}: {len(zh)} 字')
 ```
 
-**Budget per section** (refined 2026-07-24 — total ≤500字 when 备选 / 本周数据 treated as reference metadata):
+**Budget per section** (refined 2026-07-26 — total ≤500字 when 备选 / 本周数据 treated as reference metadata):
 - 大模型动态: 60–80字 (2–3 items × ~25字)
 - 行业融资: 50–70字
 - 产品发布: 40–60字
@@ -113,7 +140,7 @@ for s in sections[1:]:
 
 If 大模型动态 runs long, compress by dropping the third item, not by shortening sentences — readers skim, they don't parse hedges.
 
-## Source-fetch failure modes — extended list (refined 2026-07-24)
+## Source-fetch failure modes — extended list (refined 2026-07-26)
 
 Major-publication article pages that **return Cloudflare JS gates** as of mid-2026 (extending the parent skill's known list — these are all curl-useless, HN title is the only fallback):
 
@@ -130,8 +157,9 @@ Major-publication article pages that **return Cloudflare JS gates** as of mid-20
 | `finance.yahoo.com/.../article` | 23-byte empty response | Try MSN syndication (`msn.com/.../ar-XXXX`) instead |
 | `thenextweb.com/.../article` | Cloudflare block | HN title only |
 | `msn.com/.../article` | Often works via syndication | **Use this as Yahoo Finance substitute** |
+| `blog.google/technology/ai/{slug}` | **404 if slug is wrong** (Google rotates slugs frequently — verified 2026-07-26 with `google-gemini-updates-7-21-2026` 404'ing; correct slug for the 7/21 triple-release was `gemini-3-6-flash-3-5-flash-lite-3-5-flash-cyber`). **Always HN-search for the actual title first to confirm slug** before fetching blog.google. | Search HN for the release's exact title, then construct slug from the matching pattern |
 
-**Rule of thumb**: if the HN `url` field points to any of the above, don't waste curl turns — accept the HN title and look for an Al Jazeera / Reuters / France24 / TechCrunch **non-paywalled** URL of the same story before quoting specifics. TechCrunch article bodies DO return via curl (verified 2026-07-24, `https://techcrunch.com/{YYYY}/{MM}/{DD}/{slug}/`).
+**Rule of thumb**: if the HN `url` field points to any of the above, don't waste curl turns — accept the HN title and look for an Al Jazeera / Reuters / France24 / TechCrunch **non-paywalled** URL of the same story before quoting specifics. TechCrunch article bodies DO return via curl (verified 2026-07-26, `https://techcrunch.com/{YYYY}/{MM}/{DD}/{slug}/`).
 
 ## 备选条目 section pattern (added 2026-07-24)
 
@@ -142,3 +170,21 @@ When a story is interesting but fails the verification tier (Tier 3 / 4), includ
 ```
 
 This keeps weak items visible without diluting the main 6 sections, and gives the next run a known starting list to re-verify.
+
+## Single-keyword query pattern (validated 2026-07-26)
+
+The default query list that produced a clean briefing in one batched `terminal()` call (~3s, 12 queries, all returning 15–25 hits each):
+
+```python
+queries = [
+    "Anthropic", "OpenAI", "Google+Gemini", "DeepSeek", "Mistral",
+    "Llama", "GPT-5", "Claude", "AI+funding", "AI+raise",
+    "AI+regulation", "China+AI",
+]
+TS = int((datetime.datetime.utcnow() - datetime.timedelta(days=7)).timestamp())
+for q in queries:
+    url = f"https://hn.algolia.com/api/v1/search?query={q}&tags=story&numericFilters=created_at_i%3E{TS}&hitsPerPage=20"
+    # curl + dedupe by objectID + sort by points
+```
+
+**Never use OR operators in the query parameter** — see the parent SKILL.md "Pitfall — `query=A+OR+B+OR+C`" section. The single-keyword pattern is slower (~3s vs <1s) but always returns 15–25 hits per query and gives perfect category coverage for the 6 briefing sections. Add `Series+raise`, `valuation+billion` for funding-specific queries; add `<model>+<version>` (e.g. `Gemini+3.6+Flash`) for product-name-specific queries when a known release lands.

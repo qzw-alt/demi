@@ -1,0 +1,12 @@
+{
+  "name": "kimicode",
+  "base_url": "https://api.kimi.com/coding/v1",
+  "api_mode": "chat_completions",
+  "context_length": "",
+  "models": [
+    {
+      "id": "kimi-for-coding",
+      "name": "Kimi K2.7 Code"
+    }
+  ]
+}

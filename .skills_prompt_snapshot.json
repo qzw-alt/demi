@@ -1,6 +1,50 @@
 {
   "version": 1,
   "manifest": {
+    "dogfood/SKILL.md": [
+      1778925537000000000,
+      6270
+    ],
+    "mcp/DESCRIPTION.md": [
+      1778925537000000000,
+      216
+    ],
+    "mcp/native-mcp/SKILL.md": [
+      1778925537000000000,
+      12365
+    ],
+    "medical-tourism/weiye-collaboration-style/SKILL.md": [
+      1785061346116517896,
+      10312
+    ],
+    "medical-tourism/medical-tourism-client-intake/SKILL.md": [
+      1785061321537074719,
+      69223
+    ],
+    "medical-tourism/hospital-customer-report/SKILL.md": [
+      1782783058363782385,
+      33675
+    ],
+    "find-skill-skillhub/SKILL.md": [
+      1785029028970508748,
+      3780
+    ],
+    "note-taking/DESCRIPTION.md": [
+      1778925537000000000,
+      146
+    ],
+    "note-taking/obsidian/SKILL.md": [
+      1778925537000000000,
+      2919
+    ],
+    "diagramming/DESCRIPTION.md": [
+      1778925537000000000,
+      159
+    ],
+    "apple/DESCRIPTION.md": [
+      1778925537000000000,
+      137
+    ],
     "apple/apple-notes/SKILL.md": [
       1778925537000000000,
       2169
@@ -13,201 +57,57 @@
       1778925537000000000,
       3709
     ],
-    "apple/imessage/SKILL.md": [
-      1778925537000000000,
-      2442
-    ],
     "apple/macos-computer-use/SKILL.md": [
       1778925537000000000,
       7309
     ],
-    "autonomous-ai-agents/claude-code/SKILL.md": [
+    "apple/imessage/SKILL.md": [
       1778925537000000000,
-      34288
+      2442
     ],
-    "autonomous-ai-agents/codex/SKILL.md": [
+    "red-teaming/godmode/SKILL.md": [
       1778925537000000000,
-      4557
+      20059
     ],
-    "autonomous-ai-agents/hermes-agent/SKILL.md": [
-      1780546490943002584,
-      46812
-    ],
-    "autonomous-ai-agents/opencode/SKILL.md": [
+    "inference-sh/DESCRIPTION.md": [
       1778925537000000000,
-      7259
+      706
     ],
-    "chinahospitalsguide-content/SKILL.md": [
-      1784909958095290354,
-      13760
-    ],
-    "creative/architecture-diagram/SKILL.md": [
+    "gaming/DESCRIPTION.md": [
       1778925537000000000,
-      5830
-    ],
-    "creative/ascii-art/SKILL.md": [
-      1778925537000000000,
-      10556
-    ],
-    "creative/ascii-video/SKILL.md": [
-      1778925537000000000,
-      14864
-    ],
-    "creative/baoyu-comic/SKILL.md": [
-      1778925537000000000,
-      14621
-    ],
-    "creative/baoyu-infographic/SKILL.md": [
-      1778925537000000000,
-      10434
-    ],
-    "creative/claude-design/SKILL.md": [
-      1778925537000000000,
-      19859
-    ],
-    "creative/comfyui/SKILL.md": [
-      1778925537000000000,
-      24287
-    ],
-    "creative/creative-ideation/SKILL.md": [
-      1778925537000000000,
-      6318
-    ],
-    "creative/design-md/SKILL.md": [
-      1778925537000000000,
-      7023
-    ],
-    "creative/excalidraw/SKILL.md": [
-      1778925537000000000,
-      7300
-    ],
-    "creative/humanizer/SKILL.md": [
-      1780359228392367794,
-      30482
-    ],
-    "creative/manim-video/SKILL.md": [
-      1778925537000000000,
-      12023
-    ],
-    "creative/p5js/SKILL.md": [
-      1778925537000000000,
-      27494
-    ],
-    "creative/pixel-art/SKILL.md": [
-      1778925537000000000,
-      7581
-    ],
-    "creative/popular-web-designs/SKILL.md": [
-      1778925537000000000,
-      9722
-    ],
-    "creative/pretext/SKILL.md": [
-      1778925537000000000,
-      14168
-    ],
-    "creative/programmatic-seo/SKILL.md": [
-      1784851600503446079,
-      100812
-    ],
-    "creative/seo-article-publish-cron/SKILL.md": [
-      1783994980952670176,
-      33764
-    ],
-    "creative/sketch/SKILL.md": [
-      1778925537000000000,
-      9304
-    ],
-    "creative/songwriting-and-ai-music/SKILL.md": [
-      1778925537000000000,
-      10206
-    ],
-    "creative/touchdesigner-mcp/SKILL.md": [
-      1778925537000000000,
-      15429
-    ],
-    "cron-content-pipeline-cap-safe/SKILL.md": [
-      1783733038568836667,
-      11995
-    ],
-    "data-science/jupyter-live-kernel/SKILL.md": [
-      1778925537000000000,
-      5285
-    ],
-    "devops/hermes-backup/SKILL.md": [
-      1784902024167357992,
-      79215
-    ],
-    "devops/hermes-cron-troubleshooting/SKILL.md": [
-      1783733039600855239,
-      13968
-    ],
-    "devops/hermes-upgrade/SKILL.md": [
-      1783747767673347917,
-      10470
-    ],
-    "devops/kanban-orchestrator/SKILL.md": [
-      1778925537000000000,
-      14105
-    ],
-    "devops/kanban-worker/SKILL.md": [
-      1778925537000000000,
-      10030
-    ],
-    "devops/memory-hygiene/SKILL.md": [
-      1783086654188876512,
-      11959
-    ],
-    "devops/webhook-subscriptions/SKILL.md": [
-      1778925537000000000,
-      6836
-    ],
-    "dogfood/SKILL.md": [
-      1778925537000000000,
-      6270
-    ],
-    "email/himalaya/SKILL.md": [
-      1778925537000000000,
-      6902
-    ],
-    "gaming/minecraft-modpack-server/SKILL.md": [
-      1778925537000000000,
-      6559
+      129
     ],
     "gaming/pokemon-player/SKILL.md": [
       1778925537000000000,
       8709
     ],
-    "github/codebase-inspection/SKILL.md": [
+    "gaming/minecraft-modpack-server/SKILL.md": [
       1778925537000000000,
-      3628
+      6559
     ],
-    "github/github-auth/SKILL.md": [
-      1781705265732779174,
-      17311
+    "pending-2026-06-27-cms-silevimig-shipped/SKILL.md": [
+      1782522731800947367,
+      4360
     ],
-    "github/github-code-review/SKILL.md": [
+    "data-science/DESCRIPTION.md": [
       1778925537000000000,
-      13565
+      137
     ],
-    "github/github-issues/SKILL.md": [
+    "data-science/jupyter-live-kernel/SKILL.md": [
       1778925537000000000,
-      9265
+      5285
     ],
-    "github/github-pr-workflow/SKILL.md": [
+    "media/DESCRIPTION.md": [
       1778925537000000000,
-      9985
+      139
     ],
-    "github/github-repo-management/SKILL.md": [
-      1781532127911144225,
-      22421
-    ],
-    "mcp/native-mcp/SKILL.md": [
+    "media/youtube-content/SKILL.md": [
       1778925537000000000,
-      12365
+      3218
     ],
-    "media/gif-search/SKILL.md": [
+    "media/spotify/SKILL.md": [
       1778925537000000000,
-      2704
+      6319
     ],
     "media/heartmula/SKILL.md": [
       1778925537000000000,
@@ -217,69 +117,53 @@
       1778925537000000000,
       2336
     ],
-    "media/spotify/SKILL.md": [
+    "media/gif-search/SKILL.md": [
       1778925537000000000,
-      6319
+      2704
     ],
-    "media/youtube-content/SKILL.md": [
+    "gifs/DESCRIPTION.md": [
       1778925537000000000,
-      3218
+      109
     ],
-    "medical-tourism/hospital-customer-report/SKILL.md": [
-      1782783058363782385,
-      33675
-    ],
-    "medical-tourism/medical-tourism-client-intake/SKILL.md": [
-      1784917178751755572,
-      64926
-    ],
-    "mlops/evaluation/lm-evaluation-harness/SKILL.md": [
+    "domain/DESCRIPTION.md": [
       1778925537000000000,
-      12020
+      1142
     ],
-    "mlops/evaluation/weights-and-biases/SKILL.md": [
+    "autonomous-ai-agents/DESCRIPTION.md": [
       1778925537000000000,
-      12395
+      211
     ],
-    "mlops/huggingface-hub/SKILL.md": [
+    "autonomous-ai-agents/opencode/SKILL.md": [
       1778925537000000000,
-      3674
+      7259
     ],
-    "mlops/inference/llama-cpp/SKILL.md": [
+    "autonomous-ai-agents/codex/SKILL.md": [
       1778925537000000000,
-      8880
+      4557
     ],
-    "mlops/inference/obliteratus/SKILL.md": [
+    "autonomous-ai-agents/hermes-agent/SKILL.md": [
+      1780546490943002584,
+      46812
+    ],
+    "autonomous-ai-agents/claude-code/SKILL.md": [
       1778925537000000000,
-      15464
+      34288
     ],
-    "mlops/inference/vllm/SKILL.md": [
+    "productivity/DESCRIPTION.md": [
       1778925537000000000,
-      9071
+      114
     ],
-    "mlops/models/audiocraft/SKILL.md": [
+    "productivity/teams-meeting-pipeline/SKILL.md": [
       1778925537000000000,
-      16189
+      6867
     ],
-    "mlops/models/segment-anything/SKILL.md": [
+    "productivity/notion/SKILL.md": [
       1778925537000000000,
-      13372
+      14597
     ],
-    "mlops/research/dspy/SKILL.md": [
+    "productivity/nano-pdf/SKILL.md": [
       1778925537000000000,
-      15220
-    ],
-    "note-taking/obsidian/SKILL.md": [
-      1778925537000000000,
-      2919
-    ],
-    "patient-cases-public-outreach/SKILL.md": [
-      1784644809295541003,
-      18339
-    ],
-    "pending-2026-06-27-cms-silevimig-shipped/SKILL.md": [
-      1782522731800947367,
-      4360
+      1414
     ],
     "productivity/airtable/SKILL.md": [
       1778925537000000000,
@@ -289,205 +173,45 @@
       1778925537000000000,
       13411
     ],
-    "productivity/linear/SKILL.md": [
-      1778925537000000000,
-      14782
-    ],
-    "productivity/maps/SKILL.md": [
-      1778925537000000000,
-      6726
-    ],
-    "productivity/nano-pdf/SKILL.md": [
-      1778925537000000000,
-      1414
-    ],
-    "productivity/notion/SKILL.md": [
-      1778925537000000000,
-      14597
-    ],
     "productivity/ocr-and-documents/SKILL.md": [
       1778925537000000000,
       5280
+    ],
+    "productivity/ocr-and-documents/DESCRIPTION.md": [
+      1778925537000000000,
+      147
     ],
     "productivity/powerpoint/SKILL.md": [
       1778925537000000000,
       9298
     ],
-    "productivity/teams-meeting-pipeline/SKILL.md": [
+    "productivity/maps/SKILL.md": [
       1778925537000000000,
-      6867
+      6726
     ],
-    "red-teaming/godmode/SKILL.md": [
+    "productivity/linear/SKILL.md": [
       1778925537000000000,
-      20059
+      14782
     ],
-    "research/arxiv/SKILL.md": [
-      1778925537000000000,
-      10085
-    ],
-    "research/blogwatcher/SKILL.md": [
-      1778925537000000000,
-      5111
-    ],
-    "research/content-research-writer-cn/SKILL.md": [
-      1784682516922796566,
-      100267
-    ],
-    "research/llm-wiki/SKILL.md": [
-      1778925537000000000,
-      20113
-    ],
-    "research/polymarket/SKILL.md": [
-      1778925537000000000,
-      2985
-    ],
-    "research/research-paper-writing/SKILL.md": [
-      1778925537000000000,
-      103375
-    ],
-    "research/terminal-web-research/SKILL.md": [
-      1784250263332454189,
-      20743
-    ],
-    "smart-home/openhue/SKILL.md": [
-      1778925537000000000,
-      2713
-    ],
-    "social-media/xurl/SKILL.md": [
-      1778925537000000000,
-      13993
-    ],
-    "software-development/debugging-hermes-tui-commands/SKILL.md": [
-      1778925537000000000,
-      7910
-    ],
-    "software-development/hermes-agent-skill-authoring/SKILL.md": [
-      1778925537000000000,
-      7618
-    ],
-    "software-development/linux-desktop-setup/SKILL.md": [
-      1782028037258576204,
-      5540
-    ],
-    "software-development/node-inspect-debugger/SKILL.md": [
-      1778925537000000000,
-      10929
-    ],
-    "software-development/plan/SKILL.md": [
-      1778925537000000000,
-      2016
-    ],
-    "software-development/python-debugpy/SKILL.md": [
-      1778925537000000000,
-      13172
-    ],
-    "software-development/requesting-code-review/SKILL.md": [
-      1778925537000000000,
-      8483
-    ],
-    "software-development/spike/SKILL.md": [
-      1778925537000000000,
-      8753
-    ],
-    "software-development/subagent-driven-development/SKILL.md": [
-      1778925537000000000,
-      10742
-    ],
-    "software-development/systematic-debugging/SKILL.md": [
-      1778925537000000000,
-      10480
-    ],
-    "software-development/test-driven-development/SKILL.md": [
-      1778925537000000000,
-      9573
-    ],
-    "software-development/writing-plans/SKILL.md": [
-      1778925537000000000,
-      7229
-    ],
-    "web-development/hospital-directory/SKILL.md": [
-      1782621787749633218,
-      9491
-    ],
-    "web-development/medical-tourism-site-ops/SKILL.md": [
-      1784780179918168002,
-      91833
-    ],
-    "yuanbao/SKILL.md": [
-      1778925537000000000,
-      3795
-    ],
-    "apple/DESCRIPTION.md": [
-      1778925537000000000,
-      137
-    ],
-    "autonomous-ai-agents/DESCRIPTION.md": [
-      1778925537000000000,
-      211
-    ],
-    "creative/DESCRIPTION.md": [
-      1778925537000000000,
-      116
-    ],
-    "data-science/DESCRIPTION.md": [
-      1778925537000000000,
-      137
-    ],
-    "diagramming/DESCRIPTION.md": [
-      1778925537000000000,
-      159
-    ],
-    "domain/DESCRIPTION.md": [
-      1778925537000000000,
-      1142
-    ],
-    "email/DESCRIPTION.md": [
-      1778925537000000000,
-      101
-    ],
-    "gaming/DESCRIPTION.md": [
-      1778925537000000000,
-      129
-    ],
-    "gifs/DESCRIPTION.md": [
-      1778925537000000000,
-      109
-    ],
-    "github/DESCRIPTION.md": [
-      1778925537000000000,
-      167
-    ],
-    "inference-sh/DESCRIPTION.md": [
-      1778925537000000000,
-      706
-    ],
-    "mcp/DESCRIPTION.md": [
-      1778925537000000000,
-      216
-    ],
-    "media/DESCRIPTION.md": [
-      1778925537000000000,
-      139
+    "cron-content-pipeline-cap-safe/SKILL.md": [
+      1783733038568836667,
+      11995
     ],
     "mlops/DESCRIPTION.md": [
       1778925537000000000,
       162
     ],
-    "mlops/evaluation/DESCRIPTION.md": [
-      1778925537000000000,
-      126
-    ],
-    "mlops/inference/DESCRIPTION.md": [
-      1778925537000000000,
-      161
-    ],
     "mlops/models/DESCRIPTION.md": [
       1778925537000000000,
       253
     ],
-    "mlops/research/DESCRIPTION.md": [
+    "mlops/models/audiocraft/SKILL.md": [
       1778925537000000000,
-      113
+      16189
+    ],
+    "mlops/models/segment-anything/SKILL.md": [
+      1778925537000000000,
+      13372
     ],
     "mlops/training/DESCRIPTION.md": [
       1778925537000000000,
@@ -497,29 +221,313 @@
       1778925537000000000,
       125
     ],
-    "note-taking/DESCRIPTION.md": [
+    "mlops/evaluation/DESCRIPTION.md": [
       1778925537000000000,
-      146
+      126
     ],
-    "productivity/DESCRIPTION.md": [
+    "mlops/evaluation/lm-evaluation-harness/SKILL.md": [
       1778925537000000000,
-      114
+      12020
     ],
-    "productivity/ocr-and-documents/DESCRIPTION.md": [
+    "mlops/evaluation/weights-and-biases/SKILL.md": [
       1778925537000000000,
-      147
+      12395
+    ],
+    "mlops/research/DESCRIPTION.md": [
+      1778925537000000000,
+      113
+    ],
+    "mlops/research/dspy/SKILL.md": [
+      1778925537000000000,
+      15220
+    ],
+    "mlops/huggingface-hub/SKILL.md": [
+      1778925537000000000,
+      3674
+    ],
+    "mlops/inference/DESCRIPTION.md": [
+      1778925537000000000,
+      161
+    ],
+    "mlops/inference/vllm/SKILL.md": [
+      1778925537000000000,
+      9071
+    ],
+    "mlops/inference/llama-cpp/SKILL.md": [
+      1778925537000000000,
+      8880
+    ],
+    "mlops/inference/obliteratus/SKILL.md": [
+      1778925537000000000,
+      15464
+    ],
+    "devops/hermes-backup/SKILL.md": [
+      1784988605434266276,
+      81743
+    ],
+    "devops/kanban-worker/SKILL.md": [
+      1778925537000000000,
+      10030
+    ],
+    "devops/kanban-orchestrator/SKILL.md": [
+      1778925537000000000,
+      14105
+    ],
+    "devops/webhook-subscriptions/SKILL.md": [
+      1778925537000000000,
+      6836
+    ],
+    "devops/hermes-upgrade/SKILL.md": [
+      1783747767673347917,
+      10470
+    ],
+    "devops/hermes-cron-troubleshooting/SKILL.md": [
+      1783733039600855239,
+      13968
+    ],
+    "devops/memory-hygiene/SKILL.md": [
+      1783086654188876512,
+      11959
+    ],
+    "web-development/medical-tourism-site-ops/SKILL.md": [
+      1784999140302532709,
+      101706
+    ],
+    "web-development/hospital-directory/SKILL.md": [
+      1782621787749633218,
+      9491
+    ],
+    "creative/DESCRIPTION.md": [
+      1778925537000000000,
+      116
+    ],
+    "creative/songwriting-and-ai-music/SKILL.md": [
+      1778925537000000000,
+      10206
+    ],
+    "creative/touchdesigner-mcp/SKILL.md": [
+      1778925537000000000,
+      15429
+    ],
+    "creative/ascii-art/SKILL.md": [
+      1778925537000000000,
+      10556
+    ],
+    "creative/seo-article-publish-cron/SKILL.md": [
+      1783994980952670176,
+      33764
+    ],
+    "creative/popular-web-designs/SKILL.md": [
+      1778925537000000000,
+      9722
+    ],
+    "creative/pretext/SKILL.md": [
+      1778925537000000000,
+      14168
+    ],
+    "creative/excalidraw/SKILL.md": [
+      1778925537000000000,
+      7300
+    ],
+    "creative/baoyu-comic/SKILL.md": [
+      1778925537000000000,
+      14621
+    ],
+    "creative/sketch/SKILL.md": [
+      1778925537000000000,
+      9304
+    ],
+    "creative/manim-video/SKILL.md": [
+      1778925537000000000,
+      12023
+    ],
+    "creative/creative-ideation/SKILL.md": [
+      1778925537000000000,
+      6318
+    ],
+    "creative/p5js/SKILL.md": [
+      1778925537000000000,
+      27494
+    ],
+    "creative/ascii-video/SKILL.md": [
+      1778925537000000000,
+      14864
+    ],
+    "creative/humanizer/SKILL.md": [
+      1780359228392367794,
+      30482
+    ],
+    "creative/pixel-art/SKILL.md": [
+      1778925537000000000,
+      7581
+    ],
+    "creative/programmatic-seo/SKILL.md": [
+      1784851600503446079,
+      100812
+    ],
+    "creative/architecture-diagram/SKILL.md": [
+      1778925537000000000,
+      5830
+    ],
+    "creative/comfyui/SKILL.md": [
+      1778925537000000000,
+      24287
+    ],
+    "creative/claude-design/SKILL.md": [
+      1778925537000000000,
+      19859
+    ],
+    "creative/baoyu-infographic/SKILL.md": [
+      1778925537000000000,
+      10434
+    ],
+    "creative/design-md/SKILL.md": [
+      1778925537000000000,
+      7023
+    ],
+    "yuanbao/SKILL.md": [
+      1778925537000000000,
+      3795
     ],
     "research/DESCRIPTION.md": [
       1778925537000000000,
       179
     ],
+    "research/terminal-web-research/SKILL.md": [
+      1785027892628038375,
+      22135
+    ],
+    "research/arxiv/SKILL.md": [
+      1778925537000000000,
+      10085
+    ],
+    "research/blogwatcher/SKILL.md": [
+      1778925537000000000,
+      5111
+    ],
+    "research/research-paper-writing/SKILL.md": [
+      1778925537000000000,
+      103375
+    ],
+    "research/content-research-writer-cn/SKILL.md": [
+      1784682516922796566,
+      100267
+    ],
+    "research/polymarket/SKILL.md": [
+      1778925537000000000,
+      2985
+    ],
+    "research/llm-wiki/SKILL.md": [
+      1778925537000000000,
+      20113
+    ],
+    "chinahospitalsguide-content/SKILL.md": [
+      1784996865884588325,
+      19030
+    ],
     "smart-home/DESCRIPTION.md": [
       1778925537000000000,
       123
     ],
+    "smart-home/openhue/SKILL.md": [
+      1778925537000000000,
+      2713
+    ],
     "social-media/DESCRIPTION.md": [
       1778925537000000000,
       151
+    ],
+    "social-media/xurl/SKILL.md": [
+      1778925537000000000,
+      13993
+    ],
+    "patient-cases-public-outreach/SKILL.md": [
+      1784995913449440607,
+      20395
+    ],
+    "software-development/plan/SKILL.md": [
+      1778925537000000000,
+      2016
+    ],
+    "software-development/linux-desktop-setup/SKILL.md": [
+      1782028037258576204,
+      5540
+    ],
+    "software-development/debugging-hermes-tui-commands/SKILL.md": [
+      1778925537000000000,
+      7910
+    ],
+    "software-development/test-driven-development/SKILL.md": [
+      1778925537000000000,
+      9573
+    ],
+    "software-development/python-debugpy/SKILL.md": [
+      1778925537000000000,
+      13172
+    ],
+    "software-development/node-inspect-debugger/SKILL.md": [
+      1778925537000000000,
+      10929
+    ],
+    "software-development/hermes-agent-skill-authoring/SKILL.md": [
+      1778925537000000000,
+      7618
+    ],
+    "software-development/requesting-code-review/SKILL.md": [
+      1778925537000000000,
+      8483
+    ],
+    "software-development/writing-plans/SKILL.md": [
+      1778925537000000000,
+      7229
+    ],
+    "software-development/systematic-debugging/SKILL.md": [
+      1778925537000000000,
+      10480
+    ],
+    "software-development/spike/SKILL.md": [
+      1778925537000000000,
+      8753
+    ],
+    "software-development/subagent-driven-development/SKILL.md": [
+      1778925537000000000,
+      10742
+    ],
+    "email/DESCRIPTION.md": [
+      1778925537000000000,
+      101
+    ],
+    "email/himalaya/SKILL.md": [
+      1778925537000000000,
+      6902
+    ],
+    "github/DESCRIPTION.md": [
+      1778925537000000000,
+      167
+    ],
+    "github/github-pr-workflow/SKILL.md": [
+      1778925537000000000,
+      9985
+    ],
+    "github/github-code-review/SKILL.md": [
+      1778925537000000000,
+      13565
+    ],
+    "github/github-repo-management/SKILL.md": [
+      1781532127911144225,
+      22421
+    ],
+    "github/github-issues/SKILL.md": [
+      1778925537000000000,
+      9265
+    ],
+    "github/codebase-inspection/SKILL.md": [
+      1778925537000000000,
+      3628
+    ],
+    "github/github-auth/SKILL.md": [
+      1781705265732779174,
+      17311
     ]
   },
   "skills": [
@@ -1206,6 +1214,19 @@
       }
     },
     {
+      "skill_name": "find-skill-skillhub",
+      "category": "find-skill-skillhub",
+      "frontmatter_name": "find-skill-skillhub",
+      "description": "在 SkillHub 平台查找/搜索 Skill 技能。基于 skills 列表接口，支持关键词分词搜索、一级标签...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
       "skill_name": "minecraft-modpack-server",
       "category": "gaming",
       "frontmatter_name": "minecraft-modpack-server",
@@ -1460,6 +1481,19 @@
       "category": "medical-tourism",
       "frontmatter_name": "medical-tourism-client-intake",
       "description": "处理国际患者来华就医咨询的全流程：接收邮件 → 分析病情 → 确定服务方案 → 与医院初步沟通 → 回复客户。适用...",
+      "platforms": [],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "weiye-collaboration-style",
+      "category": "medical-tourism",
+      "frontmatter_name": "weiye-collaboration-style",
+      "description": "How Hermes / 德米 collaborates with 伟烨 (Weiye) on chinahosp...",
       "platforms": [],
       "conditions": {
         "fallback_for_toolsets": [],

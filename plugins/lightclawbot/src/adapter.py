@@ -502,106 +502,93 @@ class LightClawAdapter(
         bot_client_id = ""
         api_key_map: Dict[str, str] = {}
 
+        # 对单个 key 发请求，返回解析后的 (uin, bid)，失败抛异常。
+        async def _resolve_one_key(
+            session: aiohttp.ClientSession, key: str,
+        ) -> tuple[str, str]:
+            headers = {
+                "authorization": f"Bearer {key}",
+                "x-product":     "channel",
+            }
+            async with session.post(
+                url, headers=headers,
+                timeout=aiohttp.ClientTimeout(total=15),
+            ) as resp:
+                if resp.status != 200:
+                    body_snippet = await _read_body_snippet(resp)
+                    raise RuntimeError(
+                        f"HTTP {resp.status} "
+                        f"content_type={resp.headers.get('Content-Type', '?')} "
+                        f"body={body_snippet}"
+                    )
+                raw_text = await resp.text(errors="replace")
+                try:
+                    data = json.loads(raw_text)
+                except (json.JSONDecodeError, ValueError) as parse_exc:
+                    raise RuntimeError(
+                        f"non-JSON response: {parse_exc} body={_truncate_body(raw_text)}"
+                    )
+                if not isinstance(data, dict):
+                    raise RuntimeError(
+                        f"unexpected payload type: {type(data).__name__} "
+                        f"body={_truncate_body(raw_text)}"
+                    )
+                if data.get("code") != 0:
+                    raise RuntimeError(
+                        f"code={data.get('code')} message={data.get('message')}"
+                    )
+                payload = data.get("data") or {}
+                extra_str = (payload.get("client") or {}).get("extra", "")
+                try:
+                    parsed = json.loads(extra_str) if extra_str else {}
+                    bid = parsed.get("botId", "")
+                except (json.JSONDecodeError, TypeError):
+                    bid = ""
+                uin = str(payload.get("id") or "").strip()
+                return uin, bid
+
         async with aiohttp.ClientSession() as session:
             for key in self._api_keys:
-                try:
-                    headers = {
-                        "authorization": f"Bearer {key}",
-                        "x-product":     "channel",
-                    }
-                    async with session.post(
-                        url, headers=headers,
-                        timeout=aiohttp.ClientTimeout(total=15),
-                    ) as resp:
-                        if resp.status != 200:
-                            # HTTP 层异常：连响应体一起打印（同样截断），
-                            # 便于发现"401 未授权 / 502 网关错误"等场景下
-                            # 上游返回的 error message。
-                            body_snippet = await _read_body_snippet(resp)
+                last_error = None
+                for retry in range(3):
+                    try:
+                        uin, bid = await _resolve_one_key(session, key)
+                    except Exception as exc:
+                        last_error = exc
+                        # 仅对 transient 错误重试（5xx、连接错误、超时）
+                        is_retryable = (
+                            isinstance(exc, (aiohttp.ClientError, asyncio.TimeoutError, OSError))
+                            or "HTTP 5" in str(exc)
+                        )
+                        if is_retryable and retry < 2:
                             logger.warning(
-                                "[lightclaw] %s HTTP %d for key ***%s "
-                                "content_type=%s body=%s",
-                                API_PATH_TICKET, resp.status, key[-4:],
-                                resp.headers.get("Content-Type", "?"),
-                                body_snippet,
+                                "[lightclaw] %s transient error for key ***%s "
+                                "(retry %d/2): %s",
+                                API_PATH_TICKET, key[-4:], retry, exc,
                             )
+                            await asyncio.sleep(2.0 * (retry + 1))  # 2s → 4s → 6s
                             continue
-                        # 手动读文本 + JSON 解析：避免 resp.json() 在
-                        # 上游返回 text/html 时直接抛 ContentTypeError
-                        # 却不带响应体信息。
-                        raw_text = await resp.text(errors="replace")
-                        try:
-                            data = json.loads(raw_text)
-                        except (json.JSONDecodeError, ValueError) as parse_exc:
-                            content_type = resp.headers.get(
-                                "Content-Type", "?",
-                            )
-                            logger.warning(
-                                "[lightclaw] %s non-JSON response for key "
-                                "***%s: content_type=%s parse_error=%s "
-                                "body=%s",
-                                API_PATH_TICKET, key[-4:], content_type,
-                                parse_exc, _truncate_body(raw_text),
-                            )
-                            continue
-
-                        if not isinstance(data, dict):
-                            logger.warning(
-                                "[lightclaw] %s unexpected payload type for "
-                                "key ***%s: type=%s body=%s",
-                                API_PATH_TICKET, key[-4:],
-                                type(data).__name__,
-                                _truncate_body(raw_text),
-                            )
-                            continue
-
-                        if data.get("code") != 0:
-                            logger.warning(
-                                "[lightclaw] %s error for key ***%s: "
-                                "code=%s message=%s",
-                                API_PATH_TICKET, key[-4:],
-                                data.get("code"), data.get("message"),
-                            )
-                            continue
-
-                        payload = data.get("data") or {}
-
-                        # Extract botClientId from data.client.extra (JSON-encoded)
-                        extra_str = (payload.get("client") or {}).get("extra", "")
-                        try:
-                            parsed = json.loads(extra_str) if extra_str else {}
-                            bid    = parsed.get("botId", "")
-                        except (json.JSONDecodeError, TypeError):
-                            bid = ""
-
-                        if bid and not bot_client_id:
-                            bot_client_id = bid
-
-                        # Extract the uin — this is what inbound messages use
-                        # as their `from` field and what we use to route the
-                        # per-tenant apiKey.
-                        uin = str(payload.get("id") or "").strip()
-                        if uin:
-                            api_key_map[uin] = key
-                            logger.info(
-                                "[lightclaw] Key ***%s mapped to uin=%s (botId=%s)",
-                                key[-4:], uin, bid or "?",
-                            )
-                        else:
-                            # No uin exposed → fall back to key→key so
-                            # resolve_effective_api_key() always finds
-                            # *something* for single-tenant deployments.
-                            api_key_map[key] = key
-                            logger.info(
-                                "[lightclaw] Key ***%s mapped (botId=%s, no uin returned)",
-                                key[-4:], bid or "?",
-                            )
-                except Exception as exc:
-                    logger.warning(
-                        "[lightclaw] Identity resolve failed for key ***%s: "
-                        "%s: %s",
-                        key[-4:], type(exc).__name__, exc,
-                    )
+                        logger.warning(
+                            "[lightclaw] %s failed for key ***%s: %s",
+                            API_PATH_TICKET, key[-4:], exc,
+                        )
+                        break  # non-retryable or exhausted → next key
+                    # success
+                    if bid and not bot_client_id:
+                        bot_client_id = bid
+                    if uin:
+                        api_key_map[uin] = key
+                        logger.info(
+                            "[lightclaw] Key ***%s mapped to uin=%s (botId=%s)",
+                            key[-4:], uin, bid or "?",
+                        )
+                    else:
+                        api_key_map[key] = key
+                        logger.info(
+                            "[lightclaw] Key ***%s mapped (botId=%s, no uin returned)",
+                            key[-4:], bid or "?",
+                        )
+                    break  # success → next key
 
         if not bot_client_id:
             raise RuntimeError(

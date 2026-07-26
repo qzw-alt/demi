@@ -926,6 +926,7 @@ git show HEAD:blog/<file>.html > blog/<file>.html
 - `references/multi-language-audit-checklist.md` — **NEW 2026-07-11** — 7 executable checks for auditing the 4-language (EN/RU/AR/ID) site. Pre-flight, all 7 audit commands with expected outputs, and the report format. Use every time the user says "再帮我审查一下".
 - `references/session-2026-07-11-lessons.md` — **NEW 2026-07-11** — transcript + reasoning from a 3-round iterative audit session where the user drove an external Claude Code agent between rounds. Documents 4 new pitfall classes (agent self-report verification, "改好了" 3-state trap, schema URL corruption by sed, source-vs-build coexistence) plus the fix script for the `***` schema corruption. Parent SKILL.md carries the concise pitfall sections; this file is the worked transcript + working fix script.
 - `references/iterative-audit-and-report-upload.md` — **NEW 2026-07-22** — workflow for the 2nd+ SEO audit iteration: preserve previous baseline, compute delta + direction per category, attach root-cause hypothesis for regressions, upload dated report to `qzw-alt/demi` `reports/chinahospitalsguide/`, surface both old + new URLs in chat. Complements the one-shot recipe in `references/session-2026-07-21-lessons.md` §B.
+- `references/session-2026-07-26-service-tier-audit.md` — **NEW 2026-07-26** — 5-round audit session for the L1/L2/L3 service-tier rename + mobile-bottom-bar coverage. Documents the 7-commit sequence, the `.html`/`.njk` dual-track breakthrough in round 3, the regex patterns to distinguish tier-name from natural-language ("Hospital Match" vs "Hospital Matching" / "hospital matches"), the canonical mobile-bar audit recipe (`grep "{% include"` check), and 7 user-message signals for iterative-audit sessions. Parent SKILL.md carries the concise pitfall sections; this file is the worked transcript + working scripts.
 
 ### 📦 Audit reports archive (NEW 2026-07-22)
 
@@ -1102,13 +1103,170 @@ After the site's 2026-07-10 migration from static `.html` to Eleventy `.njk` tem
 
 **The trap**: when `pricing.njk` gets a fix (e.g. wire PayPal to `{{ site.paypalClientId }}`), the user runs `npm run build` → `pricing.html` is regenerated → git diff shows `pricing.html` changed. If the user pushes both, the build artifact now matches the source. **Good.**
 
-**The bug**: if the user only commits `pricing.njk` and forgets to rebuild, the deployed `_site/pricing.html` is stale. Even worse, `pricing.html` at the repo root is also stale — `grep BAAuE pricing.html` returns 1 hit, looking like the fix didn't take.
+**The bug**: if the user only commits `pricing.njk` and forgets to rebuild, the deployed `_site/pricing.html` is stale. Even worse, `pricing.html` at repo root is also stale — `grep BAAuE pricing.html` returns 1 hit, looking like the fix didn't take.
 
 **The audit pitfall**: when I see hardcoded `BAAuE` in `pricing.html` after a fix, **the right question is not "why is this hardcoded?" but "did `npm run build` run after the .njk edit?"**. The hardcoded string in the source `.html` file at repo root is **expected** if it hasn't been rebuilt yet.
 
 **The right pattern**: `pricing.html` at repo root should be **gitignored** after the migration is complete (or renamed to `pricing.html.tmpl`). Until then, document that it's a build artifact and audits should look at `pricing.njk` for source-of-truth.
 
 See `references/session-2026-07-11-lessons.md` for the full 3-round audit transcript including the schema `@context` corruption fix script.
+
+### ⚠️ Eleventy audit must scan BOTH `.html` and `.njk` (NEW 2026-07-26 — VERIFIED MULTIPLE TIMES)
+
+**The trap**: when auditing for stale content / missing references / service-tier renames, scanning only `.html` files produces a misleading "90% complete" report that misses the `.njk` source templates, AND scanning only `.njk` misses stand-alone `.html` files (e.g. blog/news articles, multi-language standalone pages).
+
+**Verified failure (2026-07-26)**: a service-tier rename audit (Hospital Match / Pre-Arrival → L1 Hospital Shortlist / L2 Hospital Verification / L3 Full Journey Management) ran 4 audit rounds, each round incomplete:
+
+| Round | What I scanned | Missed |
+|---|---|---|
+| 1 | Only `.html` files | `.njk` templates (which are the source of truth for Eleventy sites) |
+| 2 | `.html` only after pull | Stale `.html` (build artifact) ≠ `.njk` source |
+| 3 | `.html` + `.njk` | Realized `.html` is build artifact from `.njk` — both files exist, both need audit |
+| 4 | Both + `.html` only-standalone files | Same as 3, but now confident |
+
+**The lesson**: for ANY Eleventy site audit, **always scan both `.html` AND `.njk` files in one Python pass**. The two file types are not redundant — they ARE two separate things in this project, and audit must cover both:
+
+```python
+# Canonical audit scan pattern (Eleventy sites)
+search_terms = [...]
+hits = {}
+for ext in ['*.html', '*.njk']:                    # both, in same pass
+    for f in sorted(ROOT.glob(ext)):
+        c = f.read_text(encoding='utf-8', errors='ignore')
+        # Strip scripts/styles, normalize whitespace, count
+        ...
+        if matches:
+            hits[f.name] = {label: count for label, count in matches}
+```
+
+**Bonus pitfall in same audit pattern**: when searching for hardcoded keywords (like `Hospital Match`, `pre-arrival`), **distinguish "档名/产品名" from "natural-language description"**:
+
+- "Hospital Match" (the old tier name) → must be renamed
+- "hospital matches" (natural language: "2-3 hospital matches + cost comparison") → keep
+
+The exact same characters with subtle difference. Use regex with negative lookahead: `r'Hospital Match(?!ing)'` to catch only the tier name, not the natural language.
+
+### ⚠️ `.html`/`.njk` dual-track bug — commit message can claim "deploy" but only rename source (NEW 2026-07-26)
+
+**Trap**: the user (or me) commits a series of "ci: deploy rename" commits that look successful in `git log`, but the actual `npm run build` either did not run or was not part of the commit chain. The committed `git log` shows "rename deployed" but the live `.html` files are still pre-rename.
+
+**Verified pattern (2026-07-26)**: when the user committed `ci: deploy L1/L2/L3 rename across all pages` (4 commits, `b47de7b` / `a7bf243` / `414a4f7` / `b306ec5`), the deploy actually succeeded for `.njk` but the build step did not regenerate `.html`. The 4 CI commits were tagged as "deploy" but in reality only renamed source. Live site showed old tier names for weeks.
+
+**The fix — detect this pattern** (3 signals):
+
+```bash
+# 1. Check whether the .html files at repo root have a recent mtime matching the rename commits
+find . -maxdepth 2 -name "*.html" -newer .eleventy.config.js 2>/dev/null
+# If empty → build never re-ran
+
+# 2. Check whether commits claiming "deploy" actually touched .html files
+git log --oneline --grep="deploy" | head -5
+git log --oneline --grep="deploy" --name-only | grep -E "\.html$" | head -10
+# If empty → "deploy" commits only touched .njk, build step did NOT regenerate .html
+```
+
+**The actual fix the user applied (2026-07-26)**: `chore: remove dead .html files already served by .njk templates` (commit `508a39f`) — **delete the .html files at repo root, since `.njk` will regenerate them on build**. This eliminates the dual-track problem entirely.
+
+**Decision rule**:
+- If `.html` files at repo root are generated by `.njk` templates (check `permalink:` frontmatter matches) → delete the `.html` to remove duplication. `.njk` is the source of truth.
+- If `.html` is standalone (no matching `.njk`) → keep both files in audit, treat `.html` as canonical.
+
+### ⚠️ Multi-pass audit upgrade pattern — surface dimension shifts, not just file counts (NEW 2026-07-26)
+
+**Trap**: when running the same audit multiple times in a single session (which happens often — user does iterative edits and asks "再看看"), reporting only the latest file count misses the **process story**. The user wants to know:
+1. What changed since last audit (delta + direction)
+2. What commit(s) caused the change
+3. What's STILL broken after multiple rounds
+
+**Verified pattern (2026-07-26)**: 5 audit rounds over the service-tier rename produced this delta table:
+
+| Round | Conflict count | Files affected | Notable change |
+|---|---|---|---|
+| 1 | 51 mentions / 12 files | 12 | First baseline |
+| 2 | 49 / 11 | 11 | stories.html rename |
+| 3 | 9 / 6 | 6 | 7 .html files deleted |
+| 4 | 9 / 6 | 6 | pre-travel rename across natural language |
+| 5 | 1 / 1 (natural language) | 1 | contact-new.njk's "hospital matches" (kept) |
+
+**Each audit round should produce**:
+1. **Delta vs previous round**: what changed
+2. **Commit reference**: which commit caused the change (e.g. `commit 022f1b3 — add $149 to multi-language landing pages`)
+3. **Direction**: improving / regressing / mixed
+4. **Remaining work**: explicit list, by priority
+5. **Recommended next step**: ONE thing, not a roadmap
+
+The user's "再看看" pattern is repeated audit + light review. Do NOT spend each round building a new audit tool — just **rerun the same scan function with delta computation**, which is faster and surfaces improvement.
+
+### ⚠️ Mobile bar / shared include components must be in `_includes/`, NOT per-template HTML (NEW 2026-07-26)
+
+**Trap**: when adding a shared UI element like `mobile-bottom-bar` (mobile bottom navigation) to multiple pages, two wrong patterns exist:
+
+- **Per-template hand-written HTML**: write `<div class="mobile-bottom-bar">...</div>` in every `.html` and `.njk`. Every edit requires touching every file. Easy to miss a file. Easy to have inconsistent content (one page links `/services.html`, another links `/hospitals.html`).
+- **Per-template hand-written CSS**: same problem.
+
+**Verified failure (2026-07-26)**: `mobile-bottom-bar` was added to 14 `.html` files by hand, then `_includes/mobile-bottom-bar.njk` template was created, then **0 of the 8 core `.njk` templates included it**. Build would have wiped the hand-written bars.
+
+**The correct pattern (Eleventy)**:
+
+1. Create the component in `_includes/<name>.njk` with template syntax:
+   ```njk
+   <div class="mobile-bottom-bar">
+       <a href="{{ '/index.html' | url }}"><span>🏠</span>Home</a>
+       <a href="{{ '/services.html' | url }}"><span>🩺</span>Services</a>
+       ...
+   </div>
+   ```
+
+2. Reference from every template that should render it:
+   ```njk
+   {# in main template, before </body> #}
+   {% include "mobile-bottom-bar.njk" %}
+   ```
+
+3. Reference the CSS once in `_includes/head.njk` (or as an `addPassthroughCopy` to `_site/styles.css`).
+
+4. Multi-language variants: use a separate `_includes/<name>-<lang>.njk` per language OR pass locale as data. **Never** hardcode Chinese / English / Russian text in the same template.
+
+**Audit checklist for shared components**:
+
+```bash
+# 1. Find components in _includes/
+ls _includes/*.njk
+
+# 2. Find which main templates include them
+for tmpl in $(ls *.njk); do
+  echo "$tmpl:"
+  grep "{% include" "$tmpl" | head -5
+done
+
+# 3. Components referenced by SOME but not ALL templates = bug
+# (Decide whether missing inclusion is intentional)
+```
+
+**Pre-flight before adding any new shared component**: write the component to `_includes/`, then add `{% include %}` to ALL templates that need it IN THE SAME COMMIT. Do NOT commit partial application.
+
+### ⚠️ Commit message typos can mislead audit — verify against actual file content (NEW 2026-07-26)
+
+**Trap**: a commit message can contain factual errors (typos, wrong numbers, outdated description). Agents (me, future me, other agents) may cite the commit message verbatim instead of checking the actual file content.
+
+**Verified failure (2026-07-26)**: commit `528e891` had message `feat: 3-tier pricing — Hospital Shortlist ($9) / Verification ($49) / Full Journey ($99)`. I read the message and inferred the live site used $9/$49/$99 prices. **The actual `.html` files in that commit had $49/$149/$399 — the message was a typo, never corrected.**
+
+**The lesson — for ANY factual claim from a commit message**:
+
+1. **Verify against file content**, not the message text.
+2. If the message says "$9 / $49 / $99" but `git show 528e891 -- pricing.html | grep -E "\$[0-9]+"` shows "$49 / $149 / $399" → trust the file, not the message.
+3. If the file agrees with the message → both are source-of-truth, can cite.
+
+**Audit pattern**:
+
+```bash
+# When commit claims "X has property Y", verify
+git show COMMIT_SHA -- FILE | grep -E "Y-pattern" | head -3
+
+# Don't just read commit message and assume
+```
+
+This is also a specific instance of the more general "memory contamination vs current file content" rule. The cure is the same: **read the file, not the message**.
 
 ### Pitfall: "centralize the config" is only step 1
 

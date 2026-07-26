@@ -23,6 +23,7 @@ import os
 import re
 from pathlib import Path
 from typing import Any, Dict, List, Optional
+from urllib.parse import quote
 
 from .config import LOCALFILE_SCHEME
 
@@ -286,10 +287,13 @@ _LOCALFILE_MD_RE = re.compile(
     r"\[(?P<name>[^\]]+)\]\((?P<uri>localfile://[^)\s]+)\)"
 )
 
-# MEDIA:/path tags — stored raw in transcripts, need conversion to localfile://
-# Matches: MEDIA:/absolute/path/to/file.ext  (with optional quotes/backticks)
+# MEDIA:/path tags — stored raw in transcripts, need conversion to localfile://.
+# Treat everything after the absolute-path prefix through the line end as the
+# path so historical attachments with spaces follow the same rule as live
+# delivery. Optional quotes/backticks are tolerated for model variations.
 _MEDIA_TAG_RE = re.compile(
-    r"^[`\"']?MEDIA:\s*(?P<path>(?:~/|/)\S+)[`\"']?\s*$",
+    r'^[ \t]*[`"\']?MEDIA:[ \t]*'
+    r'(?P<path>(?:[A-Za-z]:[/\\]|/|~/)[^\r\n]*?)[`"\']?[ \t]*(?=\r?$)',
     re.MULTILINE,
 )
 
@@ -334,7 +338,8 @@ def _convert_media_tags_to_localfile(text: str) -> str:
     def _replace(m: re.Match) -> str:
         path = m.group("path").strip().rstrip("\"'`,.;:)}]")
         name = os.path.basename(path) or path
-        return f"📎 [{name}]({LOCALFILE_SCHEME}{path})"
+        encoded_path = quote(path, safe="/")
+        return f"📎 [{name}]({LOCALFILE_SCHEME}{encoded_path})"
 
     return _MEDIA_TAG_RE.sub(_replace, text)
 
@@ -399,29 +404,14 @@ def normalize_message(msg: dict) -> Optional[dict]:
         if cleaned_user_text != text:
             result["content"] = cleaned_user_text
     elif role == "assistant":
-        # Extract file links for the "files" field by converting MEDIA: tags
-        # to localfile:// format temporarily, but keep original content intact.
+        # Restore MEDIA: tags to the same localfile:// Markdown representation
+        # used by live delivery. Do not also populate files from these
+        # derived links: the front-end would otherwise render both the inline
+        # blue link/image and a second structured attachment card.
         converted_text = _convert_media_tags_to_localfile(text)
         localfile_links = _extract_localfile_links(converted_text)
         if localfile_links:
-            result["files"] = localfile_links
-            # Remove MEDIA: tags from content to avoid double rendering.
-            # The files field already contains the file info, so we strip the
-            # raw MEDIA: tags from content to prevent the front-end from
-            # rendering them twice (once as text, once as files array).
-            cleaned_text = text
-            for link in localfile_links:
-                path = link["uri"].replace(LOCALFILE_SCHEME, "")
-                cleaned_text = re.sub(
-                    rf"^[`\"']?MEDIA:\s*{re.escape(path)}[`\"']?\s*$",
-                    "",
-                    cleaned_text,
-                    flags=re.MULTILINE,
-                )
-            cleaned_text = cleaned_text.strip()
-            # 始终用清理后的版本覆盖 content，如果原始内容仅包含 MEDIA: 标签（cleaned_text==""）
-            # 则将 content 置为空字符串，使前端只渲染 files 数组，而不会将原始协议标签作为纯文本展示。
-            result["content"] = cleaned_text
+            result["content"] = converted_text.strip()
 
     return result
 

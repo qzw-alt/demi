@@ -1,6 +1,6 @@
 name: lightclawbot
 kind: platform
-version: 0.0.10
+version: 0.0.15
 description: >
   LightClaw gateway adapter for Hermes Agent.
   Connects to a LightClaw-compatible server via native WebSocket,

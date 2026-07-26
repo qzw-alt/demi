@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-25T22:00:06.517960",
+  "updated_at": "2026-07-26T21:59:06.411993",
   "platforms": {
     "feishu": [
       {
@@ -211,6 +211,14 @@
         "name": "oc_82a1a36b7bacddfbcae28d273674900a / topic om_x100b6eff9987b4a0b24d2e2d59c74c4",
         "type": "dm",
         "thread_id": "om_x100b6eff9987b4a0b24d2e2d59c74c4"
+      }
+    ],
+    "lightclawbot": [
+      {
+        "id": "100046259804",
+        "name": "100046259804",
+        "type": "dm",
+        "thread_id": null
       }
     ]
   }

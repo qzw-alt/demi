@@ -34,11 +34,48 @@ EVENT_AGENTS_RESPONSE    = "agents:response"
 AGENTS_CONFIG_FILENAME   = "agents.json"
 
 # ---------------------------------------------------------------------------
+# Site (cn / intl) 
+# ---------------------------------------------------------------------------
+# 因此由前端在调用 hermes_install.sh 时以 SITE 传入，脚本落盘到
+# ``~/.hermes/.env`` 的 LIGHTCLAW_SITE，插件启动时读取并推导三个 URL Host（WS / API / Upload）
+
+DEFAULT_SITE = "cn"
+
+# host
+SITE_HOSTS = {
+    "cn":   "lightai.cloud.tencent.com",
+    "intl": "lightai.tencentcloud.com",
+}
+
+
+def normalize_site(site):
+    """site：非法 / 空值一律回退 cn（对齐 web 端 || AI_SERVER_DOMAINS.cn）。"""
+    s = (site or "").strip().lower()
+    return s if s in SITE_HOSTS else DEFAULT_SITE
+
+
+def resolve_site_urls(site=None):
+    """根据 *site* 解析 ws / api / upload 三类 base url。
+
+    *site* 缺省（None）时读环境变量 ``LIGHTCLAW_SITE``；非法值回退 cn。
+    """
+    if site is None:
+        site = os.getenv("LIGHTCLAW_SITE")
+    host = SITE_HOSTS[normalize_site(site)]
+    return {
+        "ws":     f"wss://{host}",
+        "api":    f"https://{host}",
+        "upload": f"https://{host}",
+    }
+
+
+_SITE_URLS = resolve_site_urls()
+
+# ---------------------------------------------------------------------------
 # Server URLs / paths
 # ---------------------------------------------------------------------------
-
-DEFAULT_WS_BASE_URL  = "wss://lightai.cloud.tencent.com"
-DEFAULT_API_BASE_URL = "https://lightai.cloud.tencent.com"
+DEFAULT_WS_BASE_URL  = _SITE_URLS["ws"]
+DEFAULT_API_BASE_URL = _SITE_URLS["api"]
 SOCKET_PATH          = "/ws/agent"
 API_PATH_TICKET      = "/cgi/ticket"
 
@@ -73,7 +110,7 @@ EMIT_PENDING_MAX      = 500
 # ---------------------------------------------------------------------------
 
 # Remote file storage service base URL
-SERVER_UPLOAD_BASE_URL = "https://lightai.cloud.tencent.com"
+SERVER_UPLOAD_BASE_URL = _SITE_URLS["upload"]
 API_PATH_UPLOAD        = "/drive/save"       # POST multipart/form-data
 API_PATH_DOWNLOAD      = "/drive/preview"    # GET ?filePath=...
 

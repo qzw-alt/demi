@@ -35,7 +35,7 @@ import os
 import re
 import time
 from typing import Any, Dict, Optional
-from urllib.parse import unquote, urlparse
+from urllib.parse import quote, unquote, urlparse
 
 from gateway.platforms.base import SendResult
 
@@ -169,8 +169,12 @@ def _summarize_tool_text(content: str, tool_name: str) -> str:
 # Handles two gateway formats:
 #   compact mode:  '✏️ write_file: "/abs/path/to/file"'
 #   verbose mode:  "✏️ write_file([...])\n{\"path\": \"/abs/path\"}"
+_WRITE_FILE_QUOTED_PATH_RE = re.compile(
+    r'\bwrite_file\b.*?["\'`](/[^"\'`\r\n]+)["\'`]',
+    re.DOTALL,
+)
 _WRITE_FILE_PATH_RE = re.compile(
-    r'\bwrite_file\b.*?["\'/](/[^"\'<>\s,;}{]+)',
+    r'\bwrite_file\b.*?(/[^\r\n,;}{]+)',
     re.DOTALL,
 )
 _JSON_PATH_RE = re.compile(r'"path"\s*:\s*"(/[^"]+)"')
@@ -183,15 +187,19 @@ _JSON_PATH_RE = re.compile(r'"path"\s*:\s*"(/[^"]+)"')
 _STREAM_CURSORS: tuple[str, ...] = (" \u2589", " \u258a", "\u2589", "\u258a")
 
 # 匹配流式模型输出中的 MEDIA: 协议行。
-# 框架要求格式：单独一行 "MEDIA:<绝对路径>"。
-# 模型有时会将其作为普通文本输出——发送给客户端前必须去除，
-# 避免原始路径出现在聊天界面中。
-# 实际文件投递由框架的 _deliver_media_from_response / _deliver_pending_files 负责，
-# 此处只需将原始标签从视图中隐藏。
+# 框架要求格式：单独一行 "MEDIA:<绝对路径>"。路径允许包含空格，因此
+# 不能再用 ``\S+`` 截取，而应把 MEDIA: 后直到行尾的内容整体视为内部协议。
+# 可选的引号 / 反引号用于兼容模型偶尔输出的非标准包裹形式。
+#
+# 实际文件投递由框架的 _deliver_media_from_response / _deliver_pending_files 负责；
+# 此处只负责在任何 stream_chunk 发出前，从用户可见正文中隐藏协议行。
 _MEDIA_TAG_RE = re.compile(
-    r'(?:^|\n)([ \t]*MEDIA:(?:[A-Za-z]:[/\\]|/|~/)\S+)([ \t]*)(?=\n|$)',
+    r'^[ \t]*[`"\']?MEDIA:[ \t]*'
+    r'(?:[A-Za-z]:[/\\]|/|~/)[^\r\n]*?[`"\']?[ \t]*(?=\r?$)',
     re.MULTILINE,
 )
+
+_MEDIA_PREFIX = "MEDIA:"
 
 
 def _strip_stream_cursor(text: str) -> str:
@@ -208,8 +216,55 @@ def _strip_stream_cursor(text: str) -> str:
     return text
 
 
-def _strip_media_tags(text: str) -> str:
-    """Remove MEDIA:<path> lines from streamed model output before delivery.
+def _is_partial_media_tag_line(line: str) -> bool:
+    """判断流式文本的最后一行是否可能是尚未输出完整的 ``MEDIA:`` 协议行。
+
+    ``GatewayStreamConsumer`` 传入的是不断增长的累计全文，但一次刷新可能恰好
+    停在 ``M``、``MEDIA:``、``MEDIA:~`` 或 ``MEDIA:C:``。这些内容如果立即发给
+    AgentChat，后面即使完整协议行被过滤，前端也无法撤回已经追加的半截文本。
+
+    返回 ``True`` 表示“先暂存这一行，等待下一份累计全文确认”；返回 ``False``
+    表示它不是待确认的协议前缀，可以按普通正文继续处理。若后续内容变成普通文本
+    （例如 ``MEDal``），下一次累计快照会把整行正常释放出去。
+    """
+    # 模型偶尔会先输出缩进或用引号/反引号包住 MEDIA 行。判断协议前缀时先忽略
+    # 这些展示字符，但不修改原始 line；确认是普通文本时仍会按原样展示。
+    candidate = line.lstrip(" \t")
+    if candidate.startswith(("`", '"', "'")):
+        candidate = candidate[1:]
+    if not candidate:
+        return False
+
+    # 注意判断方向：candidate 是完整关键字 "MEDIA:" 的前缀。
+    # 因此 M / ME / MED / MEDI / MEDIA / MEDIA: 都需要继续等待。
+    if _MEDIA_PREFIX.startswith(candidate):
+        return True
+
+    # 连完整的 "MEDIA:" 都不是，例如 "MEDal"，应立即当作普通正文。
+    if not candidate.startswith(_MEDIA_PREFIX):
+        return False
+
+    # 已经出现 "MEDIA:" 后，只继续暂存“绝对路径起始部分还没写完整”的情况：
+    #   MEDIA:      → 还没开始输出路径
+    #   MEDIA:~     → 可能继续成为 MEDIA:~/file
+    #   MEDIA:C     → 可能继续成为 MEDIA:C:/file 或 MEDIA:C:\\file
+    #   MEDIA:C:    → 还在等待 / 或 \\
+    # 一旦出现完整的 /、~/、C:/ 或 C:\\ 前缀，就不再属于 partial；完整协议行
+    # 会由前面的 _MEDIA_TAG_RE 负责整体删除。
+    path_prefix = candidate[len(_MEDIA_PREFIX):].lstrip(" \t")
+    if not path_prefix or path_prefix == "~":
+        return True
+    if len(path_prefix) == 1 and path_prefix.isalpha():
+        return True
+    return (
+        len(path_prefix) == 2
+        and path_prefix[0].isalpha()
+        and path_prefix[1] == ":"
+    )
+
+
+def _strip_media_tags(text: str, *, finalize: bool = False) -> str:
+    """Hide complete and not-yet-complete MEDIA lines before delivery.
 
     The framework uses ``MEDIA:<absolute-path>`` as an internal protocol to
     signal that a local file should be attached.  The gateway's post-stream
@@ -218,14 +273,35 @@ def _strip_media_tags(text: str) -> str:
     model outputs ``MEDIA:/path/to/file`` during streaming, the raw text is
     forwarded to the client verbatim before any post-stream processing runs.
 
-    This function erases those lines so the raw path never appears in the
-    chat bubble.  Newlines surrounding the tag are preserved to avoid
-    disrupting paragraph layout.
+    Complete protocol lines are erased while their line endings are preserved.
+    A possible protocol prefix at the end of accumulated streaming text is
+    withheld until the next snapshot resolves it.  This prevents an early
+    ``MEDIA:`` chunk from becoming irreversible in AgentChat's append-only UI.
     """
-    if "MEDIA:" not in text:
+    if not text:
         return text
-    # 将每个 MEDIA: 行替换为空字符串。正则已通过换行符锚定行边界，只需丢弃标签内容，保持原有换行结构不变。
-    return _MEDIA_TAG_RE.sub(lambda m: m.group(0).replace(m.group(1) + m.group(2), ""), text)
+
+    cleaned = _MEDIA_TAG_RE.sub("", text)
+
+    # Only the final unterminated line can still grow in the next accumulated
+    # callback.  Keep its preceding newline so paragraph layout remains stable.
+    line_start = cleaned.rfind("\n") + 1
+    trailing_line = cleaned[line_start:]
+    if _is_partial_media_tag_line(trailing_line):
+        # At finalization, a bare partial keyword (M / ME / ... / MEDIA)
+        # cannot grow into a protocol tag anymore, so release it as ordinary
+        # prose.  Keep MEDIA: and incomplete absolute-path prefixes hidden.
+        candidate = trailing_line.lstrip(" \t")
+        if candidate.startswith(("`", '"', "'")):
+            candidate = candidate[1:]
+        if (
+            finalize
+            and candidate != _MEDIA_PREFIX
+            and _MEDIA_PREFIX.startswith(candidate)
+        ):
+            return cleaned
+        return cleaned[:line_start]
+    return cleaned
 
 
 class OutboundMixin:
@@ -615,10 +691,11 @@ class OutboundMixin:
         if not self._reliable:
             return SendResult(success=False, error="Not connected", retryable=True)
 
-        # Strip GatewayStreamConsumer cursor glyphs at the entry point so
-        # every downstream branch (round-open / no-round / standalone /
-        # tool_start / attachment link) uses sanitized content.
-        content = _strip_stream_cursor(content)
+        # Sanitize at the common entry point so every downstream branch
+        # (round-open / reuse-last-round / standalone / attachment link) sees
+        # the same user-visible text.  In particular, the first streaming
+        # chunk must not bypass the MEDIA filter that edit_message() applies.
+        content = _strip_media_tags(_strip_stream_cursor(content))
 
         # ── Round already open (inbound sent typing_start) ──
         round_msg_id = self._round_ids.get(chat_id)
@@ -632,22 +709,25 @@ class OutboundMixin:
             # concatenation produces the same visual breaks as the history
             # view (where each assistant/tool message is a distinct object).
             actual_content = content
+            should_emit = msg_kind == "tool_start" or bool(content.strip())
             if msg_kind == "stream_chunk":
-                if self._round_has_content.get(chat_id):
+                if should_emit and self._round_has_content.get(chat_id):
                     actual_content = "\n\n" + content
-                self._round_has_content[chat_id] = True
+                if should_emit:
+                    self._round_has_content[chat_id] = True
 
             logger.info(
                 "[lightclaw] send (%s, round open): to=%s msgId=%s content=%d chars",
                 msg_kind, chat_id, round_msg_id, len(content),
             )
-            self._fire_and_forget(
-                EVENT_MESSAGE_PRIVATE,
-                self._build_message(
-                    chat_id, actual_content, kind=msg_kind,
-                    msg_id=round_msg_id,
-                ),
-            )
+            if should_emit:
+                self._fire_and_forget(
+                    EVENT_MESSAGE_PRIVATE,
+                    self._build_message(
+                        chat_id, actual_content, kind=msg_kind,
+                        msg_id=round_msg_id,
+                    ),
+                )
 
             # Track write_file tool_start paths for the stop_typing() fallback.
             if is_tool_progress:
@@ -658,12 +738,10 @@ class OutboundMixin:
                     chat_id, round_msg_id, agent_id, content,
                 )
 
-            # 记录去除光标和 MEDIA 标签后的快照，供 edit_message() 计算增量。
-            # 此处也必须去除 MEDIA 标签——edit_message() 在比较前会先 strip，
-            # 若 send() 保存的是含 MEDIA 标签的原始内容，两侧快照不一致，
-            # 会触发 delta fallback，将整段可见文本作为增量重复下发。
+            # ``content`` 已在入口统一清洗，直接记录用户可见快照，供
+            # edit_message() 对后续累计全文计算增量。
             if msg_kind == "stream_chunk":
-                self._edit_snapshot[chat_id] = _strip_media_tags(content)
+                self._edit_snapshot[chat_id] = content
 
             # Never close round here — typing_stop is sent by stop_typing()
             # which is called by the framework when the agent finishes.
@@ -685,6 +763,7 @@ class OutboundMixin:
             # Always prepend "\n\n" for stream_chunks — the previous round
             # already has visible content, so a separator keeps the visual
             # break consistent with round-open follow-ups.
+            should_emit = msg_kind == "tool_start" or bool(content.strip())
             actual_content = (
                 content if msg_kind == "tool_start" else "\n\n" + content
             )
@@ -692,13 +771,14 @@ class OutboundMixin:
                 "[lightclaw] send (%s, reuse last round): to=%s msgId=%s content=%d chars",
                 msg_kind, chat_id, last_round_id, len(content),
             )
-            self._fire_and_forget(
-                EVENT_MESSAGE_PRIVATE,
-                self._build_message(
-                    chat_id, actual_content, kind=msg_kind,
-                    msg_id=last_round_id,
-                ),
-            )
+            if should_emit:
+                self._fire_and_forget(
+                    EVENT_MESSAGE_PRIVATE,
+                    self._build_message(
+                        chat_id, actual_content, kind=msg_kind,
+                        msg_id=last_round_id,
+                    ),
+                )
             # 与 round-open 分支一致：并发一帧 thinking_step (running)。
             # 复用 last_round_id 作为 msgId，保证后续附件链接与同一 round 聚合。
             if is_tool_progress:
@@ -748,13 +828,14 @@ class OutboundMixin:
             self._build_message(chat_id, "", kind="typing_start",
                                 msg_id=round_msg_id),
         )
-        self._fire_and_forget(
-            EVENT_MESSAGE_PRIVATE,
-            self._build_message(
-                chat_id, content, kind="stream_chunk",
-                msg_id=round_msg_id,
-            ),
-        )
+        if content.strip():
+            self._fire_and_forget(
+                EVENT_MESSAGE_PRIVATE,
+                self._build_message(
+                    chat_id, content, kind="stream_chunk",
+                    msg_id=round_msg_id,
+                ),
+            )
         self._fire_and_forget(
             EVENT_MESSAGE_PRIVATE,
             self._build_message(chat_id, "", kind="typing_stop",
@@ -962,8 +1043,6 @@ class OutboundMixin:
         # the next turn.
         self._last_round_id[chat_id] = round_msg_id
         self._edit_snapshot.pop(chat_id, None)
-        # 每轮结束时重置去重表，避免下一轮同名文件被误判为已投递而漏发。
-        self._delivered_paths.pop(chat_id, None)
         self._clear_round_id(chat_id)
 
     async def edit_message(
@@ -1003,7 +1082,7 @@ class OutboundMixin:
 
         # 1b. 去除 MEDIA: 协议行——模型可能在流式输出时将其作为普通文本输出；这些是内部投递标记，不应展示给用户。
         #     文件投递由_deliver_media_from_response / _deliver_pending_files 单独处理。
-        content = _strip_media_tags(content)
+        content = _strip_media_tags(content, finalize=finalize)
 
         # 2. Only process edits matching the current round (filter tool progress edits)
         round_msg_id = self._round_ids.get(chat_id)
@@ -1014,11 +1093,21 @@ class OutboundMixin:
         previous = self._edit_snapshot.get(chat_id, "")
         if content.startswith(previous):
             delta = content[len(previous):]
-        else:
-            # Full-text fallback (content was truncated/reordered — rare)
-            delta = content
+        elif previous.startswith(content):
+            # 前端只支持追加，无法撤回已经显示的内容；纯收缩时不发送，
+            # 并保留旧快照，等后续内容重新覆盖已下发边界后再继续计算增量。
+            delta = ""
             logger.warning(
-                "[lightclaw] edit_message delta fallback: to=%s msgId=%s "
+                "[lightclaw] edit_message snapshot shrank, suppressed: to=%s msgId=%s "
+                "previous=%d chars, content=%d chars",
+                chat_id, round_msg_id, len(previous), len(content),
+            )
+        else:
+            # 真正的重写同样无法通过追加式协议修正。整段重发会直接造成正文重复，
+            # 因此只记录告警并保留旧快照，与 LightClaw 的 final mismatch 策略一致。
+            delta = ""
+            logger.warning(
+                "[lightclaw] edit_message delta mismatch, suppressed: to=%s msgId=%s "
                 "previous=%d chars, content=%d chars",
                 chat_id, round_msg_id, len(previous), len(content),
             )
@@ -1260,8 +1349,11 @@ class OutboundMixin:
             return SendResult(success=True, message_id=None)
         delivered.add(abs_path)
 
-        # Build the Markdown link: "📎 [name](localfile:///abs/path) (size)"
-        link = f"📎 [{display_name}]({LOCALFILE_SCHEME}{abs_path})"
+        # Encode the URI path so spaces, CJK, parentheses and literal ``%``
+        # remain one Markdown destination.  The download handler decodes it
+        # exactly once before touching the filesystem.
+        encoded_path = quote(abs_path, safe="/")
+        link = f"📎 [{display_name}]({LOCALFILE_SCHEME}{encoded_path})"
         try:
             link = f"{link} ({format_file_size(size)})"
         except Exception:
@@ -1538,17 +1630,26 @@ class OutboundMixin:
             return
         path: Optional[str] = None
 
-        # Try the combined regex first (covers compact and verbose mode).
-        m = _WRITE_FILE_PATH_RE.search(content)
-        if m:
-            path = m.group(1).rstrip("\"',;:.)}]")
+        # Prefer the explicit JSON field in verbose mode; unlike the old
+        # whitespace-delimited matcher it preserves spaces in file names.
+        if '"path"' in content:
+            m_json = _JSON_PATH_RE.search(content)
+            if m_json:
+                path = m_json.group(1)
 
-        # If the combined regex missed it, try the explicit JSON "path" key
-        # (verbose mode when args are printed as JSON).
-        if not path and '"path"' in content:
-            m2 = _JSON_PATH_RE.search(content)
-            if m2:
-                path = m2.group(1)
+        # Compact mode normally quotes the path.  Keep an unquoted fallback
+        # that treats the rest of that line as the path, matching MEDIA's
+        # "whole remaining line" rule.
+        if not path:
+            m_quoted = _WRITE_FILE_QUOTED_PATH_RE.search(content)
+            if m_quoted:
+                path = m_quoted.group(1)
+        if not path:
+            m = _WRITE_FILE_PATH_RE.search(content)
+            if m:
+                path = m.group(1)
+        if path:
+            path = path.strip().rstrip("\"',;:.)}]")
 
         # Sanity-check: must be an absolute path and not a truncated preview.
         if not path or not path.startswith("/") or path.endswith("..."):
@@ -1605,13 +1706,6 @@ class OutboundMixin:
         self, chat_id: str, file_path: str, caption: Optional[str] = None,
         file_name: Optional[str] = None, reply_to: Optional[str] = None, **kwargs,
     ) -> SendResult:
-        # Record the delivered path so the stop_typing() fallback can skip it.
-        # The framework's _deliver_media_from_response also routes here for any
-        # MEDIA: tag / bare path it detects, so this dedup keeps a file from
-        # being delivered twice (framework + fallback).
-        if file_path:
-            abs_path = os.path.abspath(file_path)
-            self._delivered_paths.setdefault(chat_id, set()).add(abs_path)
         return await self._send_attachment(chat_id, file_path, caption, file_name, reply_to,
                                            metadata=kwargs.get("metadata"))
 

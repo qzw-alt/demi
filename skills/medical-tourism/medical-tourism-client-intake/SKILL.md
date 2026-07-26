@@ -1,9 +1,24 @@
 ---
 name: medical-tourism-client-intake
 description: "处理国际患者来华就医咨询的全流程：接收邮件 → 分析病情 → 确定服务方案 → 与医院初步沟通 → 回复客户。适用于 chinahospitalsguide.com 的客户咨询处理。"
-version: 1.5.0
+version: 1.6.0
 author: agent
-tag: [medical-tourism, client-intake, hospital-coordination, email, whatsapp, payment-flow, case-sharing, internet-hospital-probe, diagnostic-pivot, qq-mail-compat]
+tag:
+  - medical-tourism
+  - client-intake
+  - hospital-coordination
+  - email
+  - wechat
+  - telegram
+  - payment-flow
+  - case-sharing
+  - internet-hospital-probe
+  - diagnostic-pivot
+  - qq-mail-compat
+  - simple-task-discipline
+  - communication-stack
+  - orthopedic-questionnaire
+---
 ---
 
 # 医疗旅游客户咨询处理流程
@@ -232,6 +247,84 @@ Weiye
 | 时间要求 | 是否有期望的治疗时间 |
 | 联系方式 | 手机/邮箱（备用） |
 | **是否愿意分享案例** | 案例合作模式判断 |
+
+### ⚠️ 简单任务不要复杂化（2026-07-26 伟烨强反馈）
+
+**触发信号**：伟烨说"不要把简单的事情复杂化"/"你把它这个复杂了"/"整的好复杂"。
+
+**核心规则**：
+
+伟烨的主营业务是 **A. 文案编写** + **B. 客户维护**。不是工程性 audit、不是 build 脚本、不是 17-file conflict matrix。
+
+**两类任务的默认动作**：
+
+| 任务类型 | 默认动作 | 询问量 |
+|---|---|---|
+| **简单**（微信/邮件起稿 / 客户回信 / 文案 / 翻译） | **直接起稿**，列默认假设，让伟烨一句话拍板 | 0-1 个澄清 |
+| **复杂**（audit / 架构决策 / 价格改造 / 跨文件修复） | **完整分析 + 选项表** | 看复杂度决定 |
+
+**反例**（被伟烨叫停）：膝盖置换客户来了，先问了 4 个澄清问题（"案例合作模式有没有"+"L2 是否要换"+"邮件还是微信"+"英文还是中文"），把"列 14 个问题给客户"这件**单一动作**拆成了**多轮确认**。
+
+**正例**：直接列 14 个问题（基本信息 4 + 病情 4 + 期望 4 + 特殊情况 2）—— 翻译成英文 → 复制框 → 完。伟烨回"OK，你翻译一下"，我翻译。**3 步搞定**。
+
+### ⚠️ 对外沟通工具栈定稿（2026-07-26 伟烨拍板 — Telegram 版本）
+
+**触发**：伟烨 WhatsApp Business 账号老被风控审查 8-24 小时，严重影响业务。**决定全停 WhatsApp**。
+
+**决定（2026-07-26 终版）**：
+
+| 工具 | 用途 | 客户群 |
+|---|---|---|
+| **WeChat** | 中文沟通 | 🇨🇳🇸🇬🇲🇾🇮🇩 华语圈客户 |
+| **Telegram** | 非华人英文/俄/印尼/阿沟通 | 🇷🇺🇧🇷🇳🇬🇸🇦🇵🇰🇮🇳 等 WeChat 装不上的客户 |
+| **Email** | 永远底座（合同 / 病历 / 报价 / 重要沟通）| 所有客户 |
+| ~~WhatsApp~~ | **不再使用**（风控严重影响业务） | — |
+
+**Telegram 注册方式（避免 +86 风控）**：
+
+- 用 **海外手机号**（Google Voice / TextNow / 英国 giffgaff）注册，**不要用 +86**（国内号注册 TG 偶尔被短信拦截）
+- 用户名建议：`chinahospitalsguide`（伟烨已拍板 — 同时用作 WeChat 微信号）
+- 头像用 `assets/logo/logo-earth-cross-circle.png`
+- Bio（英文版）：
+
+  ```
+  Medical travel coordination · China
+  Hospital shortlisting · Cost comparison · Visa & arrival
+  🌐 chinahospitalsguide.com
+  ```
+
+**Telegram 置顶欢迎消息模板**（客户加 TG 后第一眼能看到你做什么）：
+
+```
+👋 I'm Weiye, coordinator at China Hospitals Guide.
+
+What I help with:
+• Hospital shortlisting & cost comparison
+• Case summary translation to hospitals
+• Visa invitation letter & appointment booking
+• Airport pickup & ongoing coordination
+
+How to start: tell me your medical need + preferred city (or "any")
+I'll send 2-3 hospital options + timeline within 4-7 days
+
+Pricing: chinahospitalsguide.com/pricing.html
+Reply: within 4h on business days (Beijing time)
+```
+
+**对网站/模板的影响（待办 · 伟烨有空再统一改）**：
+
+- `pricing.html` / `contact-new.html` 等所有 "WhatsApp: +86 157-6310-7083" → 改成 "Telegram: @chinahospitalsguide, WeChat: +86 157-6310-7083"
+- `_includes/floating-elements.njk` 里的 WhatsApp 浮动按钮 → 拿掉，留 Telegram + WeChat
+- `scripts/standardize-cta.js` 等可能提到 WhatsApp CTA 的 → 改 Telegram
+- **未完成**（2026-07-26 audit 发现）：8 个核心 .njk 没 include mobile-bottom-bar.njk / pricing.html 仍是旧档名 / 3 个语种 pricing 的 mobile bar 链接 ru 跳错（→services.html 而不是 ru-pricing.html）
+
+**支撑文件**：`references/communication-stack-2026-07-26.md`（未建，记录工具栈 + 替换规则 + TG 注册步骤 + 头像素例外）。
+
+### 标准病种问卷
+
+- **血管病种**（Nutcracker / May-Thurner / AVM / 静脉曲张）：`references/patient-questionnaire.md`（已存在）
+- **骨科病种**（膝关节置换 / 髋关节置换 / 脊柱）：`references/patient-questionnaire-orthopedic.md`（2026-07-26 新增）
+- **GBM / 神经外科**（高难度）：见 GBM 专属流程（不写通用问卷，按医院要求清单定制）
 
 ## 医院数据库检查
 

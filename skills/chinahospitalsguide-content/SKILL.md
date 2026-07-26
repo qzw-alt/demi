@@ -89,7 +89,98 @@ points at a URL that 404s.
 First build attempt failed with "Cannot find module 'glob'". Run
 `npm install --silent --no-audit --no-fund` before `npx @11ty/eleventy`.
 
-### Pitfall 4: 任何"已做 / 已修"汇报必须自己 grep 验证（2026-07-11 新增 — agent 失实报告翻车案）
+### Pitfall 5: Terminal rendering can mask real file content with `***` (2026-07-25)
+
+**触发场景**：用 `grep`、`sed`、`read_file`、甚至 `head` / `cat` 查 HTML / JS 文件里的字符串时，**终端会把某些字符序列渲染成 `***`**，让你以为文件里是占位符，实际是真实内容。
+
+**真实翻车案例（2026-07-25）**：
+- `grep "https://***" sg.html` 返回 0 行 → 误判 schema bug 已修
+- 实际 `python3 -c "import re; print(re.findall(r'https://schema.org', open('sg.html').read()))"` 返回 2 个匹配
+- 同 session 在 id.html / ru.html 修复后又出现，**两次都是终端渲染错觉**
+
+**根因**：终端对 ANSI 转义 / Unicode 私有区 / 长 unicode 行有不同回退策略，输出可能被截短成 `***`。**grep 是文本流工具，对渲染层无感**。
+
+**对策（涉及 HTML / JS 字段验证时）**：
+
+1. **永远用 Python 正则验证文件内容**，不靠 `grep` / `sed` / `head`
+2. 标准验证脚本：
+
+```python
+from pathlib import Path
+import re
+p = Path('/home/ubuntu/chinahospitalsguide/sg.html')
+c = p.read_text(encoding='utf-8')
+# 用 Python 计数
+star_bug = c.count('https://***')
+schema_ok = c.count('https://schema.org')
+print(f'https://*** occurrences: {star_bug}')
+print(f'https://schema.org occurrences: {schema_ok}')
+```
+
+3. **不要相信终端"看起来对"**：即使 `read_file` 显示 `***@type`、看着像 schema bug，**用 Python count 才知真假**
+4. **涉及的关键字符串**：`https://schema.org` / `https://***` / API keys（`sk-...`） / 邮箱 / 加密 ID
+5. **修复时**：patch 的 `new_string` 必须包含完整字符串（包括 `https://schema.org`），**不要让 patch tool 自己"智能推断"占位**
+
+### Pitfall 6: patch 工具缩进陷阱 — `</html>` 出现 2 次（2026-07-25）
+
+**触发场景**：用 `patch(mode='replace')` 在 HTML 文件结构化标签（`</main>` / `</body>` / `</html>`）附近做替换时，**old_string 和 new_string 缩进不一致**会导致 `</html>` 出现 2 次。
+
+**真实翻车案例（2026-07-25）**：在 id.html / ru.html 加 FAQ schema 段，patch 工具的 `old_string` 末尾包含 `</main>\n</body>\n</html>`，但 `new_string` 又写了一遍，**最终文件有 2 个 `</html>` 标签**。HTML 仍然能渲染，但 schema 验证和 SEO 工具会出错。
+
+**对策**：
+
+1. **结构性标签附近的 patch，写完后用 Python 校验闭合**：
+
+```python
+c = Path('/home/ubuntu/chinahospitalsguide/id.html').read_text(encoding='utf-8')
+assert c.count('</html>') == 1, f"expected 1 </html>, got {c.count('</html>')}"
+assert c.count('</body>') == 1, f"expected 1 </body>, got {c.count('</body>')}"
+assert c.count('<main') == c.count('</main>'), "main tag imbalance"
+```
+
+2. **或者**：用 `read_file` 看完最后 30 行再 patch，**用 Python 直接看到 EOF 结构**
+3. **不要相信 patch 工具 "diff 看着对"** —— diff 只显示替换段，没显示 EOF 多出来的 `</html>`
+
+### Pitfall 7: pricing-tier rename audit — L1/L2/L3 改名不会自动传播（2026-07-25）
+
+**触发场景**：站点把服务从 2 档 ($49 + $399) 重构到 3 档 ($49 / $149 / $399)，旧名 "Hospital Match" / "Pre-Arrival Coordination" 在多个文件残留。commit message 写 "rename all"，**实际只有 4/19 文件更新**。
+
+**真实案例（2026-07-25）**：
+- 9 commits 推上去，title 包括 `rename all old service names across site to L1/L2/L3`
+- 实测：仅 `thank-you.html` + 3 个语种 pricing 用新名
+- **核心定价页 pricing.html 还有 4 处 "Hospital Match" + 4 处 "Pre-Arrival"**
+- 用户旅程页 how-it-works.html 有 19 处旧名残留
+
+**对策（任何多文件 rename 后必跑）**：
+
+1. **扫所有 HTML 找旧档名**：
+
+```python
+import re
+from pathlib import Path
+ROOT = Path('/home/ubuntu/chinahospitalsguide')
+stale = {}
+for f in sorted(ROOT.glob('*.html')):
+    c = f.read_text(encoding='utf-8', errors='ignore')
+    text = re.sub(r'<script.*?</script>', '', c, flags=re.DOTALL)
+    text = re.sub(r'<style.*?</style>', '', text, flags=re.DOTALL)
+    text = re.sub(r'<[^>]+>', ' ', text)
+    text = re.sub(r'\s+', ' ', text).strip()
+    counts = {}
+    for term in ['Hospital Match', 'Pre-Arrival', '$9', '$99', '$149', '$399']:
+        counts[term] = len(re.findall(re.escape(term), text, re.IGNORECASE))
+    stale[f.name] = {k: v for k, v in counts.items() if v > 0}
+# Print files with old tier names
+for f, c in stale.items():
+    if 'Hospital Match' in c or 'Pre-Arrival' in c:
+        print(f, c)
+```
+
+2. **rename commit 完成后必须扫一遍，列出残留文件清单**
+3. **报告给伟烨时，列出 "by file" 的残留数**，不要说 "all done" — commit message 不是事实
+4. **commit message 的 `$9 / $49 / $99` / `$49 / $149 / $399` 这种价格标题必须实测验证**，因为 commit message 写错是常事
+
+### Pitfall 8: 任何"已做 / 已修"汇报必须自己 grep 验证（2026-07-11 新增 — agent 失实报告翻车案）
 
 **触发场景**：另一个 agent（Claude Code / Cursor / 子代理）或人跟你说"我做了 X / 修好了 Y"。**不要直接信，自己 grep 验证一次再汇报**。
 
@@ -247,10 +338,13 @@ Key metrics to watch (GSC):
 - Memory note: "中国顶级三甲统一规则" — affects what we can promise in
   hospital descriptions (no remote pre-review for top 3A, except few
   international departments)
+- `references/pricing-tier-evolution.md` — canonical 3-tier ($49/$149/$399)
+  definition + stale-name tracking. Load whenever Weiye asks about pricing
+  changes, service tier copy, or "L1/L2/L3" on chinahospitalsguide.com.
 
 ## Audit & Quick Commands
 
-### Audit exposed secrets (Pitfall 5)
+### Audit exposed secrets (Pitfall 9)
 
 Before any deployment / commit / merge, run:
 
@@ -260,6 +354,10 @@ bash scripts/audit-exposed-secrets.sh /home/ubuntu/oriental-destiny
 
 Detects hardcoded `sk-*` keys, the `https://***` schema-corruption bug,
 public demo pages with leaked keys, and robots.txt coverage.
+
+(See Pitfall 5 for the **separate** terminal-rendering gotcha that
+masks the `https://***` pattern in grep output — use Python `count()`
+to verify file content, not grep.)
 
 ### Other quick commands
 
