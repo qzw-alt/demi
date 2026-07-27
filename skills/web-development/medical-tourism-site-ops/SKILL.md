@@ -1,7 +1,7 @@
 ---
 name: medical-tourism-site-ops
 description: "Operations workflow for English-language medical tourism websites covering China (chinahospitalsguide archetype) — content matrix strategy, SEO technical patterns, duplicate-content defense, static site deployment to Cloudflare via GitHub, conversion blocks (trust + newsletter + featured-pillar + ranking-page decision-tree), GA4/MS-Clarity event tracking, and how the user wants this class of work run (iterative, single-step verified, no grand roadmaps)."
-version: 0.6.1
+version: 0.6.2
 author: Hermes Agent
 platforms: [linux]
 metadata:
@@ -911,6 +911,7 @@ git show HEAD:blog/<file>.html > blog/<file>.html
 ## Support files
 
 - `references/duplicate-content-defense.md` — canonical worked example of detecting two same-topic pillar pages, deciding which to keep, and recovering cleanly (delete + 301 + sitemap edit + verify). Includes a 5-command detection script and a 1-command audit script for future site scans.
+- `references/eleventy-migration-2026-07-27.md` — the 2026-07-26 Eleventy 11ty migration on chinahospitalsguide: `blog/YYYY-MM-DD-slug.md` is the new canonical daily-article path, the `news/` instruction in old cron prompts is dead, sitemap is build-driven (run `npx @11ty/eleventy` + `node scripts/generate-sitemap.js` before commit), and the JSON-LD `articleBody` extraction recipe for Deccan Herald. Includes a CrossRef/PubMed blind-spot note for Chinese TCM journal DOIs.
 - `references/conversion-optimization.md` — three conversion blocks (homepage trust section with stat cards + media references, Newsletter sign-up form with Formspree placeholder endpoint pattern, blog-index "Featured: What Only China Can Do" pillar block + "Browse by What Makes China Different" 3-category block). Includes copy-paste HTML for each block and a Cloudflare CDN cache verification protocol (curl may be stale on first poll — wait 30+s and re-check before any rollback).
 - `references/delegate-task-gotchas.md` — six subagent failure modes: hardcoded `max_concurrent_children=3` (split batches), 600s subagent timeout (rescue missing items via focused child, don't re-submit same batch), subagent HTML template drift (always validate output schema), internal cross-link correctness, "be explicit about slugs in the prompt" rule, and CDN cache propagation delay.
 - `references/execute-code-bulk-edit-patterns.md` — when `patch` tool fails on whitespace or multi-match markers, use `re.search` + capture groups + `c[:m.start()] + m.group(1) + new_block + m.group(2) + m.group(3) + c[m.end():]`. Covers common bugs (whitespace variants, multiple matches, insertion-order matters), the canonical idempotent insert_block() recipe, and verification protocol.

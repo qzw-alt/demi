@@ -38,7 +38,7 @@ python3 $SKILL_DIR/scripts/redact_secrets.py /tmp/demi-backup "$F"
 
 # Re-scan: tvly- still present
 grep -nE "tvly-[a-zA-Z0-9_-]{40,}" "$F"
-# → 88:- **Tavily API**: tvly-dev-sAFTx-2XjSFsXdR5Z...a7Si
+# → 88:- **Tavily API**: tvly-dev-sA...a7Si
 ```
 
 The single-file mode only handles the prefix list hard-coded in the script
@@ -77,7 +77,7 @@ open(p, 'w', encoding='utf-8').write(pat.sub(_trunc, c))
 ### Bug
 
 The character class `[a-zA-Z0-9_]+` does NOT include `-`. On
-`tvly-dev-sAFTx-2XjSFsXdR5Z...a7Si`:
+`tvly-dev-sA...a7Si`:
 
 - Match attempt starts at `tvly-`
 - `[a-zA-Z0-9_]+` matches `dev` (3 chars)
@@ -154,7 +154,7 @@ diff <(git show HEAD:"$F") "$F"
 # < - **Tavily API**: tvly-dev-sAFT...a7Si
 # ---
 # > - **Kimi API (2.5)**: sk-kim...NGGW（新配置中）
-# > - **Tavily API**: tvly-dev-sAFTx-2XjSFsXdR5Z...a7Si
+# > - **Tavily API**: tvly-dev-sA...a7Si
 # exit 1
 ```
 
@@ -172,12 +172,12 @@ for at least one miss per backup indefinitely.
 Three `MEMORY.md` files truncated (one sk- + three tvly- in total):
 
 1. `workspace/website/德米知识库/01-记忆系统/MEMORY.md`
-   - `tvly-dev-sAFTx-2XjSFsXdR5Z...a7Si` (62 chars)
+   - `tvly-dev-sA...a7Si` (62 chars)
      → `tvly-dev-sA...a7Si` (14 chars) via `redact_providers.py`
    - `sk-kimi-i...NGGW` got further truncated to `sk-kim...NGGW` by the
      bundled single-file mode pass (same line, more aggressive).
 2. `workspace/website_old/MEMORY.md`
-   - `tvly-dev-sAFTx-2XjSFsXdR5Z...a7Si`
+   - `tvly-dev-sA...a7Si`
      → `tvly-dev-sA...a7Si` via `redact_providers.py`
 3. `workspace/website_old/德米知识库/01-记忆系统/MEMORY.md`
    - same tvly- truncation

@@ -13,9 +13,6 @@ auth.lock
 auth.json
 kanban.db.init.lock
 kanban.db.dispatch.lock
-models_dev_cache.json
-verification_evidence.db-shm
-verification_evidence.db-wal
 
 # Sensitive content
 sessions/
@@ -32,7 +29,6 @@ logs/
 cron/output/
 gsc/client_secret.json
 gsc/token.json
-**/.curator_backups/
 
 # Node / Python deps
 **/node_modules/
@@ -50,6 +46,13 @@ hermes-agent/website/
 hermes-agent/tests/
 hermes-agent/ui-tui/
 
-# Compiled bundles (text walkers cannot safely redact binaries)
+# Kanban runtime lock + model registry cache (regenerated on every gateway tick)
+models_dev_cache.json
+
+# Compiled bundles (text walkers can't safely redact binaries)
 bin/uv
 bin/tirith
+
+# SQLite WAL / SHM transient runtime files for verification_evidence.db
+verification_evidence.db-shm
+verification_evidence.db-wal

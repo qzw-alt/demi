@@ -1,7 +1,7 @@
 ---
 name: weiye-collaboration-style
 description: "How Hermes / 德米 collaborates with 伟烨 (Weiye) on chinahospitalsguide-class work — the override rules that beat defaults. Load this skill FIRST in any session where Weiye asks for copy drafts, client outreach, content production, audit, or engineering fixes. Encodes the 2026-07-26 corrections that made the prior default behavior (over-asking, padded options, diluted output) actively wrong. Covers task-type decision (simple vs deep), output shape, and the 4 specific anti-patterns Weiye already pushed back on."
-version: 1.0.0
+version: 1.1.0
 author: agent
 tag:
   - collaboration
@@ -10,6 +10,7 @@ tag:
   - decision-overrides
   - simple-vs-deep
   - chinahospitalsguide
+  - audit-iteration
 ---
 
 # 跟伟烨（Weiye）协作的行为准则 · Override Layer
@@ -156,6 +157,50 @@ tag:
 - **单步推进 + 显式确认下一步** —— 用户偏好 "现状比改造前好" 是合法停手点
 - **改造后剩余收益可后续追做**，不必一次到位
 
+### ❌ 反模式 5：audit 改完 → 下次又全量重扫 17 文件
+
+**触发信号（真实 session 教训 2026-07-26）**：伟烨 push 后我做了**第三次"全量 re-scan 160 文件"**——列出冲突矩阵。其实他只想知道"上次标的问题修没修"。**审计是迭代**，**不是每次全量重做**。
+
+**反例**：
+
+> 推到 master 后立刻 `git pull` + 重新扫 160 文件 + 列 17 文件冲突矩阵 + 重写整份 audit 报告
+
+**正例**：
+
+> Pull 了，上次标记的 3 个问题：① WhatsApp 完全修复 ② `/treatments/` 死链完全修复（用 `_redirects` 兜底）③ Pre-Arrival 还剩 14 个（全是 `reports/*.html` 自动生成）。Bonus：mobile-bottom-bar 在 .njk 没 include，下次 build 会丢。
+
+**通用规则**：
+
+| 场景 | 正确动作 |
+|---|---|
+| **audit 后改完**（同一议题短期内） | Pull + **只**重扫上次标记的 N 个问题 + bonus 发现 |
+| **全新 audit**（很久没审计 / 第一次） | 全量扫 + 完整报告 |
+| **不同议题的新 audit** | 重新全量（议题变了） |
+
+**核心教训**：**审计是迭代式 diff，不是 n 次全量重做**。上次报告里的"问题 1/2/3" 应该 map 成下次报告里的"问题 1 ✅ / 问题 2 ⏳ / 问题 3 部分"。
+
+### ❌ 反模式 6：异常高的数字不核验 → 假警报 + 立刻冲刺修复
+
+**触发信号（真实 session 教训 2026-07-26）**：我第三次 audit 扫出 "**158 文件含 WhatsApp**" —— **实际是 false positive**（某些文件中"WhatsApp"出现在文本中但**无 `wa.me/` 链接**）。如果我不核验就报告，伟烨会基于假警报开干。
+
+**通用规则**：
+
+- **任何"X 文件有 Y 问题"的扫描，先抽 2-3 个文件验证 pattern**：真的有问题吗？regex 对吗？
+- **特别当数字异常高**（"158/160 文件 = 80%"）—— 这往往 pattern 错了
+- **核验后才报告数字**：避免伟烨基于假警报做决策浪费精力
+- **区分 "X 文件提到 Y" 和 "X 文件真的链接到 Y"**：前者用 `\bY\b`，后者必须用链接 pattern（`href="...Y..."` / `wa.me/` / `https://...Y...`）
+
+---
+
+## 🛡 持久红线（续 — 来自 session 教训）
+
+| # | 红线 | 教训来源 |
+|---|---|---|
+| **9** | **`.njk` 是 source of truth**，手写 `.html` 是临时状态 | 2026-07-26 大改后 35 个 .html 含 mobile-bottom-bar，但 8 个 .njk 模板一个都没 `include` 它 → 下次 `npm run build` 跑，mobile bar 全部消失（commit `40a0953` 的同一类 bug："index.html/pricing.html edits were overridden by Eleventy build"）|
+| **10** | **`_includes/mobile-bottom-bar.njk` 改完不算完** —— 必须 `{% include "mobile-bottom-bar.njk" %}` 到所有 .njk 模板 | 同上，否则 build 覆盖 |
+| **11** | **删 `treatments/` `news/` `course/` 等目录必须配 `_redirects`** | 2026-07-26 你的 commit `7ac5d98` 模式：每个 `/treatments/X.html` 单独 redirect 到对应新页 + `/treatments/` 兜底跳 `/index.html`——**双保险**（直接路径 → redirect 兜底）|
+| **12** | **新档名上线必须搜 `scripts/*.js`** | `scripts/generate-report.js`（carlos-mendoza 自动报告）硬编码了 "Pre-Arrival Coordination" 旧档名——**改了页面没用**，要改生成脚本。每次新档名上线 / 旧档名退役都要 grep `scripts/` |
+
 ---
 
 ## 📐 任务的"复杂 vs 简单"判断矩阵
@@ -226,9 +271,15 @@ tag:
 
 ---
 
-## 📁 关联 skill
+## 📁 关联 skill + 本 skill 的 support 文件
 
-这个 skill **不重复**已存在于其他 skill 的具体规则，只保存 class-level 的协作偏好。具体规则在：
+### 本 skill 的 support 文件
+
+| 文件 | 何时读 |
+|---|---|
+| `references/audit-after-pull-checklist.md` | 伟烨说"已修改完了 / 你再帮我审计一下"时——包含 diff-style audit 的具体 checklist + chinahospitalsguide .njk 列表 + 报告格式 |
+
+### 其他 skill 的覆盖范围
 
 | 内容类 | 在哪个 skill |
 |---|---|
@@ -239,6 +290,7 @@ tag:
 | Case-sharing 模式 | `medical-tourism-client-intake` |
 | chinahospitalsguide 内容生产 / CAR-T / oncology | `chinahospitalsguide-content` |
 | chinahospitalsguide 网站 audit / hospital-directory | `medical-tourism-site-ops` / `hospital-directory` |
+| 改后 audit 的具体步骤 + chinahospitalsguide .njk 列表 | 本 skill → `references/audit-after-pull-checklist.md` |
 | oriental-destiny DeepSeek API key 安全 | 没有专属 skill（应该在 memory）|
 
 ---
@@ -246,3 +298,7 @@ tag:
 ## 🟢 维护日志
 
 - **v1.0.0** (2026-07-26) — 第一次创建。基于 2026-07-26 伟烨对"过度复杂化"的 push back 立卡。
+- **v1.1.0** (2026-07-26) — 加 3 个真实 session 教训：
+  - 反模式 5：audit 改完不要下次又全量重扫（伟烨只想知道上次标的问题修了没有）
+  - 反模式 6：异常高的数字不核验直接报告 = 假警报
+  - 红线 9-12：`.njk` 是 source of truth / mobile-bar 必须 .njk include / 删目录必须 `_redirects` 兜底 / 新档名上线要 grep `scripts/*.js`
