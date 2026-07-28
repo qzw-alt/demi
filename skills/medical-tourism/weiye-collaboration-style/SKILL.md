@@ -188,7 +188,29 @@ tag:
 - **任何"X 文件有 Y 问题"的扫描，先抽 2-3 个文件验证 pattern**：真的有问题吗？regex 对吗？
 - **特别当数字异常高**（"158/160 文件 = 80%"）—— 这往往 pattern 错了
 - **核验后才报告数字**：避免伟烨基于假警报做决策浪费精力
-- **区分 "X 文件提到 Y" 和 "X 文件真的链接到 Y"**：前者用 `\bY\b`，后者必须用链接 pattern（`href="...Y..."` / `wa.me/` / `https://...Y...`）
+- **区分 "X 文件提到 Y" 和 "X 文件真的链接到 Y"**：前者用 `\bY\b`，后者必须用链接 pattern（`href="...Y..."` / `wa.me/` / `https://...Y..."`）
+
+### ❌ 反模式 7：程序化改 cron prompt → JSON 切片算错把 prompt 字段 2-3x 复制
+
+**触发信号（真实 session 教训 2026-07-28）**：伟烨说"以后都发博客"后，我用 Python `str.replace()` 在 `~/.hermes/cron/jobs.json` 里改了 `fa7a29b3464e` 的 prompt 字段。`str.replace` 本身没问题，但我在 **重建新文件** 时混淆了两套坐标 —— `job_block[:ps - job_start]` 当 `ps < job_start` 时会**取整个文件的最后一段**，导致新文件里 prompt 被嵌入到原 prompt 末尾重复 2-3 次。文件从 35909 字节涨到 57454 字节（+60%）。
+
+**核心规则（程序化改任何 JSON 文件的 deep-nested string 字段前必读）**：
+
+1. **必须 BACKUP** — `cp ~/.hermes/cron/jobs.json ~/.hermes/cron/jobs.json.bak-$(date +%Y%m%d-%H%M%S)` 在第一行写之前就做
+2. **不要混合坐标系** — 要么全程在 `raw` 坐标里工作，要么全程在 `job_block`（子串）坐标里工作，**不要互相减**
+3. **不要试图"自己拼切片"重建文件** — 用 `json.dump(parsed, f, ensure_ascii=False, indent=2)` 重新序列化整个文件，让 Python 处理转义
+4. **写完必须 round-trip verify** — `json.load` 读回来 → 抽 1-2 个关键字符串 → 确认内容长度合理（没重复、没截断）
+5. **CJK 文件更要警惕** — 中文 prompt 字段经过 `\uXXXX` 转义后，文件大小膨胀 2.5-3x；任何"我重新编码一遍"的循环都会让 `\uXXXX` 变成字面 `\\uXXXX` (6 字符)，JSON 解析后是 mojibake
+6. **如果 prompt ≤ 4 KB 改 ≤ 3 处，用 `patch` tool 改 jobs.json 不靠谱** — `patch` tool 期望旧字符串唯一，但 jobs.json 里 prompt 字段的 `news/`、`blog/` 这些字面 token 可能在 prompt 多个位置出现（陷阱、警告、例子）。如果一定要用 `patch`，**先 `read_file` 看完整内容 + 选独特锚点**
+
+**正确流程（伟烨说"以后都发 blog"这类 cron 改动时的标准动作）**：
+
+1. `cp ~/.hermes/cron/jobs.json ~/.hermes/cron/jobs.json.bak-$(date +%Y%m%d-%H%M%S)` — 第一步
+2. **给伟烨一份 3 选项的对照表**（按本 skill 的"复杂任务才列选项表且 ≤ 3 个"规则），**等他拍板再动手** — 不要直接做
+3. 拍板后用 `references/safe-edit-cron-jobs-json.md` 里给的 helper 脚本改（不是凭印象写 str.replace）
+4. 改完 `diff jobs.json.bak jobs.json` + `json.load` round-trip + 抽 3 处关键字符串比对
+
+**为什么这条规则重要**：`jobs.json` 没在 git 里（backup cron 才推到 `qzw-alt/demi`），corrupt 后 **没有 easy undo**。`hermes-backup` cron 是 22:00 才跑，离 09:00 的 daily-chg-medical-news cron 已经 13 小时，期间任何 cron 失败都会触发 `last_status=error` 误报。
 
 ---
 
@@ -278,6 +300,7 @@ tag:
 | 文件 | 何时读 |
 |---|---|
 | `references/audit-after-pull-checklist.md` | 伟烨说"已修改完了 / 你再帮我审计一下"时——包含 diff-style audit 的具体 checklist + chinahospitalsguide .njk 列表 + 报告格式 |
+| `references/safe-edit-cron-jobs-json.md` | 任何要程序化改 `~/.hermes/cron/jobs.json` 里 cron prompt 时——backup-then-mutate pattern + coordinate-system pitfall + round-trip verify recipe |
 
 ### 其他 skill 的覆盖范围
 
@@ -302,3 +325,4 @@ tag:
   - 反模式 5：audit 改完不要下次又全量重扫（伟烨只想知道上次标的问题修了没有）
   - 反模式 6：异常高的数字不核验直接报告 = 假警报
   - 红线 9-12：`.njk` 是 source of truth / mobile-bar 必须 .njk include / 删目录必须 `_redirects` 兜底 / 新档名上线要 grep `scripts/*.js`
+- **v1.2.0** (2026-07-28) — 加反模式 7：程序化改 cron prompt 时混淆坐标系导致 prompt 字段 2-3x 复制（jobs.json 从 35909 字节涨到 57454 字节）。配套 support 文件 `references/safe-edit-cron-jobs-json.md`。

@@ -1,4 +1,6 @@
-# News article HTML format on chinahospitalsguide.com (verified 2026-07-23)
+# News article HTML format on chinahospitalsguide.com (verified 2026-07-23, **SUPERSEDED 2026-07-28**)
+
+> ⚠️ **SUPERSEDED — 2026-07-28 news→blog migration.** As of 2026-07-28, the `news/` section is being deprecated and all new articles go to `blog/`. See `references/news-to-blog-migration-2026-07-28.md` for the canonical migration recipe. **The HTML template documented below still works for `blog/*.html` files** — copy the structure, change `news/` to `blog/` in the canonical URL, and ship to `blog/` instead of `news/`.
 
 **Status as of 2026-07-23:** news/ articles are full HTML files, NOT Jekyll/Markdown frontmatter.
 

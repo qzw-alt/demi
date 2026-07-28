@@ -6,11 +6,11 @@ Validated against the user's recurring request pattern. When they ask for "AI行
 
 | # | Section | Items | Source pool |
 |---|---------|-------|-------------|
-| 1 | 大模型动态 (Big-model dynamics) | 2–3 | HN: `Anthropic` `OpenAI` `Google AI` `Meta AI` `Mistral` `DeepSeek` `Llama` |
-| 2 | 行业融资 (Funding) | 1–2 | HN: `AI funding` `AI raise` `Series` + NYT RSS |
-| 3 | 产品发布 (Product launches) | 1–2 | HN: `Launch HN` `Show HN` + HN front page |
+| 1 | 大模型动态 (Big-model dynamics) | 2–3 | HN: `Anthropic` `OpenAI` `Google AI` `Meta AI` `Mistral` `DeepSeek` `Llama` + Techmeme feed.xml |
+| 2 | 行业融资 (Funding) | 1–2 | HN: `AI funding` `AI raise` `Series` + NYT RSS + Techmeme |
+| 3 | 产品发布 (Product launches) | 1–2 | HN: `Launch HN` `Show HN` + HN front page + Techmeme |
 | 4 | 政策监管 (Policy/regulation) | 1 | HN: `AI Act` `AI regulation` `EU AI Act` + NYT RSS |
-| 5 | 本周关注 (Trends to watch) | 2–3 | HN points-weighted synthesis + NYT cross-coverage |
+| 5 | 本周关注 (Trends to watch) | 2–3 | HN points-weighted synthesis + NYT cross-coverage + Techmeme |
 | 6 | 本周数据 (Key numbers) | 1–2 | Numbers drawn from items in sections 1–5 (no new searches) |
 
 ## Format rules (strict)
@@ -52,7 +52,33 @@ Validated against the user's recurring request pattern. When they ask for "AI行
 
 ## Worked examples
 
-### 2026-07-26 (most recent — preferred reference)
+### 2026-07-28 (most recent — preferred reference)
+
+Latest briefing produced under this spec: `/tmp/ai-briefing-2026-07-28.md` (~520 Chinese prose chars, within budget; total file 1178 chars incl. markers/emoji).
+
+**Source mix that worked** (Techmeme feed.xml as primary aggregator, HN Algolia as supplement, primary-source blogs for verification):
+- Anthropic `/news` listing → confirmed Claude Opus 5 (7/24) and Dario Amodei open-weights position (7/27)
+- HuggingFace `/blog` listing → Inkling by Thinking Machines (multimodal MoE 975B/41B, 1M context) + security-incident disclosure (the "agentic attacker" event)
+- TechCrunch per-day archive `/2026/07/27/` + search `?s=kimi+k3+moonshot` → recovered full titles for Kimi K3 License, Microsoft MAI-Cyber-1-Flash, AegisAI $36M, Prentis $100M talks, Meta AI in Threads DMs, Enigma $71M
+- Techmeme feed.xml → confirmed Nvidia $5B SSI investment, Moonshot Kimi K3 weights release, Anthropic open-weights statement
+
+**Tier 1 items (primary source confirmed):**
+- **Claude Opus 5** (anthropic.com/news/claude-opus-5 — full body verified via curl, $5/$25 per M tokens, Fast mode 2.5×) ✓
+- **Moonshot Kimi K3 weights** (Bloomberg via Techmeme feed.xml, 1M context / 975B total / 41B active MoE) ✓
+- **Microsoft MAI-Cyber-1-Flash + Perception** (NYT + TechCrunch headline, Microsoft AI blog Cloudflare-gated) ✓
+- **Nvidia $5B SSI commitment** (Bloomberg via Techmeme, valuation context $32B / $3B prior) ✓
+- **Hugging Face agentic-attacker security incident** (HF blog primary, "agentic attacker" first large-scale landing) ✓
+- **Anthropic Dario Amodei open-weights position** (anthropic.com/news primary) ✓
+
+**Tier 2 items included with hedge language:**
+- **Prentis $100M talks** (TC search headline, single source — included without specific number in prose)
+
+**Items dropped:**
+- Enigma $71M seed — used as data point in 本周关注 synthesis (AI safety track) rather than standalone 融资 entry, since Tier 2 single-source
+- Prentis $100M — used as data point in 融资 section, but specific dollar figure kept (TC headline source, 1-day-old)
+- 45,207 CVEs — used as 本周数据, primary source Bloomberg via Techmeme feed.xml ✓
+
+### 2026-07-26 (earlier reference)
 
 Latest briefing produced under this spec: `/tmp/briefing/2026-07-26-ai-briefing.md` (498 Chinese prose chars, within budget).
 
@@ -100,6 +126,7 @@ Items considered and dropped (insufficient signal):
 - **Length creep** — six sections × three items each = 18 sentences; budget ~25 Chinese chars per sentence = 450 chars. Tighten anything longer
 - **Emoji overuse** — one emoji per bullet, not per clause
 - **Reusing last briefing's items** — for cron runs, always re-fetch; HN stories from 7 days ago are stale
+- **TechCrunch truncated slugs (validated 2026-07-28)**: the per-day listing page (`/2026/07/27/`) returns truncated slugs in `<a href>` that 404 when guessed. Use TC internal search `?s=KEYWORD` to recover the canonical slug before fetching the article body. Same risk on Anthropic `/news` and HF `/blog` — those listings DO return canonical slugs, so they're safer entry points than TC.
 
 ## Verification tier rubric (refined 2026-07-26)
 
@@ -140,7 +167,7 @@ for s in sections[1:]:
 
 If 大模型动态 runs long, compress by dropping the third item, not by shortening sentences — readers skim, they don't parse hedges.
 
-## Source-fetch failure modes — extended list (refined 2026-07-26)
+## Source-fetch failure modes — extended list (refined 2026-07-28)
 
 Major-publication article pages that **return Cloudflare JS gates** as of mid-2026 (extending the parent skill's known list — these are all curl-useless, HN title is the only fallback):
 
@@ -158,8 +185,59 @@ Major-publication article pages that **return Cloudflare JS gates** as of mid-20
 | `thenextweb.com/.../article` | Cloudflare block | HN title only |
 | `msn.com/.../article` | Often works via syndication | **Use this as Yahoo Finance substitute** |
 | `blog.google/technology/ai/{slug}` | **404 if slug is wrong** (Google rotates slugs frequently — verified 2026-07-26 with `google-gemini-updates-7-21-2026` 404'ing; correct slug for the 7/21 triple-release was `gemini-3-6-flash-3-5-flash-lite-3-5-flash-cyber`). **Always HN-search for the actual title first to confirm slug** before fetching blog.google. | Search HN for the release's exact title, then construct slug from the matching pattern |
+| `techcrunch.com/{YYYY}/{MM}/{DD}/{slug}/` | **Body retrieval works** but **truncated slugs 404** (validated 2026-07-28): guessing the full slug from the per-day listing page often 404s ("We're sorry, we seem to have lost this page"). TC search `?s=KEYWORD` returns the **canonical** slug in the `<a href>`. Always verify slug via TC search before fetching the body. | TC internal search `https://techcrunch.com/?s=KEYWORD` for canonical slug |
+| `crunchbase.com/hub/ai-funding` | Cloudflare cookie-required gate | Use TC funding category instead |
+| `microsoft.com/en-us/security/blog/{slug}` | Cloudflare "Attention Required" block (validated 2026-07-28) | Use TC + Techmeme feed.xml coverage of MS security announcements |
+| `blogs.microsoft.com/{slug}` | Cloudflare "Attention Required" block | Same as above |
+| `web.archive.org/web/2026/...` | `429 Too Many Requests` for major-publication archived pages (validated 2026-07-28) | Skip archive.org for these sources; use live TC + Techmeme |
 
 **Rule of thumb**: if the HN `url` field points to any of the above, don't waste curl turns — accept the HN title and look for an Al Jazeera / Reuters / France24 / TechCrunch **non-paywalled** URL of the same story before quoting specifics. TechCrunch article bodies DO return via curl (verified 2026-07-26, `https://techcrunch.com/{YYYY}/{MM}/{DD}/{slug}/`).
+
+## Techmeme feed.xml as primary aggregator (added 2026-07-28)
+
+**Techmeme is the single highest-signal endpoint for daily tech/AI briefings** when primary-source blogs alone don't cover the breadth needed.
+
+```bash
+curl -sL "https://www.techmeme.com/feed.xml" -A "Mozilla/5.0"
+```
+
+Returns ~15 curated items/day with:
+- `<title>` — descriptive headline with outlet prefix in description
+- `<description>` — already HTML-cleaned by Techmeme's aggregator; prefixed with `Source / Outlet :`
+- `<pubDate>` — `Mon, 27 Jul 2026 18:35:01 -0400` (EDT)
+
+Parsing pattern:
+```python
+import re, sys
+xml = sys.stdin.read()
+items = re.findall(r'<item>(.*?)</item>', xml, re.DOTALL)
+for it in items[:25]:
+    title = re.search(r'<title>(.*?)</title>', it)
+    desc = re.search(r'<description>(.*?)</description>', it, re.DOTALL)
+    date = re.search(r'<pubDate>(.*?)</pubDate>', it)
+    if title:
+        d_text = re.sub(r'<[^>]+>', ' ', desc.group(1)) if desc else ''
+        d_text = re.sub(r'\s+', ' ', d_text).strip()
+        print(f"{date.group(1)[:16] if date else ''} | {title.group(1)[:150]}")
+        if d_text: print(f"  -> {d_text[:250]}")
+```
+
+**Why it's better than alternatives for daily briefings**:
+- Saves 3–4 individual curl calls to NYT RSS, TechCrunch archive, HN front page
+- Each item has editorial-summary-grade description (Techmeme curators hand-write them)
+- Mixes primary outlets (NYT, Reuters, Bloomberg, Wired, TC) so source diversity is built in
+- No rate limit / no auth / no JS gate
+- PubDate in EDT is human-readable directly
+
+**Limitation**: ~15 items/day means it's a curated subset, not a complete news feed. For broad coverage, **combine** Techmeme feed.xml + HN Algolia `search_by_date` with date filter for the day's full picture. Use Techmeme to anchor Tier 1 items (it only surfaces stories that real editors thought mattered), use HN Algolia to fill gaps.
+
+**Verified items that came exclusively from Techmeme feed.xml on 2026-07-28** (would have been missed without it):
+- Nvidia $5B SSI commitment (Bloomberg via Techmeme)
+- Moonshot Kimi K3 License release (Bloomberg via Techmeme)
+- Claude chats appearing in Google/Bing search results despite robots.txt (Wired via Techmeme)
+- Cadence Q2 revenue $1.58B (Reuters via Techmeme, used as macro context)
+- NVD 45,207 CVE count (Bloomberg via Techmeme, used in 本周数据)
+- Orange × Morrison France 400MW / €3B data center (Bloomberg via Techmeme, used in 本周数据)
 
 ## 备选条目 section pattern (added 2026-07-24)
 

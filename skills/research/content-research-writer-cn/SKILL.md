@@ -15,11 +15,25 @@ metadata:
 Research Chinese medical/health news热点 for daily article publishing on chinahospitalsguide.com.
 
 ## Context
--- Research Chinese medical/health news热点 for daily article publishing on chinahospitalsguide.com.
+- Research Chinese medical/health news热点 for daily article publishing on chinahospitalsguide.com.
 - Website: https://chinahospitalsguide.com (medical tourism guide for China)
-- Article output: `news/` directory, file naming `YYYY-MM-DD.html`
+- Article output: **`blog/` directory** (NOT `news/`) — see migration notice below
 - Publishing cadence: 1 article per day (栏目新建期)
 - Quality bar: 去AI化评分 >60; no good热点 = no publish (宁缺毋滥)
+
+## ⛔ NEWS→BLOG MIGRATION (verified 2026-07-28, HARD RULE going forward)
+
+As of 2026-07-28, 伟烨 deleted the `news/` 版面 on chinahospitalsguide.com because **many articles were duplicated across news/ and blog/**. The canonical publishing path is now `blog/` only.
+
+**Effective immediately for all cron runs (daily-chg-medical-news job_id fa7a29b3464e):**
+- ❌ DO NOT write to `news/YYYY-MM-DD-*.html` — that section is gone
+- ✅ Write to `blog/YYYY-MM-DD-<slug>.md` (preferred) or `blog/YYYY-MM-DD-<slug>.html` (legacy format acceptable for now; blog/ has 102 old .html + 2 new .md)
+- ✅ De-dup grep MUST scan `blog/*.{html,md}`, not `news/*.html`
+- ✅ Sitemap update: add the blog/ URL, not news/
+- ✅ Verify HTTP against `https://chinahospitalsguide.com/blog/YYYY-MM-DD-...`, not `/news/...`
+- ❌ The reference `references/news-article-html-format-2026-07.md` is **superseded** — its HTML template still works for `blog/*.html` files but the path naming is wrong
+
+**Migration details, de-dup verdict, and edge cases:** see `references/news-to-blog-migration-2026-07-28.md`.
 
 **⛔ CRITICAL — cap-safe execution (10 documented mid-pipeline cap-hits, 2026-06-14 → 2026-07-05):** The classic order `research → write → humanize loop → commit → push → verify` burns 30+ tool calls and reliably hits the cron iteration cap during the humanize loop, leaving articles uncommitted. **Commit + push MUST happen BEFORE the humanize loop.** Ship at 60/100 first, polish later. See `cron-content-pipeline-cap-safe` skill for the full pattern. The previous "next cron run recovers" recipe is broken by design — the next run doesn't have budget for both recovery AND a fresh article.
 
@@ -61,7 +75,7 @@ For clinical advances with Chinese relevance (新疗法, 新药上市, 国际临
 
 **Mirage News — fifth-tier source for university press releases (verified 2026-06-29, HKUMed QMH robotic microsurgery):** when the lead is an academic-medical-center press release (HKUMed, Tsinghua, Fudan, Zhongshan, etc.) and the institutional IR page is blocked or sparse, **www.miragenews.com** is a reliable working mirror. The 2026-06-29 HKUMed Queen Mary Hospital story (robotic living-donor liver transplant, world-first) was fetched as a single 59KB HTML page from `https://www.miragenews.com/{slug}` — full body text in substantive `<p>` tags, named surgeon (Dr. Ka-chun Cheung), named patient age bracket, dates, robotic platform name (Versius), and the cross-reference to Lancet Oncology 2024 all present. Date verification: `<meta itemprop="datePublished" content="2026-06-25T02:50:20+00:00">` is reliable. **Body extraction pattern:** standard `<p>` tag regex works — substantive paragraphs are 200-1500 chars each (no JS-buried payload like Manila Times). Mirage News is the cleanest single-fetch mirror for university medical press releases — use it as the first try whenever a Bing News URL points to a `.edu.hk`, `.edu.cn`, `.ac.uk`, or known academic medical center and the canonical site is blocked. Pattern generalizes: **for any "university X announces Y" medical story, search `miragenews.com` directly if Bing News surfaces it.**
 
-**The Star (Malaysia) — fourth-tier source for China Daily syndicated pharma / macro coverage (verified 2026-06-26, UCB Tellier interview):** when the lead is a *China Daily* interview or executive commentary that has been syndicated to Asia News Network outlets, **www.thestar.com.my** is a reliable working source. The 2026-06-26 UCB CEO Jean-Christophe Tellier interview ("Healthcare evolution in China attracts more global business") was fetched as a single 415KB HTML page from `https://www.thestar.com.my/business/business-news/2026/06/26/healthcare-evolution-in-china-attracts-more-global-business`. Date verification: `<meta property="article:published_time" content="2026-06-26T00:00:00.000Z">` is reliable (matches the URL date in `/YYYY/MM/DD/` path). **Body extraction pattern:** the substantive body lives inside `<article>...</article>` and yields ~7500 chars of clean prose from a single regex extract. The article is a *China Daily* wire piece — typically attributed at the end with `— China Daily` or `— China Daily/ANN`. **Coverage angle:** The Star syndication is most useful for **inbound pharma-industry / policy framing** (Western CEO commenting on China's role in global drug discovery, supply-chain investment, regulatory throughput) — distinct from BT/Bloomberg (which focuses on individual patient narratives + market projections) and Straits Times (institutional operator data). When the lead is "Western CEO publicly commenting on China as a drug-discovery hub" and *China Daily* is the canonical source, The Star's syndication is the working fetch when ChinaDaily.com.cn direct is blocked by the cron sandbox.
+**The Star (Malaysia) — fourth-tier source for China Daily / Xinhua syndicated pharma / macro / TCM coverage (verified 2026-06-26 UCB Tellier + 2026-07-28 TCM globalisation):** when the lead is a *China Daily* / Xinhua wire story syndicated to Asia News Network outlets, **www.thestar.com.my** is a reliable working source. URL pattern `thestar.com.my/aseanplus/aseanplus-news/{YYYY}/{MM}/{DD}/{slug}`, body 400-415KB HTML, `<meta property="article:published_time">` reliable, `<article>` regex yields ~7500 chars clean prose. Full source pattern + named-product/named-hospital extraction patterns in `references/source-pattern-tcm-globalisation-thestar-2026-07.md`. Reference article shipped 2026-07-28: `news/2026-07-28-tcm-going-global-shufeng-jiedu-germany-ai-workflow.html` (1,729 words, 92/100, Template C accessibility for TCM globalisation, named-product retail evidence in German pharmacies, named-hospital Hainan foreign-patient pathway).
 
 See `references/source-patterns-tier7-and-contrast-framing.md` for the verified JSON-LD `articleBody` extraction recipe (refines the 2026-06-29 "structurally gated" pitfall; many SCMP lifestyle/health stories are open at the JSON-LD layer even when the HTML body is gated). Quick rule: parse JSON-LD blocks; if `articleBody` length > 5,000 chars, the body is extractable in a single Python pass.
 
