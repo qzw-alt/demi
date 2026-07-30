@@ -1,9 +1,6 @@
 model:
-  api_mode: anthropic_messages
-  provider: custom:minimax_coding
-  api_key: sk-cp-Zyu...rWDo
-  base_url: https://api.minimaxi.com/anthropic
-  default: MiniMax-M3
+  provider: kimi-coding
+  default: kimi-k2.5
 providers:
   minimax_coding:
     base_url: https://api.minimaxi.com/anthropic
@@ -23,7 +20,7 @@ providers:
     available_models_json: '[{"id":"kimi-for-coding","name":"Kimi K2.7 Code"}]'
 fallback_providers: []
 toolsets:
-  - hermes-cli
+- hermes-cli
 agent:
   max_turns: 60
   gateway_timeout: 1800
@@ -319,9 +316,9 @@ display:
   runtime_footer:
     enabled: false
     fields:
-      - model
-      - context_pct
-      - cwd
+    - model
+    - context_pct
+    - cwd
   copy_shortcut: auto
   tool_progress: all
   cleanup_progress: false
@@ -427,7 +424,7 @@ goals:
   max_turns: 20
 skills:
   external_dirs:
-    - ~/.agents/skills
+  - ~/.agents/skills
   template_vars: true
   inline_shell: false
   inline_shell_timeout: 10
@@ -472,11 +469,11 @@ discord:
     speech_gain: 1.0
     ack_enabled: true
     ack_phrases:
-      - Let me look into that.
-      - One moment.
-      - Checking on that now.
-      - Give me a sec.
-      - On it.
+    - Let me look into that.
+    - One moment.
+    - Checking on that now.
+    - Give me a sec.
+    - On it.
 telegram:
   reactions: false
   allowed_chats: ''
@@ -597,31 +594,31 @@ session_reset:
 group_sessions_per_user: true
 platform_toolsets:
   cli:
-    - hermes-cli
+  - hermes-cli
   telegram:
-    - hermes-telegram
+  - hermes-telegram
   discord:
-    - hermes-discord
+  - hermes-discord
   whatsapp:
-    - hermes-whatsapp
+  - hermes-whatsapp
   slack:
-    - hermes-slack
+  - hermes-slack
   signal:
-    - hermes-signal
+  - hermes-signal
   homeassistant:
-    - hermes-homeassistant
+  - hermes-homeassistant
   qqbot:
-    - hermes-qqbot
+  - hermes-qqbot
   yuanbao:
-    - hermes-yuanbao
+  - hermes-yuanbao
   teams:
-    - hermes-teams
+  - hermes-teams
   google_chat:
-    - hermes-google_chat
+  - hermes-google_chat
 custom_providers: []
 plugins:
   enabled:
-    - lightclawbot
+  - lightclawbot
 platforms:
   lightclawbot:
     enabled: true

@@ -35,6 +35,8 @@ As of 2026-07-28, 伟烨 deleted the `news/` 版面 on chinahospitalsguide.com b
 
 **Migration details, de-dup verdict, and edge cases:** see `references/news-to-blog-migration-2026-07-28.md`.
 
+**Newly-broken sources + extended working/broken matrix:** see `references/source-failure-table-2026-07.md` (NCBI PubMed eutils 302 redirect, verified 2026-07-30; CrossRef misparsed dates; Bing News pollution patterns).
+
 **⛔ CRITICAL — cap-safe execution (10 documented mid-pipeline cap-hits, 2026-06-14 → 2026-07-05):** The classic order `research → write → humanize loop → commit → push → verify` burns 30+ tool calls and reliably hits the cron iteration cap during the humanize loop, leaving articles uncommitted. **Commit + push MUST happen BEFORE the humanize loop.** Ship at 60/100 first, polish later. See `cron-content-pipeline-cap-safe` skill for the full pattern. The previous "next cron run recovers" recipe is broken by design — the next run doesn't have budget for both recovery AND a fresh article.
 
 ## Research Sources
