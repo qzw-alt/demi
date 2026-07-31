@@ -362,8 +362,8 @@
       7581
     ],
     "creative/programmatic-seo/SKILL.md": [
-      1785370024721251927,
-      93130
+      1785456511691438210,
+      99322
     ],
     "creative/architecture-diagram/SKILL.md": [
       1778925537000000000,
@@ -404,6 +404,10 @@
     "research/blogwatcher/SKILL.md": [
       1778925537000000000,
       5111
+    ],
+    "research/ai-industry-daily-brief/SKILL.md": [
+      1785460018953536989,
+      2672
     ],
     "research/research-paper-writing/SKILL.md": [
       1778925537000000000,
@@ -1857,6 +1861,19 @@
         "macos",
         "windows"
       ],
+      "conditions": {
+        "fallback_for_toolsets": [],
+        "requires_toolsets": [],
+        "fallback_for_tools": [],
+        "requires_tools": []
+      }
+    },
+    {
+      "skill_name": "ai-industry-daily-brief",
+      "category": "research",
+      "frontmatter_name": "ai-industry-daily-brief",
+      "description": "Generate a concise, data-driven daily AI industry brief i...",
+      "platforms": [],
       "conditions": {
         "fallback_for_toolsets": [],
         "requires_toolsets": [],

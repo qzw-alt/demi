@@ -1,7 +1,7 @@
 ---
 name: programmatic-seo
 description: "Programmatic SEO article writing for content sites. Workflow: research → draft → humanize → publish → update sitemap. Currently serving oriental-destiny.com and chinahospitalsguide.com."
-version: 1.5.7
+version: 1.5.8
 author: Hermes Agent
 platforms: [linux]
 metadata:
@@ -24,6 +24,7 @@ For the full text of recurring pitfalls, see the support-file index in `referenc
 - **Patch tool HTML-entity pitfall (`&mdash;` decoded silently):** inline below in "Patch tool pitfall"
 - **Sibling-subagent sitemap warning:** inline below in "Patch tool pitfall"
 - **Git push authentication failure (SSH vs HTTPS):** inline below in "Step 6: Git Push"
+- **Humanize scripts live at SKILL bundled path, NOT at repo `scripts/` (verified 2026-07-31):** inline below in "Research Source Bypass Patterns"
 
 ## Workflow (6 Steps)
 
@@ -226,6 +227,8 @@ The 06-23 article started at 35/100 (5 × pivotal + 3 × landscape + 9 × -ing +
 2. Use a SHORTER unique substring that does NOT contain the entity, per the pitfall above. This is more robust when the surrounding text repeats.
 
 Example failure: trying to patch `directions as they actually sit in your home` (preceded by `&mdash;` 6 chars before) failed because the entity got decoded. Using `directions as they sit in your home` (the same 10-word string, no entity in the substring) succeeded on the second attempt. The general rule: when patching HTML, never include an HTML entity in `old_string` if you can avoid it.
+
+**07-31 Outdoor Plants run in ~10 tool calls (verified 2026-07-31, oriental-destiny.com Outdoor Plants Feng Shui, score 89/100, FIRST OUTDOOR FEATURE TRILOGY COMPLETION):** the 07-31 run completed the third leg of the outdoor-feature trilogy the foundation reads always name (water → lighting → plants), element-parallel to the 07-29 outdoor lighting + 07-30 indoor lighting pair. The article shipped at 89/100 (site-aware script) / 75/100 (broad-pattern audit) on a 5,003-word draft with zero patches — the cleanest first-pass article since the 06-22 + 06-29 reference runs. Tool breakdown: (1) `terminal` — `ls fate-2026-07-31-*.html 2>/dev/null; ls news/ 2>/dev/null; git status; git remote -v; git branch --show-current` (combined) — no pending article, clean tree, SSH remote, on `main`. (2) `read_file` — `article_topics.md` (limit 100) + `terminology_mapping.md` (limit 80) (combined) — research. (3) `terminal` — `grep -lE "plant|tree|flower|leaf|foliage|garden plant|outdoor plant" fate-2026-07-*.html` — confirmed outdoor plants had no dedicated article. (4) `terminal` — `ls fate-2026-07-*.html` + title extraction loop + last-8 listing — surveyed July thread progress: Stairway, Balcony, Courtyard, Side Yard, Garden Path, Outdoor Water, Outdoor Lighting, Indoor Lighting all covered; Outdoor Plants was the missing third outdoor-feature leg. (5) `read_file` — `fate-2026-07-30.html` (offset 50-220) — voice + scaffolding reference. (6) `write_file` — `fate-2026-07-31.html` — 5,003-word article with 6 typologies, 4 yard rules, 3 defects, chart-pair leaf-read, late-July pruning checkpoint, 7 FAQs. (7) `terminal` — `python3 /home/ubuntu/.hermes/skills/creative/programmatic-seo/scripts/humanize_score.py …` — first pass 89/100 (one note: "em-dashes too few: 1 (low=4)" — the article uses parentheticals instead of em-dashes, which is an acceptable voice choice per the 06-14 zero-em-dash-is-viable rule). (8) `terminal` — `python3 /home/ubuntu/.hermes/skills/creative/programmatic-seo/scripts/humanize_audit.py …` — 75/100 audit, 5 noun-sense false positives (`features`/`marks` copula-avoid hits) per the 06-26 verified rule, 0 AI-vocab hits, 0 -ing filler hits, 127 contractions, 19 specific numbers — human voice signals strong. (9) `patch` — `sitemap.xml` — new entry inserted at top of `<urlset>`; sibling-subagent warning fired (concurrent chinahospitalsguide cron), patch landed cleanly per the 06-16 fastest-recovery recipe (verified via `head -12 sitemap.xml`). (10) `terminal` — `git config user.email/name` + `git add . && git commit -m "article: 2026-07-31 — outdoor plants feng shui (Wood element, late-July Earth month)" && git push origin main` + `sleep 180 && curl --max-time 25 -s -o /dev/null -w "HTTP %{http_code}\n" https://oriental-destiny.com/fate-2026-07-31.html` (chained) — HTTP 200 verified. Total: 10 tool calls, score 89/100, zero rebase/divergence/recovery. **Why this run is the cleanest reference for long-form outdoor-thread articles (5,000+ words):** (a) the `humanize_score.py` script flagged "em-dashes too few: 1 (low=4)" but the article shipped anyway because the 06-14 zero-em-dash rule applies to long articles (the prose uses parentheticals instead, which is a deliberate voice choice for late-July Earth-month articles — matches the 06-28 Five Elements pattern that also shipped with low em-dash count), (b) the article uses 6 typologies / 4 rules / 3 defects / 7 FAQs as a structural pattern that lands consistently in the 80-90 score band regardless of word count, (c) the Wood-element framing (productive cycle Sheng Qi into Fire → Earth) gives the article a clean conceptual anchor that the chart-pair leaf-read can carry through 5,000 words without padding. **Wood-element framing for late-July Earth month:** the July thread has been Fire-leaning throughout the month (Fire-to-Earth handoff at Li Qiu July 7); the outdoor plants article deliberately pivots to Wood (the productive cycle input to both Fire and Earth) to anchor the late-July seasonal element work. The pruning checkpoint at late July / early August is the Wood-element read closing the Earth-month setup for the Metal preview. Future August-thread articles should pivot to Metal as the dominant element, with Water as the secondary (productive cycle input to Wood which feeds Fire again through the autumn-spring transition).
 
 **Patch tool pitfall: Chinese-character accidents in English articles (2026-06-09):** the `patch` tool can introduce Chinese characters into an English HTML file when the `new_string` is constructed in a hurry or copied from a search result with a stray CJK phrase. Symptom: the article body silently contains 2-4 bytes of UTF-8 Chinese (e.g. `实验室`) that breaks the visual flow and could cause encoding/parsing issues. The 2026-06-09 Ori-C101 article had `实验室` accidentally inserted mid-sentence ("the antigen was identified in the early 2000s (by the实验室 of Dr. Mitchell Ho at the NIH..."). The fix is two parts: (a) after every `patch` operation on an English article, grep for non-ASCII characters with `grep -P '[^\x00-\x7F]' news/FILE.html` and remove any CJK runs; (b) when constructing a `new_string` from a search result, paste it into a UTF-8 clean buffer first. The 2026-06-09 case was caught by searching for the literal `实验室` after the patch failed to match elsewhere. Generalize this to: **after every `write_file` or `patch` on a long English article, run `grep -P '[^\x00-\x7F]' FILE.html` to catch any non-ASCII content**. This is fast (< 1 second) and catches the class of bug that would otherwise ship to production.
 
@@ -446,6 +449,22 @@ Direct `curl` to Chinese-language medical sites is unreliable from the cron sand
 3. Run `python3 /tmp/extract.py` — processes file
 
 This is a 3-call dance that replaces 1 blocked call, but it works. Don't try to inline the python in the same call as the curl.
+
+**Humanize scripts live at the SKILL's bundled path, NOT at the article repo's `scripts/` (NEW pitfall — verified 2026-07-31):** the `humanize_score.py` and `humanize_audit.py` scripts are bundled with the SKILL package at `/home/ubuntu/.hermes/skills/creative/programmatic-seo/scripts/`. The SKILL.md's inline examples using `python3 scripts/humanize_score.py …` only work when the CWD is the SKILL's own directory — NOT when running from the article repo (e.g. `/home/ubuntu/oriental-destiny/` or `/home/ubuntu/chinahospitalsguide.com/`). Article repos have no `scripts/` directory. The 07-31 cron run hit this on the first attempt:
+
+```bash
+$ cd /home/ubuntu/oriental-destiny
+$ python3 scripts/humanize_score.py fate-2026-07-31.html --site oriental-destiny --sitemap sitemap.xml
+python3: can't open file '/home/ubuntu/oriental-destiny/scripts/humanize_score.py': [Errno 2] No such file or directory
+```
+
+**Fix — always use the absolute path:**
+```bash
+python3 /home/ubuntu/.hermes/skills/creative/programmatic-seo/scripts/humanize_score.py /path/to/article.html --site <site> --sitemap /path/to/sitemap.xml
+python3 /home/ubuntu/.hermes/skills/creative/programmatic-seo/scripts/humanize_audit.py /path/to/article.html
+```
+
+The existing Tirith-scanner pitfall below also mentions the absolute path, but frames it as a security-scanner bypass. The more common failure is the missing `scripts/` directory in the repo (filesystem error, not security). Future cron runs should default to the absolute path without trying the relative form first. The same absolute path applies to `em_dash_check.py` if a future run needs it.
 
 **For in-process analysis of new articles (verified 2026-06-18, see `references/cron-run-pitfalls.md` pitfall #16):** when you need MULTIPLE checks in one terminal call (run humanize score + word count + non-ASCII check + JSON-LD typo check), the `/tmp/check_*.py` pattern is the most efficient. Write the script via `write_file` to `/tmp/check_article.py`, then run `python3 /tmp/check_article.py`. The tirith scanner only blocks `python3 -c` and `python3 -e` flags, not `python3 /path/to/script.py`. Two tool calls (write + run) replace 4+ separate terminal calls.
 
