@@ -23,17 +23,17 @@
       "schedule_display": "0 8 * * *",
       "repeat": {
         "times": null,
-        "completed": 66
+        "completed": 68
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T14:45:42.377747+08:00",
-      "next_run_at": "2026-08-01T08:00:00+08:00",
-      "last_run_at": "2026-07-31T08:06:03.713154+08:00",
-      "last_status": "ok",
-      "last_error": null,
+      "next_run_at": "2026-08-03T08:00:00+08:00",
+      "last_run_at": "2026-08-02T08:00:52.024099+08:00",
+      "last_status": "error",
+      "last_error": "RuntimeError: HTTP 429: \u5df2\u8fbe\u5230 Token Plan \u7528\u91cf\u4e0a\u9650\uff1a\u8bf7\u5347\u7ea7 Token Plan \u5957\u9910\u6216\u8d2d\u4e70\u79ef\u5206\u8865\u5145\u7528\u91cf\u3002 (2056)",
       "last_delivery_error": null,
       "deliver": "feishu",
       "origin": {
@@ -66,17 +66,17 @@
       "schedule_display": "0 9 * * *",
       "repeat": {
         "times": null,
-        "completed": 61
+        "completed": 63
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T17:20:53.016111+08:00",
-      "next_run_at": "2026-08-01T09:00:00+08:00",
-      "last_run_at": "2026-07-31T09:06:03.586331+08:00",
-      "last_status": "ok",
-      "last_error": null,
+      "next_run_at": "2026-08-03T09:00:00+08:00",
+      "last_run_at": "2026-08-02T09:00:40.484427+08:00",
+      "last_status": "error",
+      "last_error": "RuntimeError: HTTP 403: You've reached your usage limit for this billing cycle. Your quota will be refreshed in the next cycle. To continue now, purchase extra usage or upgrade your plan: https://www.kimi.com/code/#pricing",
       "last_delivery_error": null,
       "deliver": "origin",
       "origin": {
@@ -111,17 +111,17 @@
       "schedule_display": "0 22 * * *",
       "repeat": {
         "times": null,
-        "completed": 64
+        "completed": 66
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-31T17:22:43.447182+08:00",
-      "next_run_at": "2026-08-01T22:00:00+08:00",
-      "last_run_at": "2026-07-30T22:07:19.081833+08:00",
-      "last_status": "ok",
-      "last_error": null,
+      "next_run_at": "2026-08-03T22:00:00+08:00",
+      "last_run_at": "2026-08-01T22:00:34.926442+08:00",
+      "last_status": "error",
+      "last_error": "RuntimeError: HTTP 403: You've reached your usage limit for this billing cycle. Your quota will be refreshed in the next cycle. To continue now, purchase extra usage or upgrade your plan: https://www.kimi.com/code/#pricing",
       "last_delivery_error": null,
       "deliver": "origin",
       "origin": {
@@ -158,17 +158,17 @@
       "schedule_display": "0 9 * * *",
       "repeat": {
         "times": null,
-        "completed": 68
+        "completed": 70
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-06-02T08:16:41.523255+08:00",
-      "next_run_at": "2026-08-01T09:00:00+08:00",
-      "last_run_at": "2026-07-31T09:11:03.258006+08:00",
+      "next_run_at": "2026-08-03T09:00:00+08:00",
+      "last_run_at": "2026-08-02T09:00:54.926315+08:00",
       "last_status": "error",
-      "last_error": "RuntimeError: Invalid API response after 3 retries: slow response (199s) \u2014 likely upstream timeout",
+      "last_error": "RuntimeError: HTTP 429: \u5df2\u8fbe\u5230 Token Plan \u7528\u91cf\u4e0a\u9650\uff1a\u8bf7\u5347\u7ea7 Token Plan \u5957\u9910\u6216\u8d2d\u4e70\u79ef\u5206\u8865\u5145\u7528\u91cf\u3002 (2056)",
       "last_delivery_error": null,
       "deliver": "feishu",
       "origin": {
@@ -225,5 +225,5 @@
       "fire_claim": null
     }
   ],
-  "updated_at": "2026-07-31T22:00:18.205874+08:00"
+  "updated_at": "2026-08-02T22:00:45.802149+08:00"
 }
